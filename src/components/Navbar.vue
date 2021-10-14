@@ -2,11 +2,12 @@
     <div>
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="navBar">
             <!-- 手機版切換導覽列顯示按鈕 -->
-            <button class="navbar-toggler" >
-              <span class="navbar-toggler-icon"></span>
+             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+                aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand"></a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">              
+            <div class="collapse navbar-collapse" id="collapsibleNavId">              
                   <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item mr-5">
                         <router-link class="text-body nav-link" to="/">首頁</router-link>
