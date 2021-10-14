@@ -52,11 +52,6 @@ import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 export default {
   name: 'Navbar',
-  data () {
-    return {
-    
-    }
-  },
   setup(){
     const reload = inject("reload");
     const router = useRouter();
@@ -88,7 +83,8 @@ export default {
               id: route.params.id // maps route param "id" to prop "profileId"
             })
           })  
-          console.log('router nav',router.currentRoute.value.path,'route nav',route.name)
+          console.log('routeId nav',route.params.id)
+          console.log('router nav',router.currentRoute.value.params)
           reload()
         }
     }

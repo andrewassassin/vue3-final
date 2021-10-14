@@ -38,10 +38,6 @@ import { ref, onMounted } from "vue";
 import Item from '@/views/Item'
 import { useRouter, useRoute } from "vue-router";
 export default {
-  data () {
-    return {
-    }
-  },
   props: ['id'],
   setup(props){
     const id = ref(props, 'id');
@@ -50,7 +46,7 @@ export default {
     const productList = ref([]);
     const threeList = ref([]);
     onMounted(async()=>{
-          console.log('id sea',id.value,'qid sea',route.query.id)
+          console.log('id sea',id.value)
          await axios.post(`https://x-home.pcpogo.com/homex/search.php?RDEBUG=andrewc`,route.params.id)
         .then(
             response => {      
