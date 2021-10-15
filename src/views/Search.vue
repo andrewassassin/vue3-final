@@ -34,7 +34,7 @@
 
 <script>
 import axios from 'axios'
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import Item from '@/views/Item'
 import { useRouter, useRoute } from "vue-router";
 export default {
@@ -45,19 +45,36 @@ export default {
     const route = useRoute();
     const productList = ref([]);
     const threeList = ref([]);
-    onMounted(async()=>{
-          console.log('id sea',id.value)
-         await axios.post(`https://x-home.pcpogo.com/homex/search.php?RDEBUG=andrewc`,route.params.id)
+    watch(id.value, async() => {
+      console.log('watch id', id.value)
+      threeList.value=[]
+       await axios.post(`https://x-home.pcpogo.com/homex/search.php?RDEBUG=andrewc`,id.value.id)
         .then(
             response => {      
               productList.value = response.data
-              // console.log(response.data)
               productList.value.forEach(item=>{
                 item.image = JSON.parse(item.image);
                 threeList.value.push(item)
               })
             }      
-        )   
+        )  
+    })
+    onMounted(async()=>{
+      console.log('route',route)
+        console.log('id sea',id.value.id)
+        console.log('threeList.value.length',threeList.value.length)
+          await axios.post(`https://x-home.pcpogo.com/homex/search.php?RDEBUG=andrewc`,id.value.id)
+          .then(
+              response => {      
+                productList.value = response.data
+                // console.log(response.data)
+                productList.value.forEach(item=>{
+                  item.image = JSON.parse(item.image);
+                  threeList.value.push(item)
+                })
+              }      
+          )   
+        
     })
     function goToProduct(event){
           const id = event.currentTarget.id

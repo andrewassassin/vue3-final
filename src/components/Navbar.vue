@@ -67,26 +67,17 @@ export default {
       isClickCart.value = false
     }
     function innerSearch(){
-  
        let id = searchBar.value
-
         if(id&& route.path!==`/search/${id}` &&route.name!=='search'){
           router.push({
             path: `/search/${id}`,
             component: Search,
           })  
         }else if(id&&route.name=='search'){
-            
             router.push({
             path: `/search/${id}`,
             component: Search,
-            props: route => ({
-              id: route.params.id // maps route param "id" to prop "profileId"
-            })
           })  
-          console.log('routeId nav',route.params.id)
-          console.log('router nav',router.currentRoute.value.params)
-          reload()
         }
     }
       return {

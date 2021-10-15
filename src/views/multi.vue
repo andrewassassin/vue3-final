@@ -90,25 +90,28 @@ export default {
                     }           
                 })
             })
-            const needToDel = this.productList[0].cate.filter(value=>{
-                    return event.value.map(ele=>ele.cate).indexOf(value)===-1
-                })
-            // const needToDel =  this.productList.map(item=>item.cate.filter(cate=>event.value.map(ele=>ele.cate).indexOf(cate)===-1))
-            console.log('needToDel',needToDel)
-            needToDel.forEach(item=>{
-                    console.log('item type',typeof item)
-                    const index =  this.productList[0].cate.indexOf(item)           
-                    console.log('index',index)
-                    this.productList.forEach(item=>item.cate.splice(index,1))
-                })
+            if(this.productList.length!==0){
+                const needToDel = this.productList[0].cate.filter(value=>{
+                        return event.value.map(ele=>ele.cate).indexOf(value)===-1
+                    })
+
+                // const needToDel =  this.productList.map(item=>item.cate.filter(cate=>event.value.map(ele=>ele.cate).indexOf(cate)===-1))
+                console.log('needToDel',needToDel)
+                needToDel.forEach(item=>{
+                        console.log('item type',typeof item)
+                        const index =  this.productList[0].cate.indexOf(item)           
+                        console.log('index',index)
+                        this.productList.forEach(item=>item.cate.splice(index,1))
+                    })
+            }
             console.log('productList綜合',this.productList)
         },
         goSearch(){
-                  const config = {
-                            headers: {
+                const config = {
+                    headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
                     }
-                  }
+                }
                 axios.post(`https://x-home.pcpogo.com/homex/multi.php?RDEBUG=andrewc`,this.productList,config)
                     .then(response => {           
                             response.data.forEach(product=>{
