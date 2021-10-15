@@ -1,10 +1,16 @@
 <template>
     <div id="multi">
         <div class="mb-5">
-            <h4>選擇品牌</h4>
-            <button @click="goSearch()" class="mr-5">搜尋</button>
-            <MultiSelect v-model="selectedBrand" :options="brands" @change="changeBrand($event)" optionLabel="name" placeholder="Select Brand" display="chip" />
-            <MultiSelect v-model="selectCate" :options="category" @change="changeCate($event)" optionLabel="cate" placeholder="Select category" display="chip" />
+            
+            <div>
+                <h6>喇叭品牌</h6>
+                <MultiSelect v-model="selectedBrand" :options="brands" @change="changeBrand($event)" optionLabel="name" placeholder="Select Brand" display="chip" />
+            </div>
+            <div class="mt-5">
+                <h6>喇叭類別</h6>
+                <MultiSelect v-model="selectCate" :options="category" @change="changeCate($event)" optionLabel="cate" placeholder="Select category" display="chip" />
+            </div>
+            <button @click="goSearch()" class="mt-5 btn btn-info">搜尋</button>
         </div>
         <section class="py-3 ">
             <div class="container mt-5">
@@ -54,10 +60,10 @@ export default {
                 {name: 'Klipsch', code: '41', cate:[]}
             ],
             category:[
-                {cate: '落地喇叭', code: '10'},
-                {cate: '藍芽喇叭', code: '50'},
-                {cate: '墊材', code: '60'},
-                {cate: '書架喇叭', code: '80'}
+                {name: '',cate: '落地喇叭', code: '10'},
+                {name: '',cate: '藍芽喇叭', code: '50'},
+                {name: '',cate: '墊材', code: '60'},
+                {name: '',cate: '書架喇叭', code: '80'}
             ],
             productList:[],
             searchBack:[],
@@ -65,12 +71,13 @@ export default {
     },
     methods: {
         changeBrand(event) {
-            event.value.forEach(item=>{
-                // 非重複品項才會新增到productList
-                if(this.productList.indexOf(item)==-1){
-                    this.productList.push(item)
-                }
-            })
+         
+                event.value.forEach(item=>{
+                    // 非重複品項才會新增到productList
+                    if(this.productList.indexOf(item)==-1){
+                        this.productList.push(item)
+                    }
+                })
             // needToDel = productList比event.value多出來的品項
              const needToDel = this.productList.filter(value =>{
                         return  event.value.indexOf(value) === -1
@@ -83,14 +90,27 @@ export default {
                     })
         },
         changeCate(event){
-            event.value.forEach(eleVal=>{
-                this.productList.forEach((item)=>{
-                    if(item.cate.indexOf(eleVal.cate)==-1){
-                        item.cate.push(eleVal.cate)
-                    }           
-                })
-            })
+            // console.log('productlist length',this.productList.length)
             if(this.productList.length!==0){
+                console.log('productlist length 1',this.productList.length)
+                event.value.forEach(eleVal=>{
+                    this.productList.forEach((item)=>{
+                        if(item.cate.indexOf(eleVal.cate)==-1){
+                            item.cate.push(eleVal.cate)
+                        }           
+                    })
+                })
+            }else{
+                console.log('productlist length 2',this.productList.length)
+                event.value.forEach(item=>{
+                    // 非重複品項才會新增到productList
+                    if(this.productList.indexOf(item)==-1){
+                        this.productList.push(item)
+                    }
+                })
+            }
+            console.log('productlist',this.productList)
+          
                 const needToDel = this.productList[0].cate.filter(value=>{
                         return event.value.map(ele=>ele.cate).indexOf(value)===-1
                     })
@@ -103,7 +123,7 @@ export default {
                         console.log('index',index)
                         this.productList.forEach(item=>item.cate.splice(index,1))
                     })
-            }
+            
             console.log('productList綜合',this.productList)
         },
         goSearch(){
