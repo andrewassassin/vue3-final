@@ -1,7 +1,6 @@
 <template>
     <div id="multi">
-        <div class="mb-5">
-            
+        <div class="mb-5">        
             <div>
                 <h6>喇叭品牌</h6>
                 <MultiSelect v-model="selectedBrand" :options="brands" @change="changeBrand($event)" optionLabel="name" placeholder="Select Brand" display="chip" />
