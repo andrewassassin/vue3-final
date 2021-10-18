@@ -3,11 +3,11 @@
         <div class="mb-5">        
             <div>
                 <h6>喇叭品牌</h6>
-                <MultiSelect v-model="selectedBrand" :options="brands" @change="changeBrand($event)" optionLabel="name" placeholder="Select Brand" display="chip" />
+                <MultiSelect v-model="selectedBrand" :options="brands" optionLabel="name" placeholder="Select Brand" display="chip" />
             </div>
             <div class="mt-5">
                 <h6>喇叭類別</h6>
-                <MultiSelect v-model="selectCate" :options="category" @change="changeCate($event)" optionLabel="cate" placeholder="Select category" display="chip" />
+                <MultiSelect v-model="selectCate" :options="category" optionLabel="cate" placeholder="Select category" display="chip" />
             </div>
             <button @click="goSearch()" class="mt-5 btn btn-info">搜尋</button>
         </div>
@@ -53,96 +53,55 @@ export default {
             selectedBrand: null,
             selectCate:null,
             brands: [
-                {name: 'Edifier', code: '11', cate:[]},
-                {name: 'Kef', code: '22', cate:[]},
-                {name: 'Dali', code: '33', cate:[]},
-                {name: 'Klipsch', code: '41', cate:[]}
+                {name: 'Edifier', code: '11'},
+                {name: 'Kef', code: '22'},
+                {name: 'Dali', code: '33'},
+                {name: 'Klipsch', code: '41'}
             ],
             category:[
-                {name: '',cate: '落地喇叭', code: '10'},
-                {name: '',cate: '藍芽喇叭', code: '50'},
-                {name: '',cate: '墊材', code: '60'},
-                {name: '',cate: '書架喇叭', code: '80'}
+                {cate: '落地喇叭', code: '10'},
+                {cate: '藍芽喇叭', code: '50'},
+                {cate: '墊材', code: '60'},
+                {cate: '書架喇叭', code: '80'},
+                {cate: '腳架', code: '80'}
             ],
-            productList:[],
+            brandList:[],
+            cateList:[],
             searchBack:[],
         }
     },
     methods: {
-        changeBrand(event) {
-         
-                event.value.forEach(item=>{
-                    // 非重複品項才會新增到productList
-                    if(this.productList.indexOf(item)==-1){
-                        this.productList.push(item)
-                    }
-                })
-            // needToDel = productList比event.value多出來的品項
-             const needToDel = this.productList.filter(value =>{
-                        return  event.value.indexOf(value) === -1
-                    });
-                    console.log('needToDel',needToDel)
-                    // index = 找出productList比event.value多出來的品項"索引"
-                    needToDel.forEach(item=>{
-                        const index =  this.productList.map(el=>el.name).indexOf(item.name)
-                         this.productList.splice(index,1)
-                    })
-        },
-        changeCate(event){
-            // console.log('productlist length',this.productList.length)
-            if(this.productList.length!==0){
-                console.log('productlist length 1',this.productList.length)
-                event.value.forEach(eleVal=>{
-                    this.productList.forEach((item)=>{
-                        if(item.cate.indexOf(eleVal.cate)==-1){
-                            item.cate.push(eleVal.cate)
-                        }           
-                    })
-                })
-            }else{
-                console.log('productlist length 2',this.productList.length)
-                event.value.forEach(item=>{
-                    // 非重複品項才會新增到productList
-                    if(this.productList.indexOf(item)==-1){
-                        this.productList.push(item)
-                    }
-                })
-            }
-            console.log('productlist',this.productList)
-          
-                const needToDel = this.productList[0].cate.filter(value=>{
-                        return event.value.map(ele=>ele.cate).indexOf(value)===-1
-                    })
-
-                // const needToDel =  this.productList.map(item=>item.cate.filter(cate=>event.value.map(ele=>ele.cate).indexOf(cate)===-1))
-                console.log('needToDel',needToDel)
-                needToDel.forEach(item=>{
-                        console.log('item type',typeof item)
-                        const index =  this.productList[0].cate.indexOf(item)           
-                        console.log('index',index)
-                        this.productList.forEach(item=>item.cate.splice(index,1))
-                    })
-            
-            console.log('productList綜合',this.productList)
-        },
         goSearch(){
                 const config = {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
                     }
+                }    
+                const product={
+                    brand: this.brandList,
+                    cate: this.cateList
                 }
-                axios.post(`https://x-home.pcpogo.com/homex/multi.php?RDEBUG=andrewc`,this.productList,config)
-                    .then(response => {           
-                            response.data.forEach(product=>{
-                                product.image = JSON.parse(product.image)
-                                this.searchBack.push(product)
-                                console.log('this.searchBack',this.searchBack)
-                            })          
-                        })      
-         
-           
+                axios.post(`https://x-home.pcpogo.com/homex/multi.php?RDEBUG=andrewc`,product,config)
+                    .then(response => {      
+                            console.log('res',response.data)
+                            this.searchBack = response.data
+                            this.searchBack.forEach(item=>{
+                                item.image = JSON.parse(item.image);
+                            })
+                    })           
         }
-    }
+    },
+    watch:{
+       selectedBrand:function(newVal){
+            console.log('newVal: ',newVal)
+            this.brandList= newVal
+            console.log('brandList: ',this.brandList)
+       },
+       selectCate:function(newVal){
+           this.cateList= newVal
+           console.log('cateList: ',this.cateList)
+       }
+     }
 }
 </script>
 
