@@ -2,15 +2,27 @@
     <div>
       <nav class="navbar-expand-lg navbar-light fixed-top" id="navBar">
             <!-- 手機版切換導覽列顯示按鈕 -->
-            <h5>Horizontal</h5>
-          <MegaMenu v-if="showMega" :model="items" />
           <div class="nav-top ml-5">              
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                   <li class="nav-item mr-5">
                       <router-link class="text-body nav-link" to="/">首頁</router-link>
                   </li>
-                  <li class="nav-item active mr-5">
+                  <li class="nav-item mr-5">
                       <router-link class="text-body nav-link" to="/product">商品詳情</router-link>
+                  </li>
+                  <li class="nav-item dropdown mr-5">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      產品一覽
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <router-link class="dropdown-item" to="/product">全部商品</router-link>
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBrand" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          喇叭品牌
+                      </a>
+                      <div class="dropdown-menu brand-new" aria-labelledby="navbarDropdownBrand">
+                        <router-link class="dropdown-item" id="navbarDropdownBrand" to="/product">Dali</router-link>
+                      </div>  
+                    </div>
                   </li>
                   <li class="nav-item mr-5 ">
                       <router-link class="text-body nav-link" to="/create">建立商品</router-link>
@@ -37,10 +49,10 @@
             <transition >
                 <Modal v-if="isClickCart" @closeBtn="closeModal"  />
             </transition >
+            
     </div>
 </template>
 <script>
-import MegaMenu from 'primevue/megamenu';
 import { inject } from "vue";
 import Modal from '@/components/Modal'
 import Search from '@/views/Search'
@@ -53,87 +65,8 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const isClickCart = ref(false);
-    const showMega = ref(false);
     const searchBar = ref("");
-      const items = ref([
-            {
-                label: 'Videos', icon: 'pi pi-fw pi-video',
-                items: [
-                    [
-                        {
-                            label: 'Video 1',
-                            items: [{label: 'Video 1.1'}, {label: 'Video 1.2'}]
-                        },
-                        {
-                            label: 'Video 2',
-                            items: [{label: 'Video 2.1'}, {label: 'Video 2.2'}]
-                        }
-                    ],
-                    [
-                        {
-                            label: 'Video 3',
-                            items: [{label: 'Video 3.1'}, {label: 'Video 3.2'}]
-                        },
-                        {
-                            label: 'Video 4',
-                            items: [{label: 'Video 4.1'}, {label: 'Video 4.2'}]
-                        }
-                    ]
-                ]
-            },
-            {
-                label: 'Users', icon: 'pi pi-fw pi-users',
-                items: [
-                    [
-                        {
-                            label: 'User 1',
-                            items: [{label: 'User 1.1'}, {label: 'User 1.2'}]
-                        },
-                        {
-                            label: 'User 2',
-                            items: [{label: 'User 2.1'}, {label: 'User 2.2'}]
-                        },
-                    ],
-                    [
-                        {
-                            label: 'User 3',
-                            items: [{label: 'User 3.1'}, {label: 'User 3.2'}]
-                        },
-                        {
-                            label: 'User 4',
-                            items: [{label: 'User 4.1'}, {label: 'User 4.2'}]
-                        }
-                    ],
-                
-                ]
-            },
-            {
-                label: 'Events', icon: 'pi pi-fw pi-calendar',
-                items: [
-                    [
-                        {
-                            label: 'Event 1',
-                            items: [{label: 'Event 1.1'}, {label: 'Event 1.2'}]
-                        },
-                        {
-                            label: 'Event 2',
-                            items: [{label: 'Event 2.1'}, {label: 'Event 2.2'}]
-                        }
-                    ],
-                    [
-                        {
-                            label: 'Event 3',
-                            items: [{label: 'Event 3.1'}, {label: 'Event 3.2'}]
-                        },
-                        {
-                            label: 'Event 4',
-                            items: [{label: 'Event 4.1'}, {label: 'Event 4.2'}]
-                        }
-                    ]
-                ]
-            },
-        ]);
-
+   
     function openModal () {
       isClickCart.value = true
     }
@@ -154,6 +87,8 @@ export default {
           })  
         }
     }
+
+
       return {
         isClickCart,
         searchBar,
@@ -163,20 +98,17 @@ export default {
         reload, 
         router,
         route,
-        items,
-        showMega
       }
   },
   components: {
     Modal,
-    MegaMenu
   },
 
 }
 
 </script>
 
-<style >
+<style scoped>
 
 #modal{
   z-index: 500000000000;
@@ -192,7 +124,7 @@ export default {
 
 #navBar{
   box-shadow: 0px 5px 10px rgba(0, 0, 0, .2);
-  background:  rgba(170, 100, 9, 0.904);
+  background:  rgba(27, 176, 221, 0.904);
   z-index: 99;
   display: flex;
   align-items: center;
@@ -207,6 +139,16 @@ export default {
 
 .search-bar{
   float: right;
+}
+
+.product-list{
+  display: flex;
+  align-items: center;
+}
+
+.product-list p{
+  margin-bottom: 0;
+  color: black;
 }
 
 </style>

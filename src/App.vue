@@ -9,11 +9,13 @@
   </div>
 </template>
 <script>
+import counter from "./mixin/counter";
 import Navbar from '@/components/Navbar'
 import { provide,nextTick } from "vue";
 import { ref } from "vue";
 export default {
   name: 'App',
+  mixins: [counter],
    components: {
     Navbar
   },

@@ -5,6 +5,8 @@ import Item from '../views/Item'
 import Search from '../views/Search'
 import multi from '../views/multi'
 import Create from '../views/Create'
+import Login from '../views/Login'
+import Register from '../views/Register'
 const routes = [
   {
     path: '/',
@@ -38,6 +40,16 @@ const routes = [
     path: '/create',
     name: 'create',
     component: Create
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register
   },
 ]
 

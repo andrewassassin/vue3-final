@@ -36,7 +36,7 @@ export default {
         }
     }, 
     methods:{
-        loginForm (event) {
+        loginForm () {
             console.log('submit')
              const data = {
                 username: this.user.username,

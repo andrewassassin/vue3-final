@@ -4,7 +4,7 @@
           <div class="row align-items-center">
             <div class="slide">
               <div class="showImg">
-                <img width="400px" height="400px" :src="require(`../assets/img/001.jpg`)" alt="">
+                <img v-if="showImg" :src="require(`../assets/img/${itemObj[focusIndex]}`)" alt="">
               </div>
               <div class="slide-item">
                 <transition-group name="flip-list" tag="ul" class="slide-list">
@@ -50,7 +50,7 @@
 </template>
 <script>
 import axios from 'axios'
-// import ItemTab from '@/components/item_tab'
+import counter from "../mixin/counter";
 export default {
     data () {
         return {
@@ -58,16 +58,9 @@ export default {
             amount:'',
             key:'',
             spin: true,
-            clickWait: false,
-            timer: {},
-            slideData: [],
-            itemObj:[],
-            focusIndex:1,
         }
     },
-    components: {
-      // ItemTab
-    },
+    mixins: [counter],
     methods: {
       addItem() {
         const item = {
@@ -113,101 +106,13 @@ export default {
             console.log('err',error);
           });
       },
-      setTime() {
-        this.timer = setTimeout(() => {
-          this.clickWait = false;
-        }, 500);
-      },
-      stopTime() {
-        window.clearInterval(this.timer);
-      },
-    // 既然上面call slideCtrl帶1進去，為何這邊強制slidesToShow = 1
-      slideCtrl(slidesToShow=1) {
-        if (this.clickWait) {
-          return;
-        }
-        this.stopTime();
-        this.clickWait = true;
-
-        if (slidesToShow > 0) {
-            if(this.focusIndex>0 ){
-          this.focusIndex=this.focusIndex-1
-            }else if(this.focusIndex==0){
-              this.focusIndex += 2
-            }
-            // 移除最後一個
-            const shiftItem = this.slideData.pop();
-            this.slideData.unshift(shiftItem);
-            this.setTime();
-            return;
-        }
-        console.log('123456789')
-        if (slidesToShow < 0) {
-          if(this.focusIndex<2){
-            this.focusIndex++
-          }else if(this.focusIndex == 2){
-            this.focusIndex = this.focusIndex-2
-            console.log('this.focusIndex 內',this.focusIndex)
-          }
-
-          const shiftItem = this.slideData.shift();
-          // 把移除的加到最後面
-          this.slideData.push(shiftItem);
-          // 註解掉的話只能點一次
-          this.setTime();
-          // return;
-        }
-      },
-      clickImg(event,index) {
-        // 直接靠map回傳的title屬性轉成陣列，做indexOf找出點選圖片的ref
-        const ref = this.itemObj.map(item => item).indexOf(event.currentTarget.name)
-        // 9/2=4.5   取四捨五入為5，但陣列從0開始，故-1
-        const middleImg =  Math.round(this.slideData.length/2)-1
-        // 如果我點的圖片在我的(中間為4)右邊
-          if(index>middleImg){
-            const needToSlice = index-middleImg
-                  this.focusIndex = ref 
-                  const shiftItem = this.slideData.splice(0,needToSlice);
-                  this.slideData = this.slideData.concat(shiftItem);
-                  this.setTime();
-        // 如果我點的圖片在我的左邊
-            }else{
-                  const needToSlice = -(middleImg-index)
-                  this.focusIndex = ref 
-                  const shiftItem = this.slideData.splice(needToSlice);
-                  this.slideData =[...shiftItem,...this.slideData]
-                  this.setTime();
-            }
-      }
     }, 
-    async mounted() {
-        await axios.get("https://x-home.pcpogo.com/homex/product.php?RDEBUG=andrewc")
-          .then(response => {
-              const item = response.data.find(item=>{
-                return item.id == this.id
-              })
-              this.itemObj  = JSON.parse(item.image)   
-              this.product = item
-              this.spin = false
-          })
-          .catch(error => {
-            console.log('err',error);
-          });
-          for (let i = 0; i < this.itemObj.length * 5; i++) {
-            let obj = {};
-            obj.id = i;
-            // length除以i的餘數， 如果length=25，代表ref到24之後會重輪一次
-            obj.ref = i % this.itemObj.length;
-            this.slideData.push(obj);
-          }
-          
-    },
-    created (){               
-                // 一開啟網頁就更新itemList內容
-            const itemListStr = localStorage.getItem(this.key);
+    async created() {
+        const itemListStr = localStorage.getItem(this.key);
             const defaultList = JSON.parse(itemListStr);
             this.$store.state.itemList = defaultList || []; 
     },
+
   props: {
     id: {
       type: String,
@@ -327,4 +232,8 @@ a {
   z-index: 5;
 }
 
+.showImg img{
+  width:400px;
+ height:400px;
+}
 </style>

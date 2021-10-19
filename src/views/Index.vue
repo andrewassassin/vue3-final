@@ -23,11 +23,6 @@
 import axios from 'axios'
 import { ref, onMounted } from "vue";
 export default {
-  data(){
-    return{
-
-    }
-  },
   setup(){
     const slideData = ref([]);
     const shiftItem = ref([]);

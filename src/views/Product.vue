@@ -3,11 +3,12 @@
       <section class="py-3">
       <div class="container">
         <h2 class="text-center mb-2">產品列表</h2>
+         <SelectButton v-model="orderSort" :options="options" @click="orderFocus($event)" class="mt-5 mb-3" />
           <div class="row">
             <div class="col-md-4 person" v-for="(product,index) in threeList" :key="index">
               <div class="card my-5 mx-2">
                 <div class="slide-img">
-                  <img :src="require(`../assets/img/${product.image[1]}`)" class="card-img-top">       
+                  <img  class="card-img-top">       
                     <div class="overlay">
                       <a :id="`${product.id}`" @click="goToProduct($event)" class="buy-btn">Buy Now</a>	
                     </div>
@@ -35,18 +36,24 @@
 </template>
 
 <script>
+import product from "../mixin/product";
+import SelectButton from 'primevue/selectbutton';
 import axios from 'axios'
 import Item from '@/views/Item'
 export default {
   name: 'Product',
   data () {
     return {
+      orderSort: '',
       productList:[],
-      threeList: []
+      threeList: [],
+      options: ['價格由低至高', '最新上架','熱門排行'],
+      sortKey:''
     }
   },
+  mixins:[product],
   components: {
-
+    SelectButton
   },
   beforeMount() {
     // 在頁面開啟前發出請求
@@ -77,12 +84,12 @@ export default {
         })    
     },
     scroll() {
+     
         let isLoading = false
         var count = 0
+
         var that = this
         window.onscroll = async function() {
-          console.log(1)
-
           // 距離底部200px加載一次
           let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 200
           // let height = document.documentElement.offsetHeight - document.documentElement.scrollTop
@@ -93,7 +100,6 @@ export default {
             await axios.post(`https://x-home.pcpogo.com/homex/product.php?RDEBUG=andrewc`, count)
                 .then(
                   response => {
-                    console.log(2)
                     that.productList = response.data
                     that.productList.splice(0,6).forEach(item=>{
                       item.image = JSON.parse(item.image);
@@ -101,7 +107,6 @@ export default {
                     })            
                   }      
                 )        
-              console.log(3)
               isLoading = false
           }         
        }
@@ -109,7 +114,33 @@ export default {
       topFunction() {
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      },
+      orderFocus(event){
+        if(this.orderSort==event.target.ariaLabel){
+          console.log('可以切換')
+        }
+        console.log('event.target.value',event.target.ariaLabel)
+        console.log('sortKey: ',this.sortKey)
+   
       } 
+  },
+  watch:{
+      orderSort:function(newVal){
+          this.threeList=[]
+          this.sortKey  = newVal
+           console.log('sortKey: ',this.sortKey)
+          console.log('newVal: ',newVal)
+          const count = "0"
+          axios.post(`https://x-home.pcpogo.com/homex/sortBy.php?RDEBUG=andrewc`,count)
+                  .then(response => {      
+                        this.productList = response.data
+                        console.log(response.data)
+                        this.productList.splice(0,6).forEach(item=>{
+                          item.image = JSON.parse(item.image);
+                          this.threeList.push(item)
+                        })
+                  })    
+      },
     }
 }
 
