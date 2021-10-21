@@ -1,6 +1,10 @@
 
 <template >
-  <section id="introSection" >
+  <section id="introSection" class="row" >
+    <div class="col-md-12">
+      <img src="../assets/img/carousel-3.jpg" class="col-md-12 mb-5" alt="">
+      <button class="mt-5 btn btn-info">往下</button>
+    </div>
     <div class="slide">
       <div class="slide-item">
         <transition-group :name="transitionSwiper" tag="ul" class="slide-list">

@@ -40,7 +40,7 @@ export default {
     position: fixed;
     margin-top: 75px;
     left: 450px;
-    z-index: 50;
+    z-index: 1;
     width: 560px;
     height: 400px;
     border-radius: 10px;

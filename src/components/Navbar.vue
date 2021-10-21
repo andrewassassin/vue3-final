@@ -8,7 +8,9 @@
                       <router-link class="nav-link" to="/">首頁</router-link>
                   </li>
                   <li class="nav-item mr-5">
-                      <router-link @mouseover="mouseOver"  class="nav-link" to="/product">商品詳情</router-link>
+                      <router-link @mouseenter="mouseOver" class="nav-link" to="/product">
+                          商品詳情
+                      </router-link>
                   </li>
                   <li class="nav-item mr-5 ">
                       <router-link class="nav-link" to="/create">建立商品</router-link>
@@ -39,7 +41,7 @@
                 <Modal v-if="isClickCart" @closeBtn="closeModal"  />
             </transition >
             <transition >
-                <itembar v-show="isHoverItem" @mouseleave="mouseOut" />
+                <itembar @mouseleave="mouseOut" v-show="isHoverItem"  />
             </transition >
             
     </div>
@@ -103,6 +105,12 @@ export default {
       isActive.value =false
     }
 
+    function hide(){
+      console.log('hide')
+    }
+
+
+
       return {
         isClickCart,
         searchBar,
@@ -118,7 +126,8 @@ export default {
         mouseOver,
         mouseOut,
         showInput,
-        blurFocus
+        blurFocus,
+        hide
       }
   },
   components: {
