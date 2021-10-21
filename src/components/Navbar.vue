@@ -1,53 +1,45 @@
 <template>
     <div>
       <nav class="navbar-expand-lg navbar-light fixed-top" id="navBar">
-            <!-- 手機版切換導覽列顯示按鈕 -->
-          <div class="nav-top ml-5">              
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <img class="logo" src="../assets/img/logo.png" alt="">
+          <div v-bind:class="{ active: isActive }" class="nav-top">              
+                <ul class=" mr-auto mt-2 mt-lg-0 nav-ul">
                   <li class="nav-item mr-5">
-                      <router-link class="text-body nav-link" to="/">首頁</router-link>
+                      <router-link class="nav-link" to="/">首頁</router-link>
                   </li>
                   <li class="nav-item mr-5">
-                      <router-link class="text-body nav-link" to="/product">商品詳情</router-link>
-                  </li>
-                  <li class="nav-item dropdown mr-5">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      產品一覽
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                      <router-link class="dropdown-item" to="/product">全部商品</router-link>
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBrand" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          喇叭品牌
-                      </a>
-                      <div class="dropdown-menu brand-new" aria-labelledby="navbarDropdownBrand">
-                        <router-link class="dropdown-item" id="navbarDropdownBrand" to="/product">Dali</router-link>
-                      </div>  
-                    </div>
+                      <router-link @mouseover="mouseOver"  class="nav-link" to="/product">商品詳情</router-link>
                   </li>
                   <li class="nav-item mr-5 ">
-                      <router-link class="text-body nav-link" to="/create">建立商品</router-link>
+                      <router-link class="nav-link" to="/create">建立商品</router-link>
                   </li>
                   <li class="nav-item mr-5">
-                      <router-link class="text-body nav-link" to="/register">註冊</router-link>
+                      <router-link class="nav-link" to="/register">註冊</router-link>
                   </li>
                   <li class="nav-item mr-5">
-                      <router-link class="text-body nav-link" to="/login">登入</router-link>
+                      <router-link class="nav-link" to="/login">登入</router-link>
                   </li>
                     <li class="nav-item mr-5">
-                      <router-link class="text-body nav-link" to="/multi">多選</router-link>
+                      <router-link class="nav-link" to="/multi">多選</router-link>
                   </li>              
                 </ul>
           </div>
+          <button @click="toggleBar()" class="nav-toggler">
+            <div v-bind:class="{ rotate: isActive }" class="line"></div>
+          </button>
           <form @submit.prevent="innerSearch($event)" class="form-inline mr-5 search-bar">
-                <input v-model="searchBar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
+                <input v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search">
+                <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="submit"></i>
           </form>
-          <button v-on:click.prevent="openModal()" class="btn btn-primary mr-5"  type="click">
-            <i class="fas fa-shopping-cart"></i> 購物車
+          <button v-on:click.prevent="openModal()" class="btn btn-info mr-5" id="cart-btn" type="click">
+            <i class="pi pi-shopping-cart bigM" style="fontSize: 1rem"></i> 購物車
           </button>
       </nav>
             <transition >
                 <Modal v-if="isClickCart" @closeBtn="closeModal"  />
+            </transition >
+            <transition >
+                <itembar v-show="isHoverItem" @mouseleave="mouseOut" />
             </transition >
             
     </div>
@@ -55,6 +47,7 @@
 <script>
 import { inject } from "vue";
 import Modal from '@/components/Modal'
+import itembar from '@/components/itembar'
 import Search from '@/views/Search'
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -66,6 +59,8 @@ export default {
     const route = useRoute();
     const isClickCart = ref(false);
     const searchBar = ref("");
+    const isActive = ref(false);
+    const isHoverItem = ref(false);
    
     function openModal () {
       isClickCart.value = true
@@ -88,6 +83,25 @@ export default {
         }
     }
 
+    function toggleBar(){
+      isActive.value = !isActive.value;
+    }
+
+    function mouseOver(){
+            isHoverItem.value =true ;   
+        }
+
+    function mouseOut(){
+      isHoverItem.value = false  
+    }    
+
+    function showInput(){
+      isActive.value =true
+    }
+
+    function blurFocus(){
+      isActive.value =false
+    }
 
       return {
         isClickCart,
@@ -98,10 +112,18 @@ export default {
         reload, 
         router,
         route,
+        isActive,
+        toggleBar,
+        isHoverItem,
+        mouseOver,
+        mouseOut,
+        showInput,
+        blurFocus
       }
   },
   components: {
     Modal,
+    itembar
   },
 
 }
@@ -109,6 +131,10 @@ export default {
 </script>
 
 <style scoped>
+.logo{
+  width: 8%;
+  margin-left: 50px;
+}
 
 #modal{
   z-index: 500000000000;
@@ -124,21 +150,56 @@ export default {
 
 #navBar{
   box-shadow: 0px 5px 10px rgba(0, 0, 0, .2);
-  background:  rgba(27, 176, 221, 0.904);
+  background:  rgba(255, 255, 255, 0.904);
   z-index: 99;
   display: flex;
   align-items: center;
-  height: 56px;
-  justify-content: space-between;
+  height:75px;
+  /* justify-content: space-between; */
   
 }
 
-.nav-top{
+.nav-top {
+  position: fixed;
+  left: 20%;
+  }
+
+.nav-ul {
   display: flex;
+  align-items: center;
+  list-style-type:none;
+  margin-bottom: 0;
+}
+
+
+.nav-ul a{
+  color: rgb(82, 82, 82);
+}
+
+.nav-toggler {
+    display: none;
 }
 
 .search-bar{
-  float: right;
+  position: fixed;
+  right: 280px;
+}
+
+.s-input{
+  width: 0px;
+  height: 38px;
+  opacity: 0;
+  border-radius: 5px;
+  transition: .3s ease-in;
+}
+
+.s-input.extend {
+  width: 180px;
+  opacity: 1;
+}
+
+input:focus{
+  outline:none
 }
 
 .product-list{
@@ -149,6 +210,109 @@ export default {
 .product-list p{
   margin-bottom: 0;
   color: black;
+}
+
+#cart-btn{
+  position: fixed;
+  right: 1%;
+}
+
+@media (max-width: 600px) {
+    .logo{
+      position: fixed;
+      left: 50px;
+      width: 120px;
+    }
+
+    .nav-top {
+        position: fixed;
+        top: -300px;
+        left: 0;
+        width: 100%;
+        /* viewport height 100% */
+        height: 200px;
+        background: rgba(255, 255, 255, 0.904);
+        transition: all .5s ease-out;
+    }
+
+    .nav-ul{
+        flex-wrap: wrap;
+    }
+
+   .nav-ul li{
+        width: 100px;
+    }
+    .nav-top.active {
+        top: 18px;
+    }
+
+    .search-bar{
+        left: -340px;
+    }
+
+    #cart-btn{
+        position: fixed;
+        left: 75%;
+        width: 100px;
+        margin-right: 0;
+    }
+
+    .nav-toggler{
+        position: fixed;
+        left: 10px;
+        border: none;
+        display: block;
+        width: 60px;
+        height: 60px;
+        background: transparent;
+        z-index: 500;
+    }
+
+       .line {
+        width: 30px;
+        height:2px;
+        background: rgb(0, 0, 0);
+        position: relative;
+        /* transform: rotateZ(45deg); */
+    }
+
+    .line.rotate {
+        transform: rotateZ(45deg);
+    }
+
+    .line.rotate:before {
+        top: 0;
+    }
+
+    .line.rotate:after {
+        transform: rotateZ(270deg);
+        bottom: 0px;
+    }
+
+    .line,
+    .line:before,
+    .line:after {
+        transition: all .3s ease-out;
+    }
+
+    .line:before,
+    .line:after {
+        content: "";
+        width: 30px;
+        height: 2px;
+        background: rgb(0, 0, 0);
+        display: block;
+        position: absolute;
+        /* top: -5px; */
+    }
+
+    .line:before {
+        top: -8px;
+    }
+
+    .line:after {
+        bottom: -8px;
+    }
 }
 
 </style>

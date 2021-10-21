@@ -7,7 +7,7 @@
             </div>
             <div class="mt-5">
                 <h6>喇叭類別</h6>
-                <MultiSelect v-model="selectCate" :options="category" optionLabel="cate" placeholder="Select category" display="chip" />
+                <MultiSelect v-model="selectCate" :options="category" optionLabel="category" placeholder="Select category" display="chip" />
             </div>
             <button @click="goSearch()" class="mt-5 btn btn-info">搜尋</button>
         </div>
@@ -59,11 +59,11 @@ export default {
                 {name: 'Klipsch', code: '41'}
             ],
             category:[
-                {cate: '落地喇叭', code: '10'},
-                {cate: '藍芽喇叭', code: '50'},
-                {cate: '墊材', code: '60'},
-                {cate: '書架喇叭', code: '80'},
-                {cate: '腳架', code: '80'}
+                {category: '落地喇叭', code: '10'},
+                {category: '藍芽喇叭', code: '50'},
+                {category: '墊材', code: '60'},
+                {category: '書架喇叭', code: '80'},
+                {category: '腳架', code: '80'}
             ],
             brandList:[],
             cateList:[],
@@ -78,8 +78,8 @@ export default {
                     }
                 }    
                 const product={
-                    brand: this.brandList,
-                    cate: this.cateList
+                    name: this.brandList,
+                    category: this.cateList
                 }
                 axios.post(`https://x-home.pcpogo.com/homex/multi.php?RDEBUG=andrewc`,product,config)
                     .then(response => {      

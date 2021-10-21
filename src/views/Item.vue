@@ -111,6 +111,31 @@ export default {
         const itemListStr = localStorage.getItem(this.key);
             const defaultList = JSON.parse(itemListStr);
             this.$store.state.itemList = defaultList || []; 
+            await axios.get("https://x-home.pcpogo.com/homex/product.php?RDEBUG=andrewc")
+        .then(response => {
+            const item = response.data.find(item=>{
+              return item.id == this.id
+            })
+            if(item){
+                this.itemObj  = JSON.parse(item.image)   
+                this.product = item
+                console.log('item',item)
+            }
+            this.spin = false
+        })
+        .catch(error => {
+          console.log('err',error);
+        });
+        if(this.itemObj.length!==0){
+          this.showImg = true
+        }
+        for (let i = 0; i < this.itemObj.length * 5; i++) {
+          let obj = {};
+          obj.id = i;
+          // length除以i的餘數， 如果length=25，代表ref到24之後會重輪一次
+          obj.ref = i % this.itemObj.length;
+          this.slideData.push(obj);
+        }
     },
 
   props: {

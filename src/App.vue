@@ -63,6 +63,6 @@ export default {
 }
 
 .content{
-  padding-top:56px ;
+  padding-top:75px ;
 }
 </style>

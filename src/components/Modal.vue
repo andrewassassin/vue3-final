@@ -60,10 +60,10 @@
               <button id="clearCartBtn" @click.prevent="delSelected($event)" type="button" class="btn btn-warning">
                   <i class="fas fa-trash-alt"></i> 刪除所選品項
               </button>
-              <button id="clearCartBtn" @click.prevent="clearBtn($event)" type="button" class="btn btn-danger">
+              <button id="clearCartBtn" @click.prevent="clearBtn($event)" type="button" class="btn btn-danger ml-3">
                   <i class="fas fa-trash-alt"></i> 清空購物車
               </button>
-              <button type="button" @click.prevent="closeBtn()" class="btn btn-secondary" >
+              <button type="button" @click.prevent="closeBtn()" class="btn btn-secondary ml-3" >
                   <i class="fas fa-times"></i> 關閉
               </button>
           </div>
@@ -174,7 +174,19 @@ export default {
 }
 
 .close {
-  font-size: 35px;
+  font-size: 40px;
+}
+
+@media (max-width: 600px) {
+  .DivDialog{
+    position:fixed;
+    width:500px;
+    height:600px;
+    margin:0;
+    padding:20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+  }
 }
 
 </style>

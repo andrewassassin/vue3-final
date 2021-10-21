@@ -1,8 +1,6 @@
 <template>
-  <div class="create">
-    <img class="img-animation" src="../../static/img/001.jpg" v-if="showImg" alt="">
-    <button @click="showImgplz()">show img</button>
-    <h1>新增商品</h1>
+  <div class="create mt-5">
+    <h3>新增商品</h3>
     <section class="py-3">
       <div class="container">
           <div class="row">
@@ -98,25 +96,12 @@ export default {
         console.log('value',this.image)
         reader.readAsDataURL(input.files[0]);
       }
-    },
-    showImgplz(){
-      this.showImg = true
-    },
+    }
   }
 }
 </script>
 <style scoped>
-.img-animation{
-  animation:fade 0.5s;
-}
-@keyframes fade {
-  0%{
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
-}
+
 
 </style>
 

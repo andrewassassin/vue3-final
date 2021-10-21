@@ -1,6 +1,6 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div class="hello mt-5">
+    <h3>{{ msg }}</h3>
     <section class="py-3">
         <div class="container">
             <div class="row">

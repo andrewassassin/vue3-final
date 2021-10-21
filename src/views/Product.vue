@@ -1,9 +1,9 @@
 <template>
-    <header class="my-2">
+    <header class="mt-5">
       <section class="py-3">
       <div class="container">
-        <h2 class="text-center mb-2">產品列表</h2>
-         <SelectButton v-model="orderSort" :options="options" @click="orderFocus($event)" class="mt-5 mb-3" />
+        <h3 class="text-center mb-2">產品列表</h3>
+         <SelectButton v-model="orderSort" :options="options" class="mt-5 mb-3" />
           <div class="row">
             <div class="col-md-4 person" v-for="(product,index) in threeList" :key="index">
               <div class="card my-5 mx-2">
@@ -44,11 +44,14 @@ export default {
   name: 'Product',
   data () {
     return {
-      orderSort: '',
+      orderSort: '最新上架',
       productList:[],
       threeList: [],
       options: ['價格由低至高', '最新上架','熱門排行'],
-      sortKey:''
+      sortKey:{
+        name:""
+      },
+      api:"product"
     }
   },
   mixins:[product],
@@ -56,19 +59,21 @@ export default {
     SelectButton
   },
   beforeMount() {
+    console.log('beforemounted')
     // 在頁面開啟前發出請求
     this.getInitialUsers()
   },
   mounted(){
+    console.log('mounted')
     this.scroll()    
   },
   methods:{
     getInitialUsers() {  
       const count = "0"
-      axios.post(`https://x-home.pcpogo.com/homex/product.php?RDEBUG=andrewc`,count)
+      axios.post(`https://x-home.pcpogo.com/homex/${this.api}.php?RDEBUG=andrewc`,count)
         .then(response => {      
               this.productList = response.data
-              console.log(response.data)
+              // console.log(response.data)
               this.productList.splice(0,6).forEach(item=>{
                 item.image = JSON.parse(item.image);
                 this.threeList.push(item)
@@ -87,26 +92,25 @@ export default {
      
         let isLoading = false
         var count = 0
-
         var that = this
         window.onscroll = async function() {
+          console.log('api',that.api)
           // 距離底部200px加載一次
-          let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 200
+          let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 400
           // let height = document.documentElement.offsetHeight - document.documentElement.scrollTop
           // console.log('bottomOfWindow',height - window.innerHeight)
           if (bottomOfWindow && isLoading == false) {
               isLoading = true
               count += 6
-            await axios.post(`https://x-home.pcpogo.com/homex/product.php?RDEBUG=andrewc`, count)
-                .then(
-                  response => {
+            await axios.post(`https://x-home.pcpogo.com/homex/${that.api}.php?RDEBUG=andrewc`, count)
+                .then(response => {
+                  console.log('scroll res',response.data)
                     that.productList = response.data
                     that.productList.splice(0,6).forEach(item=>{
                       item.image = JSON.parse(item.image);
                       that.threeList.push(item)
                     })            
-                  }      
-                )        
+                })        
               isLoading = false
           }         
        }
@@ -114,32 +118,32 @@ export default {
       topFunction() {
         document.body.scrollTop = 0; // For Safari
         document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-      },
-      orderFocus(event){
-        if(this.orderSort==event.target.ariaLabel){
-          console.log('可以切換')
-        }
-        console.log('event.target.value',event.target.ariaLabel)
-        console.log('sortKey: ',this.sortKey)
-   
-      } 
+      }
   },
   watch:{
-      orderSort:function(newVal){
+      orderSort:async function(newVal){
           this.threeList=[]
-          this.sortKey  = newVal
+          this.sortKey.name  = newVal
            console.log('sortKey: ',this.sortKey)
           console.log('newVal: ',newVal)
+          this.sortKey.count = "0"
+          if(this.sortKey.name=="價格由低至高"){
+            this.api = 'sortByPrice'
+          }else if(this.sortKey.name=="最新上架"){
+            this.api = 'product'
+          }
+          console.log('api',this.api)
           const count = "0"
-          axios.post(`https://x-home.pcpogo.com/homex/sortBy.php?RDEBUG=andrewc`,count)
-                  .then(response => {      
-                        this.productList = response.data
-                        console.log(response.data)
-                        this.productList.splice(0,6).forEach(item=>{
-                          item.image = JSON.parse(item.image);
-                          this.threeList.push(item)
-                        })
-                  })    
+           await axios.post(`https://x-home.pcpogo.com/homex/${this.api}.php?RDEBUG=andrewc`,count)
+                    .then(response => {      
+                          this.productList = response.data
+                          console.log('watch res data',response.data)
+                          this.productList.splice(0,6).forEach(item=>{
+                            item.image = JSON.parse(item.image);
+                            this.threeList.push(item)
+                          })
+                        })    
+          
       },
     }
 }

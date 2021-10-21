@@ -1,19 +1,18 @@
 <template>
-    <header class="my-2">
+    <header class="my-5">
         <div class="multi">
-            <h5 class="mb-4 badge badge-secondary">條件篩選</h5>
+            <h5 class="mb-4 badge badge-secondary">進階搜尋</h5>
             <div>
                 <h6>喇叭品牌</h6>
                 <MultiSelect v-model="selectedBrand" :options="brands" optionLabel="name" placeholder="Select Brand" display="chip" />
             </div>
             <div class="mt-5">
                 <h6>喇叭類別</h6>
-                <MultiSelect v-model="selectCate" :options="category" optionLabel="cate" placeholder="Select category" display="chip" />
+                <MultiSelect v-model="selectCate" :options="category" optionLabel="category" placeholder="Select category" display="chip" />
             </div>
             <button @click="goSearch()" class="mt-5 btn btn-info">搜尋</button>
         </div>
         <section class="mt-2" id="section">
-          <h2 class="text-center mb-2">搜尋結果</h2>
           <h4 class="text-left">搜尋: {{itemName}}</h4>
             <div class="row">
               <div class="col-md-4 person" v-for="(product,index) in threeList" :key="index">
@@ -67,11 +66,11 @@ export default {
         {name: 'Klipsch', code: '41'}
     ]);
     const category = ref([
-        {cate: '落地喇叭', code: '10'},
-        {cate: '藍芽喇叭', code: '50'},
-        {cate: '墊材', code: '60'},
-        {cate: '書架喇叭', code: '80'},
-        {cate: '腳架', code: '80'}
+        {category: '落地喇叭', code: '10'},
+        {category: '藍芽喇叭', code: '50'},
+        {category: '墊材', code: '60'},
+        {category: '書架喇叭', code: '80'},
+        {category: '腳架', code: '80'}
     ]);
     const brandList = ref([]);
     const cateList = ref([]);
@@ -132,8 +131,8 @@ export default {
                     }
                 }    
                 const product={
-                    brand: brandList.value,
-                    cate: cateList.value
+                    name: brandList.value,
+                    category: cateList.value
                 }
                 axios.post(`https://x-home.pcpogo.com/homex/multi.php?RDEBUG=andrewc`,product,config)
                     .then(response => {      
