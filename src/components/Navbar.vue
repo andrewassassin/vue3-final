@@ -22,7 +22,7 @@
                       <router-link class="nav-link" to="/login">登入</router-link>
                   </li>
                     <li class="nav-item mr-5">
-                      <router-link class="nav-link" to="/multi">多選</router-link>
+                      <router-link class="nav-link" to="/userinfo">會員資料</router-link>
                   </li>              
                 </ul>
           </div>
@@ -30,11 +30,15 @@
             <div v-bind:class="{ rotate: isActive }" class="line"></div>
           </button>
           <form @submit.prevent="innerSearch($event)" class="form-inline mr-5 search-bar">
-                <input v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search">
+                <input v-model="searchBar"  @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search">
                 <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="submit"></i>
           </form>
-            <i class="pi pi-shopping-cart" @click.prevent="openModal()" style="fontSize: 1.6rem" type="button"></i>
-        
+          <i @mouseover="mouseCart" @mouseleave="mouseOut" v-bind:class="{ move: isHoverCart }" class="pi pi-shopping-cart" @click.prevent="openModal()" style="fontSize: 1.6rem" type="button"></i>   
+         
+              <i class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>
+
+     
+            
       </nav>
             <transition >
                 <Modal v-if="isClickCart" @closeBtn="closeModal"  />
@@ -62,13 +66,16 @@ export default {
     const searchBar = ref("");
     const isActive = ref(false);
     const isHoverItem = ref(false);
+    const isHoverCart = ref(false);
    
     function openModal () {
+      isHoverItem.value = true
       isClickCart.value = true
     }
     function closeModal(){
       isClickCart.value = false
     }
+    
     function innerSearch(){
        let id = searchBar.value
         if(id&& route.path!==`/search/${id}` &&route.name!=='search'){
@@ -90,22 +97,24 @@ export default {
 
     function mouseOver(){
             isHoverItem.value =true ;   
+            isHoverCart.value = true
         }
 
     function mouseOut(){
       isHoverItem.value = false  
+      isHoverCart.value = false  
     }    
 
     function showInput(){
       isActive.value =true
     }
-
+    
     function blurFocus(){
-      isActive.value =false
+      isActive.value =!isActive.value
     }
 
-    function hide(){
-      console.log('hide')
+    function mouseCart(){
+      isHoverCart.value =true;
     }
 
 
@@ -122,11 +131,12 @@ export default {
         isActive,
         toggleBar,
         isHoverItem,
+        isHoverCart,
         mouseOver,
         mouseOut,
         showInput,
         blurFocus,
-        hide
+        mouseCart
       }
   },
   components: {
@@ -165,6 +175,7 @@ export default {
   height:75px;
   padding: 30px;
   margin:0  ;
+  align-items: center;
   /* justify-content: space-between; */
   
 }
@@ -192,7 +203,7 @@ export default {
 
 .search-bar{
   position: fixed;
-  right: 15%;
+  right: 16%;
 }
 
 .s-input{
@@ -201,6 +212,7 @@ export default {
   opacity: 0;
   border-radius: 5px;
   transition: .3s ease-in;
+  border: 1px #b1b1b1 solid;
 }
 
 .s-input.extend {
@@ -209,28 +221,27 @@ export default {
 }
 
 input:focus{
-  outline:none
-}
-
-.product-list{
-  display: flex;
-  align-items: center;
-}
-
-.product-list p{
-  margin-bottom: 0;
-  color: black;
+  outline:none;
+  border:2px #000000 solid;
+  transition: .1s auto;
 }
 
 .pi-shopping-cart{
   position: fixed;
   right: 18%;
+  transition: .3s;
+}
+
+.pi-shopping-cart.move{
+  transform: scale(1.2);
 }
 
 .pi-user{
   position: fixed;
-  right: 16%;
+  right: 15%;
 }
+
+
 
 @media (max-width: 600px) {
     .logo{
@@ -267,10 +278,18 @@ input:focus{
 
     .pi-shopping-cart{
         position: fixed;
-        left: 75%;
+        left: 72%;
         width: 100px;
         margin-right: 0;
+        z-index: 50;
     }
+
+    .pi-user{
+        position: fixed;
+        width: 100px;
+        left: 83%;
+    }
+
 
     .nav-toggler{
         position: fixed;

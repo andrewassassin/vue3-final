@@ -16,8 +16,8 @@
         </transition-group>
       </div>
       <div class="slide-ctrl">
-        <div v-if="prevBtn" class="slide-prev" @click="slideCtrl(1)"><i class="fas fa-angle-double-left"></i></div>
-        <div v-if="nextBtn" class="slide-next" @click="slideCtrl(-1)"><i class="fas fa-angle-double-right"></i></div>
+        <i v-if="prevBtn" @click="slideCtrl(1)" class="slide-prev pi pi-angle-double-left" style="fontSize: 2rem" type="button"></i>
+        <i v-if="nextBtn" @click="slideCtrl(-1)" class="slide-next pi pi-angle-double-right" style="fontSize: 2rem" type="button"></i>
       </div>
     </div>
     <div>
@@ -155,22 +155,15 @@ ul {
 .slide-prev,
 .slide-next {
   position: relative;
-  /* user-select: none; */
   width: 25px;
   height: 25px;
   display: inline-block;
-  background-color: #000;
-  color: #fff;
   border-radius: 50%;
   cursor: pointer;
+  transition: .2s ease;
+  transform: scale(.8);
 }
 
-.slide-prev i,
-.slide-next i{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-}
 
 .slide-prev{
   position: relative;
@@ -187,7 +180,7 @@ ul {
 
 .slide-prev:hover,
 .slide-next:hover {
-  color: #ff0;
+  transform: scale(1);
 }
 /* slide */
 .slide-item{

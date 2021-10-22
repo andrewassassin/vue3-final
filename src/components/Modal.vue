@@ -14,7 +14,7 @@
               <table class="table table-border">
                   <thead>
                       <tr>
-                          <th>產品名稱</th>
+                          <th class="text-center">產品名稱</th>
                           <th class="text-right">單價</th>
                           <th class="text-right">數量</th>
                           <th class="text-right">總計</th>
@@ -27,8 +27,7 @@
                                 <input 
                                   type="checkbox" 
                                   :value="item.id" 
-                                  v-model="item.rd"    
-                                  @change="check($event)" 
+                                  v-model="inputTag"                       
                                   class="mr-2 mt-2"
                                 > 
                                 <button v-on:click.prevent="deleteBtn($event)" :id="`${idx}`" type="button" class="delete-btn btn btn-danger btn-sm mr-3">
@@ -41,17 +40,17 @@
                         </td>
                         <td class="text-right">$ {{item.price}}</td>
                         <td class="text-right">
-                          <button :id="`${idx}`" class="counter-btn" >-</button>
+                          <i class="pi pi-minus-circle" @click="minusItem($event)" :id="`${idx}`" style="fontSize: 1rem" type="button"></i> 
                             {{item.amount}}
-                          <button :id="`${idx}`" class="counter-btn" >+</button>
+                          <i class="pi pi-plus-circle" @click="plusItem($event)" :id="`${idx}`" style="fontSize: 1rem" type="button"></i>
                         </td>
                         <td class="text-right">$ {{item.price*item.amount}}</td>
                     </tr>
                   </tbody>
                   <tfoot id="cartTableFoot">
                     <tr>
-                    <th>總金額</th>
-                    <td colspan="3" class="text-right">$ {{getCartValue}}</td>
+                      <th colspan="3" class="text-right">總金額</th>
+                      <td  class="text-right">$ {{getCartValue}}</td>
                     </tr>
                   </tfoot>
               </table>
@@ -77,10 +76,22 @@ export default {
         return {
           key:'',
           checkBox:[],
-
+          inputTag:[]
         }
     },
     methods: {
+      minusItem(event){
+        const idx = event.currentTarget.id
+        if(this.itemList[idx].amount>0){
+          this.itemList[idx].amount -=1
+        }
+      },
+      plusItem(event){
+        const idx = event.currentTarget.id
+        if(this.itemList[idx].amount<10){
+          this.itemList[idx].amount +=1
+        }
+      },
       closeBtn () {
         this.$emit('closeBtn')
       },
@@ -97,25 +108,12 @@ export default {
         const itemListStr = JSON.stringify(this.itemList);
         localStorage.setItem(this.key, itemListStr);
       },
-      check(event){
-        if(event.target.checked){
-          console.log(event.currentTarget)
-          this.checkBox.push(event.currentTarget.value)
-          console.log('checkbox',this.checkBox)
-        }else{
-            const index = this.checkBox.indexOf(event.currentTarget.value)
-            if (index > -1) {
-              this.checkBox.splice(index, 1);
-            }
-        }
-        
-      },
       delSelected(){      
         this.checkBox.forEach(item =>{
           const index = this.itemList.map(el=>el.id).indexOf(item)
           this.itemList.splice(index,1)
         })  
-        this.checkBox=[] 
+        this.inputTag=[]
         // this.updateDataToStorage()
       }
     },
@@ -137,6 +135,13 @@ export default {
           }, 0)
         }
      },
+    watch:{
+      inputTag:function(newval){
+        console.log('newval',newval)
+        this.checkBox = newval 
+        console.log('checkBox',this.checkBox)
+      }
+    }
 
      
 }
@@ -174,7 +179,18 @@ export default {
 }
 
 .close {
-  font-size: 40px;
+  transform: scale(1.5);
+}
+
+.pi-plus-circle,
+.pi-minus-circle {
+  transition: .2s ease;
+}
+
+.pi-plus-circle:hover,
+.pi-minus-circle:hover {
+  background: rgb(17, 17, 17);
+  border-radius: 50%
 }
 
 @media (max-width: 600px) {

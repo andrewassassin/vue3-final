@@ -7,6 +7,7 @@ import multi from '../views/multi'
 import Create from '../views/Create'
 import Login from '../views/Login'
 import Register from '../views/Register'
+import UserInfo from '../views/UserInfo'
 const routes = [
   {
     path: '/',
@@ -50,6 +51,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register
+  },
+  {
+    path: '/userinfo',
+    name: 'userinfo',
+    component: UserInfo
   },
 ]
 

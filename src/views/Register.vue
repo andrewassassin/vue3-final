@@ -72,6 +72,9 @@ export default {
             this.isActive =! this.isActive 
             this.notActive =! this.notActive
         }
+    },
+    mounted(){
+        console.log('userId',this.$store.state.userId)
     }
 }
 </script>
