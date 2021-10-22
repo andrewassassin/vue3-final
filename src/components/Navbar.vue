@@ -33,9 +33,8 @@
                 <input v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search">
                 <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="submit"></i>
           </form>
-          <button v-on:click.prevent="openModal()" class="btn btn-info mr-5" id="cart-btn" type="click">
-            <i class="pi pi-shopping-cart bigM" style="fontSize: 1rem"></i> 購物車
-          </button>
+            <i class="pi pi-shopping-cart" @click.prevent="openModal()" style="fontSize: 1.6rem" type="button"></i>
+        
       </nav>
             <transition >
                 <Modal v-if="isClickCart" @closeBtn="closeModal"  />
@@ -164,6 +163,8 @@ export default {
   display: flex;
   align-items: center;
   height:75px;
+  padding: 30px;
+  margin:0  ;
   /* justify-content: space-between; */
   
 }
@@ -191,7 +192,7 @@ export default {
 
 .search-bar{
   position: fixed;
-  right: 280px;
+  right: 15%;
 }
 
 .s-input{
@@ -221,9 +222,14 @@ input:focus{
   color: black;
 }
 
-#cart-btn{
+.pi-shopping-cart{
   position: fixed;
-  right: 1%;
+  right: 18%;
+}
+
+.pi-user{
+  position: fixed;
+  right: 16%;
 }
 
 @media (max-width: 600px) {
@@ -259,7 +265,7 @@ input:focus{
         left: -340px;
     }
 
-    #cart-btn{
+    .pi-shopping-cart{
         position: fixed;
         left: 75%;
         width: 100px;

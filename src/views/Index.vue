@@ -1,11 +1,11 @@
 
 <template >
   <section id="introSection" class="row" >
-    <div class="col-md-12">
-      <img src="../assets/img/carousel-3.jpg" class="col-md-12 mb-5" alt="">
-      <button class="mt-5 btn btn-info">往下</button>
+    <div class="img-head">
+      <img src="../assets/img/carousel-3.jpg" class="col-md-12 mb-5 px-0" alt="">
+      <button @click="scroll()" class="mt-5 btn btn-info">往下</button>
     </div>
-    <div class="slide">
+    <div class="slide" id="slide">
       <div class="slide-item">
         <transition-group :name="transitionSwiper" tag="ul" class="slide-list">
           <li v-for="(item,index) in slideData" :key="item.id">                   
@@ -19,6 +19,12 @@
         <div v-if="prevBtn" class="slide-prev" @click="slideCtrl(1)"><i class="fas fa-angle-double-left"></i></div>
         <div v-if="nextBtn" class="slide-next" @click="slideCtrl(-1)"><i class="fas fa-angle-double-right"></i></div>
       </div>
+    </div>
+    <div>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br> debitis? Non ratione porro excepturi autem debitis distinctio rerum id, inventore, quisquam quibusdam itaque nam voluptas eos hic pariatur at. Veniam.</p>
+    </div>
+    <div>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br> debitis? Non ratione porro excepturi autem debitis distinctio rerum id, inventore, quisquam quibusdam itaque nam voluptas eos hic pariatur at. Veniam.</p>
     </div>
   </section>
 </template>
@@ -51,6 +57,15 @@ export default {
             console.log('err',error);
           });
     })
+
+    function scroll(){
+       document.getElementById('slide').scrollIntoView({
+  behavior: "smooth",
+  block: "center",
+  inline: "nearest",
+});
+    }
+
     function setTime(){
       timer.value = setTimeout(() => {
             clickWait.value = false;
@@ -108,7 +123,8 @@ export default {
       nextBtn,
       slideCtrl,
       stopTime,
-      setTime
+      setTime,
+      scroll
       }
   }
 
@@ -118,6 +134,12 @@ export default {
 </script>
 
 <style scoped>
+.img-head{
+  overflow: hidden;
+  width: 100%;
+}
+
+
 #introSection{
   display: flex;
   justify-content: center;

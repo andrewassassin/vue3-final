@@ -38,7 +38,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+*{
+    overflow-x:hidden;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -48,10 +51,6 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-   margin:0;
-}
 
 #nav a {
   font-weight: bold;
