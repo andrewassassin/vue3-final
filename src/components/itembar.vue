@@ -38,9 +38,9 @@ export default {
 .itemBar{
     background:rgb(3, 8, 53);
     position: fixed;
-    margin-top: 75px;
+    top: 75px;
     left: 450px;
-    z-index: 1;
+    z-index: 5;
     width: 560px;
     height: 400px;
     border-radius: 10px;

@@ -20,13 +20,13 @@
             </div>
             <div class="card-body">
               <form v-on:submit.prevent="addItem($event)" class="mt-3 card-body">
-                <h3 class="card-title">{{product.name}}</h3>
-                  <h2>
+                <h2 class="card-title">{{product.name}}</h2>
+                  <h4>
                     <span class="badge badge-info">
                       {{product.category}}
                     </span>
-                  </h2>
-                <h3 class="card-text">商品價格  $ {{product.price}} NTD</h3>
+                  </h4>
+                <h4 class="card-text mt-3">TWD ${{product.price}}</h4>
                 <div class="mt-5 form-group formGroup">
                     <label>購買數量</label>
                     <input v-model="amount" class="form-control input-box" type="number" min="1" max="20" required>
@@ -35,13 +35,11 @@
                     <button class="btn btn-primary"  type="submit">
                         加入購物車
                     </button>
-                </div> 
-              </form>   
-                <div class="mt-5 form-group">
-                  <button class="btn btn-primary" @click="deleteBtn()" type="click">
+                    <button class="ml-4 btn btn-outline-danger" @click="deleteBtn()" type="click">
                       刪除商品
                   </button>
-                </div>            
+                </div> 
+              </form>          
             </div>
           </div>
     </section>
@@ -161,7 +159,7 @@ a {
 /* slide ctrl */
 .slide{
   width: 800px;
-  margin-left:120px;
+  margin-left:200px;
 }
 
 .slide-prev,
@@ -196,10 +194,10 @@ a {
 }
 /* slide */
 .slide-item{
-  width:700px;
+  width:680px;
   height: 163px;
-  margin-top: 20px;
-  background-color: rgb(241, 240, 241);
+  margin: 20px 0 0 60px;
+  background-color: rgb(255, 255, 255);
   overflow: hidden;
 }
 
@@ -207,29 +205,26 @@ a {
   display: flex;
   margin: 10px 0px;
   padding: 5px 0px;
-  height: 100px;
-  /* overflow: hidden; */
+  height: 150px;
 }
 .slide-list li {
   position: relative;
   flex: 1 0 0;
-  left:calc(-100% /5.7 * 5);
+  left:calc(-100% /5.3 * 5);
   opacity: 0.3;
   margin: 15px;
 }
 
 .slide-list li:nth-child(8) {
-      opacity: 1;
-      transform: scale(1.3);
-      z-index: 2;
-    }
-
+  opacity: 1;
+  border: black 4px solid;
+  z-index: 5;
+}
 
 .slide-list li:nth-child(1),
 .slide-list li:nth-child(2),
 .slide-list li:nth-child(14),
-.slide-list li:nth-child(15)
-{
+.slide-list li:nth-child(15){
   z-index: 0;
   opacity: 0;
 } 
@@ -240,15 +235,14 @@ a {
 }
 
 .flip-list-move {
-  transition: transform 0.8s;
+  transition: 0.7s;
 }
 
 
 .input-box{
   width: 300px;
-   /* float: left; */
-   position: relative;
-   left: 36%;
+  position: relative;
+  left: 36%;
 }
 
 .spinner{

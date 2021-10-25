@@ -8,7 +8,7 @@
                       <router-link class="nav-link" to="/">首頁</router-link>
                   </li>
                   <li class="nav-item mr-5">
-                      <router-link @mouseenter="mouseOver" class="nav-link" to="/product">
+                      <router-link @mouseover="mouseOver" class="nav-link" to="/product">
                           商品詳情
                       </router-link>
                   </li>
@@ -30,23 +30,18 @@
             <div v-bind:class="{ rotate: isActive }" class="line"></div>
           </button>
           <form @submit.prevent="innerSearch($event)" class="form-inline mr-5 search-bar">
-                <input v-model="searchBar"  @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search">
+                <input v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" ref="myinput">
                 <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="submit"></i>
           </form>
-          <i @mouseover="mouseCart" @mouseleave="mouseOut" v-bind:class="{ move: isHoverCart }" class="pi pi-shopping-cart" @click.prevent="openModal()" style="fontSize: 1.6rem" type="button"></i>   
-         
-              <i class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>
-
-     
-            
+          <i @mouseover="mouseCart" @mouseleave="mouseOut" v-bind:class="{ move: isHoverCart }" class="pi pi-shopping-cart" @click.prevent="openModal()" style="fontSize: 1.6rem" type="button"></i>  
+              <i class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>     
       </nav>
             <transition >
                 <Modal v-if="isClickCart" @closeBtn="closeModal"  />
             </transition >
             <transition >
-                <itembar @mouseleave="mouseOut" v-show="isHoverItem"  />
+              <itembar @mouseleave="mouseOut" v-show="isHoverItem"/>
             </transition >
-            
     </div>
 </template>
 <script>
@@ -57,9 +52,11 @@ import Search from '@/views/Search'
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 export default {
+  
   name: 'Navbar',
   setup(){
     const reload = inject("reload");
+     const myinput = ref(null);
     const router = useRouter();
     const route = useRoute();
     const isClickCart = ref(false);
@@ -67,7 +64,6 @@ export default {
     const isActive = ref(false);
     const isHoverItem = ref(false);
     const isHoverCart = ref(false);
-   
     function openModal () {
       isHoverItem.value = true
       isClickCart.value = true
@@ -96,16 +92,17 @@ export default {
     }
 
     function mouseOver(){
-            isHoverItem.value =true ;   
+            isHoverItem.value = true
             isHoverCart.value = true
         }
 
     function mouseOut(){
-      isHoverItem.value = false  
+      isHoverItem.value=false
       isHoverCart.value = false  
     }    
 
     function showInput(){
+      myinput.value.focus()
       isActive.value =true
     }
     
@@ -118,8 +115,8 @@ export default {
     }
 
 
-
       return {
+        myinput,
         isClickCart,
         searchBar,
         openModal,
@@ -136,7 +133,7 @@ export default {
         mouseOut,
         showInput,
         blurFocus,
-        mouseCart
+        mouseCart,
       }
   },
   components: {
@@ -165,6 +162,15 @@ export default {
 .v-enter-from, .v-leave-to {
   opacity: 0;
 }
+
+.showup-enter-active,.showup-leave-active {
+  transition: opacity .4s;
+}
+
+.showup-enter-from, .showup-leave-to {
+  opacity: 0;
+} 
+
 
 #navBar{
   box-shadow: 0px 5px 10px rgba(0, 0, 0, .2);
@@ -240,7 +246,6 @@ input:focus{
   position: fixed;
   right: 15%;
 }
-
 
 
 @media (max-width: 600px) {
