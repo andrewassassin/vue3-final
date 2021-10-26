@@ -1,10 +1,9 @@
 <template>
-  <div>
+  <div id="userInfo">
     <h1>UserInfo</h1>
     <h3>user name:</h3>
-    <p>{{ userName }}</p>
     <h3>ID:</h3>
-    <p>{{ userId }}</p>
+    <p>{{ userid }}</p>
   </div>
 </template>
 <script>
@@ -12,8 +11,18 @@
     data () {
       return {
         userName: 'Steven Chou',
-        userId: 9527,
       }
     },
+    computed: {
+        userid() {
+        console.log('userid info ',this.$store.state.userId)  
+        return this.$store.state.userId;
+      },
+    }
   }
 </script>
+<style scoped>
+#userInfo{
+    margin-top: 75px;
+}
+</style>

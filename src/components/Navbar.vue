@@ -30,7 +30,7 @@
             <div v-bind:class="{ rotate: isActive }" class="line"></div>
           </button>
           <form @submit.prevent="innerSearch($event)" class="form-inline mr-5 search-bar">
-                <input v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus >
+                <input ref="myinput"   v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus >
                 <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="submit"></i>
           </form>
           <i @mouseover="mouseCart" @mouseleave="mouseOut" v-bind:class="{ move: isHoverCart }" class="pi pi-shopping-cart" @click.prevent="openModal()" style="fontSize: 1.6rem" type="button"></i>  
@@ -103,7 +103,7 @@ export default {
 
     function showInput(){
 
-      // myinput.value.focus()
+      myinput.value.focus()
       isActive.value =true
     }
     
@@ -230,7 +230,7 @@ export default {
 input:focus{
   outline:none;
   border:2px #000000 solid;
-  transition: .1s auto;
+  transition: .5s auto;
 }
 
 .pi-shopping-cart{

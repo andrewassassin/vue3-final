@@ -1,5 +1,5 @@
 <template>
-  <div class="hello mt-5">
+  <div class="mt-5">
     <h3>{{ msg }}</h3>
     <section class="py-3">
         <div class="container">
@@ -25,6 +25,7 @@
 
 <script>
 import axios from 'axios'
+import UserInfo from '@/views/UserInfo'
 export default {
     data () {
         return {
@@ -56,13 +57,20 @@ export default {
                     this.$store.commit("user", response.data.id);
                     localStorage.setItem(this.$store.state.userId, response.data.id)
                     console.log('user',this.$store.state.userId)
+                      this.$router.push({
+                            path: `/userinfo`,
+                            component: UserInfo,
+                        })  
                 })
                 .catch(error => {
                     console.log('err',error);
                 });
 
          }          
-    }
+    },
 
 }
 </script>
+<style scoped>
+
+</style>
