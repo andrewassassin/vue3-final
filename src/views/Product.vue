@@ -51,7 +51,8 @@ export default {
       sortKey:{
         name:""
       },
-      api:"product"
+      api:"product",
+      count:0
     }
   },
   mixins:[product],
@@ -59,8 +60,6 @@ export default {
     SelectButton
   },
   beforeMount() {
-    console.log('beforemounted')
-    // 在頁面開啟前發出請求
     this.getInitialUsers()
   },
   mounted(){
@@ -69,11 +68,11 @@ export default {
   },
   methods:{
     getInitialUsers() {  
-      const count = "0"
-      axios.post(`https://x-home.pcpogo.com/homex/${this.api}.php?RDEBUG=andrewc`,count)
+      this.count = 0
+      // console.log( 'mount count',this.count)
+      axios.post(`https://x-home.pcpogo.com/homex/${this.api}.php?RDEBUG=andrewc`,this.count.toString())
         .then(response => {      
               this.productList = response.data
-              // console.log(response.data)
               this.productList.splice(0,6).forEach(item=>{
                 item.image = JSON.parse(item.image);
                 this.threeList.push(item)
@@ -88,23 +87,18 @@ export default {
           component: Item,
         })    
     },
-    scroll() {
-     
+    scroll() {   
         let isLoading = false
-        var count = 0
         var that = this
         window.onscroll = async function() {
-          console.log('api',that.api)
           // 距離底部200px加載一次
           let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 400
-          // let height = document.documentElement.offsetHeight - document.documentElement.scrollTop
-          // console.log('bottomOfWindow',height - window.innerHeight)
           if (bottomOfWindow && isLoading == false) {
               isLoading = true
-              count += 6
-            await axios.post(`https://x-home.pcpogo.com/homex/${that.api}.php?RDEBUG=andrewc`, count)
+              that.count += 6
+              // console.log('count scroll',that.count)
+            await axios.post(`https://x-home.pcpogo.com/homex/${that.api}.php?RDEBUG=andrewc`, that.count.toString())
                 .then(response => {
-                  console.log('scroll res',response.data)
                     that.productList = response.data
                     that.productList.splice(0,6).forEach(item=>{
                       item.image = JSON.parse(item.image);
@@ -124,26 +118,24 @@ export default {
       orderSort:async function(newVal){
           this.threeList=[]
           this.sortKey.name  = newVal
-           console.log('sortKey: ',this.sortKey)
-          console.log('newVal: ',newVal)
+          //  console.log('sortKey: ',this.sortKey)
+          // console.log('newVal: ',newVal)
           this.sortKey.count = "0"
           if(this.sortKey.name=="價格由低至高"){
             this.api = 'sortByPrice'
           }else if(this.sortKey.name=="最新上架"){
             this.api = 'product'
           }
-          console.log('api',this.api)
-          const count = "0"
-           await axios.post(`https://x-home.pcpogo.com/homex/${this.api}.php?RDEBUG=andrewc`,count)
+          this.count = 0
+           await axios.post(`https://x-home.pcpogo.com/homex/${this.api}.php?RDEBUG=andrewc`,this.count.toString())
                     .then(response => {      
                           this.productList = response.data
-                          console.log('watch res data',response.data)
+                          // console.log('watch res data',response.data)
                           this.productList.splice(0,6).forEach(item=>{
                             item.image = JSON.parse(item.image);
                             this.threeList.push(item)
                           })
                         })    
-          
       },
     }
 }
