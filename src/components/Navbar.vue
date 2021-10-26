@@ -29,12 +29,12 @@
           <button @click="toggleBar()" class="nav-toggler">
             <div v-bind:class="{ rotate: isActive }" class="line"></div>
           </button>
-          <form @submit.prevent="innerSearch($event)" class="form-inline mr-5 search-bar">
-                <input ref="myinput"   v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus >
-                <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="submit"></i>
+          <form @submit.prevent="innerSearch($event)" class="form-inline mr-5 search-bar">  
+                <input v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus="autofocus">
+                <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="button"></i>          
           </form>
           <i @mouseover="mouseCart" @mouseleave="mouseOut" v-bind:class="{ move: isHoverCart }" class="pi pi-shopping-cart" @click.prevent="openModal()" style="fontSize: 1.6rem" type="button"></i>  
-              <i class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>     
+              <i v-if="isLogin" class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>     
       </nav>
             <transition >
                 <Modal v-if="isClickCart" @closeBtn="closeModal"  />
@@ -46,10 +46,11 @@
 </template>
 <script>
 import { inject } from "vue";
+import store from "@/store";
 import Modal from '@/components/Modal'
 import itembar from '@/components/itembar'
 import Search from '@/views/Search'
-import { ref } from "vue";
+import { ref,watch,computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 export default {
   
@@ -64,6 +65,17 @@ export default {
     const isActive = ref(false);
     const isHoverItem = ref(false);
     const isHoverCart = ref(false);
+    const isLogin = ref(false);
+    const doneTodos = computed(()=>{
+      // console.log('doneTodos',store.getters.doneTodos)
+      return store.getters.doneTodos;
+    })
+
+    watch(doneTodos,function(newVal){
+        console.log('newVal: ',newVal)
+        isLogin.value=true
+    })
+
     function openModal () {
       isHoverItem.value = true
       isClickCart.value = true
@@ -102,13 +114,12 @@ export default {
     }    
 
     function showInput(){
-
-      myinput.value.focus()
       isActive.value =true
+      // myinput.value.focus()
     }
     
     function blurFocus(){
-      isActive.value =!isActive.value
+      isActive.value =false
     }
 
     function mouseCart(){
@@ -130,11 +141,13 @@ export default {
         toggleBar,
         isHoverItem,
         isHoverCart,
+        isLogin,
         mouseOver,
         mouseOut,
         showInput,
         blurFocus,
         mouseCart,
+        doneTodos
       }
   },
   components: {
@@ -163,14 +176,6 @@ export default {
 .v-enter-from, .v-leave-to {
   opacity: 0;
 }
-
-.showup-enter-active,.showup-leave-active {
-  transition: opacity .4s;
-}
-
-.showup-enter-from, .showup-leave-to {
-  opacity: 0;
-} 
 
 
 #navBar{
@@ -219,13 +224,13 @@ export default {
   opacity: 0;
   border-radius: 5px;
   transition: .3s ease-in;
-  border: 1px #b1b1b1 solid;
+  border: 1px #3a3a3a solid;
 }
 
 .s-input.extend {
   width: 180px;
   opacity: 1;
-}
+} 
 
 input:focus{
   outline:none;

@@ -55,7 +55,7 @@ export default {
                     localStorage.setItem(this.$store.state.token,  response.data.token)
                     console.log('token login',this.$store.state.token)
                     this.$store.commit("user", response.data.id);
-                    localStorage.setItem(this.$store.state.userId, response.data.id)
+                    localStorage.setItem('userId', response.data.id)
                     console.log('user',this.$store.state.userId)
                       this.$router.push({
                             path: `/userinfo`,
