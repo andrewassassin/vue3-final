@@ -39,7 +39,7 @@ export default {
     methods:{
         loginForm () {
             console.log('submit')
-             const data = {
+            const data = {
                 username: this.user.username,
                 password: this.user.password,
             }
@@ -54,9 +54,9 @@ export default {
                     this.$store.commit('login',response.data.token);
                     localStorage.setItem(this.$store.state.token,  response.data.token)
                     console.log('token login',this.$store.state.token)
-                    this.$store.commit("user", response.data.id);
+                    this.$store.commit("user", response.data);
                     localStorage.setItem('userId', response.data.id)
-                    console.log('user',this.$store.state.userId)
+                    console.log('user',this.$store.state.user)
                       this.$router.push({
                             path: `/userinfo`,
                             component: UserInfo,

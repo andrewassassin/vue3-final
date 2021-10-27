@@ -6,7 +6,8 @@ export default createStore({
   state: {
     itemList:[],
     isLogin:'',
-    userId:"",
+    user:{
+    },
     token:"",
   },
   
@@ -14,16 +15,16 @@ export default createStore({
     itemList(state,item) {
       state.itemList.push(item)
     },
-    login(state,data) {
-      state.token = data;
+    login(state,payload) {
+      state.token = payload;
     },
-    user(state,data) {
-      state.userId = data
+    user(state,payload) {
+      state.user = payload
     }
   },
   getters: {
     doneTodos: state => {
-      return state.userId
+      return state.user
     }
   }
 })

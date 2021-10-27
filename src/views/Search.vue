@@ -93,11 +93,11 @@ export default {
           console.log('newVal: ',newVal)
           brandList.value= newVal
           console.log('brandList: ',brandList.value)
-      })
-      watch(selectCate,function(newVal){
+    })
+    watch(selectCate,function(newVal){
         cateList.value= newVal
           console.log('cateList: ', cateList.value)
-      })
+    })
 
     onMounted(async()=>{
       itemName.value = id.value.id

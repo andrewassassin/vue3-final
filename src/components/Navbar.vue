@@ -31,7 +31,7 @@
             <div v-bind:class="{ rotate: isActive }" class="line"></div>
           </button>
           <form @submit.prevent="innerSearch($event)" class="form-inline mr-5 search-bar">  
-                <input v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus="autofocus">
+                <input v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus>
                 <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="button"></i>          
           </form>
           <i @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }" class="pi pi-shopping-cart" @click.prevent="openModal()" style="fontSize: 1.6rem" type="button"></i>  
@@ -70,8 +70,12 @@ export default {
     })
 
     watch(doneTodos,function(newVal){
-        console.log('newVal: ',newVal)
-        isLogin.value=true
+        // console.log('newVal: ',newVal)
+        if(Object.entries(newVal).length !==0){
+          isLogin.value=true
+        }else{
+          isLogin.value=false
+        }
     })
 
     function openModal () {

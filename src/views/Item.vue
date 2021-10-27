@@ -33,17 +33,16 @@
                 </div>
                 <div class="mt-5 form-group">
                     <button class="btn btn-primary"  type="submit">
-                        加入購物車
+                      加入購物車
                     </button>
                     <button class="ml-4 btn btn-outline-danger" @click="deleteBtn()" type="click">
                       刪除商品
-                  </button>
+                    </button>
                 </div> 
               </form>          
             </div>
           </div>
     </section>
-    <!-- <ItemTab/> -->
   </div>
 </template>
 <script>
@@ -64,9 +63,9 @@ export default {
         const item = {
               ...this.product,
               amount: this.amount,
-              uid: this.$store.state.userId
+              uid: this.$store.state.user.id
         }
-
+        // console.log('item new',item)
            const already = this.$store.state.itemList.find(item => {
               return item.id === this.product.id
             })
@@ -77,12 +76,13 @@ export default {
             } else{
               this.$store.commit("itemList",item);
             }
-              console.log('this.$store.state.itemList',this.$store.state.itemList)
+              // console.log('this.$store.state.itemList',this.$store.state.itemList)
               this.productDatabase()
       },
       productDatabase(){
         const itemListStr = JSON.stringify(this.$store.state.itemList);
         localStorage.setItem(this.key, itemListStr);
+        console.log('itemListStr',itemListStr)
          axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc",itemListStr)
           .then(res => {
                 console.log(res)
@@ -117,7 +117,7 @@ export default {
             if(item){
                 this.itemObj  = JSON.parse(item.image)   
                 this.product = item
-                console.log('item',item)
+                // console.log('item',item)
             }
             this.spin = false
         })
