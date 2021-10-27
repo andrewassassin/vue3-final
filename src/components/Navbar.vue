@@ -3,23 +3,23 @@
       <nav class="navbar-expand-lg navbar-light fixed-top" id="navBar">
           <img class="logo" src="../assets/img/logo.png" alt="">
           <div v-bind:class="{ active: isActive }" class="nav-top">              
-                <ul class=" mr-auto mt-2 mt-lg-0 nav-ul">
-                  <li class="nav-item mr-5">
-                      <router-link class="nav-link" to="/">首頁</router-link>
+                <ul class="mr-auto mt-2 mt-lg-0 nav-ul">
+                  <li class="nav-item">
+                      <router-link class="nav-link" to="/">回到首頁</router-link>
                   </li>
-                  <li class="nav-item mr-5">
-                      <router-link @mouseover="mouseOver" class="nav-link" to="/product">
+                  <li class="nav-item">
+                      <router-link @mouseover="isHoverItem=!isHoverItem" @mouseleave="isHoverItem=false" id="proDetail" class="nav-link" to="/product">
                           商品詳情
                       </router-link>
                   </li>
-                  <li class="nav-item mr-5 ">
+                  <li class="nav-item ">
                       <router-link class="nav-link" to="/create">建立商品</router-link>
                   </li>
-                  <li class="nav-item mr-5">
-                      <router-link class="nav-link" to="/register">註冊</router-link>
+                  <li class="nav-item">
+                      <router-link class="nav-link" to="/register">會員註冊</router-link>
                   </li>
-                  <li class="nav-item mr-5">
-                      <router-link class="nav-link" to="/login">登入</router-link>
+                  <li class="nav-item">
+                      <router-link class="nav-link" to="/login">會員登入</router-link>
                   </li>
                     <li class="nav-item mr-5">
                       <router-link class="nav-link" to="/userinfo">會員資料</router-link>
@@ -33,14 +33,14 @@
                 <input v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus="autofocus">
                 <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="button"></i>          
           </form>
-          <i @mouseover="mouseCart" @mouseleave="mouseOut" v-bind:class="{ move: isHoverCart }" class="pi pi-shopping-cart" @click.prevent="openModal()" style="fontSize: 1.6rem" type="button"></i>  
+          <i @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }" class="pi pi-shopping-cart" @click.prevent="openModal()" style="fontSize: 1.6rem" type="button"></i>  
               <i v-if="isLogin" class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>     
       </nav>
             <transition >
                 <Modal v-if="isClickCart" @closeBtn="closeModal"  />
             </transition >
             <transition >
-              <itembar @mouseleave="mouseOut" v-show="isHoverItem"/>
+              <itembar @mouseenter="mouseDetail" v-show="isHoverItem"/>
             </transition >
     </div>
 </template>
@@ -57,7 +57,7 @@ export default {
   name: 'Navbar',
   setup(){
     const reload = inject("reload");
-     const myinput = ref(null);
+    const myinput = ref(null);
     const router = useRouter();
     const route = useRoute();
     const isClickCart = ref(false);
@@ -71,13 +71,13 @@ export default {
       return store.getters.doneTodos;
     })
 
+
     watch(doneTodos,function(newVal){
         console.log('newVal: ',newVal)
         isLogin.value=true
     })
 
     function openModal () {
-      isHoverItem.value = true
       isClickCart.value = true
     }
     function closeModal(){
@@ -103,15 +103,14 @@ export default {
       isActive.value = !isActive.value;
     }
 
-    function mouseOver(){
-            isHoverItem.value = true
-            isHoverCart.value = true
-        }
+    function mouseDetail(){
+      console.log('詳情')
+      if(isHoverItem.value==true){
+        isHoverItem.value=true
+      }
+    }
+ 
 
-    function mouseOut(){
-      isHoverItem.value=false
-      isHoverCart.value = false  
-    }    
 
     function showInput(){
       isActive.value =true
@@ -121,11 +120,6 @@ export default {
     function blurFocus(){
       isActive.value =false
     }
-
-    function mouseCart(){
-      isHoverCart.value =true;
-    }
-
 
       return {
         myinput,
@@ -142,11 +136,9 @@ export default {
         isHoverItem,
         isHoverCart,
         isLogin,
-        mouseOver,
-        mouseOut,
+        mouseDetail,
         showInput,
         blurFocus,
-        mouseCart,
         doneTodos
       }
   },
@@ -194,19 +186,29 @@ export default {
 
 .nav-top {
   position: fixed;
+  height: auto;
+  overflow: auto;
   left: 20%;
   }
 
 .nav-ul {
+  height: 75px;
   display: flex;
   align-items: center;
   list-style-type:none;
   margin-bottom: 0;
 }
 
-
+.nav-ul li{
+  height: auto;
+}
 .nav-ul a{
   color: rgb(82, 82, 82);
+  height: 75px;
+  width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-toggler {
