@@ -8,8 +8,9 @@
                       <router-link class="nav-link" to="/">回到首頁</router-link>
                   </li>
                   <li class="nav-item">
-                      <router-link @mouseover="isHoverItem=!isHoverItem" @mouseleave="isHoverItem=false" id="proDetail" class="nav-link" to="/product">
+                      <router-link class="nav-link itemList" to="/product">
                           商品詳情
+                            <itembar class="itemBar" />
                       </router-link>
                   </li>
                   <li class="nav-item ">
@@ -39,9 +40,7 @@
             <transition >
                 <Modal v-if="isClickCart" @closeBtn="closeModal"  />
             </transition >
-            <transition >
-              <itembar @mouseenter="mouseDetail" v-show="isHoverItem"/>
-            </transition >
+           
     </div>
 </template>
 <script>
@@ -52,8 +51,7 @@ import itembar from '@/components/itembar'
 import Search from '@/views/Search'
 import { ref,watch,computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
-export default {
-  
+export default {  
   name: 'Navbar',
   setup(){
     const reload = inject("reload");
@@ -70,7 +68,6 @@ export default {
       // console.log('doneTodos',store.getters.doneTodos)
       return store.getters.doneTodos;
     })
-
 
     watch(doneTodos,function(newVal){
         console.log('newVal: ',newVal)
@@ -103,14 +100,6 @@ export default {
       isActive.value = !isActive.value;
     }
 
-    function mouseDetail(){
-      console.log('詳情')
-      if(isHoverItem.value==true){
-        isHoverItem.value=true
-      }
-    }
- 
-
 
     function showInput(){
       isActive.value =true
@@ -136,7 +125,6 @@ export default {
         isHoverItem,
         isHoverCart,
         isLogin,
-        mouseDetail,
         showInput,
         blurFocus,
         doneTodos
@@ -255,6 +243,16 @@ input:focus{
   right: 15%;
 }
 
+.itemBar{
+  visibility: hidden;
+  transition: .4s ease;
+  opacity: 0;
+}
+
+.itemList:hover .itemBar{
+  visibility: visible;
+  opacity: 1;
+}
 
 @media (max-width: 600px) {
     .logo{
