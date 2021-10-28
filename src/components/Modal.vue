@@ -74,7 +74,7 @@
 export default {
     data() {
         return {
-          key:'',
+          key:'cart',
           checkBox:[],
           inputTag:[]
         }
@@ -82,15 +82,17 @@ export default {
     methods: {
       minusItem(event){
         const idx = event.currentTarget.id
-        if(this.itemList[idx].amount>0){
+        if(this.itemList[idx].amount>1){
           this.itemList[idx].amount -=1
         }
+        this.updateDataToStorage()
       },
       plusItem(event){
         const idx = event.currentTarget.id
         if(this.itemList[idx].amount<10){
           this.itemList[idx].amount +=1
         }
+        this.updateDataToStorage()
       },
       closeBtn () {
         this.$emit('closeBtn')
@@ -137,13 +139,18 @@ export default {
      },
     watch:{
       inputTag:function(newval){
-        console.log('newval',newval)
         this.checkBox = newval 
-        console.log('checkBox',this.checkBox)
-      }
+        // console.log('checkBox',this.checkBox)
+      },
+      itemList:{
+        handler:function(){
+          // console.log('itemList Change',newval)
+          // console.log('length',newval.length)
+          console.log('length',this.$store.getters.changeCartNum)
+        },
+        deep:true
     }
-
-     
+  }    
 }
 </script>
 <style >

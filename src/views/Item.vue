@@ -53,7 +53,7 @@ export default {
         return {
             product:{},
             amount:'',
-            key:'',
+            key:'cart',
             spin: true,
         }
     },

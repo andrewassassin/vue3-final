@@ -25,6 +25,9 @@ export default createStore({
   getters: {
     doneTodos: state => {
       return state.user
+    },
+    changeCartNum: state => {
+      return state.itemList.length
     }
   }
 })

@@ -34,11 +34,14 @@
                 <input v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus>
                 <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="button"></i>          
           </form>
-          <i @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }" class="pi pi-shopping-cart" @click.prevent="openModal()" style="fontSize: 1.6rem" type="button"></i>  
-              <i v-if="isLogin" class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>     
+          <div class="cart-place" @click.prevent="openModal()" @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }">
+            <div id="cartNumber" type="button">{{changeCartNum}}</div>
+            <i class="pi pi-shopping-cart" style="fontSize: 1.6rem" type="button"></i>  
+          </div>
+          <i v-if="isLogin" class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>     
       </nav>
             <transition >
-                <Modal v-if="isClickCart" @closeBtn="closeModal"  />
+                <Modal v-if="isClickCart" @closeBtn="closeModal" />
             </transition >
            
     </div>
@@ -49,7 +52,7 @@ import store from "@/store";
 import Modal from '@/components/Modal'
 import itembar from '@/components/itembar'
 import Search from '@/views/Search'
-import { ref,watch,computed } from "vue";
+import { ref,watch,computed,onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 export default {  
   name: 'Navbar',
@@ -69,8 +72,20 @@ export default {
       return store.getters.doneTodos;
     })
 
+    const changeCartNum = computed(()=>{
+      // 監聽購物車商品數量
+      return store.getters.changeCartNum;
+    })
+
+    onMounted(()=>{
+      // 取得購物車商品數量
+        const itemListStr = localStorage.getItem("cart");
+        const defaultList = JSON.parse(itemListStr);
+        store.state.itemList = defaultList || []; 
+    })
+
     watch(doneTodos,function(newVal){
-        // console.log('newVal: ',newVal)
+      // 監聽是否登入，若登入會跑出人頭圖示
         if(Object.entries(newVal).length !==0){
           isLogin.value=true
         }else{
@@ -84,7 +99,7 @@ export default {
     function closeModal(){
       isClickCart.value = false
     }
-    
+
     function innerSearch(){
        let id = searchBar.value
         if(id&& route.path!==`/search/${id}` &&route.name!=='search'){
@@ -120,6 +135,7 @@ export default {
         searchBar,
         openModal,
         closeModal,
+        changeCartNum,
         innerSearch,
         reload, 
         router,
@@ -171,9 +187,6 @@ export default {
   height:75px;
   padding: 30px;
   margin:0  ;
-  align-items: center;
-  /* justify-content: space-between; */
-  
 }
 
 .nav-top {
@@ -232,14 +245,28 @@ input:focus{
   transition: .5s auto;
 }
 
-.pi-shopping-cart{
+.cart-place{
   position: fixed;
   right: 18%;
   transition: .3s;
 }
 
-.pi-shopping-cart.move{
+.cart-place.move{
   transform: scale(1.2);
+}
+
+#cartNumber {
+  width: 28px;
+  height: 28px;
+  background-color: tomato;
+  text-align: center;
+  line-height: 30px;
+  position: absolute;
+  border-radius: 50%;
+  top: -10px;
+  left: 12px;
+  color: white;
+  transform: scale(.6);
 }
 
 .pi-user{
