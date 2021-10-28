@@ -94,11 +94,11 @@ export default {
     watch:{
        selectedBrand:function(newVal){
             console.log('newVal: ',newVal)
-            this.brandList= newVal
+            this.brandList = newVal
             console.log('brandList: ',this.brandList)
        },
        selectCate:function(newVal){
-           this.cateList= newVal
+           this.cateList = newVal
            console.log('cateList: ',this.cateList)
        }
      }

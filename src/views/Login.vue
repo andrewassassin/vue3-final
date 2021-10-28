@@ -52,11 +52,10 @@ export default {
                 .then(response => {
                     // console.log('', response.data);                 
                     this.$store.commit('login',response.data.token);
-                    localStorage.setItem(this.$store.state.token,  response.data.token)
-                    console.log('token login',this.$store.state.token)
+                    localStorage.setItem('token',  response.data.token)
                     this.$store.commit("user", response.data);
-                    localStorage.setItem('userId', response.data.id)
-                    console.log('user',this.$store.state.user)
+                    localStorage.setItem('user', JSON.stringify(response.data))
+                    // console.log('user',this.$store.state.user)
                       this.$router.push({
                             path: `/userinfo`,
                             component: UserInfo,

@@ -86,6 +86,7 @@ export default {
           this.itemList[idx].amount -=1
         }
         this.updateDataToStorage()
+        this.$store.dispatch("productToData");
       },
       plusItem(event){
         const idx = event.currentTarget.id
@@ -93,6 +94,7 @@ export default {
           this.itemList[idx].amount +=1
         }
         this.updateDataToStorage()
+        this.$store.dispatch("productToData");
       },
       closeBtn () {
         this.$emit('closeBtn')
@@ -101,10 +103,12 @@ export default {
         const idx = event.currentTarget.id
         this.itemList.splice(idx, 1)
         this.updateDataToStorage()
+        this.$store.dispatch("productToData");
       },
       clearBtn () {
         this.$store.state.itemList=[]
         this.updateDataToStorage()
+        this.$store.dispatch("productToData");
       },
       updateDataToStorage() {
         const itemListStr = JSON.stringify(this.itemList);
@@ -116,7 +120,8 @@ export default {
           this.itemList.splice(index,1)
         })  
         this.inputTag=[]
-        // this.updateDataToStorage()
+        this.updateDataToStorage()
+        this.$store.dispatch("productToData");
       }
     },
     created() {

@@ -47,7 +47,7 @@
 </template>
 <script>
 import axios from 'axios'
-import counter from "../mixin/counter";
+import slider from "../mixin/slider";
 export default {
     data () {
         return {
@@ -57,7 +57,7 @@ export default {
             spin: true,
         }
     },
-    mixins: [counter],
+    mixins: [slider],
     methods: {
       addItem() {
         const item = {
@@ -65,7 +65,6 @@ export default {
               amount: this.amount,
               uid: this.$store.state.user.id
         }
-        // console.log('item new',item)
            const already = this.$store.state.itemList.find(item => {
               return item.id === this.product.id
             })
@@ -76,20 +75,12 @@ export default {
             } else{
               this.$store.commit("itemList",item);
             }
-              // console.log('this.$store.state.itemList',this.$store.state.itemList)
               this.productDatabase()
       },
       productDatabase(){
         const itemListStr = JSON.stringify(this.$store.state.itemList);
         localStorage.setItem(this.key, itemListStr);
-        console.log('itemListStr',itemListStr)
-         axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc",itemListStr)
-          .then(res => {
-                console.log(res)
-              })
-          .catch(error => {
-            console.log('err',error);
-          });
+        this.$store.dispatch("productToData");
       },
       loaded() {
         this.spin = false
