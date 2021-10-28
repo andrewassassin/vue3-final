@@ -9,7 +9,6 @@ export default createStore({
     user:{
     },
     token:"",
-    itemToData:[]
   },
   
   mutations: {
@@ -21,18 +20,6 @@ export default createStore({
     },
     user(state,payload) {
       state.user = payload
-    },
-    itemToData(state){
-      state.itemList.forEach(item=>{
-        const product ={
-          id: item.id,
-          amount: item.amount,
-          uid: item.uid
-        }
-
-        state.itemToData.push(product)
-        // console.log('action product',state.itemToData)
-      })
     }
   },
   getters: {
@@ -45,14 +32,21 @@ export default createStore({
   },
   actions: {
     productToData(context){
-      // context.commit('itemToData')
-      console.log('context',context)
       const config = {
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
         }
-    }  
-      axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc",JSON.stringify(this.state.itemList),config)
+      }
+
+      const userInfo = JSON.parse(localStorage.getItem('user'));
+      context.commit('user',userInfo) 
+      
+      const cartItem = {
+        uid:this.state.user.id,
+        itemList: this.state.itemList
+      }
+      console.log('cartItem',cartItem)
+      axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc", cartItem ,config)
         .then(res => {
               console.log(res)
             })

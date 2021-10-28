@@ -55,7 +55,7 @@ export default {
                     localStorage.setItem('token',  response.data.token)
                     this.$store.commit("user", response.data);
                     localStorage.setItem('user', JSON.stringify(response.data))
-                    // console.log('user',this.$store.state.user)
+                    console.log('user',this.$store.state.user)
                       this.$router.push({
                             path: `/userinfo`,
                             component: UserInfo,
