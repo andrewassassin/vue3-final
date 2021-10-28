@@ -31,7 +31,9 @@
             <div v-bind:class="{ rotate: isActive }" class="line"></div>
           </button>
           <form @submit.prevent="innerSearch($event)" class="form-inline mr-5 search-bar">  
-                <input v-model="searchBar" @blur="blurFocus()" v-bind:class="{ extend: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus>
+                <transition name="showI">
+                  <input v-model="searchBar" @blur="blurFocus()" v-if="isActive" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus>
+                </transition >
                 <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="button"></i>          
           </form>
           <div class="cart-place" @click.prevent="openModal()" @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }">
@@ -177,6 +179,18 @@ export default {
   opacity: 0;
 }
 
+.showI-enter-active,.showI-leave-active {
+  transition: opacity .4s;
+}
+
+.showI-enter-from,.showI-leave-to {
+  opacity:0;
+}
+
+.showI-enter-to,.showI-leave-from {
+  opacity:1;
+}
+
 
 #navBar{
   box-shadow: 0px 5px 10px rgba(0, 0, 0, .2);
@@ -226,18 +240,18 @@ export default {
 }
 
 .s-input{
-  width: 0px;
+  /* width: 0px; */
   height: 38px;
-  opacity: 0;
+  /* opacity: 0; */
   border-radius: 5px;
   transition: .3s ease-in;
   border: 1px #3a3a3a solid;
 }
 
-.s-input.extend {
+/* .s-input.extend {
   width: 180px;
   opacity: 1;
-} 
+}  */
 
 input:focus{
   outline:none;
