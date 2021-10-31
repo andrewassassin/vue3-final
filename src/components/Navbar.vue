@@ -180,15 +180,15 @@ export default {
 }
 
 .showI-enter-active,.showI-leave-active {
-  transition: opacity .4s;
+  transition: width .4s;
 }
 
 .showI-enter-from,.showI-leave-to {
-  opacity:0;
+  width:0;
 }
 
 .showI-enter-to,.showI-leave-from {
-  opacity:1;
+  width:180px;
 }
 
 

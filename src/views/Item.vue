@@ -99,7 +99,7 @@ export default {
         const itemListStr = localStorage.getItem(this.key);
             const defaultList = JSON.parse(itemListStr);
             this.$store.state.itemList = defaultList || []; 
-            await axios.get("https://x-home.pcpogo.com/homex/product.php?RDEBUG=andrewc")
+            await axios.get("http://localhost/Amitproject/product.php#/")
         .then(response => {
             const item = response.data.find(item=>{
               return item.id == this.id

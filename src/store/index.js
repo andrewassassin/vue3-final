@@ -46,7 +46,7 @@ export default createStore({
         itemList: this.state.itemList
       }
       console.log('cartItem',cartItem)
-      axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc", cartItem ,config)
+      axios.post("http://localhost/Amitproject/create.php#/", cartItem ,config)
         .then(res => {
               console.log(res)
             })

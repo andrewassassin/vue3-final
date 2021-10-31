@@ -8,7 +8,7 @@
             <div class="col-md-4 person" v-for="(product,index) in threeList" :key="index">
               <div class="card my-5 mx-2">
                 <div class="slide-img">
-                  <img  class="card-img-top">       
+                  <img :src="require(`../assets/img/${product.image[1]}`)" class="card-img-top">       
                     <div class="overlay">
                       <a :id="`${product.id}`" @click="goToProduct($event)" class="buy-btn">Buy Now</a>	
                     </div>
@@ -70,7 +70,7 @@ export default {
     getInitialUsers() {  
       this.count = 0
       // console.log( 'mount count',this.count)
-      axios.post(`https://x-home.pcpogo.com/homex/${this.api}.php?RDEBUG=andrewc`,this.count.toString())
+      axios.post(`http://localhost/Amitproject/${this.api}.php#/`,this.count.toString())
         .then(response => {      
               this.productList = response.data
               this.productList.splice(0,6).forEach(item=>{
@@ -97,7 +97,7 @@ export default {
               isLoading = true
               that.count += 6
               // console.log('count scroll',that.count)
-            await axios.post(`https://x-home.pcpogo.com/homex/${that.api}.php?RDEBUG=andrewc`, that.count.toString())
+            await axios.post(`http://localhost/Amitproject/${that.api}.php#/`, that.count.toString())
                 .then(response => {
                     that.productList = response.data
                     that.productList.splice(0,6).forEach(item=>{
@@ -127,7 +127,7 @@ export default {
             this.api = 'product'
           }
           this.count = 0
-           await axios.post(`https://x-home.pcpogo.com/homex/${this.api}.php?RDEBUG=andrewc`,this.count.toString())
+           await axios.post(`http://localhost/Amitproject/${this.api}.php#/`,this.count.toString())
                     .then(response => {      
                           this.productList = response.data
                           // console.log('watch res data',response.data)
