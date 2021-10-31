@@ -31,9 +31,9 @@
             <div v-bind:class="{ rotate: isActive }" class="line"></div>
           </button>
           <form @submit.prevent="innerSearch($event)" class="form-inline mr-5 search-bar">  
-                <transition name="showI">
-                  <input v-model="searchBar" @blur="blurFocus()" v-if="isActive" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus>
-                </transition >
+
+                  <input v-model="searchBar" ref="myinput" @blur="blurFocus()" @focus="showInput()"  v-if="isActive" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus>
+       
                 <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="button"></i>          
           </form>
           <div class="cart-place" @click.prevent="openModal()" @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }">
@@ -54,7 +54,7 @@ import store from "@/store";
 import Modal from '@/components/Modal'
 import itembar from '@/components/itembar'
 import Search from '@/views/Search'
-import { ref,watch,computed,onMounted } from "vue";
+import { ref,watch,computed,onMounted  } from "vue";
 import { useRouter, useRoute } from "vue-router";
 export default {  
   name: 'Navbar',
@@ -123,6 +123,13 @@ export default {
 
 
     function showInput(){
+      if(myinput.value!=null){
+       
+      myinput.value.focus()
+      console.log('input value',myinput.value)
+       
+      }
+      
       isActive.value =true
       // myinput.value.focus()
     }
