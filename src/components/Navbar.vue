@@ -31,7 +31,7 @@
             <div v-bind:class="{ rotate: isActive }" class="line"></div>
           </button>
           <form @submit.prevent="innerSearch($event)" class="form-inline mr-5 search-bar">  
-            <input v-model="searchBar" ref="myinput" @blur="blurFocus()" @focus="showInput()" v-if="isActive" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus="autofocus">
+            <input v-model="searchBar" ref="myinput" @blur="blurFocus()" @focus="showInput()" :class="{ show: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus="autofocus">
             <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="button"></i>          
           </form>
           <div class="cart-place" @click.prevent="openModal()" @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }">
@@ -79,9 +79,10 @@ export default {
 
     onMounted(()=>{
       // 取得購物車商品數量
-        const itemListStr = localStorage.getItem("cart");
-        const defaultList = JSON.parse(itemListStr);
-        store.state.itemList = defaultList || []; 
+      store.dispatch("DataGetCart");
+        // const itemListStr = localStorage.getItem("cart");
+        // const defaultList = JSON.parse(itemListStr);
+        // store.state.itemList = defaultList || []; 
     })
 
     watch(doneTodos,function(newVal){
@@ -120,16 +121,22 @@ export default {
     }
 
 
-    function showInput(){
-      if(myinput.value!=null){
-       
-      myinput.value.focus()
-      console.log('input value',myinput.value)
-       
-      }
+    async function showInput(){
+
+
+  await new Promise(resolve => {
+    console.log(resolve)
+    
+    isActive.value =true
+     
+    }).then(  myinput.value.focus())
       
-      isActive.value =true
+      // if(myinput.value!=null){
+       
       // myinput.value.focus()
+      // console.log('input value',myinput.value)
+       
+      // }
     }
     
     function blurFocus(){
@@ -249,14 +256,16 @@ export default {
   height: 38px;
   /* opacity: 0; */
   border-radius: 5px;
-  transition: .3s ease-in;
+  /* transition: .3s ease-in; */
   border: 1px #3a3a3a solid;
+  visibility: hidden;
 }
 
-/* .s-input.extend {
+.s-input.show {
+  visibility: visible;
   width: 180px;
   opacity: 1;
-}  */
+} 
 
 input:focus{
   outline:none;

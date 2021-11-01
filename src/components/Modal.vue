@@ -125,9 +125,10 @@ export default {
       }
     },
     created() {
-        const itemListStr = localStorage.getItem(this.key);
-        const defaultList = JSON.parse(itemListStr);
-        this.$store.state.itemList = defaultList || []; 
+        this.$store.dispatch("DataGetCart");
+        // const itemListStr = localStorage.getItem(this.key);
+        // const defaultList = JSON.parse(itemListStr);
+        // this.$store.state.itemList = defaultList || []; 
     },
     computed: {
     // 2. 將 state 中的 Loaded 用 computed 抓出來給 userLoaded 做使用

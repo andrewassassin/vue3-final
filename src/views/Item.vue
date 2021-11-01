@@ -96,9 +96,10 @@ export default {
       },
     }, 
     async created() {
-        const itemListStr = localStorage.getItem(this.key);
-            const defaultList = JSON.parse(itemListStr);
-            this.$store.state.itemList = defaultList || []; 
+            this.$store.dispatch("DataGetCart");
+            // const itemListStr = localStorage.getItem(this.key);
+            // const defaultList = JSON.parse(itemListStr);
+            // this.$store.state.itemList = defaultList || []; 
             await axios.get("https://x-home.pcpogo.com/homex/product.php?RDEBUG=andrewc")
         .then(response => {
             const item = response.data.find(item=>{

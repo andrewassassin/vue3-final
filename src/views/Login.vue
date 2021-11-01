@@ -50,9 +50,6 @@ export default {
             };                 
             axios.post("https://x-home.pcpogo.com/homex/login.php?RDEBUG=andrewc", data, config)
                 .then(response => {
-                    // console.log('', response.data);                 
-                    this.$store.commit('login',response.data.token);
-                    localStorage.setItem('token',  response.data.token)
                     this.$store.commit("user", response.data);
                     localStorage.setItem('user', JSON.stringify(response.data))
                     console.log('user',this.$store.state.user)
