@@ -11,27 +11,27 @@
 <script>
 
 import Navbar from '@/components/Navbar'
-import { provide,nextTick } from "vue";
-import { ref } from "vue";
 export default {
   name: 'App',
    components: {
     Navbar
+  }, 
+  provide() {
+    return {
+      reload: this.reload
+    };
   },
-  setup() {
-    provide("reload", reload);
-    const isRouterAlive = ref(true);
-
-    function reload(){
-      isRouterAlive.value = false;
-      nextTick(() => {
-        console.log('next tick')
-        isRouterAlive.value = true;
-      })
-    }
-    return{
-      reload,
-      isRouterAlive
+  data() {
+    return {
+      isRouterAlive: true
+    };
+  },
+  methods: {
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(() => {
+        this.isRouterAlive = true;
+      });
     }
   }
 }

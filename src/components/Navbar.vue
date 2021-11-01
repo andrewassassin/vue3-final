@@ -79,11 +79,21 @@ export default {
 
     onMounted(()=>{
       // 取得購物車商品數量
+      console.log('nav mounted')
       store.dispatch("DataGetCart");
         // const itemListStr = localStorage.getItem("cart");
         // const defaultList = JSON.parse(itemListStr);
         // store.state.itemList = defaultList || []; 
     })
+
+     watch(changeCartNum,{
+      // 監聽是否登入，若登入會跑出人頭圖示
+      handler(newVal){
+        console.log('reload cartNum',newVal)
+      },
+      deep:true
+    })
+
 
     watch(doneTodos,function(newVal){
       // 監聽是否登入，若登入會跑出人頭圖示

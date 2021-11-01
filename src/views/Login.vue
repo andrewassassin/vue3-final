@@ -30,6 +30,7 @@ export default {
     data () {
         return {
         msg: '會員登入',
+        inject: ["reload"],
         user:{
                 username:'',
                 password:'',
@@ -47,16 +48,17 @@ export default {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                 }
-            };                 
+            };                
             axios.post("https://x-home.pcpogo.com/homex/login.php?RDEBUG=andrewc", data, config)
                 .then(response => {
                     this.$store.commit("user", response.data);
                     localStorage.setItem('user', JSON.stringify(response.data))
                     console.log('user',this.$store.state.user)
-                      this.$router.push({
-                            path: `/userinfo`,
-                            component: UserInfo,
-                        })  
+                   this.$router.push({
+                        path: `/userinfo`,
+                        component: UserInfo,
+                    })  
+                    this.$forceUpdate();
                 })
                 .catch(error => {
                     console.log('err',error);
