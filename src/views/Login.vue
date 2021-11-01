@@ -58,7 +58,8 @@ export default {
                         path: `/userinfo`,
                         component: UserInfo,
                     })  
-                    this.$forceUpdate();
+                    this.$store.dispatch("DataGetCart");
+                    // console.log('num',this.$store.getters.changeCartNum)
                 })
                 .catch(error => {
                     console.log('err',error);

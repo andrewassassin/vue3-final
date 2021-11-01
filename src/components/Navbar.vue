@@ -86,15 +86,6 @@ export default {
         // store.state.itemList = defaultList || []; 
     })
 
-     watch(changeCartNum,{
-      // 監聽是否登入，若登入會跑出人頭圖示
-      handler(newVal){
-        console.log('reload cartNum',newVal)
-      },
-      deep:true
-    })
-
-
     watch(doneTodos,function(newVal){
       // 監聽是否登入，若登入會跑出人頭圖示
         if(Object.entries(newVal).length !==0){
