@@ -72,7 +72,7 @@ export default {
   
     onMounted(async()=>{
       const count = "0"
-       await axios.post("http://localhost/Amitproject/tab2.php#/",count)
+       await axios.post("https://x-home.pcpogo.com/homex/tab2.php?RDEBUG=andrewc",count)
           .then(response => {
             console.log('response',response)
               response.data.forEach(element => {
@@ -124,7 +124,7 @@ export default {
               nextBtn.value= false   
               transitionSwiper.value="slide" 
               count.value="5"
-              await axios.post("http://localhost/Amitproject/tab2.php#/",count.value)
+              await axios.post("https://x-home.pcpogo.com/homex/tab2.php?RDEBUG=andrewc",count.value)
                 .then(response => {
                     response.data.forEach(element => {
                       element.image = JSON.parse(element.image)[1]

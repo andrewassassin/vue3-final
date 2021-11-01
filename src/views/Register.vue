@@ -59,7 +59,7 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded",
                     },
                 };
-            axios.post("http://localhost/Amitproject/register.php#/", data, config)
+            axios.post("https://x-home.pcpogo.com/homex/register.php?RDEBUG=andrewc", data, config)
                 .then(response => {
                 console.log('res  ', response);
                 })

@@ -77,7 +77,7 @@ export default {
     watch(id.value, async() => {
       itemName.value = id.value.id
       threeList.value=[]
-       await axios.post(`http://localhost/Amitproject/search.php#/`,id.value.id)
+       await axios.post(`https://x-home.pcpogo.com/homex/search.php?RDEBUG=andrewc`,id.value.id)
         .then(
             response => {      
               productList.value = response.data
@@ -101,7 +101,7 @@ export default {
 
     onMounted(async()=>{
       itemName.value = id.value.id
-          await axios.post(`http://localhost/Amitproject/search.php#/`,id.value.id)
+          await axios.post(`https://x-home.pcpogo.com/homex/search.php?RDEBUG=andrewc`,id.value.id)
           .then(
               response => {      
                 productList.value = response.data
@@ -134,7 +134,7 @@ export default {
                     name: brandList.value,
                     category: cateList.value
                 }
-                axios.post(`http://localhost/Amitproject/multi.php#/`,product,config)
+                axios.post(`https://x-home.pcpogo.com/homex/multi.php?RDEBUG=andrewc`,product,config)
                     .then(response => {      
                             console.log('res',response.data)
                             productList.value = response.data

@@ -81,7 +81,7 @@ export default {
                     name: this.brandList,
                     category: this.cateList
                 }
-                axios.post(`http://localhost/Amitproject/multi.php#/`,product,config)
+                axios.post(`https://x-home.pcpogo.com/homex/multi.php?RDEBUG=andrewc`,product,config)
                     .then(response => {      
                             console.log('res',response.data)
                             this.searchBack = response.data
