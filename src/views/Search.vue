@@ -134,6 +134,7 @@ export default {
                     name: brandList.value,
                     category: cateList.value
                 }
+                // console.log('product~',product)
                 axios.post(`https://x-home.pcpogo.com/homex/multi.php?RDEBUG=andrewc`,product,config)
                     .then(response => {      
                             console.log('res',response.data)

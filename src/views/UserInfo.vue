@@ -23,6 +23,8 @@ import Login from '@/views/Login'
     methods:{
       logOut(){
           this.$store.commit("user",{});
+          localStorage.setItem('user', "")
+          this.$store.dispatch("DataGetCart");
           this.$router.push({
               path: `/login`,
               component: Login,

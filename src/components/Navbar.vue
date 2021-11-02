@@ -38,7 +38,7 @@
             <div id="cartNumber" type="button">{{changeCartNum}}</div>
             <i class="pi pi-shopping-cart" style="fontSize: 1.6rem" type="button"></i>  
           </div>
-          <i v-if="isLogin" class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>     
+          <i v-if="isLogin" @click="toUserInfo" class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>     
       </nav>
             <transition >
                 <Modal v-if="isClickCart" @closeBtn="closeModal" />
@@ -52,6 +52,7 @@ import store from "@/store";
 import Modal from '@/components/Modal'
 import itembar from '@/components/itembar'
 import Search from '@/views/Search'
+import UserInfo from '@/views/UserInfo'
 import { ref,watch,computed,onMounted  } from "vue";
 import { useRouter, useRoute } from "vue-router";
 export default {  
@@ -124,25 +125,33 @@ export default {
 
     async function showInput(){
 
-
-  await new Promise(resolve => {
-    console.log(resolve)
-    
-    isActive.value =true
-     
-    }).then(  myinput.value.focus())
-      
-      // if(myinput.value!=null){
-       
-      // myinput.value.focus()
-      // console.log('input value',myinput.value)
-       
-      // }
+      await new Promise(resolve => {
+        console.log(resolve)
+        
+        isActive.value =true
+        
+        }).then(  myinput.value.focus())
+          
+          // if(myinput.value!=null){
+          
+          // myinput.value.focus()
+          // console.log('input value',myinput.value)
+          
+          // }
     }
     
     function blurFocus(){
       isActive.value =false
     }
+
+    function toUserInfo(){
+      console.log('toUserInfo')
+      router.push({
+          path: `/userinfo`,
+          component: UserInfo,
+      })  
+    }
+
 
       return {
         myinput,
@@ -162,12 +171,13 @@ export default {
         isLogin,
         showInput,
         blurFocus,
-        doneTodos
+        doneTodos,
+        toUserInfo
       }
   },
   components: {
     Modal,
-    itembar
+    itembar,
   },
 
 }

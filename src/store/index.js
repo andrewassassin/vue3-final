@@ -7,6 +7,7 @@ export default createStore({
     itemList:[],
     isLogin:'',
     user:{
+
     },
   },
   
@@ -44,7 +45,7 @@ export default createStore({
         uid:this.state.user.id,
         itemList: this.state.itemList
       }
-      console.log('cartItem',cartItem)
+      // console.log('cartItem',cartItem)
       axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc", cartItem ,config)
         .then(res => {
               console.log(res)
@@ -54,11 +55,22 @@ export default createStore({
         });
     },
     DataGetCart(context){
-      
-      const userInfo = JSON.parse(localStorage.getItem('user'));
-      context.commit('user',userInfo) 
-      const uid = this.state.user.id
-      axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc", uid )
+      let uid;
+      if(localStorage["user"]){
+        const userInfo = localStorage.getItem('user')
+        context.commit('user',JSON.parse(userInfo))
+        uid = this.state.user.id
+      }else{
+        context.commit('user',{})
+        uid =[]
+      }
+      const config = {
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
+      }
+
+      axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc", uid ,config)
         .then(res => {
               console.log('cart item',res.data)
               context.commit('changeIList',res.data)
