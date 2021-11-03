@@ -31,8 +31,8 @@
             <div v-bind:class="{ rotate: isActive }" class="line"></div>
           </button>
           <form @submit.prevent="innerSearch($event)" class="form-inline mr-5 search-bar">  
-            <input v-model="searchBar" ref="myinput" @blur="blurFocus()" @focus="showInput()" :class="{ show: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search" autofocus="autofocus">
-            <i class="pi pi-search mr-5" @click="showInput()" style="fontSize: 1.5rem" type="button"></i>          
+            <input v-model="searchBar" ref="myinput" @blur="blurFocus" :class="{ show: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search">
+            <i class="pi pi-search mr-5" @click="showInput" style="fontSize: 1.5rem" type="button"></i>          
           </form>
           <div class="cart-place" @click.prevent="openModal()" @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }">
             <div id="cartNumber" type="button">{{changeCartNum}}</div>
@@ -123,21 +123,9 @@ export default {
     }
 
 
-    async function showInput(){
-
-      await new Promise(resolve => {
-        console.log(resolve)
-        
-        isActive.value =true
-        
-        }).then(  myinput.value.focus())
-          
-          // if(myinput.value!=null){
-          
-          // myinput.value.focus()
-          // console.log('input value',myinput.value)
-          
-          // }
+    function showInput(){
+          isActive.value = true
+          myinput.value.focus()
     }
     
     function blurFocus(){
@@ -202,19 +190,6 @@ export default {
   opacity: 0;
 }
 
-.showI-enter-active,.showI-leave-active {
-  transition: width .4s;
-}
-
-.showI-enter-from,.showI-leave-to {
-  width:0;
-}
-
-.showI-enter-to,.showI-leave-from {
-  width:180px;
-}
-
-
 #navBar{
   box-shadow: 0px 5px 10px rgba(0, 0, 0, .2);
   background:  rgba(255, 255, 255, 0.904);
@@ -263,18 +238,19 @@ export default {
 }
 
 .s-input{
-  /* width: 0px; */
+  width: 0px;
   height: 38px;
-  /* opacity: 0; */
+  opacity: 0;
   border-radius: 5px;
-  /* transition: .3s ease-in; */
+  transition: .3s ease-in;
   border: 1px #3a3a3a solid;
-  visibility: hidden;
+  /* visibility: unset; */
 }
 
 .s-input.show {
-  visibility: visible;
+  /* visibility: visible; */
   width: 180px;
+  transition: .3s ease-in;
   opacity: 1;
 } 
 
