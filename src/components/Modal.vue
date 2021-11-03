@@ -14,6 +14,7 @@
               <table class="table table-border">
                   <thead>
                       <tr>
+                          <th class="text-center"></th>
                           <th class="text-center">產品名稱</th>
                           <th class="text-right">單價</th>
                           <th class="text-right">數量</th>
@@ -23,20 +24,19 @@
                   <tbody id="cartTableBody" v-for="(item,idx) in itemList" :key="item.key">
                     <tr>
                         <td>
-                            <div class="d-flex">
+                            <div class="d-flex row justify-content-center">
                                 <input 
                                   type="checkbox" 
                                   :value="item.id" 
                                   v-model="inputTag"                       
                                   class="mr-2 mt-2"
                                 > 
-                                <button v-on:click.prevent="deleteBtn($event)" :id="`${idx}`" type="button" class="delete-btn btn btn-danger btn-sm mr-3">
-                                    &times;
-                                </button>
-                                <div>
+                                 </div>
+                         </td>   
+                           <td>  
                                     <p class="m-0">{{item.name}}</p>
-                                </div>
-                            </div>
+                                
+                         
                         </td>
                         <td class="text-right">$ {{item.price}}</td>
                         <td class="text-right">
@@ -49,15 +49,15 @@
                   </tbody>
                   <tfoot id="cartTableFoot">
                     <tr>
-                      <th colspan="3" class="text-right">總金額</th>
+                      <th colspan="4" class="text-right">總金額</th>
                       <td  class="text-right">$ {{getCartValue}}</td>
                     </tr>
                   </tfoot>
               </table>
           </div>
           <div class="text-right">
-              <button id="clearCartBtn" @click.prevent="delSelected($event)" type="button" class="btn btn-warning">
-                  <i class="fas fa-trash-alt"></i> 刪除所選品項
+              <button @click.prevent="delSelected($event)" type="button" class=" delete-cart">
+                   刪除所選品項
               </button>
               <button id="clearCartBtn" @click.prevent="clearBtn($event)" type="button" class="btn btn-danger ml-3">
                   <i class="fas fa-trash-alt"></i> 清空購物車
@@ -99,12 +99,6 @@ export default {
       closeBtn () {
         this.$emit('closeBtn')
       },
-      deleteBtn (event) {
-        const idx = event.currentTarget.id
-        this.itemList.splice(idx, 1)
-        this.updateDataToStorage()
-        this.$store.dispatch("productToData");
-      },
       clearBtn () {
         this.$store.state.itemList=[]
         this.updateDataToStorage()
@@ -120,6 +114,7 @@ export default {
           this.itemList.splice(index,1)
         })  
         this.inputTag=[]
+
         this.updateDataToStorage()
         this.$store.dispatch("productToData");
       }
@@ -146,7 +141,7 @@ export default {
     watch:{
       inputTag:function(newval){
         this.checkBox = newval 
-        // console.log('checkBox',this.checkBox)
+        console.log('checkBox watch',this.checkBox)
       },
       itemList:{
         handler:function(){
@@ -198,12 +193,29 @@ export default {
 .pi-plus-circle,
 .pi-minus-circle {
   transition: .2s ease;
+  border: none;
 }
 
 .pi-plus-circle:hover,
 .pi-minus-circle:hover {
+  color: #fff;
   background: rgb(17, 17, 17);
-  border-radius: 50%
+  border-radius: 50%;
+}
+
+.delete-cart{
+  width: 150px;
+  height: 40px;
+  border:1px #000000 solid;
+  background: rgb(255, 255, 255);
+  border-radius: 0;
+  font-weight:bold;
+  transition: .3s ease;
+}
+
+.delete-cart:hover{
+  background: black;
+  color: #fff;
 }
 
 @media (max-width: 600px) {

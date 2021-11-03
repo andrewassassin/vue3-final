@@ -21,10 +21,7 @@
                   </li>
                   <li class="nav-item">
                       <router-link class="nav-link" to="/login">會員登入</router-link>
-                  </li>
-                    <li class="nav-item mr-5">
-                      <router-link class="nav-link" to="/userinfo">會員資料</router-link>
-                  </li>              
+                  </li>          
                 </ul>
           </div>
           <button @click="toggleBar()" class="nav-toggler">

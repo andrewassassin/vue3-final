@@ -18,25 +18,22 @@
                 <div class="slide-next" @click="slideCtrl(-1)">Next</div>
               </div>
             </div>
-            <div class="card-body">
+            <div class="list-sec">
               <form v-on:submit.prevent="addItem($event)" class="mt-3 card-body">
                 <h2 class="card-title">{{product.name}}</h2>
-                  <h4>
-                    <span class="badge badge-info">
-                      {{product.category}}
-                    </span>
-                  </h4>
+                <h4 class="mt-3">
+                  <span class="badge badge-info">
+                    {{product.category}}
+                  </span>
+                </h4>
                 <h4 class="card-text mt-3">TWD ${{product.price}}</h4>
-                <div class="mt-5 form-group formGroup">
+                <div class="mt-5 form-group amount-buy">
                     <label>購買數量</label>
                     <input v-model="amount" class="form-control input-box" type="number" min="1" max="20" required>
                 </div>
                 <div class="mt-5 form-group">
-                    <button class="btn btn-primary"  type="submit">
+                    <button class="btn add-cart"  type="submit">
                       加入購物車
-                    </button>
-                    <button class="ml-4 btn btn-outline-danger" @click="deleteBtn()" type="click">
-                      刪除商品
                     </button>
                 </div> 
               </form>          
@@ -83,17 +80,7 @@ export default {
       },
       loaded() {
         this.spin = false
-      },
-      deleteBtn(){
-        axios.post("https://x-home.pcpogo.com/homex/delete.php?RDEBUG=andrewc",this.id)
-          .then(res => {
-                console.log(res)
-              })
-              // console.log('product內',this.product)
-          .catch(error => {
-            console.log('err',error);
-          });
-      },
+      }
     }, 
     async created() {
             this.$store.dispatch("DataGetCart");
@@ -230,11 +217,33 @@ a {
   transition: 0.7s;
 }
 
+.list-sec{
+  width: 700px;
+}
+
+.card-title{
+  font-weight: 900;
+}
+
+.amount-buy{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.amount-buy label{
+  font-size: 10px;
+  position: absolute;
+  bottom: 40px;
+  left: 350px;
+}
+
 
 .input-box{
-  width: 300px;
+  width: 150px;
   position: relative;
-  left: 36%;
+  /* left: 36%; */
 }
 
 .spinner{
@@ -246,5 +255,18 @@ a {
 .showImg img{
   width:400px;
  height:400px;
+}
+
+.add-cart{
+  width: 350px;
+  height: 55px;
+  border:1px #000000 solid;
+  border-radius: 0;
+  font-weight:bold;
+}
+
+.add-cart:hover{
+  background: black;
+  color: #fff;
 }
 </style>
