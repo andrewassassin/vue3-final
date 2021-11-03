@@ -1,6 +1,6 @@
 <template>
   <div class="mt-5">
-    <h3>{{ msg }}</h3>
+    <h3>會員登入</h3>
     <section class="py-3">
         <div class="container">
             <div class="row">
@@ -14,7 +14,11 @@
                         <input type="password" v-model="user.password" placeholder="請輸入密碼" id="userPwd" class="form-control"  required>
                     </div>
                     <div class="form-group my-4">
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> 登入</button>
+                        <button type="submit" class="btn btn-primary loginBtn" :class="{ color: spinActive }"> 
+                            <div class="spinner-border" v-show="spinActive" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>{{loginText}}
+                        </button>
                     </div>
                 </form>
             </div>
@@ -29,8 +33,8 @@ import UserInfo from '@/views/UserInfo'
 export default {
     data () {
         return {
-        msg: '會員登入',
-        inject: ["reload"],
+        loginText:'登入',
+        spinActive:false,
         user:{
                 username:'',
                 password:'',
@@ -39,6 +43,8 @@ export default {
     }, 
     methods:{
         loginForm () {
+            this.spinActive = true
+            this.loginText=''
             console.log('submit')
             const data = {
                 username: this.user.username,
@@ -51,15 +57,16 @@ export default {
             };                
             axios.post("https://x-home.pcpogo.com/homex/login.php?RDEBUG=andrewc", data, config)
                 .then(response => {
-                    this.$store.commit("user", response.data);
-                    localStorage.setItem('user', JSON.stringify(response.data))
-                    console.log('user',this.$store.state.user)
-                   this.$router.push({
-                        path: `/userinfo`,
-                        component: UserInfo,
-                    })  
-                    this.$store.dispatch("DataGetCart");
-                    // console.log('num',this.$store.getters.changeCartNum)
+                    setTimeout(() => {
+                        this.$router.push({
+                            path: `/userinfo`,
+                            component: UserInfo,
+                        })  
+                        localStorage.setItem('user', JSON.stringify(response.data))
+                        this.$store.commit("user", response.data);
+                        this.$store.dispatch("DataGetCart");
+                        // this.spinActive = false
+                    }, 2000);
                 })
                 .catch(error => {
                     console.log('err',error);
@@ -71,5 +78,19 @@ export default {
 }
 </script>
 <style scoped>
+.spinner-border{
+    width: 22px;
+    height: 22px;
+}
 
+.loginBtn{
+    width: 70px;
+    height: 38px;
+}
+.loginBtn.color{
+    width: 70px;
+    height: 38px;
+    /* background: rgb(22, 21, 21); */
+    opacity: .8;
+}
 </style>

@@ -6,8 +6,10 @@
       <hr size="8px" align="center" width="70%" class="my-4">
       <p class="mt-5">會員ID: {{user.id}}</p>
       <hr size="8px" align="center" width="70%" class="my-4">
-      <button v-if="isShowLogOut" class="btn btn-outline-danger" @click="logOut()" type="click">
-          登出
+      <button v-if="isShowLogOut" class="btn btn-outline-danger logOutBtn" @click="logOut()" type="submit" :class="{ color: spinActive }">
+        <div class="spinner-border" v-show="spinActive" role="status" >
+             <span class="sr-only">Loading...</span>
+         </div>{{logOutText}}
       </button>
     </div>
   </div>
@@ -17,18 +19,23 @@ import Login from '@/views/Login'
   export default {
     data () {
       return {
+        logOutText:'登出',
         isShowLogOut:false
       }
     },
     methods:{
       logOut(){
-          this.$store.commit("user",{});
-          localStorage.setItem('user', "")
-          this.$store.dispatch("DataGetCart");
-          this.$router.push({
-              path: `/login`,
-              component: Login,
-          })  
+        this.spinActive = true
+        this.logOutText=''
+        setTimeout(() => {
+            this.$store.commit("user",{});
+            localStorage.setItem('user', "")
+            this.$store.dispatch("DataGetCart");
+            this.$router.push({
+                path: `/login`,
+                component: Login,
+            })  
+        }, 1000);     
       }
     },
     computed: {
@@ -52,5 +59,21 @@ import Login from '@/views/Login'
 <style scoped>
 #userInfo{
     margin-top: 75px;
+}
+
+.spinner-border{
+    width: 22px;
+    height: 22px;
+}
+
+.logOutBtn{
+    width: 70px;
+    height: 38px;
+}
+.logOutBtn.color{
+    width: 70px;
+    height: 38px;
+    /* background: rgb(22, 21, 21); */
+    opacity: .8;
 }
 </style>

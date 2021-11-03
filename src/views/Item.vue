@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="item">
     <section class="py-3">
           <div class="row align-items-center">
             <div class="slide">
@@ -137,9 +137,10 @@ export default {
 }
 </script>
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.item{
+  margin: 40px;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
