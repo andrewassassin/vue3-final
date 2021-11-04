@@ -31,12 +31,11 @@
                                   v-model="inputTag"                       
                                   class="mr-2 mt-2"
                                 > 
-                                 </div>
-                         </td>   
-                           <td>  
-                                    <p class="m-0">{{item.name}}</p>
-                                
-                         
+                            </div>
+                        </td>   
+                        <td>  
+                            <p class="m-0">{{item.name}}</p>
+                            <img v-if="isShowImg" class="item-img" :src="require(`../assets/img/${item.image[1]}`)" alt="">
                         </td>
                         <td class="text-right">$ {{item.price}}</td>
                         <td class="text-right">
@@ -76,7 +75,8 @@ export default {
         return {
           key:'cart',
           checkBox:[],
-          inputTag:[]
+          inputTag:[],
+          isShowImg:false
         }
     },
     methods: {
@@ -121,6 +121,16 @@ export default {
     },
     created() {
         this.$store.dispatch("DataGetCart");
+        
+        this.itemList.forEach(item=>{
+          console.log('m item',item)
+          if(item.image.length!==0){
+            this.isShowImg = true
+          }
+          item.image = JSON.parse(item.image);
+        })
+        
+        console.log('itemList modal',this.itemList)
         // const itemListStr = localStorage.getItem(this.key);
         // const defaultList = JSON.parse(itemListStr);
         // this.$store.state.itemList = defaultList || []; 
@@ -188,6 +198,11 @@ export default {
 
 .close {
   transform: scale(1.5);
+}
+
+.item-img{
+  width: 100px;
+  height: 100px;
 }
 
 .pi-plus-circle,

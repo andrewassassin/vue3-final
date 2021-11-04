@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <section class="py-3">
+    <header class="py-3">
           <div class="row align-items-center">
             <div class="slide">
               <div class="showImg">
@@ -39,6 +39,18 @@
               </form>          
             </div>
           </div>
+    </header>
+    <section class="my-5">
+      <h3>商品介紹</h3>
+      <div class="top-sec">
+        <div class="top-sec-img">
+          <img src="../assets/img/item-info.jpg" alt="">
+        </div>
+        <div class="top-sec-text">
+          <h4>CABINET DESIGN</h4>
+          <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
+        </div>
+    </div>
     </section>
   </div>
 </template>
@@ -125,7 +137,7 @@ export default {
 </script>
 <style scoped>
 .item{
-  margin: 40px;
+  margin: 40px 0;
 }
 
 ul {
@@ -269,4 +281,59 @@ a {
   background: black;
   color: #fff;
 }
+
+.top-sec{
+  display: flex;
+  width: 100%;
+  height: 600px;
+  background: rgba(238, 238, 238, 0.863);
+  align-items: center;
+  margin: 50px 0;
+  overflow: hidden;
+}
+
+.top-sec:hover img{
+  transform: scale(1.1);
+}
+
+.top-sec-img{
+  position: relative;
+  height: 600px;
+  display: flex;
+  flex: 0 0 50%;
+  align-items: center;
+  overflow: hidden;
+}
+
+.top-sec-img img{
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-width: 100%;
+  height: 600px;
+  /* padding: 150px; */
+  transition: transform 0.5s linear;
+}
+
+
+.top-sec-text{
+  position: relative;
+  color: rgb(0, 0, 0);
+  margin:0 200px;
+  font-family: 'Helvetica';
+}
+
+.top-sec h4 {
+  font-weight: 900;
+}
+
+
+
+.top-sec p{
+  margin-top:18px ;
+  word-wrap: break-word;
+  /* display: block; */
+  text-align: left;
+}
+
 </style>

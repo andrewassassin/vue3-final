@@ -1,4 +1,3 @@
-
 <template >
   <section id="introSection" class="row" >
     <div class="img-head">
@@ -20,7 +19,7 @@
         <i v-if="nextBtn" @click="slideCtrl(-1)" class="slide-next pi pi-angle-double-right" style="fontSize: 2rem" type="button"></i>
       </div>
     </div>
-     <div class="top-sec">
+    <div class="top-sec">
       <div class="top-sec-img">
         <img src="../assets/img/oberon-grille-closeup.jpg" alt="">
       </div>

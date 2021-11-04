@@ -66,7 +66,7 @@ export default {
                         this.$store.commit("user", response.data);
                         this.$store.dispatch("DataGetCart");
                         // this.spinActive = false
-                    }, 2000);
+                    }, 1000);
                 })
                 .catch(error => {
                     console.log('err',error);

@@ -247,7 +247,7 @@ export default {
 .s-input.show {
   /* visibility: visible; */
   width: 180px;
-  transition: .3s ease-in;
+  transition: .2s ease-in;
   opacity: 1;
 } 
 
@@ -255,6 +255,10 @@ input:focus{
   outline:none;
   border:2px #000000 solid;
   transition: .5s auto;
+}
+
+input::-webkit-search-cancel-button{
+  display: none;
 }
 
 .cart-place{
