@@ -300,7 +300,7 @@ a {
   position: relative;
   height: 600px;
   display: flex;
-  flex: 0 0 50%;
+  flex: 0 0 40%;
   align-items: center;
   overflow: hidden;
 }
@@ -312,7 +312,7 @@ a {
   max-width: 100%;
   height: 600px;
   /* padding: 150px; */
-  transition: transform 0.5s linear;
+  transition: transform 0.5s ease;
 }
 
 

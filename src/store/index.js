@@ -73,8 +73,7 @@ export default createStore({
       axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc", uid ,config)
         .then(res => {
               // console.log('cart item',res.data)
-              context.commit('changeIList',res.data)
-              
+              context.commit('changeIList',res.data)         
             })
         .catch(error => {
           console.log('err',error);
