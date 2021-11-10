@@ -9,10 +9,16 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 import PrimeVue from 'primevue/config';
 
-//import Carousel from 'primevue/carousel';
 
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 
-createApp(App).use(store).use(router,axios,VueAxios,PrimeVue).mount('#app')
+
+const app = createApp(App);
+app.use(router)
+app.use(store)
+app.use(VueAxios,axios)
+app.use(PrimeVue);
+app.mount('#app');
+
