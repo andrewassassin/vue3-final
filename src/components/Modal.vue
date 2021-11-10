@@ -11,6 +11,7 @@
               </button>
           </div>
           <div>
+            <ScrollPanel style="width: 100%; height: 600px" class="custombar1">
               <table class="table table-border">
                   <thead>
                       <tr>
@@ -21,6 +22,7 @@
                           <th class="text-right">總計</th>
                       </tr>
                   </thead>
+                  
                   <tbody id="cartTableBody" v-for="(item,idx) in itemList" :key="item.key">
                     <tr>
                         <td>
@@ -46,6 +48,7 @@
                         <td class="text-right">$ {{item.price*item.amount}}</td>
                     </tr>
                   </tbody>
+                  
                   <tfoot id="cartTableFoot">
                     <tr>
                       <th colspan="4" class="text-right">總金額</th>
@@ -53,6 +56,7 @@
                     </tr>
                   </tfoot>
               </table>
+              </ScrollPanel>
           </div>
           <div class="text-right">
               <button @click.prevent="delSelected($event)" type="button" class=" delete-cart">
@@ -65,11 +69,13 @@
                   <i class="fas fa-times"></i> 關閉
               </button>
           </div>
+        
         </div> 
       </div>
   </div>
 </template>
 <script>
+import ScrollPanel from 'primevue/scrollpanel';
 export default {
     data() {
         return {
@@ -78,6 +84,9 @@ export default {
           inputTag:[],
           isShowImg:false
         }
+    },
+    components:{
+      ScrollPanel
     },
     methods: {
       minusItem(event){
@@ -119,16 +128,9 @@ export default {
         this.$store.dispatch("productToData");
       }
     },
-    created() {
-        this.$store.dispatch("DataGetCart");
-        
-        this.itemList.forEach(item=>{
-          console.log('m item',item)
-          if(item.image.length!==0){
-            this.isShowImg = true
-          }
-          item.image = JSON.parse(item.image);
-        })
+  async created() {
+        await this.$store.dispatch("DataGetCart");
+        this.isShowImg = true
         
         console.log('itemList modal',this.itemList)
         // const itemListStr = localStorage.getItem(this.key);

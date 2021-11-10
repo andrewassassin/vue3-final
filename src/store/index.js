@@ -54,7 +54,7 @@ export default createStore({
           console.log('err',error);
         });
     },
-    DataGetCart(context){
+    async DataGetCart(context){
       let uid;
       if(localStorage["user"]){
         const userInfo = localStorage.getItem('user')
@@ -70,10 +70,14 @@ export default createStore({
         }
       }
 
-      axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc", uid ,config)
+      await axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc", uid ,config)
         .then(res => {
               // console.log('cart item',res.data)
-              context.commit('changeIList',res.data)         
+              res.data.forEach(item=>{
+                item.image = JSON.parse(item.image);
+              })
+              context.commit('changeIList',res.data) 
+
             })
         .catch(error => {
           console.log('err',error);
