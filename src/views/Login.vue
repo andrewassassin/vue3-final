@@ -55,7 +55,7 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded",
                 }
             };                
-            axios.post("https://x-home.pcpogo.com/homex/login.php?RDEBUG=andrewc", data, config)
+            axios.post("https://x-home.pcpogo.com/homex/report_country_amazon.php", data, config)
                 .then(response => {
                     setTimeout(() => {
                         this.$router.push({

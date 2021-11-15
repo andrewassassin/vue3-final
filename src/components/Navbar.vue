@@ -231,29 +231,34 @@ export default {
 
 .search-bar{
   position: fixed;
-  right: 16%;
+  right: 14%;
 }
 
 .s-input{
   width: 0px;
   height: 38px;
   opacity: 0;
-  border-radius: 5px;
+  border-radius: 6px;
   transition: .3s ease-in;
-  border: 1px #3a3a3a solid;
+  border:none;
   /* visibility: unset; */
+}
+
+.pi-search{
+  position: relative;
+  left: -40px;
 }
 
 .s-input.show {
   /* visibility: visible; */
-  width: 180px;
+  width: 220px;
   transition: .2s ease-in;
   opacity: 1;
 } 
 
 input:focus{
   outline:none;
-  border:2px #000000 solid;
+  background: rgb(233, 232, 232);
   transition: .5s auto;
 }
 
