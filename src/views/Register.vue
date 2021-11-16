@@ -110,7 +110,7 @@ export default {
             };
             axios
                 .post(
-                    "https://x-home.pcpogo.com/homex/register.php?RDEBUG=andrewc",
+                    "https://x-home.pcpogo.com/px/register.php?PDEBUG=andrewc",
                     data,
                     config
                 )
@@ -137,28 +137,28 @@ export default {
                 /[a-z]/.test(oValue) &&
                 /[A-Z]/.test(oValue)
             ) {
-                this.pwdHint = "Strong";
-                this.value2 = 100;
-                this.activeColor=true
-                this.middle=false
+                // this.pwdHint = "Strong";
+                // this.value2 = 100;
+                // this.activeColor=true
+                // this.middle=false
+                this.changeColorHint("Strong",100,true,false)
             } else if (
                 /^\d+$/.test(oValue) ||
                 /^[A-Z]+$/.test(oValue) ||
                 /^[a-z]+$/.test(oValue)
             ) {
-                this.pwdHint = "Weak";
-                this.value2 = 25;
-                this.middle=false
-                this.activeColor=false
+                this.changeColorHint("Weak",25,false,false)
             } else if(oValue==""){
-                this.value2 = 0;
-                this.pwdHint = "Enter a password"
+                this.changeColorHint("Enter a password",0,false,false)
             } else{
-                this.pwdHint = "Middle";
-                this.value2 = 50;
-                this.middle=true
-                this.activeColor=false
+                this.changeColorHint("Middle",50,false,true)
             }
+        },
+        changeColorHint(hint,value2,acolor,mcolor){
+                this.pwdHint = hint;
+                this.value2 = value2;
+                this.activeColor=acolor
+                this.middle=mcolor
         },
         blur(){
             this.showHint = false

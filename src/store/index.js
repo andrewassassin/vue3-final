@@ -46,7 +46,7 @@ export default createStore({
         itemList: this.state.itemList
       }
       // console.log('cartItem',cartItem)
-      axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc", cartItem ,config)
+      axios.post("https://x-home.pcpogo.com/px/create.php?PDEBUG=andrewc", cartItem ,config)
         .then(res => {
               console.log(res)
             })
@@ -70,7 +70,7 @@ export default createStore({
         }
       }
 
-      await axios.post("https://x-home.pcpogo.com/homex/create.php?RDEBUG=andrewc", uid ,config)
+      await axios.post("https://x-home.pcpogo.com/px/create.php?PDEBUG=andrewc", uid ,config)
         .then(res => {
               // console.log('cart item',res.data)
               res.data.forEach(item=>{
