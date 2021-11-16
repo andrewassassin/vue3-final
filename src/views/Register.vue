@@ -91,7 +91,8 @@ export default {
             },
             value2: 0,
             activeColor:false,
-            middle:false
+            middle:false,
+            api:'register'
         };
     },
     methods: {
@@ -110,7 +111,7 @@ export default {
             };
             axios
                 .post(
-                    "https://x-home.pcpogo.com/px/register.php?PDEBUG=andrewc",
+                    `https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,
                     data,
                     config
                 )

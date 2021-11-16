@@ -33,12 +33,13 @@ import UserInfo from '@/views/UserInfo'
 export default {
     data () {
         return {
-        loginText:'登入',
-        spinActive:false,
-        user:{
-                username:'',
-                password:'',
+            loginText:'登入',
+            spinActive:false,
+            user:{
+                    username:'',
+                    password:'',
             }, 
+            api:'login'
         }
     }, 
     methods:{
@@ -55,7 +56,7 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded",
                 }
             };                
-            axios.post("https://x-home.pcpogo.com/px/login.php?PDEBUG=andrewc", data, config)
+            axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`, data, config)
                 .then(response => {
                     setTimeout(() => {
                         this.$router.push({

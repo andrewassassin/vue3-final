@@ -64,6 +64,7 @@ export default {
             amount:'',
             key:'cart',
             spin: true,
+            api:'product'
         }
     },
     mixins: [slider],
@@ -99,7 +100,7 @@ export default {
             // const itemListStr = localStorage.getItem(this.key);
             // const defaultList = JSON.parse(itemListStr);
             // this.$store.state.itemList = defaultList || []; 
-            await axios.get("https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc")
+            await axios.get(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`)
         .then(response => {
             const item = response.data.find(item=>{
               return item.id == this.id

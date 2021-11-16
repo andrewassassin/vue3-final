@@ -68,10 +68,11 @@ export default {
     const nextBtn = ref(true);
     const transitionSwiper = ref("");
     const count = ref("");
+    const api = ref("tab2");
   
     onMounted(async()=>{
       const count = "0"
-       await axios.post("https://x-home.pcpogo.com/px/tab2.php?PDEBUG=andrewc",count)
+       await axios.post(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,count)
           .then(response => {
             console.log('response',response)
               response.data.forEach(element => {
@@ -123,7 +124,7 @@ export default {
               nextBtn.value= false   
               transitionSwiper.value="slide" 
               count.value="5"
-              await axios.post("https://x-home.pcpogo.com/px/tab2.php?PDEBUG=andrewc",count.value)
+              await axios.post(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,count.value)
                 .then(response => {
                     response.data.forEach(element => {
                       element.image = JSON.parse(element.image)[1]
@@ -150,7 +151,8 @@ export default {
       slideCtrl,
       stopTime,
       setTime,
-      scroll
+      scroll,
+      api
       }
   }
 

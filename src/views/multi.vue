@@ -9,7 +9,7 @@
                 <h6>喇叭類別</h6>
                 <MultiSelect v-model="selectCate" :options="category" optionLabel="category" placeholder="Select category" display="chip" />
             </div>
-            <button @click="goSearch()" class="mt-5 btn btn-info">搜尋</button>
+            <button @click="goMultiSearch()" class="mt-5 btn btn-info">搜尋</button>
         </div>
         <section class="py-3 ">
             <div class="container mt-5">
@@ -71,7 +71,7 @@ export default {
         }
     },
     methods: {
-        goSearch(){
+        goMultiSearch(){
                 const config = {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",

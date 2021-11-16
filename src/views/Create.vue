@@ -56,7 +56,8 @@ export default {
         price:'',
         image:[],
         category: ''
-      }
+      },
+      api:''
     }
   }, 
   methods: {
@@ -77,7 +78,7 @@ export default {
             "Content-Type": "application/x-www-form-urlencoded",
           }
               };
-              axios.post("https://x-home.pcpogo.com/px/insert.php?PDEBUG=andrewc", product, config)
+              axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`, product, config)
                   .then(response => {
                     console.log('res  ', response);
                   })

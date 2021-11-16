@@ -20,7 +20,8 @@ import Login from '@/views/Login'
     data () {
       return {
         logOutText:'登出',
-        isShowLogOut:false
+        isShowLogOut:false,
+        spinActive:false
       }
     },
     methods:{
