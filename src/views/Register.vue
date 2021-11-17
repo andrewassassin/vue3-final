@@ -1,6 +1,6 @@
 <template>
     <div class="hello mt-5">
-        <h3>{{ msg }}</h3>
+        <h3>會員註冊</h3>
         <section class="py-3">
             <div class="container">
                 <div class="row">
@@ -82,7 +82,6 @@ export default {
             showHint:false,
             isActive: true,
             notActive: false,
-            msg: "會員註冊",
             pwdHint: "Enter a password",
             user: {
                 username: "",
@@ -138,10 +137,6 @@ export default {
                 /[a-z]/.test(oValue) &&
                 /[A-Z]/.test(oValue)
             ) {
-                // this.pwdHint = "Strong";
-                // this.value2 = 100;
-                // this.activeColor=true
-                // this.middle=false
                 this.changeColorHint("Strong",100,true,false)
             } else if (
                 /^\d+$/.test(oValue) ||

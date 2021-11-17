@@ -23,6 +23,7 @@
                 </form>
             </div>
         </div>
+        <Toast /> 
     </section>
   </div>
 </template>
@@ -30,6 +31,7 @@
 <script>
 import axios from 'axios'
 import UserInfo from '@/views/UserInfo'
+import Toast from 'primevue/toast';
 export default {
     data () {
         return {
@@ -39,14 +41,15 @@ export default {
                     username:'',
                     password:'',
             }, 
-            api:'login'
+            api:'login',
+            messages: [],
         }
     }, 
+    components:{Toast},
     methods:{
         loginForm () {
             this.spinActive = true
             this.loginText=''
-            console.log('submit')
             const data = {
                 username: this.user.username,
                 password: this.user.password,
@@ -58,6 +61,13 @@ export default {
             };                
             axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`, data, config)
                 .then(response => {
+                    console.log('res',response)
+                    if(response.data.msg==="密碼錯誤"){
+                        this.$toast.add({severity:'error', summary: 'Error Message', detail:'密碼輸入錯誤', life: 3000});
+                        this.spinActive = false
+                        this.loginText='登入'
+                        return;
+                    }
                     setTimeout(() => {
                         this.$router.push({
                             path: `/userinfo`,
@@ -66,16 +76,14 @@ export default {
                         localStorage.setItem('user', JSON.stringify(response.data))
                         this.$store.commit("user", response.data);
                         this.$store.dispatch("DataGetCart");
-                        // this.spinActive = false
                     }, 1000);
                 })
                 .catch(error => {
                     console.log('err',error);
                 });
 
-         }          
-    },
-
+        }          
+    }
 }
 </script>
 <style scoped>
@@ -91,7 +99,6 @@ export default {
 .loginBtn.color{
     width: 70px;
     height: 38px;
-    /* background: rgb(22, 21, 21); */
     opacity: .8;
 }
 </style>

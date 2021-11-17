@@ -16,14 +16,17 @@ import "primeicons/primeicons.css";
 import ProgressBar from 'primevue/progressbar';
 import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
-
+import ToastService from 'primevue/toastservice';
+import Toast from 'primevue/toast';
 const app = createApp(App);
 app.use(router)
 app.use(store)
 app.use(VueAxios,axios)
 app.use(PrimeVue);
+app.use(ToastService)
 app.component('ProgressBar', ProgressBar);
 app.component('Checkbox', Checkbox);
 app.component('Button', Button);
+app.component('Toast', Toast);
 app.mount('#app');
 

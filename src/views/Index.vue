@@ -1,7 +1,7 @@
 <template >
   <section id="introSection" class="row" >
     <div class="img-head">
-      <img src="../assets/img/header2.jpg" class="col-md-12 mb-2 px-0" alt="">
+      <img src="" class="col-md-12 mb-2 px-0" alt="">
       <button @click="scroll()" class="mt-2 mb-5 btn btn-info">往下</button>
     </div>
      <div class="slide" id="slide">
