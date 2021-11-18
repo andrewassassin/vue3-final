@@ -2,7 +2,7 @@
     <div id="modal" class="container">
         <div class="DivOverlapMask">
             <div class="DivDialog">
-                <div class="row justify-content-between">
+                <div class="row justify-content-between ">
                     <h5 class="ml-3">
                         <i class="fas fa-shopping-cart"></i> 購物車
                     </h5>
@@ -14,106 +14,69 @@
                         &times;
                     </button>
                 </div>
-                <div>
-                    <ScrollPanel style="width: 100%; height: 600px" class="custombar1">
-                        <table class="table table-border">
-                            <thead>
-                                <tr>
-                                    <th class="text-center"></th>
-                                    <th class="text-center">產品名稱</th>
-                                    <th class="text-right">單價</th>
-                                    <th class="text-right">數量</th>
-                                    <th class="text-right">總計</th>
-                                </tr>
-                            </thead>
-                            
-                            <tbody id="cartTableBody" v-for="(item, idx) in itemList" :key="item.key">
-                                <tr>
-                                    <td>
-                                        <div class="d-flex row justify-content-center">
-                                            <Checkbox class="mr-2 mt-2" :value="item.id" v-model="inputTag"/>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="m-0">{{ item.name }}</p>
-                                        <img
-                                            v-if="isShowImg"
-                                            class="item-img"
-                                            :src="require(`../assets/img/${item.image[1]}`)"
-                                            alt=""
-                                        />
-                                    </td>
-                                    <td class="text-right">
-                                        $ {{ item.price }}
-                                    </td>
-                                    <td class="text-right">
-                                        <i
-                                            class="pi pi-minus-circle"
-                                            @click="minusItem($event)"
-                                            :id="`${idx}`"
-                                            style="fontsize: 1rem"
-                                            type="button"
-                                        ></i>
-                                        {{ item.amount }}
-                                        <i
-                                            class="pi pi-plus-circle"
-                                            @click="plusItem($event)"
-                                            :id="`${idx}`"
-                                            style="fontsize: 1rem"
-                                            type="button"
-                                        ></i>
-                                    </td>
-                                    <td class="text-right">
-                                        $ {{ item.price * item.amount }}
-                                    </td>
-                                </tr>
-                                    
-                            </tbody>
-                           
-                            <tfoot>
-                                <tr>
-                                    <th colspan="4" class="text-right">
-                                        總金額
-                                    </th>
-                                    <td class="text-right">
-                                        $ {{ getCartValue }}
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </ScrollPanel>
-                             
-                </div>
-                <div class="text-right">
-                    <button
-                        @click.prevent="delSelected($event)"
-                        type="button"
-                        class="delete-cart"
-                    >
-                        刪除所選品項
-                    </button>
-                    <button
-                        id="clearCartBtn"
-                        @click.prevent="clearBtn($event)"
-                        type="button"
-                        class="btn btn-danger ml-3"
-                    >
-                        <i class="fas fa-trash-alt"></i> 清空購物車
-                    </button>
-                    <button
-                        type="button"
-                        @click.prevent="closeBtn()"
-                        class="btn btn-secondary ml-3"
-                    >
-                        <i class="fas fa-times"></i> 關閉
-                    </button>
-                </div>
+                <ScrollPanel style="width: 100%; height: 630px" class="custombar1">
+                    <div v-for="(item, idx) in itemList" class="cart-body" :key="item.key">
+                        <div class="item-top-bar" :class="{ active: inputTag.indexOf(item.id)!==-1}"></div>
+                        <div class="item-body" :class="{ active:  inputTag.indexOf(item.id)!==-1}">
+                            <div class="p-field-checkbox">
+                                <Checkbox :value="item.id" v-model="inputTag"/>
+                            </div>
+                            <div class="item-img">
+                                <img
+                                    v-if="isShowImg"
+                                    :src="require(`../assets/img/${item.image[1]}`)"
+                                    alt=""
+                                />
+                            </div>
+                            <div class="item-content">
+                                <h6>{{ item.name }}</h6>
+                            </div>
+                            <div class="item-price">
+                                $ {{ item.price }}
+                            </div>
+                            <div> 
+                                <i class="pi pi-minus-circle" @click="minusItem($event)" :id="`${idx}`" style="fontsize: 1rem" type="button"></i>
+                                            {{ item.amount }}
+                                <i class="pi pi-plus-circle" @click="plusItem($event)" :id="`${idx}`" style="fontsize: 1rem" type="button"></i>
+                            </div>
+                        </div>
+                    </div>
+                </ScrollPanel>
+                <footer class="cart-footer">
+                    <div class="cart-total-money">
+                        <h6>總金額</h6>
+                        <div> $ {{ getCartValue }}</div>
+                    </div>
+                    <div class="text-right">
+                        <button
+                            @click.prevent="delSelected($event)"
+                            type="button"
+                            class="delete-cart"
+                        >
+                            刪除所選品項
+                        </button>
+                        <button
+                            id="clearCartBtn"
+                            @click.prevent="clearBtn($event)"
+                            type="button"
+                            class="btn btn-danger ml-3"
+                        >
+                            <i class="fas fa-trash-alt"></i> 清空購物車
+                        </button>
+                        <button
+                            type="button"
+                            @click.prevent="closeBtn()"
+                            class="btn btn-secondary ml-3"
+                        >
+                            <i class="fas fa-times"></i> 關閉
+                        </button>
+                    </div> 
+                </footer>
             </div>
         </div>
     </div>
 </template>
 <script>
-import ScrollPanel from "primevue/scrollpanel";
 export default {
     data() {
         return {
@@ -122,9 +85,6 @@ export default {
             inputTag: [],
             isShowImg: false,
         };
-    },
-    components: {
-        ScrollPanel,
     },
     methods: {
         minusItem(event) {
@@ -164,13 +124,12 @@ export default {
 
             this.updateDataToStorage();
             this.$store.dispatch("productToData");
-        },
+        }
     },
     async created() {
         await this.$store.dispatch("DataGetCart");
         this.isShowImg = true;
-
-        console.log("itemList modal", this.itemList);
+        this.inputTag.push(this.itemList[0].id)   
         // const itemListStr = localStorage.getItem(this.key);
         // const defaultList = JSON.parse(itemListStr);
         // this.$store.state.itemList = defaultList || [];
@@ -191,13 +150,10 @@ export default {
     watch: {
         inputTag: function (newval) {
             this.checkBox = newval;
-            console.log("checkBox watch", this.checkBox);
         },
         itemList: {
             handler: function () {
-                // console.log('itemList Change',newval)
-                // console.log('length',newval.length)
-                console.log("length", this.$store.getters.changeCartNum);
+                // console.log("length", this.$store.getters.changeCartNum);
             },
             deep: true,
         },
@@ -228,21 +184,65 @@ export default {
 /* Modal Dialog 層 */
 .DivDialog {
     position: fixed;
-    width: 800px;
+    width: 850px;
     height: 800px;
     margin: 0;
-    padding: 20px;
+    padding: 30px;
     background-color: #ffffff;
     border-radius: 10px;
 }
 
-.close {
-    transform: scale(1.5);
+.p-scrollpanel .p-scrollpanel-content{
+    padding: 0;
 }
 
-.item-img {
-    width: 100px;
-    height: 100px;
+.cart-body{
+    margin: 20px 0;
+}
+
+.item-top-bar{
+    margin: 0 10px;
+    height: 40px;
+}
+
+.item-body{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0 10px;
+    padding: 20px;
+    position: relative;
+}
+
+.item-top-bar.active{
+    background:lightseagreen ;
+}
+
+.item-body.active{
+    border: lightseagreen 2px solid; 
+}
+
+.item-img{
+    width: 150px;
+    margin: 0 50px;
+}
+
+.item-img img{
+    width: 150px;
+    height: 150px;
+}
+
+.item-content{
+    text-align: left;
+    width: 250px;
+}
+
+.item-price{
+    margin: 0 20px;
+}
+
+.close {
+    transform: scale(1.5);
 }
 
 .pi-plus-circle,
@@ -271,6 +271,15 @@ export default {
 .delete-cart:hover {
     background: black;
     color: #fff;
+}
+
+.cart-footer{
+    display: flex;
+    margin: 15px 0;
+}
+
+.cart-total-money{
+    width: 400px;
 }
 
 @media (max-width: 600px) {

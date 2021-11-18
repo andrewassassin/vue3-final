@@ -18,6 +18,7 @@ import Checkbox from 'primevue/checkbox';
 import Button from 'primevue/button';
 import ToastService from 'primevue/toastservice';
 import Toast from 'primevue/toast';
+import ScrollPanel from "primevue/scrollpanel";
 const app = createApp(App);
 app.use(router)
 app.use(store)
@@ -25,6 +26,7 @@ app.use(VueAxios,axios)
 app.use(PrimeVue);
 app.use(ToastService)
 app.component('ProgressBar', ProgressBar);
+app.component('ScrollPanel', ScrollPanel);
 app.component('Checkbox', Checkbox);
 app.component('Button', Button);
 app.component('Toast', Toast);
