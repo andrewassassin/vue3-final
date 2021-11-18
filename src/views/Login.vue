@@ -101,4 +101,8 @@ export default {
     height: 38px;
     opacity: .8;
 }
+
+.p-toast{
+top: 150px;
+}
 </style>

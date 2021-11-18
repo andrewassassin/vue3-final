@@ -15,10 +15,7 @@
                     </button>
                 </div>
                 <div>
-                    <ScrollPanel
-                        style="width: 100%; height: 600px"
-                        class="custombar1"
-                    >
+                    <ScrollPanel style="width: 100%; height: 600px" class="custombar1">
                         <table class="table table-border">
                             <thead>
                                 <tr>
@@ -29,26 +26,12 @@
                                     <th class="text-right">總計</th>
                                 </tr>
                             </thead>
-
-                            <tbody
-                                id="cartTableBody"
-                                v-for="(item, idx) in itemList"
-                                :key="item.key"
-                            >
+                            
+                            <tbody id="cartTableBody" v-for="(item, idx) in itemList" :key="item.key">
                                 <tr>
                                     <td>
-                                        <div
-                                            class="
-                                                d-flex
-                                                row
-                                                justify-content-center
-                                            "
-                                        >
-                                            <Checkbox
-                                                class="mr-2 mt-2"
-                                                :value="item.id"
-                                                v-model="inputTag"
-                                            />
+                                        <div class="d-flex row justify-content-center">
+                                            <Checkbox class="mr-2 mt-2" :value="item.id" v-model="inputTag"/>
                                         </div>
                                     </td>
                                     <td>
@@ -56,9 +39,7 @@
                                         <img
                                             v-if="isShowImg"
                                             class="item-img"
-                                            :src="
-                                                require(`../assets/img/${item.image[1]}`)
-                                            "
+                                            :src="require(`../assets/img/${item.image[1]}`)"
                                             alt=""
                                         />
                                     </td>
@@ -86,9 +67,10 @@
                                         $ {{ item.price * item.amount }}
                                     </td>
                                 </tr>
+                                    
                             </tbody>
-
-                            <tfoot id="cartTableFoot">
+                           
+                            <tfoot>
                                 <tr>
                                     <th colspan="4" class="text-right">
                                         總金額
@@ -100,6 +82,7 @@
                             </tfoot>
                         </table>
                     </ScrollPanel>
+                             
                 </div>
                 <div class="text-right">
                     <button
