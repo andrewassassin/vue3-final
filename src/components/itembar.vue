@@ -1,7 +1,7 @@
 <template>
     <div class="itemBar">
         <h2 class="mt-5">代理品牌</h2>
-        <hr size="8px" align="center" width="70%" class="my-4">
+        <hr size="8px" align="center" width="400px" class="my-4">
         <div class="mt-4 bar-list">              
                 <ul class="mt-2 mt-lg-0">
                     <li class="nav-item mr-5 mt-3">
@@ -37,11 +37,15 @@ export default {
 <style scoped>
 .itemBar{
     background:rgb(3, 8, 53);
+    background-position:62% 60px;
+    background-attachment:fixed;
+    background-repeat:no-repeat;
+    background-size:460px 450px;
     position: fixed;
     top: 75px;
     left: 450px;
     z-index: 5;
-    width: 560px;
+    width: 900px;
     height: 400px;
     border-radius: 10px;
 }
@@ -76,5 +80,9 @@ hr{
 .bar-list a{
     color: rgb(240, 232, 232);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.itemBar:hover{
+    background-image: url('../assets/img/033.jpg');
 }
 </style>
