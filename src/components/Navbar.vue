@@ -16,10 +16,10 @@
                   <li class="nav-item ">
                       <router-link class="nav-link" to="/create">建立商品</router-link>
                   </li>
-                  <li class="nav-item">
+                  <li v-if="isLogin===false" class="nav-item">
                       <router-link class="nav-link" to="/register">會員註冊</router-link>
                   </li>
-                  <li class="nav-item">
+                  <li v-if="isLogin===false" class="nav-item">
                       <router-link class="nav-link" to="/login">會員登入</router-link>
                   </li>          
                 </ul>
