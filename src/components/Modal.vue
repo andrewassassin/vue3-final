@@ -14,12 +14,16 @@
                         &times;
                     </button>
                 </div>
-                <ScrollPanel style="width: 100%; height: 630px" class="custombar1">
+                <ScrollPanel class="custombar1">
+                    <div v-if="cartNoItem" class="cart-empty">
+                        <h6>購物車無商品</h6>
+                        <button class="general-btn" @click="startShop">開始選購</button>
+                    </div>
                     <div v-for="(item, idx) in itemList" class="cart-body" :key="item.key">
                         <div class="item-top-bar" :class="{ active: inputTag.indexOf(item.id)!==-1}"></div>
                         <div class="item-body" :class="{ active:  inputTag.indexOf(item.id)!==-1}">
                             <div class="p-field-checkbox">
-                                <Checkbox :value="item.id" v-model="inputTag"/>
+                                <Checkbox :id="idx" :checked="true" :value="item.id" v-model="inputTag" />
                             </div>
                             <div class="item-img">
                                 <img
@@ -49,19 +53,19 @@
                     </div>
                     <div class="text-right">
                         <button
-                            @click.prevent="delSelected($event)"
+                            @click.prevent="deleteSelected($event)"
                             type="button"
-                            class="delete-cart"
+                            class="general-btn"
                         >
                             刪除所選品項
                         </button>
                         <button
                             id="clearCartBtn"
-                            @click.prevent="clearBtn($event)"
+                            @click.prevent="selectAll($event)"
                             type="button"
-                            class="btn btn-danger ml-3"
+                            class="btn btn-info ml-3"
                         >
-                            <i class="fas fa-trash-alt"></i> 清空購物車
+                         全選
                         </button>
                         <button
                             type="button"
@@ -77,13 +81,14 @@
     </div>
 </template>
 <script>
+import Product from '@/views/Product'
 export default {
     data() {
         return {
             key: "cart",
-            checkBox: [],
             inputTag: [],
             isShowImg: false,
+            cartNoItem:true
         };
     },
     methods: {
@@ -106,36 +111,46 @@ export default {
         closeBtn() {
             this.$emit("closeBtn");
         },
-        clearBtn() {
-            this.$store.state.itemList = [];
-            this.updateDataToStorage();
-            this.$store.dispatch("productToData");
+        selectAll() {       
+            this.itemList.forEach(item=>{
+                if(this.inputTag.indexOf(item.id)===-1){
+                    this.inputTag.push(item.id)
+                }
+            })
         },
         updateDataToStorage() {
             const itemListStr = JSON.stringify(this.itemList);
             localStorage.setItem(this.key, itemListStr);
         },
-        delSelected() {
-            this.checkBox.forEach((item) => {
+        deleteSelected() {
+            this.inputTag.forEach((item) => {
                 const index = this.itemList.map((el) => el.id).indexOf(item);
                 this.itemList.splice(index, 1);
             });
             this.inputTag = [];
-
             this.updateDataToStorage();
             this.$store.dispatch("productToData");
+        },
+        startShop(){
+            this.$router.push({
+                path: `/product`,
+                component: Product,
+            })  
+            this.$emit("closeBtn");
         }
     },
     async created() {
         await this.$store.dispatch("DataGetCart");
         this.isShowImg = true;
-        this.inputTag.push(this.itemList[0].id)   
+        if(this.itemList.length!==0){
+            // this.cartNoItem = false
+            this.inputTag.push(this.itemList[0].id)   
+        }
         // const itemListStr = localStorage.getItem(this.key);
         // const defaultList = JSON.parse(itemListStr);
         // this.$store.state.itemList = defaultList || [];
     },
     computed: {
-        // 2. 將 state 中的 Loaded 用 computed 抓出來給 userLoaded 做使用
         itemList() {
             console.log("vuex itemList ", this.$store.state.itemList);
             return this.$store.state.itemList;
@@ -148,12 +163,16 @@ export default {
         },
     },
     watch: {
-        inputTag: function (newval) {
-            this.checkBox = newval;
+        inputTag: function () {
+            console.log('input tag',this.inputTag)
         },
         itemList: {
             handler: function () {
-                // console.log("length", this.$store.getters.changeCartNum);
+                if(this.itemList.length!==0){
+                    this.cartNoItem = false
+                }else{
+                    this.cartNoItem = true
+                }
             },
             deep: true,
         },
@@ -183,7 +202,7 @@ export default {
 
 /* Modal Dialog 層 */
 .DivDialog {
-    position: fixed;
+    position: relative;
     width: 850px;
     height: 800px;
     margin: 0;
@@ -198,6 +217,7 @@ export default {
 
 .cart-body{
     margin: 20px 0;
+    width: 98%;
 }
 
 .item-top-bar{
@@ -210,7 +230,7 @@ export default {
     flex-wrap: wrap;
     align-items: center;
     margin: 0 10px;
-    padding: 20px;
+    padding: 5px 20px;
     position: relative;
 }
 
@@ -258,7 +278,7 @@ export default {
     border-radius: 40%;
 }
 
-.delete-cart {
+.general-btn {
     width: 150px;
     height: 40px;
     border: 1px #000000 solid;
@@ -268,7 +288,7 @@ export default {
     transition: 0.3s ease;
 }
 
-.delete-cart:hover {
+.general-btn:hover {
     background: black;
     color: #fff;
 }
@@ -282,6 +302,20 @@ export default {
     width: 400px;
 }
 
+.p-scrollpanel{
+    width: 100%;
+    height: 630px;
+}
+
+
+.cart-empty{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 100px;
+}
+
 @media (max-width: 600px) {
     .DivDialog {
         position: fixed;
@@ -292,5 +326,9 @@ export default {
         background-color: #ffffff;
         border-radius: 10px;
     }
+    .p-scrollpanel{
+        height: 330px;
+    }
+
 }
 </style>

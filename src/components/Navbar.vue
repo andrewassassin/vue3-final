@@ -297,12 +297,13 @@ input::-webkit-search-cancel-button{
 
 .itemBar{
   visibility: hidden;
-  transition: .4s ease;
+  transition: .2s ease;
   opacity: 0;
 }
 
 .itemList:hover .itemBar{
   visibility: visible;
+  transition: .6s ease;
   opacity: 1;
 }
 
