@@ -1,9 +1,6 @@
 <template>
   <div class="create mt-5">
-    <h3>新增商品</h3>
     <section class="py-3 section">
-      <div class="">
-        <div class="">
           <form v-on:submit.prevent="createForm($event)" class="createProductForm">
             <div class="create-form-group">
               <label for="productName">商品名稱</label>
@@ -93,31 +90,43 @@
                 <option value="落地喇叭">落地喇叭</option>
               </select>
             </div>
+            <div class="create-form-group">
+                <label class="btn btn-info mb-0">
+                    <input
+                        id="upload_img"
+                        style="display:none;"
+                        accept="image/*"
+                        @change="chooseExcel"
+                        type="file"
+                        multiple
+                    />
+                    上傳產品規格
+                </label>
+            </div>
             <div class="create-form-group my-4">
               <button type="submit" class="btn btn-primary">
-                <i class="fas fa-plus"></i> 新增商品
+                <i class="fas fa-plus"></i> Submit
               </button>
             </div>
           </form>
-        </div>
-      </div>
     </section>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import XLSX from "xlsx"
 export default {
     data() {
         return {
             preview: [],
             imgList: [],
-            showImg: false,
+            speciTable:[],
             product: {
-            name: "",
-            price: "",
-            image: [],
-            category: "",
+                name: "",
+                price: "",
+                image: [],
+                category: ""
             },
             api: "insert",
         }
@@ -130,6 +139,7 @@ export default {
                 image: this.product.image,
                 category: this.product.category,
                 createdAt: new Date().getTime(),
+                specification:this.speciTable
             };
             const config = {
                 headers: {
@@ -171,7 +181,28 @@ export default {
             this.imgList=[]
             this.preview=[]
             this.product.image=[]
-        }
+        },
+        chooseExcel(event) {
+            this.file = event.target.files ? event.target.files[0] : null;
+            if (this.file) {
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                /* Parse data */
+                const bstr = e.target.result;
+                const wb = XLSX.read(bstr, { type: 'binary' });
+                /* Get first worksheet */
+                const wsname = wb.SheetNames[0];
+                const ws = wb.Sheets[wsname];
+                /* Convert array of arrays */
+                const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+                console.log(data)
+                this.speciTable = JSON.stringify(data)
+                }
+
+                reader.readAsBinaryString(this.file);
+            }
+        },      
     },
 }
 </script>

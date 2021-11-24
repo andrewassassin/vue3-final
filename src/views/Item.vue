@@ -50,8 +50,25 @@
           <h4>CABINET DESIGN</h4>
           <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
         </div>
-    </div>
+      </div>
     </section>
+    <div class="specification">
+      <h3>產品規格</h3>
+      <table class="table table-border col-md-6">
+        <thead >
+            <tr>
+              <th v-for="item in columnCnt" :key="item.key" class="text-right">{{item}}</th>
+            </tr>
+        </thead>
+          <tbody id="cartTableBody" v-for="item in specification" :key="item.key">      
+            <tr>
+              <td v-for="column in item" :key="column.key">                                      
+                <p class="m-0 text-right">{{column}}</p> 
+              </td>      
+            </tr>         
+          </tbody>
+      </table>
+    </div>
   </div>
 </template>
 <script>
@@ -64,7 +81,9 @@ export default {
             amount:'',
             key:'cart',
             spin: true,
-            api:'product'
+            api:'product',
+            specification:[],
+            columnCnt:[]
         }
     },
     mixins: [slider],
@@ -101,20 +120,23 @@ export default {
             // const defaultList = JSON.parse(itemListStr);
             // this.$store.state.itemList = defaultList || []; 
             await axios.get(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`)
-        .then(response => {
-            const item = response.data.find(item=>{
-              return item.id == this.id
-            })
-            if(item){
-                this.itemObj  = JSON.parse(item.image)   
-                this.product = item
-                // console.log('item',item)
-            }
-            this.spin = false
-        })
-        .catch(error => {
-          console.log('err',error);
-        });
+              .then(response => {
+                  const item = response.data.find(item=>{
+                    return item.id == this.id
+                  })
+                  if(item){
+                      this.itemObj  = JSON.parse(item.image)   
+                      this.product = item
+                      this.specification = JSON.parse(item.specification)
+                      this.columnCnt = this.specification[0]
+                      this.specification.splice(0,1)
+                      console.log('this.specification',this.specification)
+                  }
+                  this.spin = false
+              })
+              .catch(error => {
+                console.log('err',error);
+              });
         if(this.itemObj.length!==0){
           this.showImg = true
         }
@@ -328,13 +350,22 @@ a {
   font-weight: 900;
 }
 
-
-
 .top-sec p{
   margin-top:18px ;
   word-wrap: break-word;
   /* display: block; */
   text-align: left;
+}
+
+.specification{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.specification h3{
+  width: 100%;
+  margin-bottom: 30px;
 }
 
 </style>
