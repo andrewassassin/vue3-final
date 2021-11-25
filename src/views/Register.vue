@@ -1,6 +1,5 @@
 <template>
     <div class="hello mt-5">
-        <h3>會員註冊</h3>
         <section class="py-3">
             <div class="container">
                 <div class="row">
@@ -19,6 +18,11 @@
                                 class="col-lg-8 form-control"
                                 required
                             />
+                            <button @click.prevent="checkAccount" class="btn btn-info checking-btn" :class="{ color: spinActive }">
+                                <div class="spinner-border" v-show="spinActive" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>{{loginText}}
+                            </button>
                         </div>
                         <div class="form-group row align-items-center mt-5">
                             <label for="userPwd" class="mr-3">會員密碼</label>
@@ -46,7 +50,7 @@
                         <transition>
                             <div v-show="showHint" class="pwd-hint">
                                 <div class="textarea">Pick a password</div>
-                                <ProgressBar :value="value2" :showValue="false" :class="{ safecolor: activeColor, color:middle}" />
+                                <ProgressBar :value="progressRate" :showValue="false" :class="{ safecolor: activeColor, color:middle}" />
                                 <div>{{ pwdHint }}</div>
                             </div>
                         </transition>
@@ -78,6 +82,8 @@ export default {
     name: "Register",
     data() {
         return {
+            loginText:'檢查帳號',
+            spinActive:false,
             typePwd: "password",
             showHint:false,
             isActive: true,
@@ -88,7 +94,7 @@ export default {
                 password: "",
                 name: "",
             },
-            value2: 0,
+            progressRate: 0,
             activeColor:false,
             middle:false,
             api:'register'
@@ -116,6 +122,42 @@ export default {
                 )
                 .then((response) => {
                     console.log("res  ", response);
+                })
+                .catch((error) => {
+                    console.log("err", error);
+                });
+        },
+        checkAccount(){
+            this.spinActive = true
+            this.loginText=''
+            const data = {
+                username: this.user.username,
+            }
+            const config = {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            };
+            axios
+                .post(
+                    `https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,
+                    data,config
+                )
+                .then((response) => {
+                    // console.log("res  ", response.data.msg);
+                    if(response.data.msg==='帳號可使用'){
+                        console.log('帳號可使用')
+                         setTimeout(() => {
+                            this.spinActive = false
+                            this.loginText='帳號可使用'
+                            },1000)
+                        return;
+                    }else{
+                        console.log('帳號已重複')
+                        this.spinActive = false
+                        this.loginText='帳號已重複'
+                        return;
+                    }
                 })
                 .catch((error) => {
                     console.log("err", error);
@@ -150,15 +192,15 @@ export default {
                 this.changeColorHint("Middle",50,false,true)
             }
         },
-        changeColorHint(hint,value2,acolor,mcolor){
+        changeColorHint(hint,progressRate,acolor,mcolor){
                 this.pwdHint = hint;
-                this.value2 = value2;
+                this.progressRate = progressRate;
                 this.activeColor=acolor
                 this.middle=mcolor
         },
         blur(){
             this.showHint = false
-        }
+        },
     },
 };
 </script>
@@ -225,5 +267,15 @@ export default {
 .v-enter-to, .v-leave-from {
   height: 120px;
   opacity: 1;
+}
+
+.spinner-border{
+    width: 22px;
+    height: 22px;
+}
+
+.checking-btn{
+    width: 110px;
+    height: 38px;
 }
 </style>

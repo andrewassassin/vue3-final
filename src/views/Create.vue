@@ -1,5 +1,5 @@
 <template>
-  <div class="create mt-5">
+  <div class="mt-5">
     <section class="py-3 section">
           <form v-on:submit.prevent="createForm($event)" class="createProductForm">
             <div class="create-form-group">
@@ -220,8 +220,14 @@ export default {
 }
 
 .create-form-group {
-  width: 500px;
-  padding: 20px 40px;
+  width: 100%;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.create-form-group label {
+    width: 100px;
 }
 
 .upload {

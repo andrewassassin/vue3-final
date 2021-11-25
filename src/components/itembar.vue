@@ -5,25 +5,25 @@
         <div class="mt-4 bar-list">              
                 <ul class="mt-2 mt-lg-0">
                     <li class="nav-item mr-5 mt-3">
-                      <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> DALI</a>
-                  </li>
-                  <li class="nav-item mr-5 mt-3">
-                      <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KLIPSCH</a>
-                  </li>
-                     <li class="nav-item mr-5 mt-3">
-                      <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> EDIFIER</a>
-                  </li>
+                        <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> DALI</a>
+                    </li>
+                    <li class="nav-item mr-5 mt-3">
+                        <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KLIPSCH</a>
+                    </li>
+                        <li class="nav-item mr-5 mt-3">
+                        <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> EDIFIER</a>
+                    </li>
                 </ul>
                 <ul class="mt-2 mt-lg-0">
                     <li class="nav-item mr-5 mt-3">
-                      <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KEF</a>
-                  </li>
+                        <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KEF</a>
+                    </li>
                     <li class="nav-item mr-5 mt-3">
-                      <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> WHARFEDALE</a>
-                  </li>
+                        <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> WHARFEDALE</a>
+                    </li>
                     <li class="nav-item mr-5 mt-3">
-                      <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> YAMAHA</a>
-                  </li>            
+                        <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> YAMAHA</a>
+                    </li>            
                 </ul>
         </div>
     </div>
@@ -38,6 +38,7 @@ export default {
 .itemBar{
     background:rgb(3, 8, 53);
     background-position:62% 60px;
+    background-image: url('../assets/img/033.jpg');
     background-attachment:fixed;
     background-repeat:no-repeat;
     background-size:460px 450px;
@@ -82,7 +83,4 @@ hr{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-.itemBar:hover{
-    background-image: url('../assets/img/033.jpg');
-}
 </style>

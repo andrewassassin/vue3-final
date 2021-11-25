@@ -9,7 +9,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 import PrimeVue from 'primevue/config';
 
-import 'primeflex/primeflex.css';
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
@@ -19,6 +18,8 @@ import Button from 'primevue/button';
 import ToastService from 'primevue/toastservice';
 import Toast from 'primevue/toast';
 import ScrollPanel from "primevue/scrollpanel";
+import InputText from "primevue/inputtext";
+import Dropdown from "primevue/dropdown";
 const app = createApp(App);
 app.use(router)
 app.use(store)
@@ -30,5 +31,7 @@ app.component('ScrollPanel', ScrollPanel);
 app.component('Checkbox', Checkbox);
 app.component('Button', Button);
 app.component('Toast', Toast);
+app.component('InputText', InputText);
+app.component('Dropdown', Dropdown);
 app.mount('#app');
 
