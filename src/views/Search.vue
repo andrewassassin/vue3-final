@@ -192,8 +192,6 @@ export default {
             goMultiSearch,
             brands,
             category,
-            itemName,
-            api,
         };
     },
 };

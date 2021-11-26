@@ -3,7 +3,7 @@
     <section class="py-3 section">
           <form v-on:submit.prevent="createForm($event)" class="createProductForm">
             <div class="create-form-group">
-              <label for="productName">商品名稱</label>
+              <label for="productName mb-0">商品名稱</label>
               <input
                 type="text"
                 v-model="product.name"
@@ -13,7 +13,7 @@
               />
             </div>
             <div class="create-form-group">
-              <label for="productPrice">商品價格</label>
+              <label for="productPrice mb-0">商品價格</label>
               <input
                 type="number"
                 v-model="product.price"
@@ -170,12 +170,13 @@ export default {
             this.imgList.forEach(img => {
                 this.product.image.push(img.name);
             });
+            this.imgList=[]
+            this.preview=[]
             console.log("product", this.product);
         },
         deleteItem(idx) {
             this.preview.splice(idx, 1);
             this.imgList.splice(idx, 1);
-            this.product.image.splice(idx,1)
         },
         removeAllImg(){
             this.imgList=[]
@@ -227,7 +228,7 @@ export default {
 }
 
 .create-form-group label {
-    width: 100px;
+    width: 150px;
 }
 
 .upload {

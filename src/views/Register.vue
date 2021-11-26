@@ -1,5 +1,5 @@
 <template>
-    <div class="hello mt-5">
+    <div class="mt-5">
         <section class="py-3">
             <div class="container">
                 <div class="row">
@@ -9,7 +9,7 @@
                         class="container col-md-6 py-3"
                     >
                         <div class="form-group row align-items-center">
-                            <label for="userName" class="mr-3">會員帳號</label>
+                            <label for="userName" class="mr-3 mb-0">會員帳號</label>
                             <input
                                 type="text"
                                 v-model="user.username"
@@ -25,7 +25,7 @@
                             </button>
                         </div>
                         <div class="form-group row align-items-center mt-5">
-                            <label for="userPwd" class="mr-3">會員密碼</label>
+                            <label for="userPwd" class="mr-3 mb-0">會員密碼</label>
                             <input
                                 :type="typePwd"
                                 v-model="user.password"
@@ -55,7 +55,7 @@
                             </div>
                         </transition>
                         <div class="form-group row align-items-center mt-5">
-                            <label for="nickName" class="mr-3">會員姓名</label>
+                            <label for="nickName" class="mr-3 mb-0">會員姓名</label>
                             <input
                                 type="text"
                                 v-model="user.name"
