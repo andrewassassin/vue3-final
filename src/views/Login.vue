@@ -1,26 +1,28 @@
 <template>
   <div class="mt-5">
-    <h3>會員登入</h3>
+    <h3>登入</h3>
     <section class="py-3">
         <div class="container">
             <div class="row">
                 <form id="LoginForm" v-on:submit.prevent="loginForm($event)" class="container col-md-6 py-3">
                     <div class="form-group">
-                        <label for="userName">會員帳號</label>
-                        <input type="text" v-model="user.username" placeholder="請輸入帳號" id="userName" class="form-control" required>
+                        <input type="text" v-model="user.username" placeholder="E-mail" id="userName" class="login-input" required>
                     </div>
                     <div class="form-group">
-                        <label for="userPwd">會員密碼</label>
-                        <input type="password" v-model="user.password" placeholder="請輸入密碼" id="userPwd" class="form-control"  required>
+                        <input type="password" v-model="user.password" placeholder="密碼" id="userPwd" class="login-input"  required>
                     </div>
-                    <div class="form-group my-4">
-                        <button type="submit" class="btn btn-primary loginBtn" :class="{ color: spinActive }"> 
+                    <div class="form-group ">
+                        <button type="submit" class="loginBtn" :class="{ color: spinActive }"> 
                             <div class="spinner-border" v-show="spinActive" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>{{loginText}}
                         </button>
                     </div>
-                </form>
+                    <div class="mt-5">
+                        <h6 class="mb-3">忘記密碼了嗎?</h6>
+                        <h6>創建帳戶</h6>
+                    </div>
+                </form>              
             </div>
         </div>
         <Toast /> 
@@ -87,22 +89,53 @@ export default {
 }
 </script>
 <style scoped>
+.login-input{
+    background: rgb(241, 241, 241);
+    width: 500px;
+    height: 50px;
+    border: none;
+    padding: 10px;
+}
+
+.login-input:focus{
+    border-radius: 4px;
+    border: 2px black solid;
+}
+    
+
 .spinner-border{
     width: 22px;
     height: 22px;
 }
 
 .loginBtn{
-    width: 70px;
-    height: 38px;
+    width: 500px;
+    height: 50px;
+    border: 1px #000000 solid;
+    background: rgb(255, 255, 255);
+    border-radius: 0;
+    font-weight: bold;
+    transition: 0.3s ease;
+    color: black;
 }
+
+.loginBtn:hover {
+    background: black;
+    color: #fff;
+}
+
 .loginBtn.color{
-    width: 70px;
-    height: 38px;
-    opacity: .8;
+    opacity: .7;
 }
 
 .p-toast{
-top: 150px;
+    top: 150px;
 }
+
+@media (max-width: 600px) {
+    .login-input,.loginBtn{
+        width: 90vw;
+    }
+}
+
 </style>
