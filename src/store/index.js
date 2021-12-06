@@ -25,7 +25,7 @@ export default createStore({
         }
     },
     getters: {
-        doneTodos: state => {
+        loginState: state => {
             return state.user
         },
         changeCartNum: state => {

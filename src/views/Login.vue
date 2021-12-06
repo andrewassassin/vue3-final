@@ -20,7 +20,7 @@
                     </div>
                     <div class="mt-5">
                         <h6 class="mb-3">忘記密碼了嗎?</h6>
-                        <h6>創建帳戶</h6>
+                        <h6 @click="toRegister" class="create-btn">創建帳戶</h6>
                     </div>
                 </form>              
             </div>
@@ -33,6 +33,7 @@
 <script>
 import axios from 'axios'
 import UserInfo from '@/views/UserInfo'
+import Register from '@/views/Register'
 import Toast from 'primevue/toast';
 export default {
     data () {
@@ -84,6 +85,12 @@ export default {
                     console.log('err',error);
                 });
 
+        },
+        toRegister(){
+             this.$router.push({
+                path: `/register`,
+                component: Register,
+            })  
         }          
     }
 }
@@ -130,6 +137,10 @@ export default {
 
 .p-toast{
     top: 150px;
+}
+
+.create-btn{
+    cursor: pointer;
 }
 
 @media (max-width: 600px) {

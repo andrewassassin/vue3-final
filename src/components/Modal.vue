@@ -52,11 +52,10 @@
                         <div> $ {{ getCartValue }}</div>
                     </div>
                     <div class="text-right">
-                        <button
-                            @click.prevent="deleteSelected($event)"
-                            type="button"
-                            class="general-btn"
-                        >
+                        <button type="button" class="general-btn mr-3">
+                            購買所選品項
+                        </button>
+                        <button @click.prevent="deleteSelected($event)" type="button" class="general-btn">
                             刪除所選品項
                         </button>
                         <button
@@ -299,7 +298,7 @@ export default {
 }
 
 .cart-total-money{
-    width: 400px;
+    width: 300px;
 }
 
 .p-scrollpanel{

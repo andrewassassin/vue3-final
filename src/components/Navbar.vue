@@ -15,13 +15,7 @@
                   </li>
                   <li class="nav-item ">
                       <router-link class="nav-link" to="/create">建立商品</router-link>
-                  </li>
-                  <li v-if="isLogin===false" class="nav-item">
-                      <router-link class="nav-link" to="/register">會員註冊</router-link>
-                  </li>
-                  <li v-if="isLogin===false" class="nav-item">
-                      <router-link class="nav-link" to="/login">會員登入</router-link>
-                  </li>          
+                  </li>      
                 </ul>
           </div>
           <button @click="toggleBar()" class="nav-toggler">
@@ -44,18 +38,17 @@
     </div>
 </template>
 <script>
-import { inject } from "vue";
 import store from "@/store";
 import Modal from '@/components/Modal'
 import itembar from '@/components/itembar'
 import Search from '@/views/Search'
 import UserInfo from '@/views/UserInfo'
-import { ref,watch,computed,onMounted  } from "vue";
+import Login from '../views/Login'
+import { ref,computed,onMounted  } from "vue";
 import { useRouter, useRoute } from "vue-router";
 export default {  
   name: 'Navbar',
   setup(){
-    const reload = inject("reload");
     const myinput = ref(null);
     const router = useRouter();
     const route = useRoute();
@@ -64,10 +57,9 @@ export default {
     const isActive = ref(false);
     const isHoverItem = ref(false);
     const isHoverCart = ref(false);
-    const isLogin = ref(false);
-    const doneTodos = computed(()=>{
-      // console.log('doneTodos',store.getters.doneTodos)
-      return store.getters.doneTodos;
+    const isLogin = ref(true);
+    const loginState = computed(()=>{
+      return store.getters.loginState;
     })
 
     const changeCartNum = computed(()=>{
@@ -82,15 +74,6 @@ export default {
         // const itemListStr = localStorage.getItem("cart");
         // const defaultList = JSON.parse(itemListStr);
         // store.state.itemList = defaultList || []; 
-    })
-
-    watch(doneTodos,function(newVal){
-      // 監聽是否登入，若登入會跑出人頭圖示
-        if(Object.entries(newVal).length !==0){
-          isLogin.value=true
-        }else{
-          isLogin.value=false
-        }
     })
 
     function openModal () {
@@ -130,11 +113,17 @@ export default {
     }
 
     function toUserInfo(){
-      console.log('toUserInfo')
-      router.push({
+      if(Object.entries(loginState.value).length !==0){
+        router.push({
           path: `/userinfo`,
           component: UserInfo,
-      })  
+        }) 
+      }else{
+        router.push({
+          path: `/login`,
+          component: Login,
+        }) 
+      }
     }
 
 
@@ -145,10 +134,7 @@ export default {
         openModal,
         closeModal,
         changeCartNum,
-        innerSearch,
-        reload, 
-        router,
-        route,
+        innerSearch, 
         isActive,
         toggleBar,
         isHoverItem,
@@ -156,7 +142,6 @@ export default {
         isLogin,
         showInput,
         blurFocus,
-        doneTodos,
         toUserInfo
       }
   },

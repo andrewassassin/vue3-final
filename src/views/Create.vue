@@ -1,19 +1,19 @@
 <template>
   <div class="mt-5">
+    <h3>建立商品</h3>
     <section class="py-3 section">
           <form v-on:submit.prevent="createForm($event)" class="createProductForm">
             <div class="create-form-group">
-              <label for="productName mb-0">商品名稱</label>
               <input
                 type="text"
                 v-model="product.name"
                 id="productName"
                 class="form-control"
+                placeholder="商品名稱"
                 required
               />
             </div>
             <div class="create-form-group">
-              <label for="productPrice mb-0">商品價格</label>
               <input
                 type="number"
                 v-model="product.price"
@@ -21,6 +21,7 @@
                 class="form-control"
                 min="1"
                 max="90000"
+                placeholder="商品價格"
                 required
               />
             </div>
@@ -77,12 +78,12 @@
               </div>
             </div>
             <div class="create-form-group">
-              <label for="productCategory">商品分類</label>
               <select
                 v-model="product.category"
                 id="productCategory"
                 class="form-control"
               >
+               <option value="" disabled selected>商品分類</option>
                 <option value="書架喇叭">書架喇叭</option>
                 <option value="腳架" selected>腳架</option>
                 <option value="墊材">墊材</option>
@@ -159,8 +160,9 @@ export default {
             var input = event.target;
             var reader = new FileReader();
             reader.onload = (e) => {
-            this.preview.push(e.target.result);
+              this.preview.push(e.target.result);
             };
+            console.log('this.preview',this.preview)
             // console.log('input.files[0]',input.files[0])
             reader.readAsDataURL(input.files[0]);
             this.imgList.push(input.files[0]);
@@ -168,15 +170,16 @@ export default {
         upload() {
             //讀取圖片路徑
             this.imgList.forEach(img => {
-                this.product.image.push(img.name);
+              if(this.product.image.indexOf(img.name)==-1){
+                  this.product.image.push(img.name)
+                }           
             });
-            this.imgList=[]
-            this.preview=[]
             console.log("product", this.product);
         },
         deleteItem(idx) {
             this.preview.splice(idx, 1);
             this.imgList.splice(idx, 1);
+            this.product.image.splice(idx, 1);
         },
         removeAllImg(){
             this.imgList=[]

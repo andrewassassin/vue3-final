@@ -3,11 +3,14 @@
     <h3>註冊</h3>
     <section class="section">
           <form @submit.prevent="registerForm($event)" class="register-form">
-            <div class="input-group">
-              <input type="text" v-model="user.name" id="nickName" class="register-input" placeholder="姓名" required/>
+            <div v-if="repeatAccount" class="input-group">
+                帳號已有人使用
             </div>
             <div class="input-group">
-              <input type="text" v-model="user.name" id="nickName" class="register-input" placeholder="手機號碼" required/>
+              <input type="text" v-model="user.name" class="register-input" placeholder="姓名" required/>
+            </div>
+            <div class="input-group">
+              <input type="text" v-model="user.phone" class="register-input" placeholder="手機號碼" required/>
             </div>
             <div class="input-group account-group">
               <input
@@ -64,17 +67,18 @@ export default {
   name: "Register",
   data() {
     return {
-      loginText: "檢查帳號",
       spinActive: false,
       typePwd: "password",
       showHint: false,
       isActive: true,
       notActive: false,
+      repeatAccount:false,
       pwdHint: "Enter a password",
       user: {
         username: "",
         password: "",
         name: "",
+        phone:""
       },
       progressRate: 0,
       activeColor: false,
@@ -89,6 +93,7 @@ export default {
         username: this.user.username,
         password: this.user.password,
         name: this.user.name,
+        phone: this.user.phone,
       };
       // console.log('data',data)
       const config = {
@@ -104,6 +109,9 @@ export default {
         )
         .then((response) => {
           console.log("res  ", response);
+          if(response.data.msg==='帳號已有人註冊'){
+              this.repeatAccount = true
+          }
         })
         .catch((error) => {
           console.log("err", error);
