@@ -1,35 +1,35 @@
 <template>
-    <header class="mt-5">
-      <section class="py-3">
-      <div class="container">
-        <h3 class="text-center mb-2">產品列表</h3>
-         <SelectButton v-model="orderSort" :options="options" class="mt-5 mb-3" />
-          <div class="row">
-            <div class="col-md-4 person" v-for="(product,index) in threeList" :key="index">
-              <div class="card my-5 mx-2">
-                <div class="slide-img">
-                  <img :src="require(`../assets/img/${product.image[1]}`)" class="card-img-top">       
-                    <div class="overlay">
-                      <a :id="`${product.id}`" @click="goToProduct($event)" class="buy-btn">Buy Now</a>	
-                    </div>
-                </div>
-                <div class="card-body">
-                  <h4 class="card-title">{{product.name}}</h4>
-                  <h4>
-                    <span class="badge badge-info">
-                    {{product.category}}
-                    </span>
-                  </h4>
-                  <p class="card-text"> $ {{product.price}} NTD</p>               
+    <header class="header">
+      <section class="py-3 p-d-flex p-flex-wrap p-jc-center">
+        <div class="p-md-7">
+          <h1 class="p-text-center p-mb-2">產品列表</h1>
+            <SelectButton v-model="orderSort" :options="options" class="p-mt-5 p-mb-3" />
+            <div class="p-d-flex p-flex-wrap">
+              <div class="p-col-12 p-md-4 person" v-for="(product,index) in threeList" :key="index">
+                <div class="p-my-5 p-mx-3">
+                  <div class="slide-img">
+                    <img :src="require(`../assets/img/${product.image[1]}`)" class="card-img-top">       
+                      <div class="overlay">
+                        <a :id="`${product.id}`" @click="goToProduct($event)" class="buy-btn">Buy Now</a>	
+                      </div>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{product.name}}</h4>
+                    <h4>
+                      <span class="badge badge-info">
+                      {{product.category}}
+                      </span>
+                    </h4>
+                    <p class="card-text"> $ {{product.price}} NTD</p>               
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-      </div>
-    </section>
-     <button @click="topFunction()" class="goBackBtn">
-        <i class="fas fa-chevron-up"></i>
-    </button>
+        </div>
+      </section>
+      <button @click="topFunction()" class="goBackBtn">
+          <i class="fas fa-chevron-up"></i>
+      </button>
 </header>
 
 
@@ -142,7 +142,9 @@ export default {
 
 </script>
 <style scoped>
-
+.header{
+  margin-top: 50px;
+}
 
 .slide-img{
 	height: 450px;

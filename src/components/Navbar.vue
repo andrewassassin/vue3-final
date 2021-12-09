@@ -1,35 +1,40 @@
 <template>
     <div>
-      <nav class="navbar-expand-lg navbar-light fixed-top" id="navBar">
-          <img class="logo" src="../assets/img/logo.png" alt="">
+      <nav class="navbar-light fixed-top" id="navBar">
+          <i class="pi pi-apple p-ml-lg-2" style="fontSize: 2.5rem"></i>
           <div v-bind:class="{ active: isActive }" class="nav-top">              
-                <ul class="mr-auto mt-2 mt-lg-0 nav-ul">
+                <ul class="nav-ul">
                   <li class="nav-item">
-                      <router-link class="nav-link" to="/">回到首頁</router-link>
+                      <router-link class="nav-link" to="/" style="text-decoration:none;">回到首頁</router-link>
                   </li>
                   <li class="nav-item">
-                      <router-link class="nav-link itemList" to="/product">
+                      <router-link class="nav-link itemList" to="/product" style="text-decoration:none;">
                           商品詳情
                             <itembar class="itemBar" />
                       </router-link>
                   </li>
                   <li class="nav-item ">
-                      <router-link class="nav-link" to="/create">建立商品</router-link>
-                  </li>      
+                      <router-link class="nav-link" to="/create" style="text-decoration:none;">建立商品</router-link>
+                  </li>
+                  <li class="nav-item ">
+                      <router-link class="nav-link" to="/productManage" style="text-decoration:none;">商品管理</router-link>
+                  </li>        
                 </ul>
           </div>
           <button @click="toggleBar()" class="nav-toggler">
             <div v-bind:class="{ rotate: isActive }" class="line"></div>
           </button>
-          <form @submit.prevent="innerSearch($event)" class="form-inline mr-5 search-bar">  
-            <input v-model="searchBar" ref="myinput" @blur="blurFocus" :class="{ show: isActive }" class="mr-sm-2 s-input" type="search" placeholder="Search" aria-label="Search">
-            <i class="pi pi-search mr-5" @click="showInput" style="fontSize: 1.5rem" type="button"></i>          
-          </form>
-          <div class="cart-place" @click.prevent="openModal()" @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }">
-            <div id="cartNumber" type="button">{{changeCartNum}}</div>
-            <i class="pi pi-shopping-cart" style="fontSize: 1.6rem" type="button"></i>  
+          <div class="work-brench p-d-flex p-ai-center">
+            <form @submit.prevent="innerSearch($event)" class="search-bar p-mr-5">  
+              <input v-model="searchBar" ref="myinput" @blur="blurFocus" :class="{ show: isExtend }" class="s-input" type="search" placeholder="Search" aria-label="Search">
+              <i class="pi pi-search" @click="showInput" style="fontSize: 1.5rem" type="button"></i>          
+            </form>
+            <div class="cart-place p-mr-5" @click.prevent="openModal()" @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }">
+              <div id="cartNumber" type="button">{{changeCartNum}}</div>
+              <i class="pi pi-shopping-cart" style="fontSize: 1.6rem" type="button"></i>  
+            </div>
+            <i v-if="isLogin" @click="toUserInfo" class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>     
           </div>
-          <i v-if="isLogin" @click="toUserInfo" class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>     
       </nav>
             <transition >
                 <Modal v-if="isClickCart" @closeBtn="closeModal" />
@@ -55,6 +60,7 @@ export default {
     const isClickCart = ref(false);
     const searchBar = ref("");
     const isActive = ref(false);
+    const isExtend = ref(false);
     const isHoverItem = ref(false);
     const isHoverCart = ref(false);
     const isLogin = ref(true);
@@ -104,12 +110,12 @@ export default {
 
 
     function showInput(){
-          isActive.value = true
+          isExtend.value = true
           myinput.value.focus()
     }
     
     function blurFocus(){
-      isActive.value =false
+      isExtend.value =false
     }
 
     function toUserInfo(){
@@ -136,6 +142,7 @@ export default {
         changeCartNum,
         innerSearch, 
         isActive,
+        isExtend,
         toggleBar,
         isHoverItem,
         isHoverCart,
@@ -155,11 +162,6 @@ export default {
 </script>
 
 <style scoped>
-.logo{
-  width: 8%;
-  margin-left: 50px;
-}
-
 #modal{
   z-index: 500000000000;
 }
@@ -174,33 +176,32 @@ export default {
 
 #navBar{
   box-shadow: 0px 5px 10px rgba(0, 0, 0, .2);
-  background:  rgba(255, 255, 255, 0.904);
+  background:  white;
   z-index: 99;
   display: flex;
   align-items: center;
   height:75px;
-  padding: 30px;
-  margin:0  ;
+  border: hidden;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
 
 .nav-top {
   position: fixed;
-  height: auto;
-  overflow: auto;
+  /* overflow: auto; */
   left: 20%;
-  }
+}
 
 .nav-ul {
-  height: 75px;
+  /* height: 75px; */
   display: flex;
   align-items: center;
   list-style-type:none;
-  margin-bottom: 0;
+  margin: 0;
 }
 
-.nav-ul li{
-  height: auto;
-}
 .nav-ul a{
   color: rgb(82, 82, 82);
   height: 75px;
@@ -211,31 +212,43 @@ export default {
 }
 
 .nav-toggler {
-    display: none;
+  display: none;
+}
+
+.work-brench{
+  position: fixed;
+  right: 20%;
+  /* display: flex; */
+  /* width: 150px; */
+  /* padding: 30px; */
 }
 
 .search-bar{
-  position: fixed;
-  right: 14%;
+ display: flex; 
+  align-items: center; 
+
 }
 
 .s-input{
+  position: relative;
+  left: 30px;
   width: 0px;
   height: 38px;
   opacity: 0;
   border-radius: 6px;
   transition: .3s ease-in;
   border:none;
-  /* visibility: unset; */
+  z-index: 1;
 }
 
 .pi-search{
   position: relative;
-  left: -40px;
+  z-index: 2;
+  /* left: -40px; */
 }
 
+
 .s-input.show {
-  /* visibility: visible; */
   width: 220px;
   transition: .2s ease-in;
   opacity: 1;
@@ -252,8 +265,7 @@ input::-webkit-search-cancel-button{
 }
 
 .cart-place{
-  position: fixed;
-  right: 18%;
+  position: relative;
   transition: .3s;
 }
 
@@ -276,8 +288,9 @@ input::-webkit-search-cancel-button{
 }
 
 .pi-user{
-  position: fixed;
-  right: 15%;
+  /* position: fixed;
+  right: 15%; */
+  position: relative;
 }
 
 .itemBar{
@@ -306,7 +319,7 @@ input::-webkit-search-cancel-button{
         width: 100%;
         /* viewport height 100% */
         height: 200px;
-        background: rgba(255, 255, 255, 0.904);
+        background: white;
         transition: all .5s ease-out;
     }
 
@@ -320,25 +333,6 @@ input::-webkit-search-cancel-button{
     .nav-top.active {
         top: 18px;
     }
-
-    .search-bar{
-        left: -340px;
-    }
-
-    .pi-shopping-cart{
-        position: fixed;
-        left: 72%;
-        width: 100px;
-        margin-right: 0;
-        z-index: 50;
-    }
-
-    .pi-user{
-        position: fixed;
-        width: 100px;
-        left: 83%;
-    }
-
 
     .nav-toggler{
         position: fixed;
@@ -386,7 +380,6 @@ input::-webkit-search-cancel-button{
         background: rgb(0, 0, 0);
         display: block;
         position: absolute;
-        /* top: -5px; */
     }
 
     .line:before {
@@ -395,6 +388,10 @@ input::-webkit-search-cancel-button{
 
     .line:after {
         bottom: -8px;
+    }
+
+    .work-brench{
+      right: 10%;
     }
 }
 

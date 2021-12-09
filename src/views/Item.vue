@@ -1,7 +1,7 @@
 <template>
-  <div class="item">
-    <header class="py-3">
-          <div class="row align-items-center">
+  <div class="p-my-5">
+    <header class="p-py-3">
+          <div class="p-d-flex p-ai-center">
             <div class="slide">
               <div class="showImg">
                 <img v-if="showImg" :src="require(`../assets/img/${itemObj[focusIndex]}`)" alt="">
@@ -18,21 +18,17 @@
                 <div class="slide-next" @click="slideCtrl(-1)">Next</div>
               </div>
             </div>
-            <div class="list-sec">
-              <form v-on:submit.prevent="addItem($event)" class="mt-3 card-body">
-                <h2 class="card-title">{{product.name}}</h2>
-                <h4 class="mt-3">
-                  <span class="badge badge-info">
-                    {{product.category}}
-                  </span>
-                </h4>
-                <h4 class="card-text mt-3">TWD ${{product.price}}</h4>
-                <div class="mt-5 form-group amount-buy">
+            <div class="p-md-6">
+              <form v-on:submit.prevent="addItem($event)" class="p-mt-3">
+                <h1 class="card-title">{{product.name}}</h1>
+                <Badge :value="product.category" class="p-mt-2" size="large" severity="info"></Badge>
+                <h2 class="p-mt-3">TWD ${{product.price}}</h2>
+                <div class="p-mt-5 amount-buy">
                     <label>購買數量</label>
-                    <input v-model="amount" class="form-control input-box" type="number" min="1" max="20" required>
+                    <input v-model="amount" class="input-box" type="number" min="1" max="20" required>
                 </div>
-                <div class="mt-5 form-group">
-                    <button class="btn add-cart"  type="submit">
+                <div class="p-mt-5">
+                    <button class="add-cart" type="submit">
                       加入購物車
                     </button>
                 </div> 
@@ -159,9 +155,7 @@ export default {
 }
 </script>
 <style scoped>
-.item{
-  margin: 40px 0;
-}
+
 
 ul {
   list-style-type: none;
@@ -270,13 +264,14 @@ a {
 .amount-buy label{
   font-size: 10px;
   position: absolute;
-  bottom: 40px;
-  left: 350px;
+  bottom: 45px;
+  left: 390px;
 }
 
 
 .input-box{
   width: 150px;
+  height:40px;
   position: relative;
   /* left: 36%; */
 }
@@ -289,15 +284,18 @@ a {
 
 .showImg img{
   width:400px;
- height:400px;
+  height:400px;
 }
 
 .add-cart{
   width: 350px;
   height: 55px;
   border:1px #000000 solid;
+  background: white;
   border-radius: 0;
   font-weight:bold;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .add-cart:hover{

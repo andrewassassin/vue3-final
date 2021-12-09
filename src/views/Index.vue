@@ -1,8 +1,8 @@
 <template >
-  <section id="introSection" class="row" >
+  <section id="introSection" class="p-d-flex p-ai-center p-jc-center p-flex-wrap" >
     <div class="img-head">
-      <img src="" class="col-md-12 mb-2 px-0" alt="">
-      <button @click="scroll()" class="mt-2 mb-5 btn btn-info">往下</button>
+      <img src="" class="p-md-12 p-mb-2 p-px-0" alt="">
+      <button @click="scroll()" class="p-mt-2 p-mb-5 btn btn-info">往下</button>
     </div>
      <div class="slide" id="slide">
       <div class="slide-item">
@@ -295,9 +295,6 @@ export default {
 
 
 #introSection{
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: calc(100vh - 60px);
 }
 

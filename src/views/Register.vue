@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-5">
-    <h3>註冊</h3>
-    <section class="section">
+  <div class="p-mt-5">
+    <h2>註冊</h2>
+    <section class="p-py-3 section">
           <form @submit.prevent="registerForm($event)" class="register-form">
             <div v-if="repeatAccount" class="input-group">
                 帳號已有人使用
@@ -184,6 +184,10 @@ export default {
   margin: 10px 0px;
 }
 
+::-webkit-input-placeholder { /* Chrome, Safari */
+  font-size: 16px;
+}   
+
 /* 密碼強度驗證區塊 */
 .pwd-hint {
   position: absolute;
@@ -268,11 +272,13 @@ export default {
     font-weight: bold;
     transition: 0.3s ease;
     color: black;
+    font-size: 16px;
 }
 
 .registerBtn:hover {
     background: black;
     color: #fff;
+    cursor: pointer;
 }
 
 @media (max-width: 600px) {

@@ -1,27 +1,27 @@
 <template>
     <div class="itemBar">
-        <h2 class="mt-5">代理品牌</h2>
-        <hr size="8px" align="center" width="400px" class="my-4">
-        <div class="mt-4 bar-list">              
-                <ul class="mt-2 mt-lg-0">
-                    <li class="nav-item mr-5 mt-3">
+        <h2 class="p-mt-5">代理品牌</h2>
+        <hr size="8px" align="center" width="400px" class="p-my-4">
+        <div class="p-mt-4 bar-list">              
+                <ul class="p-mt-2 p-d-flex p-flex-wrap">
+                    <li class="p-mr-6 p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> DALI</a>
                     </li>
-                    <li class="nav-item mr-5 mt-3">
+                    <li class="p-mr-5 p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KLIPSCH</a>
                     </li>
-                        <li class="nav-item mr-5 mt-3">
+                        <li class="p-mr-5 p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> EDIFIER</a>
                     </li>
                 </ul>
-                <ul class="mt-2 mt-lg-0">
-                    <li class="nav-item mr-5 mt-3">
+                <ul class="p-mt-2 mt-lg-0">
+                    <li class="p-mr-5 p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KEF</a>
                     </li>
-                    <li class="nav-item mr-5 mt-3">
+                    <li class="p-mr-5 p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> WHARFEDALE</a>
                     </li>
-                    <li class="nav-item mr-5 mt-3">
+                    <li class="p-mr-5 p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> YAMAHA</a>
                     </li>            
                 </ul>

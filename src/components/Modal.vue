@@ -1,18 +1,12 @@
 <template>
-    <div id="modal" class="container">
+    <div id="modal" class="">
         <div class="DivOverlapMask">
             <div class="DivDialog">
-                <div class="row justify-content-between ">
-                    <h5 class="ml-3">
-                        <i class="fas fa-shopping-cart"></i> 購物車
-                    </h5>
-                    <button
-                        type="button"
-                        v-on:click.prevent="closeBtn()"
-                        class="close mb-3 mr-3"
-                    >
-                        &times;
-                    </button>
+                <div class="p-d-flex p-jc-between">
+                    <h2 class="ml-3">
+                         購物車
+                    </h2>
+                    <i v-on:click.prevent="closeBtn()" style="fontSize: 1.5rem" class="p-mt-3 pi pi-times close"></i>      
                 </div>
                 <ScrollPanel class="custombar1">
                     <div v-if="cartNoItem" class="cart-empty">
@@ -33,7 +27,7 @@
                                 />
                             </div>
                             <div class="item-content">
-                                <h6>{{ item.name }}</h6>
+                                <p>{{ item.name }}</p>
                             </div>
                             <div class="item-price">
                                 $ {{ item.price }}
@@ -46,33 +40,20 @@
                         </div>
                     </div>
                 </ScrollPanel>
-                <footer class="cart-footer">
+                <footer class="cart-footer p-mt-2">
                     <div class="cart-total-money">
-                        <h6>總金額</h6>
+                        <p>總金額</p>
                         <div> $ {{ getCartValue }}</div>
                     </div>
-                    <div class="text-right">
-                        <button type="button" class="general-btn mr-3">
+                    <div class="p-d-flex p-ai-center">
+                        <button type="button" class="general-btn p-mr-3">
                             購買所選品項
                         </button>
                         <button @click.prevent="deleteSelected($event)" type="button" class="general-btn">
                             刪除所選品項
                         </button>
-                        <button
-                            id="clearCartBtn"
-                            @click.prevent="selectAll($event)"
-                            type="button"
-                            class="btn btn-info ml-3"
-                        >
-                         全選
-                        </button>
-                        <button
-                            type="button"
-                            @click.prevent="closeBtn()"
-                            class="btn btn-secondary ml-3"
-                        >
-                            <i class="fas fa-times"></i> 關閉
-                        </button>
+                        <Button class="p-mx-3 p-button-info" @click.prevent="selectAll($event)" label="全選" />
+                        <Button @click.prevent="closeBtn" label="關閉" />
                     </div> 
                 </footer>
             </div>
@@ -205,7 +186,7 @@ export default {
     width: 850px;
     height: 800px;
     margin: 0;
-    padding: 30px;
+    padding: 0 30px;
     background-color: #ffffff;
     border-radius: 10px;
 }
@@ -260,8 +241,8 @@ export default {
     margin: 0 20px;
 }
 
-.close {
-    transform: scale(1.5);
+.close{
+    cursor: pointer;
 }
 
 .pi-plus-circle,
@@ -284,7 +265,9 @@ export default {
     background: rgb(255, 255, 255);
     border-radius: 0;
     font-weight: bold;
+    font-size: 16px;
     transition: 0.3s ease;
+    cursor: pointer;
 }
 
 .general-btn:hover {
@@ -294,7 +277,7 @@ export default {
 
 .cart-footer{
     display: flex;
-    margin: 15px 0;
+    margin: 0px 0;
 }
 
 .cart-total-money{

@@ -4,8 +4,8 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import 'bootstrap/dist/js/bootstrap.min'
-import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap/dist/js/bootstrap.min'
+// import 'bootstrap/dist/css/bootstrap.css'
 
 import PrimeVue from 'primevue/config';
 
@@ -20,6 +20,10 @@ import Toast from 'primevue/toast';
 import ScrollPanel from "primevue/scrollpanel";
 import InputText from "primevue/inputtext";
 import Dropdown from "primevue/dropdown";
+import Badge from 'primevue/badge';
+import TieredMenu from 'primevue/tieredmenu';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 const app = createApp(App);
 app.use(router)
 app.use(store)
@@ -33,5 +37,9 @@ app.component('Button', Button);
 app.component('Toast', Toast);
 app.component('InputText', InputText);
 app.component('Dropdown', Dropdown);
+app.component('Badge', Badge);
+app.component('TieredMenu', TieredMenu);
+app.component('DataTable', DataTable);
+app.component('Column', Column);
 app.mount('#app');
 

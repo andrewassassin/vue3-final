@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-5">
-    <h3>登入</h3>
-    <section class="py-3">
+  <div class="p-mt-5">
+    <h2>登入</h2>
+    <section class="p-py-3">
         <div class="container">
             <div class="row">
                 <form id="LoginForm" v-on:submit.prevent="loginForm($event)" class="container col-md-6 py-3">
@@ -9,12 +9,13 @@
                         <input type="text" v-model="user.username" placeholder="E-mail" id="userName" class="login-input" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" v-model="user.password" placeholder="密碼" id="userPwd" class="login-input"  required>
-                    </div>
+                        <input type="password" v-model="user.password" placeholder="密碼" id="userPwd" class="login-input"  required>				
+					</div>
                     <div class="form-group ">
                         <button type="submit" class="loginBtn" :class="{ color: spinActive }"> 
-                            <div class="spinner-border" v-show="spinActive" role="status">
-                                <span class="sr-only">Loading...</span>
+                            
+                            <div class="spinner-border " v-show="spinActive" role="status">
+                                <i class="pi pi-spin pi-spinner" style="fontSize: 2rem"></i>
                             </div>{{loginText}}
                         </button>
                     </div>
@@ -96,6 +97,10 @@ export default {
 }
 </script>
 <style scoped>
+.form-group{
+    margin: 15px;
+}
+
 .login-input{
     background: rgb(241, 241, 241);
     width: 500px;
@@ -109,6 +114,9 @@ export default {
     border: 2px black solid;
 }
     
+::-webkit-input-placeholder { /* Chrome, Safari */
+    font-size: 16px;
+}   
 
 .spinner-border{
     width: 22px;
@@ -124,11 +132,13 @@ export default {
     font-weight: bold;
     transition: 0.3s ease;
     color: black;
+    font-size: 16px;
 }
 
 .loginBtn:hover {
     background: black;
     color: #fff;
+    cursor: pointer;
 }
 
 .loginBtn.color{

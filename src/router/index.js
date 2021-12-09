@@ -8,6 +8,7 @@ import Create from '../views/Create'
 import Login from '../views/Login'
 import Register from '../views/Register'
 import UserInfo from '../views/UserInfo'
+import ProductManage from '../views/ProductManage'
 const routes = [
   {
     path: '/',
@@ -55,13 +56,28 @@ const routes = [
   {
     path: '/userinfo',
     name: 'userinfo',
-    component: UserInfo
+    component: UserInfo,
+    redirect: '/userinfo/info',
+    children: [
+      {
+      path: 'info',
+      component: () => import('../views/Info.vue')
+      },
+    ]
+  },
+  {
+    path: '/productManage',
+    name: 'ProductManage',
+    component: ProductManage
   },
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  scrollBehavior() {
+    return { left: 0, top: 0, behavior: "smooth" };
+  },
 })
 
 export default router
