@@ -4,45 +4,44 @@
         <h3>會員資料</h3>
     </div>
     <div class="p-text-left">
-      <p>帳號: {{user.username}}</p>
+      <div>
+        <div class="p-mb-1">E-mail</div>
+        <p v-if="changeInfo">{{user.username}}</p>
+        <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12" v-model="user.username" placeholder="" type="text" />
+      </div>
       <hr size="1px" align="left" class="p-my-4">
-      <p class="p-mt-5">ID: {{user.id}}</p>
+      <div>
+        <div class="p-mb-1">姓名</div>
+        <p v-if="changeInfo">{{user.name}}</p>
+        <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12" v-model="user.name" placeholder="" type="text" />
+      </div>
       <hr size="1px" align="left" width="100%" class="p-my-4">
-      <p>姓名: {{user.name}}</p>
+      <div>
+        <div class="p-mb-1">電話</div>
+        <p v-if="changeInfo">{{user.phone}}</p>
+        <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12" v-model="user.phone" type="text" />
+      </div>
       <hr size="1px" align="left" width="100%" class="p-my-4">
-      <p>電話: {{user.phone}}</p>
-      <hr size="1px" align="left" width="100%" class="p-my-4">
-      <button type="submit" class="logout-Btn" @click="logOut" :class="{ color: spinActive }">                        
-            <div class="spinner-border " v-show="spinActive" role="status">
-                <i class="pi pi-spin pi-spinner" style="fontSize: 2rem"></i>
-            </div>{{logOutText}}
-        </button>
+      <button type="submit" class="logout-Btn" @click="changeInfo?editInfo():saveInfo()">{{changeInfo?'編輯':'儲存'}}</button>
     </div>
   </div>
 </template>
 <script>
-import Login from '@/views/Login'
   export default {
     data () {
       return {
-        logOutText:'登出',
-        isShowLogOut:false,
-        spinActive:false,
+        changeInfo:true
       }
     },
     methods:{
-      logOut(){
-        this.spinActive = true
-        this.logOutText=''
-        setTimeout(() => {
-            this.$store.commit("user",{});
-            localStorage.setItem('user', "")
-            this.$store.dispatch("DataGetCart");
-            this.$router.push({
-                path: `/login`,
-                component: Login,
-            })  
-        }, 1000);     
+      editInfo(){
+        this.changeInfo=false
+      },
+      saveInfo(){
+        console.log('saveInfo')
+        console.log('userNew',this.user)
+        localStorage.setItem('user', JSON.stringify(this.user))
+        this.changeInfo=true
       }
     },
     computed: {
@@ -50,26 +49,12 @@ import Login from '@/views/Login'
         console.log('userid info ',this.$store.state.user)  
         return this.$store.state.user;
       },
-      userFromVuex(){
-        return this.$store.state.user;
-      }
     },
     mounted(){
-         if(Object.entries(this.userFromVuex).length !==0){
-          this.isShowLogOut = true
-        }else{
-          this.isShowLogOut = false
-        }
     }
 }
 </script>
 <style scoped>
-
-.spinner-border{
-    width: 22px;
-    height: 22px;
-}
-
 .logout-Btn{
     width: 500px;
     height: 50px;

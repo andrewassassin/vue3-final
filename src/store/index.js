@@ -87,6 +87,9 @@ export default createStore({
                 .catch(error => {
                     console.log('err', error);
                 });
+        },
+        changeUserInfo(){
+            
         }
     }
 })
