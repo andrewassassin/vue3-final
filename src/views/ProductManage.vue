@@ -5,28 +5,28 @@
         </div>
         <section class="p-md-12 p-d-flex p-jc-center">
             <table class="pro-table p-md-8 p-col-12">
-                <thead>
+                <thead style="display:block;">
                     <tr class="p-text-left">
                         <th style="width:14rem" v-for="item in productTitle" :key="item.key" >{{item}}</th>
                     </tr>
                 </thead>
-                <ScrollPanel style="height: 500px">
-                <tbody id="cartTableBody" v-for="(item,idx) in manageList" :key="item.key">      
-                    <tr class="product-list">
-                        <td v-for="(column,order) in item" :key="order" style="width:14rem">  
-                            <div class="p-text-left">                                  
-                                <p :class="{'selectedClass': selected === idx}" class="p-m-0">{{column}}</p>
-                            </div>  
-                            <div class="p-d-flex p-jc-end">
-                                <InputText style="max-width:12rem" :style="(selected === idx?'display:block;':'display:none;')" v-model="item[order]" :value="item[order]" type="text" />  
-                            </div>  			
-                        </td>
-                        <td>
-                            <Button @click="selected === idx? saveBtn(idx):editBtn(idx)" :label="(selected === idx?'儲存':'編輯')" class="p-ml-3"/>
-                        </td>     
-                    </tr>         
-                </tbody>
-                 </ScrollPanel>
+                <ScrollPanel style="width: 100%; height: 600px">
+                    <tbody id="cartTableBody">      
+                        <tr class="product-list"  v-for="(item,idx) in manageList" :key="item">
+                            <td v-for="(column,order) in item" :key="order" style="width:14rem">  
+                                <div class="p-text-left">                                  
+                                    <p :class="{'selectedClass': selected === idx}" class="p-m-0">{{column}}</p>
+                                </div>  
+                                <div class="p-d-flex p-jc-end">
+                                    <InputText style="max-width:12rem" :style="(selected === idx?'display:block;':'display:none;')" v-model="item[order]" :value="item[order]" type="text" />  
+                                </div>  			
+                            </td>
+                            <td>
+                                <Button @click="selected === idx? saveBtn(idx):editBtn(idx)" :label="(selected === idx?'儲存':'編輯')" class="p-ml-3"/>
+                            </td>     
+                        </tr>         
+                    </tbody>
+                </ScrollPanel>
             </table>
         </section>
     </div>
