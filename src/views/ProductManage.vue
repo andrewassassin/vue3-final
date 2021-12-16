@@ -6,10 +6,11 @@
         <section class="p-md-12 p-d-flex p-jc-center">
             <table class="pro-table p-md-8 p-col-12">
                 <thead>
-                    <tr class="p-text-left p-md-12">
-                        <th v-for="item in productTitle" :key="item.key" >{{item}}</th>
+                    <tr class="p-text-left">
+                        <th style="width:14rem" v-for="item in productTitle" :key="item.key" >{{item}}</th>
                     </tr>
                 </thead>
+                <ScrollPanel style="height: 500px">
                 <tbody id="cartTableBody" v-for="(item,idx) in manageList" :key="item.key">      
                     <tr class="product-list">
                         <td v-for="(column,order) in item" :key="order" style="width:14rem">  
@@ -25,6 +26,7 @@
                         </td>     
                     </tr>         
                 </tbody>
+                 </ScrollPanel>
             </table>
         </section>
     </div>
@@ -45,26 +47,19 @@ export default {
             console.log('安安')
             selected.value = -10
             console.log('new value',manageList.value[idx])
-            // const config = {
-            //     headers: {
-            //     "Content-Type": "application/x-www-form-urlencoded",
-            //     },
-            // };
-            // axios
-            //     .post(
-            //     `https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,
-            //     data,
-            //     config
-            //     )
-            //     .then((response) => {
-            //     console.log("res  ", response);
-            //     if(response.data.msg==='帳號已有人註冊'){
-            //         this.repeatAccount = true
-            //     }
-            //     })
-            //     .catch((error) => {
-            //     console.log("err", error);
-            //     });
+            const config = {
+                headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                },
+            };
+            axios.post(
+                `https://x-home.pcpogo.com/px/productManege.php?PDEBUG=andrewc`, manageList.value[idx],config)
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((error) => {
+                console.log("err", error);
+                });
         }
         onMounted(() => {
             axios.get(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`)

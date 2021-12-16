@@ -31,9 +31,9 @@
             </form>
             <div class="cart-place p-mr-5" @click.prevent="openModal()" @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }">
               <div id="cartNumber" type="button">{{changeCartNum}}</div>
-              <i class="pi pi-shopping-cart" style="fontSize: 1.6rem" type="button"></i>  
+              <i class="pi pi-shopping-cart" style="fontSize: 1.6rem;cursor:pointer" type="button"></i>  
             </div>
-            <i v-if="isLogin" @click="toUserInfo" class="pi pi-user" style="fontSize: 1.6rem" type="button" aria-current="page"></i>     
+            <i v-if="isLogin" @click="toUserInfo" class="pi pi-user" style="fontSize: 1.6rem;cursor:pointer" type="button" aria-current="page"></i>     
           </div>
       </nav>
             <transition >
@@ -285,12 +285,6 @@ input::-webkit-search-cancel-button{
   left: 12px;
   color: white;
   transform: scale(.6);
-}
-
-.pi-user{
-  /* position: fixed;
-  right: 15%; */
-  position: relative;
 }
 
 .itemBar{
