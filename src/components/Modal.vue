@@ -1,5 +1,5 @@
 <template>
-    <div id="modal" class="">
+    <div id="modal">
         <div class="DivOverlapMask">
             <div class="DivDialog">
                 <div class="p-d-flex p-jc-between">

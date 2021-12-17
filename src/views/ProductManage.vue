@@ -3,6 +3,9 @@
         <div class="p-md-12">
             <h2>商品管理</h2>
         </div>
+        <div class="p-md-12">
+            <Button @click="filterGo" label="篩選" class="p-ml-3 p-btn-warn"/>
+        </div>
         <section class="p-md-12 p-d-flex p-jc-center">
             <table class="pro-table p-md-8 p-col-12">
                 <thead style="display:block;">
@@ -17,9 +20,19 @@
                                 <div class="p-text-left">                                  
                                     <p :class="{'selectedClass': selected === idx}" class="p-m-0">{{column}}</p>
                                 </div>  
-                                <div class="p-d-flex p-jc-end">
-                                    <InputText style="max-width:12rem" :style="(selected === idx?'display:block;':'display:none;')" v-model="item[order]" :value="item[order]" type="text" />  
-                                </div>  			
+                                <div class="p-d-flex p-jc-start">
+                                    <InputText v-show="selected === idx && order !== 4" style="max-width:12rem" v-model="item[order]" :value="item[order]" type="text" />  
+                                </div>  
+                                <div class="p-d-flex p-jc-start">
+                                    <Dropdown
+                                        v-show="selected === idx && order === 4"
+                                        v-model="item[order]"
+                                        :options="sellings"
+                                        optionLabel="name"
+                                        optionValue="code"
+                                        style="width:12rem"
+                                        placeholder="商品分類" /> 
+                                </div> 			
                             </td>
                             <td>
                                 <Button @click="selected === idx? saveBtn(idx):editBtn(idx)" :label="(selected === idx?'儲存':'編輯')" class="p-ml-3"/>
@@ -40,6 +53,13 @@ export default {
         const api = ref('product')
         const manageList = ref([]);
         const productTitle=  ref([]);
+        const sellings = ref([
+			{ name: '書架喇叭', code: '書架喇叭' },
+			{ name: '腳架', code: '腳架' },
+			{ name: '墊材', code: '墊材' },
+            { name: '藍芽喇叭', code: '藍芽喇叭' },
+			{ name: '落地喇叭', code: '落地喇叭' },
+	]);
         function editBtn(idx){
             selected.value =idx
         }
@@ -49,7 +69,7 @@ export default {
             console.log('new value',manageList.value[idx])
             const config = {
                 headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
+                    "Content-Type": "application/x-www-form-urlencoded",
                 },
             };
             axios.post(
@@ -58,8 +78,11 @@ export default {
                     console.log(response)
                 })
                 .catch((error) => {
-                console.log("err", error);
+                    console.log("err", error);
                 });
+        }
+        function filterGo(){
+            console.log('manageList filter',manageList.value)
         }
         onMounted(() => {
             axios.get(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`)
@@ -82,7 +105,7 @@ export default {
 			
 		});
 
-        return{manageList,editBtn,productTitle,selected,saveBtn}
+        return{manageList,editBtn,productTitle,selected,saveBtn,sellings,filterGo}
     }
 }
 </script>
