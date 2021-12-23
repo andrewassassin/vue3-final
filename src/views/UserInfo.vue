@@ -7,6 +7,11 @@
       <div class="p-md-12">
         <Button @click.prevent="logOut" label="登出"  class="p-ml-3"/>
       </div>
+      <testSlot>
+        <template #title>
+          測試用
+        </template>
+      </testSlot>
     </div>
     <section class="p-md-6">
       <router-view></router-view>
@@ -15,6 +20,7 @@
 </template>
 <script>
 import Login from '@/views/Login'
+import testSlot from '@/components/testSlot'
   export default {
     data () {
       return {
@@ -45,11 +51,11 @@ import Login from '@/views/Login'
                   label:'收藏名單',
                   icon:'pi pi-fw pi-file',
                 },
-             ],
-              logOutText:'編輯',
+        ],
+        logOutText:'編輯',
         isShowLogOut:false,
         spinActive:false,
-        changeInfo:true
+        changeInfo:true,
       }
     },
     methods:{
@@ -66,6 +72,9 @@ import Login from '@/views/Login'
             })  
         }, 1000);     
       },
+    },
+    components: {
+      testSlot
     },
     computed: {
       user() {

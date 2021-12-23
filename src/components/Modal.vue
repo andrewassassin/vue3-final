@@ -6,7 +6,9 @@
                     <h2 class="ml-3">
                          購物車
                     </h2>
-                    <i v-on:click.prevent="closeBtn()" style="fontSize: 1.5rem" class="p-mt-3 pi pi-times close"></i>      
+                    <div class="close-btn">
+                        <i v-on:click.prevent="closeBtn()" style="fontSize: 1.3rem" class="p-mt-3 pi pi-times close"></i>      
+                    </div>
                 </div>
                 <ScrollPanel class="custombar1">
                     <div v-if="cartNoItem" class="cart-empty">
@@ -241,8 +243,25 @@ export default {
     margin: 0 20px;
 }
 
-.close{
+.close-btn{
+    position: relative;
+    margin-top: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     cursor: pointer;
+    transition: .3s ease;
+}
+
+.close{
+    position: absolute;
+    top: 10%;
+    left: 51%;
+    transform: translate(-50%,-50%);
+}
+
+.close-btn:hover{
+    background: rgb(224, 224, 224);
 }
 
 .pi-plus-circle,

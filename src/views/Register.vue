@@ -130,11 +130,7 @@ export default {
       console.log("keyup!", oValue);
       if (/\d/.test(oValue) && /[a-z]/.test(oValue) && /[A-Z]/.test(oValue)) {
         this.changeColorHint("Strong", 100, true, false);
-      } else if (
-        /^\d+$/.test(oValue) ||
-        /^[A-Z]+$/.test(oValue) ||
-        /^[a-z]+$/.test(oValue)
-      ) {
+      } else if (/^\d+$/.test(oValue) ||/^[A-Z]+$/.test(oValue) ||/^[a-z]+$/.test(oValue)) {
         this.changeColorHint("Weak", 25, false, false);
       } else if (oValue == "") {
         this.changeColorHint("Enter a password", 0, false, false);
