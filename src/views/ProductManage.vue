@@ -4,7 +4,6 @@
             <h2>商品管理</h2>
         </div>
         <div class="p-md-12">
-            <Button @click="filterGo" label="篩選" class="p-ml-3 p-btn-warn"/>
             <Button @click="deleteSelect" label="刪除所選品項" class="p-ml-3 p-btn-warn"/>
         </div>
         <section class="p-md-12 p-d-flex p-jc-center">
@@ -12,11 +11,16 @@
                 <thead style="display:block;">
                     <tr class="p-text-left" >
                         <th class="">
-                            <Checkbox  :value="1" @click="checkAll()" :checked="true" v-model="selectAllCheck" />
+                            <Checkbox :value="1" @click="checkAll()" :checked="true" v-model="selectAllCheck" />
                         </th>
-                        <th v-for="(item,idx) in productTitle" :key="item.key" :style="idx===3?'width:14rem;':'width:12rem;'">{{item}}</th>
-                        <th class="">
-                            <Button @click="selected === idx? saveBtn(idx):editBtn(idx)" :label="(selected === idx?'儲存':'編輯')" />
+                        <th v-for="(item,idx) in productTitle" :key="item.key" :style="idx===3?'width:14rem;':'width:12rem;'">
+                            <div @click="idx===2?filterPriceDown():none" class="p-d-flex p-jc-between " style="cursor:pointer;">
+                                <div class="p-d-flex p-ai-center" >
+                                    {{item}}                    
+                                    <i v-show="idx===2" :class="{'pi-sort-amount-down': priceLow === true,'pi-sort-amount-up-alt': priceLow === false}" class="pi p-ml-2" style="font-size: 1rem;"></i>
+                                </div>
+                                <Button @click="priceFilter" icon="pi pi-filter" class="p-button-rounded p-button-text p-button-plain"/>
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -64,6 +68,7 @@ export default {
         const selected = ref();
         const selectAllCheck= ref([]);
         const ifAllCheck = ref(false);
+        const priceLow = ref(false);
         const api = ref('product')
         const manageList = ref([]);
         const filterList = ref(null);
@@ -97,13 +102,23 @@ export default {
                     console.log("err", error);
                 });
         }
-        function filterGo(){
-            filterList.value = manageList.value.sort((a,b)=>a.price-b.price)
+        function filterPriceDown(){
+            if(priceLow.value===false){
+            filterList.value = filterList.value.sort((a,b)=>a.price-b.price)
+            priceLow.value=true
+            }else{
+                filterList.value.reverse()
+                priceLow.value=false
+            }
+        }
+
+        function priceFilter(){
+            filterList.value = manageList.value.filter(item=>item.price>200)
         }
 
         function checkAll(){
             if(ifAllCheck.value===false){
-                manageList.value.forEach(item=>{
+                filterList.value.forEach(item=>{
                     if(inputTag.value.indexOf(item.id)===-1){
                         inputTag.value.push(item.id)
                     }
@@ -148,8 +163,8 @@ export default {
             console.log("newVal: ", newVal);
         });
 
-        return{manageList,editBtn,productTitle,selected,saveBtn,sellings,filterGo,inputTag,checkAll,selectAllCheck,ifAllCheck,
-        deleteSelect,filterList}
+        return{manageList,editBtn,productTitle,selected,saveBtn,sellings,filterPriceDown,inputTag,checkAll,selectAllCheck,
+        deleteSelect,filterList,priceFilter,priceLow}
     }
 }
 </script>
@@ -165,9 +180,17 @@ th{
     padding: 10px;
 }
 
+th:hover{
+    background: rgb(230, 232, 238);
+}
+
 td{
     height: 40px;
     padding: 10px;
+}
+
+tbody tr:hover{
+    background: rgb(230, 232, 238);
 }
 .product-list{
     border-top:1px rgb(211, 210, 210) solid;
