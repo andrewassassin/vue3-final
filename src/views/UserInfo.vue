@@ -20,7 +20,7 @@
 </template>
 <script>
 import Login from '@/views/Login'
-import testSlot from '@/components/testSlot'
+import testSlot from '@/components/FilterPage.vue'
   export default {
     data () {
       return {

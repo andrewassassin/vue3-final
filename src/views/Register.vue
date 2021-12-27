@@ -200,6 +200,7 @@ export default {
   width:500px;
   height: 130px;
   font-size: 14px;
+  overflow: hidden;
 }
 
 .pwd-hint div {
@@ -225,7 +226,7 @@ export default {
 
 .v-enter-active,
 .v-leave-active {
-  transition: all 0.1s ease-in-out;
+  transition: all .3s ease;
 }
 
 .v-enter-from,
@@ -236,7 +237,7 @@ export default {
 
 .v-enter-to,
 .v-leave-from {
-  height: 120px;
+  height: 130px;
   opacity: 1;
 }
 

@@ -1,33 +1,33 @@
 <template>
-    <div class="p-mt-5 p-d-flex p-flex-wrap p-jc-center">
-        <div class="p-md-12">
+    <div class="p-d-flex p-flex-wrap p-jc-center">
+        <div class="p-md-12 p-col-12">
             <h2>商品管理</h2>
         </div>
-        <div class="p-md-12">
-            <Button @click="deleteSelect" label="刪除所選品項" class="p-ml-3 p-btn-warn"/>
+        <div class="p-md-12 p-col-12">
+            <Button @click="deleteSelect" label="刪除所選品項" class="p-ml-3 p-btn-warn filter-icon"/>
         </div>
-        <section class="p-md-12 p-d-flex p-jc-center">
-            <table class="pro-table" >
-                <thead style="display:block;">
+        <FilterPage @closeBtn="closeBtn" @apply="applyFilter" :class="{active: isActive}" class="filter-page" />
+        <section class="p-md-12 p-col-12 p-d-flex p-jc-center">
+            <table class="pro-table">
+                <thead class="p-md-12 p-col-10" style="display:block;">
                     <tr class="p-text-left" >
                         <th class="">
                             <Checkbox :value="1" @click="checkAll()" :checked="true" v-model="selectAllCheck" />
                         </th>
                         <th v-for="(item,idx) in productTitle" :key="item.key" :style="idx===3?'width:14rem;':'width:12rem;'">
-                            <div @click="idx===2?filterPriceDown():none" class="p-d-flex p-jc-between " style="cursor:pointer;">
-                                <div class="p-d-flex p-ai-center" >
+                            <div class="p-d-flex p-jc-between " style="cursor:pointer;">
+                                <div @click="idx===2?filterPriceDown():none" class="p-d-flex p-ai-center">
                                     {{item}}                    
                                     <i v-show="idx===2" :class="{'pi-sort-amount-down': priceLow === true,'pi-sort-amount-up-alt': priceLow === false}" class="pi p-ml-2" style="font-size: 1rem;"></i>
                                 </div>
-                                <Button @click="priceFilter" icon="pi pi-filter" class="p-button-rounded p-button-text p-button-plain"/>
+                                <Button @click="priceFilter" icon="pi pi-filter" class="p-button-rounded p-button-text p-button-plain filter-icon"/>
                             </div>
                         </th>
                     </tr>
-                </thead>
-                <ScrollPanel style="width: 100%; height: 600px">
-                    <tbody >      
-                        <tr class="product-list"  v-for="(item,idx) in filterList" :key="item">
-                            <td >
+                </thead>    
+                    <tbody class="p-md-12 p-col-10">      
+                        <tr class="product-list" v-for="(item,idx) in filterList" :key="item">
+                            <td>
                                 <div class="p-field-checkbox p-m-0">
                                     <Checkbox :id="idx" :checked="true" :value="item.id" v-model="inputTag" />
                                 </div>
@@ -50,24 +50,29 @@
                                         placeholder="商品分類" /> 
                                 </div> 			
                             </td>
-                            <td >
+                            <td>
                                 <Button @click="selected === idx? saveBtn(idx):editBtn(idx)" :label="(selected === idx?'儲存':'編輯')" />
                             </td>     
                         </tr>         
                     </tbody>
-                </ScrollPanel>
+     
             </table>
         </section>
     </div>
 </template>
 <script>
+import FilterPage from '@/components/FilterPage.vue'
 import axios from "axios";
 import { ref,onMounted,watch } from 'vue';
 export default {
+    components: {
+      FilterPage
+    },
     setup(){
         const selected = ref();
         const selectAllCheck= ref([]);
         const ifAllCheck = ref(false);
+        const isActive = ref(false);
         const priceLow = ref(false);
         const api = ref('product')
         const manageList = ref([]);
@@ -94,7 +99,7 @@ export default {
                 },
             };
             axios.post(
-                `https://x-home.pcpogo.com/px/productManege.php?PDEBUG=andrewc`, manageList.value[idx],config)
+                `https://x-home.pcpogo.com/px/productManege.php?PDEBUG=andrewc`, filterList.value[idx],config)
                 .then((response) => {
                     console.log(response)
                 })
@@ -104,8 +109,8 @@ export default {
         }
         function filterPriceDown(){
             if(priceLow.value===false){
-            filterList.value = filterList.value.sort((a,b)=>a.price-b.price)
-            priceLow.value=true
+                filterList.value = filterList.value.sort((a,b)=>a.price-b.price)
+                priceLow.value=true
             }else{
                 filterList.value.reverse()
                 priceLow.value=false
@@ -113,7 +118,7 @@ export default {
         }
 
         function priceFilter(){
-            filterList.value = manageList.value.filter(item=>item.price>200)
+            isActive.value = true
         }
 
         function checkAll(){
@@ -139,6 +144,24 @@ export default {
             });
             inputTag.value = [];
         }
+
+        function closeBtn(){
+            isActive.value=false
+        }
+
+        function applyFilter(res){
+            console.log('res',res.formData.count)
+            // const equal = res.formData.ifEqual
+            if(res.formData.ifEqual==="b"){
+                filterList.value = manageList.value.filter(item=>item.price>parseInt(res.formData.count))
+            }else if(res.formData.ifEqual==="s"){
+                filterList.value = manageList.value.filter(item=>item.price<parseInt(res.formData.count))
+            }else{
+                filterList.value = manageList.value.filter(item=>item.price==parseInt(res.formData.count))
+            }
+            // isActive.value = true
+            
+        }
         onMounted(() => {
             axios.get(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`)
                 .then((response) => {
@@ -159,12 +182,12 @@ export default {
 			
 		});
 
-          watch(inputTag, function (newVal) {
+        watch(inputTag, function (newVal) {
             console.log("newVal: ", newVal);
         });
 
         return{manageList,editBtn,productTitle,selected,saveBtn,sellings,filterPriceDown,inputTag,checkAll,selectAllCheck,
-        deleteSelect,filterList,priceFilter,priceLow}
+        deleteSelect,filterList,priceFilter,priceLow,isActive,closeBtn,applyFilter}
     }
 }
 </script>
@@ -172,6 +195,9 @@ export default {
 .pro-table{
     border-top:1px rgb(211, 210, 210) solid;
     border-collapse: collapse;
+    overflow-x: auto;
+    white-space: nowrap; 
+    display: block;
 }
 
 
@@ -189,6 +215,12 @@ td{
     padding: 10px;
 }
 
+tbody{
+    overflow-y:auto;
+    height:600px;
+    display:block;
+}
+
 tbody tr:hover{
     background: rgb(230, 232, 238);
 }
@@ -200,5 +232,39 @@ tbody tr:hover{
 .selectedClass{
     display: none;
 }
+
+.filter-icon{
+    position: relative;
+}
+
+.filter-page{
+    position: absolute;
+    background: white;
+    left: 940px;
+    top: 337px;
+    height: 0px;
+    opacity: 0;
+    transition: all .3s ease;
+    z-index: 5;
+    overflow: hidden;
+}
+
+.filter-page.active{
+    opacity: 1;
+    height: 250px;
+}
+
+@media(max-width:600px){
+    tbody{
+        overflow-y:visible; 
+        height: 500px;
+    }
+
+    .filter-page{
+        left: 25%;
+        top: 25%;
+    }
+}
+
 
 </style>
