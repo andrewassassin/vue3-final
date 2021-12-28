@@ -1,38 +1,40 @@
 <template>
-    <div class="p-d-flex p-flex-wrap p-jc-center">
+    <div class="p-d-flex p-flex-wrap p-jc-center" style="overflow-y:hidden;">
         <div class="p-md-12 p-col-12">
             <h2>商品管理</h2>
         </div>
         <div class="p-md-12 p-col-12">
             <Button @click="deleteSelect" label="刪除所選品項" class="p-ml-3 p-btn-warn filter-icon"/>
         </div>
-        <FilterPage @closeBtn="closeBtn" @apply="applyFilter" :class="{active: isActive}" class="filter-page" />
         <section class="p-md-12 p-col-12 p-d-flex p-jc-center">
             <table class="pro-table">
-                <thead class="p-md-12 p-col-10" style="display:block;">
-                    <tr class="p-text-left" >
+                <thead class="p-md-12 p-col-10 p-py-0" style="display:block;">
+                    <tr class="p-text-left">
                         <th class="">
                             <Checkbox :value="1" @click="checkAll()" :checked="true" v-model="selectAllCheck" />
                         </th>
                         <th v-for="(item,idx) in productTitle" :key="item.key" :style="idx===3?'width:14rem;':'width:12rem;'">
-                            <div class="p-d-flex p-jc-between " style="cursor:pointer;">
+                            <div class="p-d-flex p-jc-between filter-icon" style="cursor:pointer;">
                                 <div @click="idx===2?filterPriceDown():none" class="p-d-flex p-ai-center">
                                     {{item}}                    
                                     <i v-show="idx===2" :class="{'pi-sort-amount-down': priceLow === true,'pi-sort-amount-up-alt': priceLow === false}" class="pi p-ml-2" style="font-size: 1rem;"></i>
                                 </div>
-                                <Button @click="priceFilter" icon="pi pi-filter" class="p-button-rounded p-button-text p-button-plain filter-icon"/>
+                                <Button @click="priceFilter" icon="pi pi-filter" class="p-button-rounded p-button-text p-button-plain "/>
+                                <transition>
+                                    <FilterPage v-click-outside="onClickOutside" v-if="isActive&&idx==2"  @closeBtn="closeBtn" @apply="applyFilter" class="filter-page" />
+                                </transition>
                             </div>
                         </th>
                     </tr>
                 </thead>    
-                    <tbody class="p-md-12 p-col-10">      
+                    <tbody class="p-md-12 p-col-10 p-pt-0" >      
                         <tr class="product-list" v-for="(item,idx) in filterList" :key="item">
                             <td>
                                 <div class="p-field-checkbox p-m-0">
                                     <Checkbox :id="idx" :checked="true" :value="item.id" v-model="inputTag" />
                                 </div>
                             </td>               
-                            <td v-for="(column,order) in item" :key="order" style="width:12rem;max-width:14rem;">  
+                            <td v-for="(column,order) in item" :key="order" style="width:12rem;max-width:14rem;" >  
                                 <div class="p-text-left">                                  
                                     <p :class="{'selectedClass': selected === idx}" class="p-m-0">{{column}}</p>
                                 </div>  
@@ -86,6 +88,11 @@ export default {
             { name: '藍芽喇叭', code: '藍芽喇叭' },
 			{ name: '落地喇叭', code: '落地喇叭' },
 	]);
+        function onClickOutside(){  
+                isActive.value = false        
+        }
+
+
         function editBtn(idx){
             selected.value =idx
         }
@@ -109,7 +116,7 @@ export default {
         }
         function filterPriceDown(){
             if(priceLow.value===false){
-                filterList.value = filterList.value.sort((a,b)=>a.price-b.price)
+                filterList.value = filterList.value.sort((a,b)=>a.price-b.price).reverse()
                 priceLow.value=true
             }else{
                 filterList.value.reverse()
@@ -186,7 +193,7 @@ export default {
             console.log("newVal: ", newVal);
         });
 
-        return{manageList,editBtn,productTitle,selected,saveBtn,sellings,filterPriceDown,inputTag,checkAll,selectAllCheck,
+        return{manageList,editBtn,productTitle,selected,saveBtn,sellings,filterPriceDown,inputTag,checkAll,selectAllCheck,onClickOutside,
         deleteSelect,filterList,priceFilter,priceLow,isActive,closeBtn,applyFilter}
     }
 }
@@ -199,7 +206,6 @@ export default {
     white-space: nowrap; 
     display: block;
 }
-
 
 th{
     height: 70px;
@@ -217,7 +223,7 @@ td{
 
 tbody{
     overflow-y:auto;
-    height:600px;
+    height:1000px;
     display:block;
 }
 
@@ -240,18 +246,28 @@ tbody tr:hover{
 .filter-page{
     position: absolute;
     background: white;
-    left: 940px;
-    top: 337px;
-    height: 0px;
-    opacity: 0;
-    transition: all .3s ease;
+    left: 140px;
+    top: 54px;
+    height: 250px;
     z-index: 5;
     overflow: hidden;
 }
 
-.filter-page.active{
-    opacity: 1;
-    height: 250px;
+.v-enter-active,
+.v-leave-active {
+  transition: all .1s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  height: 0;
+  opacity: 0;
+}
+
+.v-enter-to,
+.v-leave-from {
+  height: 250px;
+  opacity: 1;
 }
 
 @media(max-width:600px){
@@ -261,8 +277,8 @@ tbody tr:hover{
     }
 
     .filter-page{
-        left: 25%;
-        top: 25%;
+        left: -220px;
+        top: 40%;
     }
 }
 

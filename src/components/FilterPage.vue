@@ -1,14 +1,10 @@
 <template>
     <div class="price-filter p-d-flex p-flex-wrap p-jc-center p-pb-2">
-          <!-- <InputText style="width:10rem;max-width:14rem;"> 
-            <slot name="title"></slot> 
-          </InputText> -->
-        <div class="p-d-flex p-jc-end p-col-12 p-py-0">
-            <div class="close-btn">
-                <i v-on:click.prevent="closeBtn()" style="fontSize: 1rem" class="p-mt-2 pi pi-times close"></i>   
-            </div>
-        </div>
-        <div class="p-col-12 p-md-12">
+        <!-- <slot name="title">
+          <InputText style="width:10rem;max-width:14rem;"> 
+          </InputText>
+        </slot> -->
+        <div class="p-col-12 p-md-12 p-d-flex p-ai-center p-jc-center">
             <Dropdown
                 v-model="big"
                 :options="options"
@@ -18,10 +14,10 @@
                 style="width:12rem;"
                 />
         </div>
-        <div class="p-col-12 p-md-12 p-mt-2">
+        <div class="p-col-12 p-md-12 p-mt-2 p-d-flex p-ai-center p-jc-center">
             <InputText v-model="price" id="productPrice" min="1" max="90000" placeholder="商品價格" type="text" style="width:12rem;" required/>
         </div>
-        <div class="p-col-12 p-md-12 p-d-flex p-jc-between p-px-0" style="width:12rem;">
+        <div class="p-col-12 p-md-12 p-d-flex p-jc-between p-ai-center p-px-0" style="width:12rem;">
             <Button type="submit" label="Clear"  class="p-button-sm"/>
             <Button type="submit" @click="apply" label="Apply"  class="p-button-sm"/>
         </div>

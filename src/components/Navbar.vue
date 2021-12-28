@@ -36,9 +36,9 @@
             <i v-if="isLogin" @click="toUserInfo" class="pi pi-user" style="fontSize: 1.6rem;cursor:pointer" type="button" aria-current="page"></i>     
           </div>
       </nav>
-            <transition >
+            <transition>
                 <Modal v-if="isClickCart" @closeBtn="closeModal" />
-            </transition >
+            </transition>
            
     </div>
 </template>

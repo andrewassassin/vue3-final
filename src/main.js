@@ -4,11 +4,8 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-// import 'bootstrap/dist/js/bootstrap.min'
-// import 'bootstrap/dist/css/bootstrap.css'
-
 import PrimeVue from 'primevue/config';
-
+import vClickOutside from "click-outside-vue3"
 import "primevue/resources/themes/saga-blue/theme.css";
 import 'primeflex/primeflex.css';
 import "primevue/resources/primevue.min.css";
@@ -26,12 +23,14 @@ import TieredMenu from 'primevue/tieredmenu';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
+
 const app = createApp(App);
 app.use(store)
 app.use(router)
 app.use(VueAxios,axios)
 app.use(PrimeVue);
 app.use(ToastService)
+app.use(vClickOutside)
 app.component('ProgressBar', ProgressBar);
 app.component('ScrollPanel', ScrollPanel);
 app.component('Checkbox', Checkbox);
