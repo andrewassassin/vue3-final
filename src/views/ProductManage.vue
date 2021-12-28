@@ -1,5 +1,5 @@
 <template>
-    <div class="p-d-flex p-flex-wrap p-jc-center" style="overflow-y:hidden;">
+    <div class="p-d-flex p-flex-wrap p-jc-center">
         <div class="p-md-12 p-col-12">
             <h2>商品管理</h2>
         </div>
@@ -13,7 +13,7 @@
                         <th class="">
                             <Checkbox :value="1" @click="checkAll()" :checked="true" v-model="selectAllCheck" />
                         </th>
-                        <th v-for="(item,idx) in productTitle" :key="item.key" :style="idx===3?'width:14rem;':'width:12rem;'">
+                        <th v-for="(item,idx) in productTitle" :key="item.key" :style="idx===3?'width:12rem;min-width:14rem;':'min-width:12rem;'">
                             <div class="p-d-flex p-jc-between filter-icon" style="cursor:pointer;">
                                 <div @click="idx===2?filterPriceDown():none" class="p-d-flex p-ai-center">
                                     {{item}}                    
@@ -34,7 +34,7 @@
                                     <Checkbox :id="idx" :checked="true" :value="item.id" v-model="inputTag" />
                                 </div>
                             </td>               
-                            <td v-for="(column,order) in item" :key="order" style="width:12rem;max-width:14rem;" >  
+                            <td v-for="(column,order) in item" :key="order" style="min-width:12rem;max-width:14rem;" >  
                                 <div class="p-text-left">                                  
                                     <p :class="{'selectedClass': selected === idx}" class="p-m-0">{{column}}</p>
                                 </div>  
