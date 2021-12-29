@@ -19,9 +19,9 @@
                                     {{item}}                    
                                     <i v-show="idx===2" :class="{'pi-sort-amount-down': priceLow === true,'pi-sort-amount-up-alt': priceLow === false}" class="pi p-ml-2" style="font-size: 1rem;"></i>
                                 </div>
-                                <Button @click="priceFilter" icon="pi pi-filter" class="p-button-rounded p-button-text p-button-plain "/>
+                                <Button :id="idx" @click="priceFilter(idx)" icon="pi pi-filter" class="p-button-rounded p-button-text p-button-plain "/>
                                 <transition>
-                                    <FilterPage v-click-outside="onClickOutside" v-if="isActive&&idx==2"  @closeBtn="closeBtn" @apply="applyFilter" class="filter-page" />
+                                    <FilterPage v-click-outside="onClickOutside" v-if="isActive===idx"  @closeBtn="closeBtn" @apply="applyFilter" class="filter-page" />
                                 </transition>
                             </div>
                         </th>
@@ -53,7 +53,7 @@
                                 </div> 			
                             </td>
                             <td>
-                                <Button @click="selected === idx? saveBtn(idx):editBtn(idx)" :label="(selected === idx?'儲存':'編輯')" />
+                                <Button @click="selected === idx? saveBtn(idx):editBtn(idx)" :label="(selected === idx?'儲存':'編輯')"/>
                             </td>     
                         </tr>         
                     </tbody>
@@ -74,7 +74,7 @@ export default {
         const selected = ref();
         const selectAllCheck= ref([]);
         const ifAllCheck = ref(false);
-        const isActive = ref(false);
+        const isActive = ref();
         const priceLow = ref(false);
         const api = ref('product')
         const manageList = ref([]);
@@ -124,8 +124,8 @@ export default {
             }
         }
 
-        function priceFilter(){
-            isActive.value = true
+        function priceFilter(idx){
+            isActive.value = idx
         }
 
         function checkAll(){
@@ -157,34 +157,30 @@ export default {
         }
 
         function applyFilter(res){
-            console.log('res',res.formData.count)
-            // const equal = res.formData.ifEqual
             if(res.formData.ifEqual==="b"){
                 filterList.value = manageList.value.filter(item=>item.price>parseInt(res.formData.count))
             }else if(res.formData.ifEqual==="s"){
                 filterList.value = manageList.value.filter(item=>item.price<parseInt(res.formData.count))
             }else{
                 filterList.value = manageList.value.filter(item=>item.price==parseInt(res.formData.count))
-            }
-            // isActive.value = true
-            
+            }        
         }
         onMounted(() => {
             axios.get(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`)
                 .then((response) => {
-                console.log("res  ", response);
-                response.data.forEach(item => {
-                    delete item["specification"]
-                    delete item["createdAt"]
-                    productTitle.value.push(Object.keys(item))
-                    manageList.value.push(item)
-                   
-                });
-                productTitle.value = productTitle.value[0]
-                filterList.value = [...manageList.value]
+                    console.log("res  ", response);
+                    response.data.forEach(item => {
+                        delete item["specification"]
+                        delete item["createdAt"]
+                        productTitle.value.push(Object.keys(item))
+                        manageList.value.push(item)
+                    
+                    });
+                    productTitle.value = productTitle.value[0]
+                    filterList.value = [...manageList.value]
                 })
                 .catch((error) => {
-                console.log("err", error);
+                    console.log("err", error);
                 });
 			
 		});
@@ -276,8 +272,14 @@ tbody tr:hover{
         height: 500px;
     }
 
+
+    .filter-icon{
+        position: static;
+    }
+
+
     .filter-page{
-        left: -220px;
+        left: -0px;
         top: 40%;
     }
 }

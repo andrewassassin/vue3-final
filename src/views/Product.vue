@@ -1,5 +1,5 @@
 <template>
-    <header class="header">
+    <header @scroll="scrollEvent" class="header">
       <section class="py-3 p-d-flex p-flex-wrap p-jc-center">
         <div class="p-md-7">
           <h1 class="p-text-center p-mb-2">產品列表</h1>
@@ -27,8 +27,8 @@
             </div>
         </div>
       </section>
-      <button @click="topFunction()" class="goBackBtn">
-          <i class="fas fa-chevron-up"></i>
+      <button v-if="showTop" @click="topFunction()" class="goBackBtn">
+          <i class="pi pi-angle-up"></i>
       </button>
 </header>
 
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import product from "../mixin/product";
 import SelectButton from 'primevue/selectbutton';
 import axios from 'axios'
 import Item from '@/views/Item'
@@ -52,10 +51,10 @@ export default {
         name:""
       },
       api:"product",
-      count:0
+      count:0,
+      showTop:false
     }
   },
-  mixins:[product],
   components: {
     SelectButton
   },
@@ -73,7 +72,7 @@ export default {
       axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,this.count.toString())
         .then(response => {      
               this.productList = response.data
-              this.productList.splice(0,6).forEach(item=>{
+              this.productList.reverse().splice(0,6).forEach(item=>{
                 item.image = JSON.parse(item.image);
                 this.threeList.push(item)
               })
@@ -94,6 +93,7 @@ export default {
           // 距離底部200px加載一次
           let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 400
           if (bottomOfWindow && isLoading == false) {
+              that.showTop=true
               isLoading = true
               that.count += 6
               // console.log('count scroll',that.count)
@@ -144,6 +144,7 @@ export default {
 <style scoped>
 .header{
   margin-top: 50px;
+  height: 1;
 }
 
 .slide-img{
@@ -219,7 +220,7 @@ export default {
 }
 
 .goBackBtn {
-    background:  rgba(170, 100, 9, 0.904);
+    background:  rgba(51, 118, 219, 0.904);
     width: 40px;
     height: 40px;
     border:none;

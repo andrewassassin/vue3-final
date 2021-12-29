@@ -23,7 +23,6 @@ import TieredMenu from 'primevue/tieredmenu';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
-
 const app = createApp(App);
 app.use(store)
 app.use(router)

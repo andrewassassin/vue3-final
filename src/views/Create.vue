@@ -45,10 +45,10 @@
                                 <td class="p-ml-2 p-text-left p-md-3 p-col-3">
                                     {{ imgList[index].name }}
                                 </td>
-                                <td class="p-text-left p-md-3 p-col-3">                                  
+                                <td class="p-text-left p-md-2 p-col-3">                                  
                                     {{ Math.round((imgList[index].size / 1024) * 10) / 10 }}KB
                                 </td>
-                                <td class="p-md-2 p-col-3 p-d-flex p-jc-center p-ai-center">
+                                <td class="p-md-4 p-col-3 p-d-flex p-jc-center p-ai-center">
                                     <Button @click.prevent="deleteItem(index)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"/>
                                 </td>
                             </tr>
