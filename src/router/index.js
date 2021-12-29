@@ -9,7 +9,7 @@ import Login from '../views/Login'
 import Register from '../views/Register'
 import UserInfo from '../views/UserInfo'
 import ProductManage from '../views/ProductManage'
-import store from "@/store";
+// import store from "@/store";
 const routes = [
   {
     path: '/',
@@ -88,26 +88,26 @@ const router = createRouter({
   },
 })
 
-router.beforeEach((to, from, next) => {
-  window.scrollTo(0, 0);
-  console.log('to=>', to);
-  console.log('from=>', from);
+// router.beforeEach((to, from, next) => {
+//   window.scrollTo(0, 0);
+//   console.log('to=>', to);
+//   console.log('from=>', from);
 
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    var eip_b = store.state.user.name;
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     var eip_b = store.state.user.name;
 
-      if ((eip_b == null) || (eip_b == '')) {
+//       if ((eip_b == null) || (eip_b == '')) {
         
-        console.log("你沒有登入!");
+//         console.log("你沒有登入!");
   
-      } else {
-        console.log('放行')
-        next() 
-      }
-  } else {
-    // 不需權限的頁面
-    next()
-  }
-})
+//       } else {
+//         console.log('放行')
+//         next() 
+//       }
+//   } else {
+//     // 不需權限的頁面
+//     next()
+//   }
+// })
 
 export default router

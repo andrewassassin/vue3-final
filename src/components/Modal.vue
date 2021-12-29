@@ -1,13 +1,13 @@
 <template>
     <div id="modal">
         <div class="DivOverlapMask">
-            <div class="DivDialog">
+            <div class="DivDialog p-md-6 p-col-12">
                 <div class="p-d-flex p-jc-between">
-                    <h2 class="ml-3">
+                    <h2 class="p-ml-3">
                          購物車
                     </h2>
-                    <div class="close-btn">
-                        <i v-on:click.prevent="closeBtn()" style="fontSize: 1.3rem" class="p-mt-3 pi pi-times close"></i>      
+                    <div v-on:click.prevent="closeBtn()" class="close-btn p-mr-3">
+                        <i style="fontSize: 1.3rem" class="p-mt-3 pi pi-times close"></i>      
                     </div>
                 </div>
                 <ScrollPanel class="custombar1">
@@ -25,7 +25,6 @@
                                 <img
                                     v-if="isShowImg"
                                     :src="require(`../assets/img/${item.image[1]}`)"
-                                    alt=""
                                 />
                             </div>
                             <div class="item-content">
@@ -94,11 +93,7 @@ export default {
             this.$emit("closeBtn");
         },
         selectAll() {       
-            this.itemList.forEach(item=>{
-                if(this.inputTag.indexOf(item.id)===-1){
-                    this.inputTag.push(item.id)
-                }
-            })
+            this.inputTag = this.itemList.map(item=>item.id)
         },
         updateDataToStorage() {
             const itemListStr = JSON.stringify(this.itemList);
@@ -185,7 +180,7 @@ export default {
 /* Modal Dialog 層 */
 .DivDialog {
     position: relative;
-    width: 850px;
+    /* width: 850px; */
     height: 800px;
     margin: 0;
     padding: 0 30px;
@@ -268,13 +263,15 @@ export default {
 .pi-minus-circle {
     transition: 0.2s ease;
     border: none;
+        overflow: auto;
 }
 
 .pi-plus-circle:hover,
 .pi-minus-circle:hover {
     color: #fff;
     background: rgb(17, 17, 17);
-    border-radius: 40%;
+    border-radius: 50%;
+
 }
 
 .general-btn {
@@ -320,7 +317,7 @@ export default {
 @media (max-width: 600px) {
     .DivDialog {
         position: fixed;
-        width: 500px;
+        /* width: 500px; */
         height: 600px;
         margin: 0;
         padding: 20px;

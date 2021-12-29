@@ -130,19 +130,13 @@ export default {
 
         function checkAll(){
             if(ifAllCheck.value===false){
-                filterList.value.forEach(item=>{
-                    if(inputTag.value.indexOf(item.id)===-1){
-                        inputTag.value.push(item.id)
-                    }
-                    console.log('all new',inputTag.value)
-                })
+                inputTag.value = filterList.value.map(item=>item.id)
                 ifAllCheck.value=true
             }else{
                 inputTag.value=[]
                 ifAllCheck.value=false
             }
         }
-
 
         function deleteSelect(){
             inputTag.value.forEach((item) => {

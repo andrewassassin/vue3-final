@@ -50,7 +50,7 @@
     </section>
     <div class="specification">
       <h3>產品規格</h3>
-      <table class="table table-border col-md-6">
+      <table class="table table-border p-md-6">
         <thead >
             <tr>
               <th v-for="item in columnCnt" :key="item.key" class="text-right">{{item}}</th>

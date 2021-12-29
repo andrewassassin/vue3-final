@@ -1,26 +1,22 @@
 <template>
     <header @scroll="scrollEvent" class="header">
       <section class="py-3 p-d-flex p-flex-wrap p-jc-center">
-        <div class="p-md-7">
+        <div class="p-xl-7 p-lg-8 p-md-12 p-sm-12 p-col-12">
           <h1 class="p-text-center p-mb-2">產品列表</h1>
             <SelectButton v-model="orderSort" :options="options" class="p-mt-5 p-mb-3" />
             <div class="p-d-flex p-flex-wrap">
-              <div class="p-col-12 p-md-4 person" v-for="(product,index) in threeList" :key="index">
+              <div class="p-col-12 p-xl-4 p-lg-6 p-md-6 p-sm-12 person" v-for="(product,index) in threeList" :key="index">
                 <div class="p-my-5 p-mx-3">
                   <div class="slide-img">
-                    <img :src="require(`../assets/img/${product.image[1]}`)" class="card-img-top">       
-                      <div class="overlay">
+                    <img :src="require(`../assets/img/${product.image[1]}`)" class="">       
+                      <div class="overlay p-d-flex p-jc-center p-ai-center">
                         <a :id="`${product.id}`" @click="goToProduct($event)" class="buy-btn">Buy Now</a>	
                       </div>
                   </div>
-                  <div class="card-body">
-                    <h4 class="card-title">{{product.name}}</h4>
-                    <h4>
-                      <span class="badge badge-info">
-                      {{product.category}}
-                      </span>
-                    </h4>
-                    <p class="card-text"> $ {{product.price}} NTD</p>               
+                  <div class="">
+                    <h4 class="">{{product.name}}</h4>
+                    <Badge :value="product.category" class="p-mt-2" size="large" severity="info"></Badge>
+                    <p class=""> $ {{product.price}} NTD</p>               
                   </div>
                 </div>
               </div>
@@ -151,6 +147,7 @@ export default {
 	height: 450px;
 	position:relative;
 }
+
 .slide-img img{
 	width:100%;
 	height: 100%;
@@ -166,10 +163,7 @@ export default {
 	width:100%;
 	height: 100%;
 	background-color: rgba(58, 53, 53, 0.6);
-	display: flex;
-	justify-content: center;
   opacity: 0;
-	align-items: center;
   transition: .1s opacity ease-in;
 }
 .buy-btn{
@@ -205,7 +199,6 @@ export default {
 
 .person {
   border-radius: 2px;
-  margin: 0 auto 15px auto;
   padding: 15px;
   animation:fade 2s;
 }

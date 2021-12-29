@@ -1,27 +1,27 @@
 <template>
     <div>
-      <nav class="navbar-light fixed-top" id="navBar">
+      <nav class="p-d-flex p-ai-center p-jc-between" id="navBar">
           <i class="pi pi-apple p-ml-lg-2" style="fontSize: 2.5rem"></i>
-          <div v-bind:class="{ active: isActive }" class="nav-top">              
-                <ul class="nav-ul">
-                  <li class="nav-item">
+          <div :class="{ active: isActive }" class="nav-top">              
+                <ul class="nav-ul p-d-flex p-ai-center">
+                  <li class="p-sm-12 p-md-4">
                       <router-link class="nav-link" to="/" style="text-decoration:none;">回到首頁</router-link>
                   </li>
-                  <li class="nav-item">
+                  <li class="p-sm-12 p-md-4">
                       <router-link class="nav-link itemList" to="/product" style="text-decoration:none;">
                           商品詳情
                             <itembar class="itemBar" />
                       </router-link>
                   </li>
-                  <li class="nav-item ">
+                  <li class="p-sm-12 p-md-4">
                       <router-link class="nav-link" to="/create" style="text-decoration:none;">建立商品</router-link>
                   </li>
-                  <li class="nav-item ">
+                  <li class=" p-sm-12 p-md-4">
                       <router-link class="nav-link" to="/productManage" style="text-decoration:none;">商品管理</router-link>
                   </li>        
                 </ul>
           </div>
-          <button @click="toggleBar()" class="nav-toggler">
+          <button @click="toggleBar()" class="nav-toggler" style="cursor:pointer;">
             <div v-bind:class="{ rotate: isActive }" class="line"></div>
           </button>
           <div class="work-brench p-d-flex p-ai-center">
@@ -132,7 +132,6 @@ export default {
       }
     }
 
-
       return {
         myinput,
         isClickCart,
@@ -178,8 +177,6 @@ export default {
   box-shadow: 0px 5px 10px rgba(0, 0, 0, .2);
   background:  white;
   z-index: 99;
-  display: flex;
-  align-items: center;
   height:75px;
   border: hidden;
   position: fixed;
@@ -190,14 +187,10 @@ export default {
 
 .nav-top {
   position: fixed;
-  /* overflow: auto; */
-  left: 20%;
 }
 
 .nav-ul {
   /* height: 75px; */
-  display: flex;
-  align-items: center;
   list-style-type:none;
   margin: 0;
 }
@@ -218,15 +211,11 @@ export default {
 .work-brench{
   position: fixed;
   right: 20%;
-  /* display: flex; */
-  /* width: 150px; */
-  /* padding: 30px; */
 }
 
 .search-bar{
- display: flex; 
+  display: flex; 
   align-items: center; 
-
 }
 
 .s-input{
@@ -238,7 +227,6 @@ export default {
   border-radius: 6px;
   transition: .3s ease-in;
   border:none;
-  z-index: 1;
 }
 
 .pi-search{
@@ -299,33 +287,39 @@ input::-webkit-search-cancel-button{
   opacity: 1;
 }
 
-@media (max-width: 600px) {
-    .logo{
-      position: fixed;
-      left: 50px;
-      width: 120px;
+@media (max-width: 900px) {
+    .pi-apple{
+      display: none;
     }
 
     .nav-top {
         position: fixed;
-        top: -300px;
-        left: 0;
-        width: 100%;
-        /* viewport height 100% */
-        height: 200px;
-        background: white;
-        transition: all .5s ease-out;
+        top: 0px;
+        left: -500px;
+        width: 350px;
+        height: 100vh;
+        background: rgb(255, 255, 255);
+        border-right: 8px solid rgb(161, 156, 156);
+        border-radius: 20%;
+        transition: all .4s ease-out;
+        z-index: 6;
     }
 
     .nav-ul{
+        margin-left: 15px;
         flex-wrap: wrap;
+        position: relative;
+        width: 150px;
+        top: 100px;
+        left: 150px;
+        padding: 0;
     }
 
    .nav-ul li{
-        width: 100px;
+        width: auto;
     }
     .nav-top.active {
-        top: 18px;
+        left: -150px;
     }
 
     .nav-toggler{
@@ -341,7 +335,7 @@ input::-webkit-search-cancel-button{
 
        .line {
         width: 30px;
-        height:2px;
+        height:2.5px;
         background: rgb(0, 0, 0);
         position: relative;
         /* transform: rotateZ(45deg); */
@@ -370,7 +364,7 @@ input::-webkit-search-cancel-button{
     .line:after {
         content: "";
         width: 30px;
-        height: 2px;
+        height: 2.5px;
         background: rgb(0, 0, 0);
         display: block;
         position: absolute;
