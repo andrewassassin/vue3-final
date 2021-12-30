@@ -70,7 +70,7 @@ export default {
         const isHoverCart = ref(false);
         const isLogin = ref(true);
         const loginState = computed(()=>{
-        return store.getters.loginState;
+            return store.getters.loginState;
         })
 
         const changeCartNum = computed(()=>{

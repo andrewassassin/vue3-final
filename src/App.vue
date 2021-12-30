@@ -29,7 +29,8 @@ export default {
     data() {
         return {
             isRouterAlive: true,
-            active:false
+            active:false,
+            lastScrollY : 250
         };
     },
     methods: {
@@ -40,11 +41,15 @@ export default {
             });
         },
         handleScroll() {
-            console.log('scroll',window.pageYOffset)
-            if(window.scrollY>300){
+            let st = window.scrollY
+            if(st > this.lastScrollY){
+                console.log('5')
                 this.active =true
             }else{
                 this.active =false
+            }
+            if(st>250){
+                this.lastScrollY = st;
             }
         }
     },
