@@ -7,20 +7,14 @@
       <div class="p-md-12">
         <Button @click.prevent="logOut" label="登出"  class="p-ml-3"/>
       </div>
-      <testSlot>
-        <template #title>
-          安安
-        </template>
-      </testSlot>
     </div>
-    <section class="p-md-6">
+    <section>
       <router-view></router-view>
     </section>
   </div>
 </template>
 <script>
 import Login from '@/views/Login'
-import testSlot from '@/components/FilterPage.vue'
   export default {
     data () {
       return {
@@ -72,9 +66,6 @@ import testSlot from '@/components/FilterPage.vue'
             })  
         }, 1000);     
       },
-    },
-    components: {
-      testSlot
     },
     computed: {
       user() {

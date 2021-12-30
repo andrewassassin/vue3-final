@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div>
+    <div class="navbar">
       <Navbar />
     </div>
     <div class="content">
@@ -40,27 +40,41 @@ export default {
 <style scoped>
 *{
     overflow-x:hidden;
+        margin: 0;
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  text-align: center;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    text-align: center;
 }
 
+.navbar{
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+}
+
+.content{
+    margin-top: 175px;
+}
 
 #nav a {
-  font-weight: bold;
-  color: #2c3e50;
+    font-weight: bold;
+    color: #2c3e50;
 }
 
 #nav a.router-link-exact-active {
   color: #42b983;
 }
 
-.content{
-  padding-top:75px ;
+@media(max-width:900px){
+    .content{
+        margin-top: 120px;
+  }
 }
+
 </style>
