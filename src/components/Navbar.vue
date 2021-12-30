@@ -57,115 +57,114 @@ import Login from '../views/Login'
 import { ref,computed,onMounted  } from "vue";
 import { useRouter, useRoute } from "vue-router";
 export default {  
-  name: 'Navbar',
-  setup(){
-    const myinput = ref(null);
-    const router = useRouter();
-    const route = useRoute();
-    const isClickCart = ref(false);
-    const searchBar = ref("");
-    const isActive = ref(false);
-    const isExtend = ref(false);
-    const isHoverItem = ref(false);
-    const isHoverCart = ref(false);
-    const isLogin = ref(true);
-    const loginState = computed(()=>{
-      return store.getters.loginState;
-    })
+    name: 'Navbar',
+    setup(){
+        const myinput = ref(null);
+        const router = useRouter();
+        const route = useRoute();
+        const isClickCart = ref(false);
+        const searchBar = ref("");
+        const isActive = ref(false);
+        const isExtend = ref(false);
+        const isHoverItem = ref(false);
+        const isHoverCart = ref(false);
+        const isLogin = ref(true);
+        const loginState = computed(()=>{
+        return store.getters.loginState;
+        })
 
-    const changeCartNum = computed(()=>{
-      // 監聽購物車商品數量
-      return store.getters.changeCartNum;
-    })
+        const changeCartNum = computed(()=>{
+        // 監聽購物車商品數量
+        return store.getters.changeCartNum;
+        })
 
-    onMounted(()=>{
-      // 取得購物車商品數量
-      console.log('nav mounted')
-      store.dispatch("DataGetCart");
-        // const itemListStr = localStorage.getItem("cart");
-        // const defaultList = JSON.parse(itemListStr);
-        // store.state.itemList = defaultList || []; 
-    })
+        onMounted(()=>{
+        // 取得購物車商品數量
+        console.log('nav mounted')
+        store.dispatch("DataGetCart");
+            // const itemListStr = localStorage.getItem("cart");
+            // const defaultList = JSON.parse(itemListStr);
+            // store.state.itemList = defaultList || []; 
+        })
 
-    function closeLeftMenu(){
-        isActive.value=false
-    }
-
-    function openModal () {
-      isClickCart.value = true
-    }
-    function closeModal(){
-      isClickCart.value = false
-    }
-
-    function innerSearch(){
-       let id = searchBar.value
-        if(id&& route.path!==`/search/${id}` &&route.name!=='search'){
-          router.push({
-            path: `/search/${id}`,
-            component: Search,
-          })  
-        }else if(id&&route.name=='search'){
-            router.push({
-            path: `/search/${id}`,
-            component: Search,
-          })  
+        function closeLeftMenu(){
+            isActive.value=false
         }
-    }
 
-    function toggleBar(){
-      isActive.value = true;
-    }
+        function openModal () {
+            isClickCart.value = true
+        }
+        function closeModal(){
+            isClickCart.value = false
+        }
+
+        function innerSearch(){
+            let id = searchBar.value
+            if(id&& route.path!==`/search/${id}` &&route.name!=='search'){
+                router.push({
+                    path: `/search/${id}`,
+                    component: Search,
+                })  
+            }else if(id&&route.name=='search'){
+                router.push({
+                    path: `/search/${id}`,
+                    component: Search,
+                })  
+            }
+        }
+
+        function toggleBar(){
+            isActive.value = true;
+        }
 
 
-    function showInput(){
-          isExtend.value = true
-          myinput.value.focus()
-    }
-    
-    function blurFocus(){
-      isExtend.value =false
-    }
+        function showInput(){
+            isExtend.value = true
+            myinput.value.focus()
+        }
+        
+        function blurFocus(){
+            isExtend.value =false
+        }
 
-    function toUserInfo(){
-      if(Object.entries(loginState.value).length !==0){
-        router.push({
-          path: `/userinfo`,
-          component: UserInfo,
-        }) 
-      }else{
-        router.push({
-          path: `/login`,
-          component: Login,
-        }) 
-      }
-    }
+        function toUserInfo(){
+        if(Object.entries(loginState.value).length !==0){
+            router.push({
+                path: `/userinfo`,
+                component: UserInfo,
+            }) 
+        }else{
+            router.push({
+                path: `/login`,
+                component: Login,
+            }) 
+        }
+        }
 
-      return {
-        myinput,
-        isClickCart,
-        searchBar,
-        openModal,
-        closeModal,
-        changeCartNum,
-        innerSearch, 
-        isActive,
-        isExtend,
-        toggleBar,
-        isHoverItem,
-        isHoverCart,
-        isLogin,
-        showInput,
-        blurFocus,
-        toUserInfo,
-        closeLeftMenu
-      }
-  },
-  components: {
-    Modal,
-    itembar,
-  },
-
+        return {
+            myinput,
+            isClickCart,
+            searchBar,
+            openModal,
+            closeModal,
+            changeCartNum,
+            innerSearch, 
+            isActive,
+            isExtend,
+            toggleBar,
+            isHoverItem,
+            isHoverCart,
+            isLogin,
+            showInput,
+            blurFocus,
+            toUserInfo,
+            closeLeftMenu
+        }
+    },
+    components: {
+        Modal,
+        itembar,
+    },
 }
 
 </script>
@@ -195,8 +194,6 @@ export default {
     height:55px; 
     border-bottom: 1px solid rgb(243, 243, 243) ;
     position: fixed;
-    left: 0;
-    top: 0;
     width: 100%;
     margin-top: 120px;
 }

@@ -1,46 +1,63 @@
 <template>
-  <div id="app">
-    <div class="navbar">
-      <Navbar />
+    <div id="app">
+        <div class="nav-bar" :class="{hideUp:active}">
+            <Navbar />
+        </div>
+        <div class="header-bar">
+            <Header/>
+        </div>
+        <div class="content">
+            <router-view v-if="isRouterAlive"/>
+        </div>
     </div>
-    <div class="content">
-      <router-view v-if="isRouterAlive"/>
-    </div>
-  </div>
 </template>
 <script>
 
 import Navbar from '@/components/Navbar'
+import Header from '@/components/Header.vue'
 export default {
-  name: 'App',
-   components: {
-    Navbar
-  }, 
-  provide() {
-    return {
-      reload: this.reload
-    };
-  },
-  data() {
-    return {
-      isRouterAlive: true
-    };
-  },
-  methods: {
-    reload() {
-      this.isRouterAlive = false;
-      this.$nextTick(() => {
-        this.isRouterAlive = true;
-      });
-    }
-  }
+    name: 'App',
+    components: {
+        Navbar,
+        Header
+    }, 
+    provide() {
+        return {
+            reload: this.reload
+        };
+    },
+    data() {
+        return {
+            isRouterAlive: true,
+            active:false
+        };
+    },
+    methods: {
+        reload() {
+            this.isRouterAlive = false;
+            this.$nextTick(() => {
+                this.isRouterAlive = true;
+            });
+        },
+        handleScroll() {
+            console.log('scroll',window.pageYOffset)
+            if(window.scrollY>300){
+                this.active =true
+            }else{
+                this.active =false
+            }
+        }
+    },
+    created() {
+        window.addEventListener("scroll", this.handleScroll);
+    },
 }
 </script>
 
 <style scoped>
 *{
     overflow-x:hidden;
-        margin: 0;
+    margin: 0;
 }
 
 #app {
@@ -51,16 +68,23 @@ export default {
     text-align: center;
 }
 
-.navbar{
+.nav-bar{
     position: fixed;
     z-index: 99999;
     top: 0;
     left: 0;
+    transition: .3s ease;
 }
 
-.content{
+.nav-bar.hideUp{
+    top: -175px;
+}
+
+
+.header-bar{
     margin-top: 175px;
 }
+
 
 #nav a {
     font-weight: bold;
@@ -68,13 +92,13 @@ export default {
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+    color: #42b983;
 }
 
 @media(max-width:900px){
-    .content{
+    .header-bar{
         margin-top: 120px;
-  }
+    }
 }
 
 </style>

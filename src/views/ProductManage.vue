@@ -1,6 +1,5 @@
 <template>
     <div class="p-d-flex p-flex-wrap p-jc-center">
-        <Header/>
         <div class="p-md-12 p-col-12">
             <h2>商品管理</h2>
         </div>
@@ -65,13 +64,11 @@
 </template>
 <script>
 import FilterPage from '@/components/FilterPage.vue'
-import Header from '@/components/Header.vue'
 import axios from "axios";
 import { ref,onMounted,watch } from 'vue';
 export default {
     components: {
       FilterPage,
-      Header
     },
     setup(){
         const selected = ref();
