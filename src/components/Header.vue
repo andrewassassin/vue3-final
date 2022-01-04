@@ -1,18 +1,15 @@
 <template>
-    <header class="header" :style="inlineBgImage(src)">
-
-    </header>
+    <header class="header" :style="inlineBgImage(src)"/>
 </template>
 <script>
-import { ref} from "vue";
-// import store from "@/store";
+import {computed} from "vue";
+import store from "@/store";
 export default {
     setup(){
-        // const src = computed(()=>{
-        // // 監聽購物車商品數量
-        //     return store.state.src;
-        // })
-        const src = ref("header1.jpg")
+        const src = computed(()=>{
+            return store.state.src;
+        })
+        // const src = ref("header1.jpg")
         function inlineBgImage(image) {
             let bgImage = require('@/assets/img/' + image)
 
@@ -37,7 +34,8 @@ export default {
 
 @media(max-width:600px){
     .header{
-        height: 400px;
+        height: 200px;
+        background-attachment:scroll;   
     }
 }
 </style>

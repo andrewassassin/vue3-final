@@ -238,27 +238,6 @@ export default {
     margin: 0 20px;
 }
 
-.close-btn{
-    position: relative;
-    margin-top: 10px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: .3s ease;
-}
-
-.close{
-    position: absolute;
-    top: 10%;
-    left: 51%;
-    transform: translate(-50%,-50%);
-}
-
-.close-btn:hover{
-    background: rgb(224, 224, 224);
-}
-
 .pi-plus-circle,
 .pi-minus-circle {
     transition: 0.2s ease;
@@ -272,23 +251,6 @@ export default {
     background: rgb(17, 17, 17);
     border-radius: 50%;
 
-}
-
-.general-btn {
-    width: 150px;
-    height: 40px;
-    border: 1px #000000 solid;
-    background: rgb(255, 255, 255);
-    border-radius: 0;
-    font-weight: bold;
-    font-size: 16px;
-    transition: 0.3s ease;
-    cursor: pointer;
-}
-
-.general-btn:hover {
-    background: black;
-    color: #fff;
 }
 
 .cart-footer{

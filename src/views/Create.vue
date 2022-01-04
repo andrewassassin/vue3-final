@@ -195,6 +195,9 @@ export default {
             }
         },
     },
+    created(){
+        this.$store.state.src='carousel-1.jpg'
+    }
 };
 </script>
 <style scoped>

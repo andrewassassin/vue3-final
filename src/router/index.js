@@ -9,7 +9,6 @@ import Login from '../views/Login'
 import Register from '../views/Register'
 import UserInfo from '../views/UserInfo'
 import ProductManage from '../views/ProductManage'
-// import store from "@/store";
 const routes = [
   {
     path: '/',

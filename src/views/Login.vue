@@ -12,7 +12,7 @@
                         <input type="password" v-model="user.password" placeholder="密碼" id="userPwd" class="login-input"  required>				
 					</div>
                     <div class="form-group ">
-                        <button type="submit" class="loginBtn" :class="{ color: spinActive }"> 
+                        <button type="submit" class="general-btn" :class="{ color: spinActive }"> 
                             
                             <div class="spinner-border " v-show="spinActive" role="status">
                                 <i class="pi pi-spin pi-spinner" style="fontSize: 2rem"></i>
@@ -123,25 +123,12 @@ export default {
     height: 22px;
 }
 
-.loginBtn{
+.general-btn{
     width: 500px;
     height: 50px;
-    border: 1px #000000 solid;
-    background: rgb(255, 255, 255);
-    border-radius: 0;
-    font-weight: bold;
-    transition: 0.3s ease;
-    color: black;
-    font-size: 16px;
 }
 
-.loginBtn:hover {
-    background: black;
-    color: #fff;
-    cursor: pointer;
-}
-
-.loginBtn.color{
+.general-btn.color{
     opacity: .7;
 }
 

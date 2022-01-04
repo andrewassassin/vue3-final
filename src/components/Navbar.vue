@@ -378,11 +378,6 @@ input::-webkit-search-cancel-button{
         position: relative;
         left: 230px;
         top: -400px;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: .3s ease;
     }
 
     .nav-toggler{

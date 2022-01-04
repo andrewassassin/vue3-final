@@ -22,7 +22,7 @@
                 <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12" v-model="user.phone" type="text" />
             </div>
             <hr size="1px" align="left" width="100%" class="p-my-4">
-            <button type="submit" class="logout-Btn" @click="changeInfo?editInfo():saveInfo()">{{changeInfo?'編輯':'儲存'}}
+            <button type="submit" class="general-btn" @click="changeInfo?editInfo():saveInfo()">{{changeInfo?'編輯':'儲存'}}
             </button>
         </div>
     </div>
@@ -56,21 +56,8 @@
 }
 </script>
 <style scoped>
-.logout-Btn{
+.general-btn{
     width: 500px;
     height: 50px;
-    border: 1px #000000 solid;
-    background: rgb(255, 255, 255);
-    border-radius: 0;
-    font-weight: bold;
-    transition: 0.3s ease;
-    color: black;
-    font-size: 16px;
-}
-
-.logout-Btn:hover {
-    background: black;
-    color: #fff;
-    cursor: pointer;
 }
 </style>

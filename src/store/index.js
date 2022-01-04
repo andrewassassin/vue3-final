@@ -11,6 +11,7 @@ export default createStore({
         user: {
 
         },
+        src:'header1.jpg'
     },
 
     mutations: {
@@ -22,6 +23,9 @@ export default createStore({
         },
         changeIList(state, payload) {
             state.itemList = payload
+        },
+        changeHeaderImg(state, payload){
+            state.src = payload
         }
     },
     getters: {

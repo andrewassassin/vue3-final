@@ -20,7 +20,7 @@
                                     <i v-show="idx===2" :class="{'pi-sort-amount-down': priceLow === true,'pi-sort-amount-up-alt': priceLow === false}" class="pi p-ml-2" style="font-size: 1rem;"></i>
                                 </div>
                                 <Button :id="idx" @click="priceFilter(idx)" icon="pi pi-filter" class="p-button-rounded p-button-text p-button-plain "/>
-                                <transition>
+                                <transition>                           
                                     <FilterPage v-click-outside="onClickOutside" v-if="isActive===idx"  @closeBtn="closeBtn" @apply="applyFilter" class="filter-page" />
                                 </transition>
                             </div>
@@ -66,11 +66,13 @@
 import FilterPage from '@/components/FilterPage.vue'
 import axios from "axios";
 import { ref,onMounted,watch } from 'vue';
+import store from "@/store";
 export default {
     components: {
       FilterPage,
     },
     setup(){
+        store.state.src="carousel-2.jpg"
         const selected = ref();
         const selectAllCheck= ref([]);
         const ifAllCheck = ref(false);
@@ -91,7 +93,6 @@ export default {
         function onClickOutside(){  
                 isActive.value = false        
         }
-
 
         function editBtn(idx){
             selected.value =idx
