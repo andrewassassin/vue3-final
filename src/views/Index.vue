@@ -1,241 +1,238 @@
 <template >
-  <section id="introSection" class="p-d-flex p-ai-center p-jc-center p-flex-wrap" >
-    <div class="img-head">
-      <img src="" class="p-md-12 p-mb-2 p-px-0" alt="">
-      <button @click="scroll()" class="p-mt-2 p-mb-5 btn btn-info">往下</button>
-    </div>
-     <div class="slide" id="slide">
-      <div class="slide-item">
-        <transition-group :name="transitionSwiper" tag="ul" class="slide-list">
-          <li v-for="(item,index) in slideData" :key="item.id">                   
-              <img :src="require(`../assets/img/${item.image}`)" :id="`${index}`" alt="">    
-              <p class="">{{item.name}}</p> 
-              <p class="money">TWD$ <span class="badge">{{item.price}}</span></p>   
-          </li>
-        </transition-group>
-      </div>
-      <div class="slide-ctrl">
-        <i v-if="prevBtn" @click="slideCtrl(1)" class="slide-prev pi pi-angle-double-left" style="fontSize: 2rem" type="button"></i>
-        <i v-if="nextBtn" @click="slideCtrl(-1)" class="slide-next pi pi-angle-double-right" style="fontSize: 2rem" type="button"></i>
-      </div>
-    </div>
-    <div class="top-sec">
-      <div class="top-sec-img">
-        <img src="../assets/img/oberon-grille-closeup.jpg" alt="">
-      </div>
-      <div class="top-sec-text">
-        <h4>CABINET DESIGN</h4>
-        <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
-      </div>
-    </div>
-    <div class="pro-sec">
-      <div class="pro-sec-text">
-        <h4>A SPEAKER FOR EVERY USE</h4>
-        <p>The OBERON series presents a ‘speaker for every use’ line-up of models. With two compact stand-mounts, an on-wall, two floor-standing and a centre channel, the OBERON range has something for every need. Every speaker model is perfect for stereo use and is able to fill everything from small apartments to large living rooms with high-quality sound.</p>
-      </div>
-      <div class="pro-sec-img">
-        <img src="../assets/img/pro-sec-img.jpg" alt="">
-      </div>
-    </div>
-    <div class="ad-sec">
-      <div class="ad-sec-img">
-        <img src="../assets/img/cabinet-design.jpg" alt="">
-      </div>
-      <div class="ad-sec-text">
-        <h4>CABINET DESIGN</h4>
-        <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
-      </div>
-    </div>
-    <div>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br> debitis? Non ratione porro excepturi autem debitis distinctio rerum id, inventore, quisquam quibusdam itaque nam voluptas eos hic pariatur at. Veniam.</p>
-    </div>
-    <div>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br> debitis? Non ratione porro excepturi autem debitis distinctio rerum id, inventore, quisquam quibusdam itaque nam voluptas eos hic pariatur at. Veniam.</p>
-    </div>
-  </section>
+    <section id="introSection" class="p-d-flex p-ai-center p-jc-center p-flex-wrap" >
+        <div class="img-head">
+            <img src="" class="p-md-12 p-mb-2 p-px-0" alt="">
+            <button @click="scroll()" class="p-mt-2 p-mb-5 btn btn-info">往下</button>
+        </div>
+        <div class="slide" id="slide">
+            <div class="slide-item">
+                <transition-group :name="transitionSwiper" tag="ul" class="slide-list">
+                <li v-for="(item,index) in slideData" :key="item.id">                   
+                    <img :src="require(`../assets/img/${item.image}`)" :id="`${index}`" alt="">    
+                    <p class="">{{item.name}}</p> 
+                    <p class="money">TWD$ <span class="badge">{{item.price}}</span></p>   
+                </li>
+                </transition-group>
+            </div>
+            <div class="slide-ctrl">
+                <i v-if="prevBtn" @click="slideCtrl(1)" class="slide-prev pi pi-angle-double-left" style="fontSize: 2rem" type="button"></i>
+                <i v-if="nextBtn" @click="slideCtrl(-1)" class="slide-next pi pi-angle-double-right" style="fontSize: 2rem" type="button"></i>
+            </div>
+        </div>
+        <div class="top-sec">
+            <div class="top-sec-img">
+                <img src="../assets/img/oberon-grille-closeup.jpg" alt="">
+            </div>
+            <div class="top-sec-text">
+                <h4>CABINET DESIGN</h4>
+                <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
+            </div>
+        </div>
+        <div class="pro-sec">
+            <div class="pro-sec-text">
+                <h4>A SPEAKER FOR EVERY USE</h4>
+                <p>The OBERON series presents a ‘speaker for every use’ line-up of models. With two compact stand-mounts, an on-wall, two floor-standing and a centre channel, the OBERON range has something for every need. Every speaker model is perfect for stereo use and is able to fill everything from small apartments to large living rooms with high-quality sound.</p>
+            </div>
+            <div class="pro-sec-img">
+                <img src="../assets/img/pro-sec-img.jpg" alt="">
+            </div>
+            </div>
+        <div class="ad-sec">
+            <div class="ad-sec-img">
+                <img src="../assets/img/cabinet-design.jpg" alt="">
+            </div>
+            <div class="ad-sec-text">
+                <h4>CABINET DESIGN</h4>
+                <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
+            </div>
+        </div>
+        <div>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br> debitis? Non ratione porro excepturi autem debitis distinctio rerum id, inventore, quisquam quibusdam itaque nam voluptas eos hic pariatur at. Veniam.</p>
+        </div>
+        <div>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br> debitis? Non ratione porro excepturi autem debitis distinctio rerum id, inventore, quisquam quibusdam itaque nam voluptas eos hic pariatur at. Veniam.</p>
+        </div>
+    </section>
 </template>
 
 <script>
 import axios from 'axios'
 import { ref, onMounted } from "vue";
 export default {
-  setup(){
-    const slideData = ref([]);
-    const shiftItem = ref([]);
-    const timer = ref({});
-    const clickWait = ref(false);
-    const prevBtn = ref(false);
-    const nextBtn = ref(true);
-    const transitionSwiper = ref("");
-    const count = ref("");
-    const api = ref("tab2");
-  
-    onMounted(async()=>{
-      const count = "0"
-       await axios.post(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,count)
-          .then(response => {
-            console.log('response',response)
-              response.data.forEach(element => {
-                element.image = JSON.parse(element.image)[1]
-                slideData.value.push(element)
-              }); 
-          })
-          .catch(error => {
-            console.log('err',error);
-          });
-    })
-
-    function scroll(){
-       document.getElementById('slide').scrollIntoView({
-  behavior: "smooth",
-  block: "center",
-  inline: "nearest",
-});
-    }
-
-    function setTime(){
-      timer.value = setTimeout(() => {
-            clickWait.value = false;
-          }, 500);
-    }
-
-    function stopTime(){
-      window.clearInterval(timer);
-    }
-
-    async function slideCtrl(slidesToShow=1){
-        if (clickWait.value) {
-            return;
-          }
-          stopTime();
-          clickWait.value = true;
-          if (slidesToShow > 0) {
-              prevBtn.value = false 
-              nextBtn.value = true  
-              transitionSwiper.value="slidePrev"
-              // 移除最後一個
-              slideData.value =[...shiftItem.value,...slideData.value]
-              slideData.value.splice(-5);
-              setTime();
-              return;
-          }
-          if (slidesToShow < 0) {  
-              prevBtn.value = true 
-              nextBtn.value= false   
-              transitionSwiper.value="slide" 
-              count.value="5"
-              await axios.post(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,count.value)
-                .then(response => {
-                    response.data.forEach(element => {
-                      element.image = JSON.parse(element.image)[1]
-                      slideData.value.push(element)
-                    }); 
-                })
-                .catch(error => {
-                  console.log('err',error);
-                });
-              shiftItem.value = slideData.value.splice(0,5)
-              setTime();
-              return;
-          }
-    }
-     return {
-      clickWait,
-      timer,
-      slideData,
-      shiftItem,
-      count,
-      transitionSwiper,
-      prevBtn,
-      nextBtn,
-      slideCtrl,
-      stopTime,
-      setTime,
-      scroll,
-      api
-      }
-  }
-
+    setup(){
+        const slideData = ref([]);
+        const shiftItem = ref([]);
+        const timer = ref({});
+        const clickWait = ref(false);
+        const prevBtn = ref(false);
+        const nextBtn = ref(true);
+        const transitionSwiper = ref("");
+        const count = ref("");
+        const api = ref("tab2");
     
-   
+        onMounted(async()=>{
+        const count = "0"
+        await axios.post(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,count)
+            .then(response => {
+                console.log('response',response)
+                response.data.forEach(element => {
+                    element.image = JSON.parse(element.image)[1]
+                    slideData.value.push(element)
+                }); 
+            })
+            .catch(error => {
+                console.log('err',error);
+            });
+        })
+
+        function scroll(){
+            document.getElementById('slide').scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "nearest",
+            });
+        }
+
+        function setTime(){
+            timer.value = setTimeout(() => {
+                    clickWait.value = false;
+            }, 500);
+        }
+
+        function stopTime(){
+            window.clearInterval(timer);
+        }
+
+        async function slideCtrl(slidesToShow=1){
+            if (clickWait.value) {
+                return;
+            }
+            stopTime();
+            clickWait.value = true;
+            if (slidesToShow > 0) {
+                prevBtn.value = false 
+                nextBtn.value = true  
+                transitionSwiper.value="slidePrev"
+                // 移除最後一個
+                slideData.value =[...shiftItem.value,...slideData.value]
+                slideData.value.splice(-5);
+                setTime();
+                return;
+            }
+            if (slidesToShow < 0) {  
+                prevBtn.value = true 
+                nextBtn.value= false   
+                transitionSwiper.value="slide" 
+                count.value="5"
+                await axios.post(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,count.value)
+                    .then(response => {
+                        response.data.forEach(element => {
+                        element.image = JSON.parse(element.image)[1]
+                        slideData.value.push(element)
+                        }); 
+                    })
+                    .catch(error => {
+                    console.log('err',error);
+                    });
+                shiftItem.value = slideData.value.splice(0,5)
+                setTime();
+                return;
+            }
+        }
+        return {
+            clickWait,
+            timer,
+            slideData,
+            shiftItem,
+            count,
+            transitionSwiper,
+            prevBtn,
+            nextBtn,
+            slideCtrl,
+            stopTime,
+            setTime,
+            scroll,
+            api
+        }
+    }
 }
 </script>
 
 <style scoped>
 .img-head{
-  overflow: hidden;
-  width: 100%;
+    overflow: hidden;
+    width: 100%;
 }
 
 .img-head img{
-  height: 85vh;
+    height: 85vh;
 }
 
 .ad-sec{
-  display: flex;
-  width: 100%;
-  height: 600px;
-  background: black;
-  align-items: center;
+    display: flex;
+    width: 100%;
+    height: 600px;
+    background: black;
+    align-items: center;
 }
 
 .ad-sec-img{
-  display: flex;
-  flex: 0 0 50%;
-  align-items: center;
-  /* justify-content: center; */
+    display: flex;
+    flex: 0 0 50%;
+    align-items: center;
+    /* justify-content: center; */
 }
 
 .ad-sec-img img{
-  max-width: 100%;
-  height: auto;
-  padding: 150px;
+    max-width: 100%;
+    height: auto;
+    padding: 150px;
 }
 
 .ad-sec-text{
-  position: relative;
-  color: aliceblue;
-  margin-right: 200px;
-  font-family: 'Helvetica', sans-serif;
+    position: relative;
+    color: aliceblue;
+    margin-right: 200px;
+    font-family: 'Helvetica', sans-serif;
 }
 
 .ad-sec h4 {
-  font-weight: 900;
+    font-weight: 900;
 }
 
 
 
 .ad-sec p{
-  margin-top:18px ;
-  word-wrap: break-word;
-  /* display: block; */
-  text-align: left;
+    margin-top:18px ;
+    word-wrap: break-word;
+    /* display: block; */
+    text-align: left;
 }
 
 .pro-sec{
-  display: flex;
-  width: 100%;
-  height: 600px;
-  background: rgb(255, 255, 255);
-  align-items: center;
-  margin: 50px 0;
+    display: flex;
+    width: 100%;
+    height: 600px;
+    background: rgb(255, 255, 255);
+    align-items: center;
+    margin: 50px 0;
 }
 
 .pro-sec-text{
-  flex: 0 0 35%;
-  align-items: center;
-  margin-left:160px ;
+    flex: 0 0 35%;
+    align-items: center;
+    margin-left:160px ;
 }
 
 .pro-sec-img img{
-  max-width: 100%;
-  height: auto;
-  padding: 180px;
+    max-width: 100%;
+    height: auto;
+    padding: 180px;
 }
 
 
 .pro-sec h4 {
-  font-weight: 900;
+    font-weight: 900;
 }
 
 

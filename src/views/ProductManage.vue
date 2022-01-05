@@ -98,9 +98,7 @@ export default {
             selected.value =idx
         }
         function saveBtn(idx){
-            console.log('安安')
             selected.value = -10
-            console.log('new value',manageList.value[idx])
             const config = {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -246,19 +244,19 @@ tbody tr:hover{
 
 .v-enter-active,
 .v-leave-active {
-  transition: all .1s ease;
+    transition: all .1s ease;
 }
 
 .v-enter-from,
 .v-leave-to {
-  height: 0;
-  opacity: 0;
+    height: 0;
+    opacity: 0;
 }
 
 .v-enter-to,
 .v-leave-from {
-  height: 250px;
-  opacity: 1;
+    height: 250px;
+    opacity: 1;
 }
 
 @media(max-width:600px){

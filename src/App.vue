@@ -9,6 +9,9 @@
         <div class="content">
             <router-view v-if="isRouterAlive"/>
         </div>
+        <button v-if="showTop" @click="clickTop" class="goBackBtn">
+            <i class="pi pi-angle-up" style="fontSize: 1.3rem;color:white;"></i>
+        </button>
     </div>
 </template>
 <script>
@@ -30,7 +33,8 @@ export default {
         return {
             isRouterAlive: true,
             active:false,
-            lastScrollY : 250
+            lastScrollY : 250,
+            showTop:false
         };
     },
     methods: {
@@ -43,18 +47,29 @@ export default {
         handleScroll() {
             let st = window.scrollY
             if(st > this.lastScrollY){
-                console.log('5')
                 this.active =true
             }else{
                 this.active =false
             }
-            if(st>250){
+            if(st>200){
                 this.lastScrollY = st;
             }
+        },
+        topFunction() {
+            let st = window.scrollY
+            if(st > 500){
+                this.showTop =true
+            }else{
+                this.showTop =false
+            }
+        },
+        clickTop(){
+            scrollTo(0, 0);
         }
     },
     created() {
         window.addEventListener("scroll", this.handleScroll);
+        window.addEventListener("scroll", this.topFunction);
     },
 }
 </script>

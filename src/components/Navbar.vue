@@ -23,7 +23,7 @@
         </section>
         <nav :class="{ active: isActive }" class="nav-top p-d-flex p-ai-center p-jc-center">  
             <div @click.prevent="closeLeftMenu()" class="close-btn p-mr-3">
-                        <i style="fontSize: 1.3rem" class="p-mt-3 pi pi-times close"></i>      
+                <i style="fontSize: 1.3rem" class="p-mt-3 pi pi-times close"></i>      
             </div>            
             <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0">
                 <li class="">
@@ -318,15 +318,15 @@ input::-webkit-search-cancel-button{
 
 
 .itemBar{
-  visibility: hidden;
-  transition: .2s ease;
-  opacity: 0;
+    visibility: hidden;
+    transition: .2s ease;
+    opacity: 0;
 }
 
 .itemList:hover .itemBar{
-  visibility: visible;
-  transition: .6s ease;
-  opacity: 1;
+    visibility: visible;
+    transition: .6s ease;
+    opacity: 1;
 }
 
 @media (max-width: 900px) {
@@ -391,12 +391,11 @@ input::-webkit-search-cancel-button{
         z-index: 500;
     }
 
-       .line {
+    .line {
         width: 30px;
         height:2.5px;
         background: rgb(0, 0, 0);
         position: relative;
-        /* transform: rotateZ(45deg); */
     }
 
 
@@ -419,7 +418,7 @@ input::-webkit-search-cancel-button{
     }
 
     .work-brench{
-      right: 10%;
+        right: 10%;
     }
 }
 
