@@ -30,9 +30,9 @@
                     <router-link to="/" style="text-decoration:none;">回到首頁</router-link>
                 </li>
                 <li class="">
-                    <router-link class="itemList" to="/product" style="text-decoration:none;">
+                    <router-link @click="toItemBar" class="itemList" to="/product" style="text-decoration:none;">
                         商品詳情
-                        <itembar class="itemBar" />
+                        <Itembar class="itemBar" :class="{ show: isShowItemBar }"/>
                     </router-link>
                 </li>
                 <li class="">
@@ -50,14 +50,18 @@
 <script>
 import store from "@/store";
 import Modal from '@/components/Modal'
-import itembar from '@/components/itembar'
+import Itembar from '@/components/Itembar'
 import Search from '@/views/Search'
 import UserInfo from '@/views/UserInfo'
-import Login from '../views/Login'
+import Login from '@/views/Login'
 import { ref,computed,onMounted  } from "vue";
 import { useRouter, useRoute } from "vue-router";
 export default {  
     name: 'Navbar',
+    components: {
+        Modal,
+        Itembar,
+    },
     setup(){
         const myinput = ref(null);
         const router = useRouter();
@@ -66,7 +70,7 @@ export default {
         const searchBar = ref("");
         const isActive = ref(false);
         const isExtend = ref(false);
-        const isHoverItem = ref(false);
+        const isShowItemBar = ref(false);
         const isHoverCart = ref(false);
         const isLogin = ref(true);
         const loginState = computed(()=>{
@@ -75,13 +79,13 @@ export default {
 
         const changeCartNum = computed(()=>{
         // 監聽購物車商品數量
-        return store.getters.changeCartNum;
+            return store.getters.changeCartNum;
         })
 
         onMounted(()=>{
-        // 取得購物車商品數量
-        console.log('nav mounted')
-        store.dispatch("DataGetCart");
+            // 取得購物車商品數量
+            console.log('nav mounted')
+            store.dispatch("DataGetCart");
             // const itemListStr = localStorage.getItem("cart");
             // const defaultList = JSON.parse(itemListStr);
             // store.state.itemList = defaultList || []; 
@@ -128,17 +132,21 @@ export default {
         }
 
         function toUserInfo(){
-        if(Object.entries(loginState.value).length !==0){
-            router.push({
-                path: `/userinfo`,
-                component: UserInfo,
-            }) 
-        }else{
-            router.push({
-                path: `/login`,
-                component: Login,
-            }) 
+            if(Object.entries(loginState.value).length !==0){
+                router.push({
+                    path: `/userinfo`,
+                    component: UserInfo,
+                }) 
+            }else{
+                router.push({
+                    path: `/login`,
+                    component: Login,
+                }) 
+            }
         }
+
+        function toItemBar(){
+            isShowItemBar.value=true
         }
 
         return {
@@ -152,18 +160,15 @@ export default {
             isActive,
             isExtend,
             toggleBar,
-            isHoverItem,
             isHoverCart,
+            isShowItemBar,
             isLogin,
             showInput,
             blurFocus,
             toUserInfo,
-            closeLeftMenu
+            closeLeftMenu,
+            toItemBar
         }
-    },
-    components: {
-        Modal,
-        itembar,
     },
 }
 
@@ -329,7 +334,7 @@ input::-webkit-search-cancel-button{
     opacity: 1;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 900px){
     .pi-apple{
       display: none;
     }
@@ -419,6 +424,12 @@ input::-webkit-search-cancel-button{
 
     .work-brench{
         right: 10%;
+    }
+
+    .itemBar.show{
+        visibility: visible;
+        transition: .6s ease;
+        opacity: 1;
     }
 }
 

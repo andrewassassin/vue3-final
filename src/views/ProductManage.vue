@@ -89,7 +89,8 @@ export default {
 			{ name: '墊材', code: '墊材' },
             { name: '藍芽喇叭', code: '藍芽喇叭' },
 			{ name: '落地喇叭', code: '落地喇叭' },
-	]);
+        ]);
+
         function onClickOutside(){  
                 isActive.value = false        
         }
@@ -104,8 +105,7 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             };
-            axios.post(
-                `https://x-home.pcpogo.com/px/productManege.php?PDEBUG=andrewc`, filterList.value[idx],config)
+            axios.post(`https://x-home.pcpogo.com/px/productManege.php?PDEBUG=andrewc`, filterList.value[idx],config)
                 .then((response) => {
                     console.log(response)
                 })

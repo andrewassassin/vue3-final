@@ -39,19 +39,15 @@
             this.changeInfo = false
         },
         saveInfo(){
-            console.log('saveInfo')
-            console.log('userNew',this.user)
             localStorage.setItem('user', JSON.stringify(this.user))
             this.changeInfo=true
         }
     },
     computed: {
-      user() {
-        console.log('userid info ',this.$store.state.user)  
-        return this.$store.state.user;
-      },
-    },
-    mounted(){
+        user() {
+            console.log('userid info ',this.$store.state.user)  
+            return this.$store.state.user;
+        },
     }
 }
 </script>
