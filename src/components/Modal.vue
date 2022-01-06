@@ -2,12 +2,12 @@
     <div id="modal">
         <div class="DivOverlapMask">
             <div class="DivDialog p-md-6 p-col-12">
-                <div class="p-d-flex p-jc-between">
+                <div class="p-d-flex p-jc-between p-ai-center">
                     <h2 class="p-ml-3">
                          購物車
                     </h2>
-                    <div v-on:click.prevent="closeBtn()" class="close-btn p-mr-3">
-                        <i style="fontSize: 1.3rem" class="p-mt-3 pi pi-times close"></i>      
+                    <div class="p-mr-3">
+                        <Button @click="closeBtn" icon="pi pi-times"  class="p-button-rounded p-button-plain p-button-text" />
                     </div>
                 </div>
                 <ScrollPanel class="custombar1">

@@ -1,51 +1,51 @@
 <template>
-        <header class="header p-d-flex p-ai-center p-jc-center">台灣本島免運費</header>
-        <section class="section p-d-flex p-ai-center p-jc-center">
-            <div class="work-brench2">
-                <i class="pi pi-map-marker p-mr-5" style="fontSize: 1.6rem"></i>
-                <i class="pi pi-heart" style="fontSize: 1.6rem"></i>
+    <header class="header p-d-flex p-ai-center p-jc-center">台灣本島免運費</header>
+    <section class="section p-d-flex p-ai-center p-jc-center">
+        <div class="work-brench2">
+            <i class="pi pi-map-marker p-mr-5" style="fontSize: 1.6rem"></i>
+            <i class="pi pi-heart" style="fontSize: 1.6rem"></i>
+        </div>
+        <i class="pi pi-apple p-ml-lg-2" style="fontSize: 2.5rem"></i>
+        <div class="work-brench p-d-flex p-ai-center">
+            <form @submit.prevent="innerSearch($event)" class="search-bar p-mr-5">  
+                <input v-model="searchBar" ref="myinput" @blur="blurFocus" :class="{ show: isExtend }" class="s-input" type="search" placeholder="Search" aria-label="Search">
+                <i class="pi pi-search" @click="showInput" style="fontSize: 1.5rem" type="button"></i>          
+            </form>
+            <div class="cart-place p-mr-5" @click.prevent="openModal()" @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }">
+                <div id="cartNumber" type="button">{{changeCartNum}}</div>
+                <i class="pi pi-shopping-cart" style="fontSize: 1.6rem;cursor:pointer" type="button"></i>  
             </div>
-            <i class="pi pi-apple p-ml-lg-2" style="fontSize: 2.5rem"></i>
-            <div class="work-brench p-d-flex p-ai-center">
-                <form @submit.prevent="innerSearch($event)" class="search-bar p-mr-5">  
-                    <input v-model="searchBar" ref="myinput" @blur="blurFocus" :class="{ show: isExtend }" class="s-input" type="search" placeholder="Search" aria-label="Search">
-                    <i class="pi pi-search" @click="showInput" style="fontSize: 1.5rem" type="button"></i>          
-                </form>
-                <div class="cart-place p-mr-5" @click.prevent="openModal()" @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }">
-                    <div id="cartNumber" type="button">{{changeCartNum}}</div>
-                    <i class="pi pi-shopping-cart" style="fontSize: 1.6rem;cursor:pointer" type="button"></i>  
-                </div>
-                <i v-if="isLogin" @click="toUserInfo" class="pi pi-user" style="fontSize: 1.6rem;cursor:pointer" type="button" aria-current="page"></i>     
-            </div>
-            <button @click="toggleBar()" class="nav-toggler" style="cursor:pointer;">
-                <div class="line"></div>
-            </button>
-        </section>
-        <nav :class="{ active: isActive }" class="nav-top p-d-flex p-ai-center p-jc-center">  
-            <div @click.prevent="closeLeftMenu()" class="close-btn p-mr-3">
-                <i style="fontSize: 1.3rem" class="p-mt-3 pi pi-times close"></i>      
-            </div>            
-            <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0">
-                <li class="">
-                    <router-link to="/" style="text-decoration:none;">回到首頁</router-link>
-                </li>
-                <li class="">
-                    <router-link @click="toItemBar" class="itemList" to="/product" style="text-decoration:none;">
-                        商品詳情
-                        <Itembar class="itemBar" :class="{ show: isShowItemBar }"/>
-                    </router-link>
-                </li>
-                <li class="">
-                    <router-link to="/create" style="text-decoration:none;">建立商品</router-link>
-                </li>
-                <li class=" ">
-                    <router-link to="/productManage" style="text-decoration:none;">商品管理</router-link>
-                </li>        
-            </ul>
-        </nav>
-        <transition>
-            <Modal v-if="isClickCart" @closeBtn="closeModal" />
-        </transition>
+            <i v-if="isLogin" @click="toUserInfo" class="pi pi-user" style="fontSize: 1.6rem;cursor:pointer" type="button" aria-current="page"></i>     
+        </div>
+        <button @click="toggleBar()" class="nav-toggler" style="cursor:pointer;">
+            <div class="line"></div>
+        </button>
+    </section>
+    <nav :class="{ active: isActive }" class="nav-top p-d-flex p-ai-center p-jc-center">  
+        <div class="p-mr-3 close-btn">
+            <Button @click="closeLeftMenu" icon="pi pi-times"  class="p-button-rounded p-button-plain p-button-text" />  
+        </div>            
+        <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0">
+            <li class="">
+                <router-link to="/" style="text-decoration:none;">回到首頁</router-link>
+            </li>
+            <li class="">
+                <router-link @click="toItemBar" class="itemList" to="/product" style="text-decoration:none;">
+                    商品詳情
+                    <Itembar class="itemBar" :class="{ show: isShowItemBar }"/>
+                </router-link>
+            </li>
+            <li class="">
+                <router-link to="/create" style="text-decoration:none;">建立商品</router-link>
+            </li>
+            <li class=" ">
+                <router-link to="/productManage" style="text-decoration:none;">商品管理</router-link>
+            </li>        
+        </ul>
+    </nav>
+    <transition>
+        <Modal v-if="isClickCart" @closeBtn="closeModal" />
+    </transition>
 </template>
 <script>
 import store from "@/store";
@@ -296,7 +296,7 @@ input::-webkit-search-cancel-button{
 }
 
 .cart-place.move{
-     transform: scale(1.2);
+    transform: scale(1.2);
 }
 
 #cartNumber {
@@ -336,7 +336,7 @@ input::-webkit-search-cancel-button{
 
 @media (max-width: 900px){
     .pi-apple{
-      display: none;
+        display: none;
     }
 
     .work-brench2{
