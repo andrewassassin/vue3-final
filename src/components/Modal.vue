@@ -35,7 +35,7 @@
                             </div>
                             <div> 
                                 <i class="pi pi-minus-circle" @click="minusItem($event)" :id="`${idx}`" style="fontsize: 1rem" type="button"></i>
-                                            {{ item.amount }}
+                                    {{ item.amount }}
                                 <i class="pi pi-plus-circle" @click="plusItem($event)" :id="`${idx}`" style="fontsize: 1rem" type="button"></i>
                             </div>
                         </div>
@@ -129,7 +129,6 @@ export default {
     },
     computed: {
         itemList() {
-            console.log("vuex itemList ", this.$store.state.itemList);
             return this.$store.state.itemList;
         },
         getCartValue() {

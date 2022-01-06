@@ -37,6 +37,9 @@ import UserInfo from '@/views/UserInfo'
 import Register from '@/views/Register'
 import Toast from 'primevue/toast';
 export default {
+    components:{
+        Toast
+    },
     data () {
         return {
             loginText:'登入',
@@ -49,7 +52,6 @@ export default {
             messages: [],
         }
     }, 
-    components:{Toast},
     methods:{
         loginForm () {
             this.spinActive = true
@@ -65,7 +67,6 @@ export default {
             };                
             axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`, data, config)
                 .then(response => {
-                    console.log('res',response)
                     if(response.data.msg==="密碼錯誤"){
                         this.$toast.add({severity:'error', summary: 'Error Message', detail:'密碼輸入錯誤', life: 3000});
                         this.spinActive = false
@@ -88,7 +89,7 @@ export default {
 
         },
         toRegister(){
-             this.$router.push({
+            this.$router.push({
                 path: `/register`,
                 component: Register,
             })  

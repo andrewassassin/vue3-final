@@ -19,7 +19,7 @@
         </div>
         <div class="p-col-12 p-md-12 p-d-flex p-jc-between p-ai-center p-px-0" style="width:12rem;">
             <Button type="submit" label="Clear"  class="p-button-sm"/>
-            <Button type="submit" @click="apply" label="Apply"  class="p-button-sm"/>
+            <Button type="submit" @click="apply" label="Apply" class="p-button-sm"/>
         </div>
     </div>
 </template>

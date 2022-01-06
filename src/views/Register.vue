@@ -16,17 +16,7 @@
                     <input type="email" v-model="user.username" placeholder="E-mail" id="userName" class="register-input account-group" required/>
                 </div>
                 <div class="input-group pwd-group">
-                    <input
-                        :type="typePwd"
-                        v-model="user.password"
-                        placeholder="密碼"
-                        id="userPwd"
-                        class="register-input"
-                        @focus="focusPwd"
-                        @keyup="pwdAuth"
-                        @blur="blur"
-                        required
-                    />
+                    <input :type="typePwd" v-model="user.password" placeholder="密碼" id="userPwd" class="register-input" @focus="focusPwd" @keyup="pwdAuth" @blur="blur" required/>
                     <i class="pi" :class="{'pi-eye': isActive,'pi-eye-slash': notActive,}" @click="showPwd()" style="fontsize: 1.2rem"></i>
                 <transition>
                     <div v-show="showHint" class="pwd-hint">
@@ -106,7 +96,7 @@ export default {
         },
         pwdAuth() {
             var oValue = this.user.password;
-            console.log("keyup!", oValue);
+            // console.log("keyup!", oValue);
             if (/\d/.test(oValue) && /[a-z]/.test(oValue) && /[A-Z]/.test(oValue)) {
                 this.changeColorHint("Strong", 100, true, false);
             } else if (/^\d+$/.test(oValue) ||/^[A-Z]+$/.test(oValue) ||/^[a-z]+$/.test(oValue)) {

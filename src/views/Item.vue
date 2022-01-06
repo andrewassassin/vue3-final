@@ -71,6 +71,7 @@
 import axios from 'axios'
 import slider from "../mixin/slider";
 export default {
+    mixins: [slider],
     props: {
         id: {
             type: String,
@@ -88,34 +89,6 @@ export default {
             columnCnt:[]
         }
     },
-    mixins: [slider],
-    methods: {
-        addItem() {
-            const item = {
-                ...this.product,
-                amount: this.amount,
-            }
-            const already = this.$store.state.itemList.find(item => {
-                return item.id === this.product.id
-            })
-            if (already) {
-                // 最後的數量= 已經擁有的數量+現在使用者輸入的數量
-                already.amount = parseInt(already.amount) + parseInt(this.amount)
-                this.product = already
-            } else{
-                this.$store.commit("itemList",item);
-            }
-            this.productDatabase()
-        },
-        productDatabase(){
-            const itemListStr = JSON.stringify(this.$store.state.itemList);
-            localStorage.setItem(this.key, itemListStr);
-            this.$store.dispatch("productToData");
-        },
-        loaded() {
-            this.spin = false
-        }
-    }, 
     async created() {
         this.$store.dispatch("DataGetCart");
         // const itemListStr = localStorage.getItem(this.key);
@@ -147,6 +120,33 @@ export default {
             // length除以i的餘數， 如果length=25，代表ref到24之後會重輪一次
             obj.ref = i % this.itemObj.length;
             this.slideData.push(obj);
+        }
+    },
+    methods: {
+        addItem() {
+            const item = {
+                ...this.product,
+                amount: this.amount,
+            }
+            const already = this.$store.state.itemList.find(item => {
+                return item.id === this.product.id
+            })
+            if (already) {
+                // 最後的數量= 已經擁有的數量+現在使用者輸入的數量
+                already.amount = parseInt(already.amount) + parseInt(this.amount)
+                this.product = already
+            } else{
+                this.$store.commit("itemList",item);
+            }
+            this.productDatabase()
+        },
+        productDatabase(){
+            const itemListStr = JSON.stringify(this.$store.state.itemList);
+            localStorage.setItem(this.key, itemListStr);
+            this.$store.dispatch("productToData");
+        },
+        loaded() {
+            this.spin = false
         }
     }
 }

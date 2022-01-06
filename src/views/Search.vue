@@ -1,52 +1,26 @@
 <template>
-    <header class="my-5">
-        <div class="multi">
-            <h5 class="mb-4 badge badge-secondary">進階搜尋</h5>
+    <div class="p-my-5">
+        <aside class="multi">
+            <h5 class="p-mb-4 badge badge-secondary">進階搜尋</h5>
             <div>
                 <h6>喇叭品牌</h6>
-                <MultiSelect
-                    v-model="selectedBrand"
-                    :options="brands"
-                    optionLabel="name"
-                    placeholder="Select Brand"
-                    display="chip"
-                />
+                <MultiSelect v-model="selectedBrand" :options="brands" optionLabel="name" placeholder="Select Brand" display="chip" />
             </div>
-            <div class="mt-5">
+            <div class="p-mt-5">
                 <h6>喇叭類別</h6>
-                <MultiSelect
-                    v-model="selectCate"
-                    :options="category"
-                    optionLabel="category"
-                    placeholder="Select category"
-                    display="chip"
-                />
+                <MultiSelect v-model="selectCate" :options="category" optionLabel="category" placeholder="Select category" display="chip" />
             </div>
-            <button @click="goMultiSearch" class="mt-5 btn btn-info">搜尋</button>
-        </div>
-        <section class="mt-2" id="section">
-            <h4 class="text-left">搜尋: {{ itemName }}</h4>
+            <button @click="goMultiSearch" class="p-mt-5 btn btn-info">搜尋</button>
+        </aside>
+        <section class="p-mt-2" id="section">
+            <h4 class="p-text-left">搜尋: {{ itemName }}</h4>
             <div class="row">
-                <div
-                    class="col-md-4 person"
-                    v-for="(product, index) in threeList"
-                    :key="index"
-                >
-                    <div class="card my-5 mx-2">
+                <div class="p-md-4 person" v-for="(product, index) in threeList" :key="index">
+                    <div class="card p-my-5 p-mx-2">
                         <div class="slide-img">
-                            <img
-                                :src="
-                                    require(`../assets/img/${product.image[1]}`)
-                                "
-                                class="card-img-top"
-                            />
+                            <img :src="require(`../assets/img/${product.image[1]}`)" class="card-img-top"/>
                             <div class="overlay">
-                                <a
-                                    :id="`${product.id}`"
-                                    @click="goToProduct($event)"
-                                    class="buy-btn"
-                                    >Buy Now</a
-                                >
+                                <a :id="`${product.id}`" @click="goToProduct($event)" class="buy-btn">Buy Now</a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -62,7 +36,7 @@
                 </div>
             </div>
         </section>
-    </header>
+    </div>
 </template>
 
 <script>
@@ -104,11 +78,7 @@ export default {
             itemName.value = id.value.id;
             threeList.value = [];
             api.value = "search";
-            await axios
-                .post(
-                    `https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,
-                    id.value.id
-                )
+            await axios.post(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`, id.value.id)
                 .then((response) => {
                     productList.value = response.data;
                     productList.value.forEach((item) => {
@@ -119,7 +89,7 @@ export default {
         });
 
         watch(selectedBrand, function (newVal) {
-            console.log("newVal: ", newVal);
+            // console.log("newVal: ", newVal);
             brandList.value = newVal;
             console.log("brandList: ", brandList.value);
         });
@@ -173,7 +143,7 @@ export default {
                     config
                 )
                 .then((response) => {
-                    console.log("res", response.data);
+                    // console.log("res", response.data);
                     productList.value = response.data;
                     productList.value.forEach((item) => {
                         item.image = JSON.parse(item.image);

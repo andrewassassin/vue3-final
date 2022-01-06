@@ -32,6 +32,9 @@ import axios from 'axios'
 import Item from '@/views/Item'
 export default {
     name: 'Product',
+    components: {
+        SelectButton
+    },
     data () {
         return {
             orderSort: '最新上架',
@@ -45,9 +48,6 @@ export default {
             count:0,
             showTop:false
         }
-    },
-    components: {
-        SelectButton
     },
     beforeMount() {
         this.getInitialUsers()
