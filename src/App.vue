@@ -9,11 +9,22 @@
         <div class="content">
             <router-view v-if="isRouterAlive"/>
         </div>
-        <button v-if="showTop" @click="clickTop" class="goBackBtn">
+        <button v-if="showTop" @click="clickTop" class="top-btn">
             <i class="pi pi-angle-up" style="fontSize: 1.3rem;color:white;"></i>
         </button>
     </div>
+    <div v-click-outside="onClickOutside" class="p-d-flex p-ai-center work-bar p-pl-3">
+        <Button @click.prevent="showup()" class="speeddial p-mr-2 p-button-info">
+                <i class="pi pi-plus" style="fontSize: 1.3rem;" :class="{rotate:isRotate}"></i>
+        </Button>
+        <transition-group name="show" tag="div" class="p-d-flex">
+            <div v-for="(item,idx) in workbrench" v-show="animationList.indexOf(idx)!==-1" class=" p-mr-2" :key="idx">
+                <i class="pi round p-d-flex p-ai-center p-jc-center" :class="item.name" style="font-size: 1.5rem"></i>
+            </div>
+        </transition-group> 
+    </div>
 </template>
+
 <script>
 
 import Navbar from '@/components/Navbar'
@@ -34,7 +45,12 @@ export default {
             isRouterAlive: true,
             active:false,
             lastScrollY : 250,
-            showTop:false
+            showTop:false,
+            animationList:[],
+            isRotate: false,
+            workbrench:[
+                {name:'pi-heart-fill'},{name:'pi-moon'},{name:'pi-github'},{name:'pi-facebook'},{name:'pi-google'}
+            ]
         };
     },
     methods: {
@@ -65,6 +81,33 @@ export default {
         },
         clickTop(){
             scrollTo(0, 0);
+        },
+        showup(){
+            this.isRotate=!this.isRotate
+            let that =this
+            if(that.animationList.length!==0){
+                this.animationList.forEach((item,i)=>{
+                    setTimeout(function() {
+                        that.animationList.pop()
+                    },i*40)
+                })
+            }else{
+                for(let i = 0; i < 6; i++) {
+                    setTimeout(function() {
+                        that.animationList.push(i)
+                    }, i*50 )
+                }
+            }
+        },
+        onClickOutside(){
+            this.isRotate=false
+            let that =this
+            this.animationList.forEach((item,i)=>{
+                setTimeout(function() {
+                    that.animationList.pop()
+                },i*40)
+            })
+
         }
     },
     created() {
@@ -114,6 +157,29 @@ export default {
 #nav a.router-link-exact-active {
     color: #42b983;
 }
+
+.round{
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    background: rgb(231, 231, 231);
+    opacity: 1;
+    transform: scale(1);
+}
+
+.show-enter-active,.show-leave-active {
+    transition: all .3s ease;
+}
+
+.show-enter-from, .show-leave-to {
+    transform: scale(0);
+}
+
+.show-enter-from{
+    opacity: 0;
+}
+
+
 
 @media(max-width:900px){
     .header-bar{

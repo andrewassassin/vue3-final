@@ -56,7 +56,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div>    
                 <div class="p-field p-grid">
                     <label for="firstname4" class="p-col-12 p-mb-2 p-md-12 p-mb-md-0">
                         商品分類
@@ -87,9 +87,6 @@
                 </div>
             </form>
         </section>
-        <Button @click.prevent="showup()" label="show"  class="p-ml-3"/>
-        <div  v-for="(item,idx) in 5"  v-show="i===idx"  :id="idx"  class="round"  :key="item.id">      
-        </div>
     </div>
 </template>
 
@@ -116,7 +113,6 @@ export default {
                 { name: '藍芽喇叭', code: '藍芽喇叭' },
                 { name: '落地喇叭', code: '落地喇叭' },
             ],
-            i:0
         };
     },
     created(){
@@ -190,12 +186,31 @@ export default {
             }
         },
         showup(){
-            this.i= this.i+1
-            // for(let i = 1; i < 6; i++) {
-            //     setTimeout(function() {
-            //         console.log(i)
-            //     },i*50)
-            // }
+            this.isRotate=!this.isRotate
+            let that =this
+            if(that.animationList.length!==0){
+                this.animationList.forEach((item,i)=>{
+                    setTimeout(function() {
+                        that.animationList.pop()
+                    },i*40)
+                })
+            }else{
+                for(let i = 0; i < 6; i++) {
+                    setTimeout(function() {
+                        that.animationList.push(i)
+                    }, i*50 )
+                }
+            }
+        },
+        onClickOutside(){
+            this.isRotate=false
+            let that =this
+            this.animationList.forEach((item,i)=>{
+                setTimeout(function() {
+                    that.animationList.pop()
+                },i*40)
+            })
+
         }
     }
 }
@@ -237,20 +252,6 @@ export default {
     height: 350px;
 }
 
-.round{
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    background: black;
-    opacity: 1;
-    transition: all .6s ease-out;
-    /* transform: scale(0); */
-}
-
-.round.show{
-    transform: scale(1);
-    opacity: 1;
-}
 
 @media(max-width: 600px){
     .section{
