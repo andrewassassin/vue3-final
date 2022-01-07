@@ -219,8 +219,6 @@ export default {
     opacity: 0;
 }
 
-
-
 .nav-ul {
     list-style-type:none;
 }
@@ -319,10 +317,6 @@ input::-webkit-search-cancel-button{
 
 .itemBar{
     position: absolute;
-}
-
-
-.itemBar{
     visibility: hidden;
     transition: .2s ease;
     opacity: 0;
@@ -426,10 +420,16 @@ input::-webkit-search-cancel-button{
         right: 10%;
     }
 
-    .itemBar.show{
-        visibility: visible;
-        transition: .6s ease;
+    .itemBar{
+        position: fixed;
+        top: 0;
+        left: 500px;
+        transition: all .3s ease;
         opacity: 1;
+    }
+
+    .itemList:hover .itemBar{
+        left: 0;
     }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-mt-5">
+  <div class="p-mt-0">
     <h2>登入</h2>
     <section class="p-py-3">
         <div class="container">
@@ -12,9 +12,8 @@
                         <input type="password" v-model="user.password" placeholder="密碼" id="userPwd" class="login-input"  required>				
 					</div>
                     <div class="form-group ">
-                        <button type="submit" class="general-btn" :class="{ color: spinActive }"> 
-                            
-                            <div class="spinner-border " v-show="spinActive" role="status">
+                        <button type="submit" class="general-btn" :class="{ color: spinActive }">                          
+                            <div class="spinner-border p-d-flex p-jc-center p-ai-center" v-if="spinActive" role="status">
                                 <i class="pi pi-spin pi-spinner" style="fontSize: 2rem"></i>
                             </div>{{loginText}}
                         </button>
@@ -45,8 +44,8 @@ export default {
             loginText:'登入',
             spinActive:false,
             user:{
-                    username:'',
-                    password:'',
+                username:'',
+                password:'',
             }, 
             api:'login',
             messages: [],
@@ -120,8 +119,7 @@ export default {
 }   
 
 .spinner-border{
-    width: 22px;
-    height: 22px;
+
 }
 
 .general-btn{

@@ -1,8 +1,8 @@
 <template>
     <header @scroll="scrollEvent" class="header">
-        <section class="py-3 p-d-flex p-flex-wrap p-jc-center">
+        <section class="p-d-flex p-flex-wrap p-jc-center">
             <div class="p-xl-7 p-lg-8 p-md-12 p-sm-12 p-col-12">
-            <h1 class="p-text-center p-mb-2">產品列表</h1>
+            <h2 class="p-text-center p-mb-2">產品列表</h2>
                 <SelectButton v-model="orderSort" :options="options" class="p-mt-5 p-mb-3" />
                 <div class="p-d-flex p-flex-wrap">
                 <div class="p-col-12 p-xl-4 p-lg-6 p-md-6 p-sm-12 person" v-for="(product,index) in threeList" :key="index">
@@ -126,11 +126,6 @@ export default {
 
 </script>
 <style scoped>
-.header{
-    margin-top: 50px;
-    height: 1;
-}
-
 .slide-img{
     height: 450px;
     position:relative;

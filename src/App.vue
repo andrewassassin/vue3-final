@@ -1,18 +1,21 @@
 <template>
     <div id="app">
-        <div class="nav-bar" :class="{hideUp:active}">
+        <nav class="nav-bar" :class="{hideUp:active}">
             <Navbar />
-        </div>
-        <div class="header-bar">
+        </nav>
+        <header class="header-bar">
             <Header/>
-        </div>
-        <div class="content">
+        </header>
+        <section class="content p-my-3">
             <router-view v-if="isRouterAlive"/>
-        </div>
-        <button v-if="showTop" @click="clickTop" class="top-btn">
-            <i class="pi pi-angle-up" style="fontSize: 1.3rem;color:white;"></i>
-        </button>
+        </section>
+        <footer>
+            <Footer/>
+        </footer>
     </div>
+    <button v-if="showTop" @click="clickTop" class="top-btn">
+        <i class="pi pi-angle-up" style="fontSize: 1.3rem;color:white;"></i>
+    </button>
     <div v-click-outside="onClickOutside" class="p-d-flex p-ai-center work-bar p-pl-3">
         <Button @click.prevent="showup()" class="speeddial p-mr-2 p-button-info">
                 <i class="pi pi-plus" style="fontSize: 1.3rem;" :class="{rotate:isRotate}"></i>
@@ -29,11 +32,13 @@
 
 import Navbar from '@/components/Navbar'
 import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
 export default {
     name: 'App',
     components: {
         Navbar,
-        Header
+        Header,
+        Footer
     }, 
     provide() {
         return {

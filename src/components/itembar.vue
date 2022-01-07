@@ -105,6 +105,17 @@ hr{
 }
 
 @media(max-width:600px){
+    .itemBar{
+        background:rgb(255, 255, 255);
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0px;
+    }
+
+    .bar-list a{
+        color: black;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
     .theme-page{
         display: none;
     }

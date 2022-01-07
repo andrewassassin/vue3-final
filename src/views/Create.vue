@@ -1,5 +1,5 @@
 <template>
-    <div class="p-mt-5">
+    <div>
         <h2>建立商品</h2>
         <section class="p-fluid p-d-flex p-jc-center section">
             <form v-on:submit.prevent="createForm($event)" class="p-md-6 p-xl-3 p-lg-6 p-sm-12 p-col-12">
@@ -26,7 +26,7 @@
                     </label>
                     <div class="upload p-col-12 p-md-12 p-p-0 p-mt-2">
                         <div class="upload-head p-d-flex p-flex-wrap p-jc-center p-ai-center">
-                            <Button class="p-d-flex p-jc-center p-p-0 ">
+                            <Button class="p-d-flex p-jc-center p-p-0">
                                 <label class="p-button-primary p-md-12 p-sm-12 p-col-12 choose-label" style="cursor:pointer">
                                     <input id="upload_img" style="display:none;" accept="image/*" @change="previewImage" type="file" multiple />
                                     選擇圖片

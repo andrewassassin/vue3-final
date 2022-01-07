@@ -1,71 +1,69 @@
 <template>
-    <div class="p-my-5">
-        <section class="p-py-3">
-            <div class="p-d-flex p-ai-center">
-                <div class="slide">
-                <div class="showImg">
-                    <img v-if="showImg" :src="require(`../assets/img/${itemObj[focusIndex]}`)" alt="">
-                </div>
-                <div class="slide-item">
-                    <transition-group name="flip-list" tag="ul" class="slide-list">
-                    <li v-for="(item,index) in slideData" :key="item.id">                   
-                        <img :src="require(`../assets/img/${itemObj[item.ref]}`)" :name="`${itemObj[item.ref]}`" :id="`${index}`"  @click="clickImg($event,index)" alt="">          
-                    </li>
-                    </transition-group>
-                </div>
-                <div class="slide-ctrl">
-                    <div class="slide-prev" @click="slideCtrl(1)">Prev</div>
-                    <div class="slide-next" @click="slideCtrl(-1)">Next</div>
-                </div>
-                </div>
-                <div class="p-md-6">
-                <form v-on:submit.prevent="addItem($event)" class="p-mt-3">
-                    <h1 class="card-title">{{product.name}}</h1>
-                    <Badge :value="product.category" class="p-mt-2" size="large" severity="info"></Badge>
-                    <h2 class="p-mt-3">TWD ${{product.price}}</h2>
-                    <div class="p-mt-5 amount-buy">
-                        <label>購買數量</label>
-                        <input v-model="amount" class="input-box" type="number" min="1" max="20" required>
-                    </div>
-                    <div class="p-mt-5">
-                        <button class="add-cart" type="submit">
-                        加入購物車
-                        </button>
-                    </div> 
-                </form>          
-                </div>
+    <section class="p-py-3">
+        <div class="p-d-flex p-ai-center">
+            <div class="slide">
+            <div class="showImg">
+                <img v-if="showImg" :src="require(`../assets/img/${itemObj[focusIndex]}`)" alt="">
             </div>
-        </section>
-        <article class="my-5">
-            <h3>商品介紹</h3>
-            <div class="top-sec">
-                <div class="top-sec-img">
-                <img src="../assets/img/item-info.jpg" alt="">
-                </div>
-                <div class="top-sec-text">
-                <h4>CABINET DESIGN</h4>
-                <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
-                </div>
+            <div class="slide-item">
+                <transition-group name="flip-list" tag="ul" class="slide-list">
+                <li v-for="(item,index) in slideData" :key="item.id">                   
+                    <img :src="require(`../assets/img/${itemObj[item.ref]}`)" :name="`${itemObj[item.ref]}`" :id="`${index}`"  @click="clickImg($event,index)" alt="">          
+                </li>
+                </transition-group>
             </div>
-        </article>
-        <section class="specification">
-            <h3>產品規格</h3>
-            <table class="table table-border p-md-6">
-                <thead >
-                    <tr>
-                    <th v-for="item in columnCnt" :key="item.key" class="text-right">{{item}}</th>
-                    </tr>
-                </thead>
-                <tbody id="cartTableBody" v-for="item in specification" :key="item.key">      
-                    <tr>
-                    <td v-for="column in item" :key="column.key">                                      
-                        <p class="m-0 text-right">{{column}}</p> 
-                    </td>      
-                    </tr>         
-                </tbody>
-            </table>
-        </section>
-    </div>
+            <div class="slide-ctrl">
+                <div class="slide-prev" @click="slideCtrl(1)">Prev</div>
+                <div class="slide-next" @click="slideCtrl(-1)">Next</div>
+            </div>
+            </div>
+            <div class="p-md-6">
+            <form v-on:submit.prevent="addItem($event)" class="p-mt-3">
+                <h1 class="card-title">{{product.name}}</h1>
+                <Badge :value="product.category" class="p-mt-2" size="large" severity="info"></Badge>
+                <h2 class="p-mt-3">TWD ${{product.price}}</h2>
+                <div class="p-mt-5 amount-buy">
+                    <label>購買數量</label>
+                    <input v-model="amount" class="input-box" type="number" min="1" max="20" required>
+                </div>
+                <div class="p-mt-5">
+                    <button class="general-btn" type="submit">
+                    加入購物車
+                    </button>
+                </div> 
+            </form>          
+            </div>
+        </div>
+    </section>
+    <article class="my-5">
+        <h3>商品介紹</h3>
+        <div class="top-sec">
+            <div class="top-sec-img">
+            <img src="../assets/img/item-info.jpg" alt="">
+            </div>
+            <div class="top-sec-text">
+            <h4>CABINET DESIGN</h4>
+            <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
+            </div>
+        </div>
+    </article>
+    <section class="specification">
+        <h3>產品規格</h3>
+        <table class="table table-border p-md-6">
+            <thead >
+                <tr>
+                <th v-for="item in columnCnt" :key="item.key" class="text-right">{{item}}</th>
+                </tr>
+            </thead>
+            <tbody id="cartTableBody" v-for="item in specification" :key="item.key">      
+                <tr>
+                <td v-for="column in item" :key="column.key">                                      
+                    <p class="m-0 text-right">{{column}}</p> 
+                </td>      
+                </tr>         
+            </tbody>
+        </table>
+    </section>
 </template>
 <script>
 import axios from 'axios'
@@ -282,15 +280,9 @@ a {
     height:400px;
 }
 
-.add-cart{
+.general-btn{
     width: 350px;
     height: 55px;
-    border:1px #000000 solid;
-    background: white;
-    border-radius: 0;
-    font-weight:bold;
-    font-size: 16px;
-    cursor: pointer;
 }
 
 .add-cart:hover{

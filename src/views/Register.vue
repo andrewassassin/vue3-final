@@ -1,5 +1,5 @@
 <template>
-    <div class="p-mt-5">
+    <div>
         <h2>註冊</h2>
         <section class="p-py-3 section">
             <form @submit.prevent="registerForm($event)" class="register-form">
