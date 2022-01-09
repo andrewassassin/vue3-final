@@ -78,7 +78,7 @@ export default {
             itemName.value = id.value.id;
             threeList.value = [];
             api.value = "search";
-            await axios.post(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`, id.value.id)
+            await axios.post(`http://localhost/Amitproject/${api.value}.php#/`, id.value.id)
                 .then((response) => {
                     productList.value = response.data;
                     productList.value.forEach((item) => {
@@ -102,7 +102,7 @@ export default {
             itemName.value = id.value.id;
             await axios
                 .post(
-                    `https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,
+                    `http://localhost/Amitproject/${api.value}.php#/`,
                     id.value.id
                 )
                 .then((response) => {
@@ -138,7 +138,7 @@ export default {
             api.value = "multi";
             axios
                 .post(
-                    `https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,
+                    `http://localhost/Amitproject/${api.value}.php#/`,
                     product,
                     config
                 )

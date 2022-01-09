@@ -28,13 +28,14 @@ export default {
     height: 600px;
     background-position: center;
     background-attachment:fixed;
-    background-size: cover;
+    background-size: contain;
     background-repeat:no-repeat;
 }
 
-@media(max-width:600px){
+@media(max-width:900px){
     .header{
         height: 200px;
+        background-size: cover;
         background-attachment:scroll;   
     }
 }

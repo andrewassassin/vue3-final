@@ -64,7 +64,7 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded",
                 }
             };                
-            axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`, data, config)
+            axios.post(`http://localhost/Amitproject/${this.api}.php#/`, data, config)
                 .then(response => {
                     if(response.data.msg==="密碼錯誤"){
                         this.$toast.add({severity:'error', summary: 'Error Message', detail:'密碼輸入錯誤', life: 3000});

@@ -105,7 +105,7 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             };
-            axios.post(`https://x-home.pcpogo.com/px/productManege.php?PDEBUG=andrewc`, filterList.value[idx],config)
+            axios.post(`http://localhost/Amitproject/productManege.php#/`, filterList.value[idx],config)
                 .then((response) => {
                     console.log(response)
                 })
@@ -159,7 +159,7 @@ export default {
             }        
         }
         onMounted(() => {
-            axios.get(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`)
+            axios.get(`http://localhost/Amitproject/${api.value}.php#/`)
                 .then((response) => {
                     console.log("res  ", response);
                     response.data.forEach(item => {

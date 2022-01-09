@@ -423,7 +423,7 @@ input::-webkit-search-cancel-button{
     .itemBar{
         position: fixed;
         top: 0;
-        left: 500px;
+        left: 0px;
         transition: all .3s ease;
         opacity: 1;
     }

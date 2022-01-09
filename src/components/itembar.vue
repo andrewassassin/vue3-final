@@ -2,27 +2,27 @@
     <div class="itemBar p-d-flex p-flex-wrap">
         <section class="p-md-6">
             <h2 class="p-mt-5">代理品牌</h2>
-            <hr size="8px" align="center" width="400px" class="p-my-4">
+            <hr size="8px" align="center" width="400px" class="p-my-4 p-mx-3">
             <div class="p-mt-4 bar-list">              
-                <ul class="p-mt-2 p-d-flex p-flex-wrap">
-                    <li class="p-mr-6 p-mt-3">
+                <ul class="p-mt-2 p-d-flex p-flex-wrap p-md-6 p-col-12">
+                    <li class="p-md-12 p-col-12">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem;"></i> DALI</a>
                     </li>
-                    <li @mouseover="changeBackground('029.jpg')" class="p-mr-5 p-mt-3">
+                    <li @mouseover="changeBackground('029.jpg')" class="p-md-12 p-col-12 p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KLIPSCH</a>
                     </li>
-                        <li class="p-mr-5 p-mt-3">
+                    <li class="p-md-12 p-col-12  p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> EDIFIER</a>
                     </li>
                 </ul>
-                <ul class="p-mt-2">
-                    <li class="p-mr-5 p-mt-3">
+                <ul class="p-mt-2 p-d-flex p-flex-wrap p-md-6 p-col-12">
+                    <li class="p-md-12 p-col-12">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KEF</a>
                     </li>
-                    <li class="p-mr-5 p-mt-3">
+                    <li class="p-md-12 p-col-12 p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> WHARFEDALE</a>
                     </li>
-                    <li class="p-mr-5 p-mt-3">
+                    <li class="p-md-12 p-col-12 p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> YAMAHA</a>
                     </li>            
                 </ul>
@@ -90,16 +90,13 @@ hr{
     width: 480px;
 }
 
-.bar-list ul {
-    width: 240px;
-}
-
 .bar-list li{
-    float: left;
+    text-align: left;
     list-style-type:none;
 }
 
 .bar-list a{
+    text-decoration: none;
     color: rgb(240, 232, 232);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
@@ -112,9 +109,14 @@ hr{
         border-radius: 0px;
     }
 
+    .bar-list li{
+        text-align: left;
+    }
+
     .bar-list a{
+        text-align: center;
         color: black;
-        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size: 24px;
     }
     .theme-page{
         display: none;

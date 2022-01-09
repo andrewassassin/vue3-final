@@ -62,6 +62,9 @@ export default {
             api: "register",
         };
     },
+    created(){
+        this.$store.state.src='carousel-4.jpg'
+    },
     methods: {
         registerForm() {
         console.log("submit");
@@ -76,7 +79,7 @@ export default {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
         };
-        axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,data,config)
+        axios.post(`http://localhost/Amitproject/${this.api}.php#/`,data,config)
             .then((response) => {
                 if(response.data.msg==='帳號已有人註冊'){
                     this.repeatAccount = true
