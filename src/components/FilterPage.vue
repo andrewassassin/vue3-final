@@ -35,12 +35,6 @@ export default {
         const big = ref("b")
         const price = ref("")
 
-        function closeBtn(){
-            target.emit('closeBtn', {
-                formData: {  }
-            });
-        } 
-
         function apply(){
             const ifEqual = big.value
             const count  = price.value
@@ -56,7 +50,7 @@ export default {
             console.log("newVal: ", newVal);
         });
 
-        return{options,big,price,closeBtn,apply}
+        return{options,big,price,apply}
 
     }
 }

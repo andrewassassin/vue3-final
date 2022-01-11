@@ -79,7 +79,7 @@ export default {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
         };
-        axios.post(`http://localhost/Amitproject/${this.api}.php#/`,data,config)
+        axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,data,config)
             .then((response) => {
                 if(response.data.msg==='帳號已有人註冊'){
                     this.repeatAccount = true

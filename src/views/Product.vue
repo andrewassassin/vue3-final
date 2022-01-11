@@ -62,7 +62,7 @@ export default {
         getInitialUsers() {  
             this.count = 0
             // console.log( 'mount count',this.count)
-            axios.post(`http://localhost/Amitproject/${this.api}.php#/`,this.count.toString())
+            axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,this.count.toString())
                 .then(response => {      
                     this.productList = response.data
                     this.productList.reverse().splice(0,6).forEach(item=>{
@@ -89,7 +89,7 @@ export default {
                     isLoading = true
                     that.count += 6
                     // console.log('count scroll',that.count)
-                await axios.post(`http://localhost/Amitproject/${that.api}.php#/`, that.count.toString())
+                await axios.post(`https://x-home.pcpogo.com/px/${that.api}.php?PDEBUG=andrewc`, that.count.toString())
                     .then(response => {
                         that.productList = response.data
                         that.productList.splice(0,6).forEach(item=>{
@@ -114,7 +114,7 @@ export default {
                 this.api = 'product'
             }
             this.count = 0
-            await axios.post(`http://localhost/Amitproject/${this.api}.php#/`,this.count.toString())
+            await axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,this.count.toString())
                 .then(response => {      
                     this.productList = response.data
                     // console.log('watch res data',response.data)

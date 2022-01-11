@@ -15,7 +15,7 @@
                 <div id="cartNumber" type="button">{{changeCartNum}}</div>
                 <i class="pi pi-shopping-cart" style="fontSize: 1.6rem;cursor:pointer" type="button"></i>  
             </div>
-            <i v-if="isLogin" @click="toUserInfo" class="pi pi-user" style="fontSize: 1.6rem;cursor:pointer" type="button" aria-current="page"></i>     
+            <i v-if="isLogin" @click="toUserInfo" class="pi pi-user" style="fontSize: 1.6rem; cursor:pointer;" type="button" aria-current="page"></i>     
         </div>
         <button @click="toggleBar()" class="nav-toggler" style="cursor:pointer;">
             <div class="line"></div>
@@ -23,22 +23,22 @@
     </section>
     <nav :class="{ active: isActive }" class="nav-top p-d-flex p-ai-center p-jc-center">  
         <div class="p-mr-3 close-btn">
-            <Button @click="closeLeftMenu" icon="pi pi-times"  class="p-button-rounded p-button-plain p-button-text" />  
+            <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
         </div>            
         <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0">
-            <li class="">
+            <li>
                 <router-link to="/" style="text-decoration:none;">回到首頁</router-link>
             </li>
-            <li class="">
+            <li>
                 <router-link @click="toItemBar" class="itemList" to="/product" style="text-decoration:none;">
                     商品詳情
-                    <Itembar class="itemBar" :class="{ show: isShowItemBar }"/>
+                    <Itembar class="itemBar" @closeItem="closeItemBar" :class="{ show: isShowItemBar }"/>
                 </router-link>
             </li>
-            <li class="">
+            <li>
                 <router-link to="/create" style="text-decoration:none;">建立商品</router-link>
             </li>
-            <li class=" ">
+            <li>
                 <router-link to="/productManage" style="text-decoration:none;">商品管理</router-link>
             </li>        
         </ul>
@@ -83,6 +83,7 @@ export default {
         })
 
         onMounted(()=>{
+            console.log('isShowItemBar前',isShowItemBar)
             // 取得購物車商品數量
             console.log('nav mounted')
             store.dispatch("DataGetCart");
@@ -121,7 +122,6 @@ export default {
             isActive.value = true;
         }
 
-
         function showInput(){
             isExtend.value = true
             myinput.value.focus()
@@ -147,8 +147,13 @@ export default {
 
         function toItemBar(){
             isShowItemBar.value=true
+            console.log('isShowItemBar前',isShowItemBar)
         }
 
+        function closeItemBar(){
+            isShowItemBar.value=false
+            console.log('isShowItemBar',isShowItemBar)
+        }
         return {
             myinput,
             isClickCart,
@@ -167,7 +172,8 @@ export default {
             blurFocus,
             toUserInfo,
             closeLeftMenu,
-            toItemBar
+            toItemBar,
+            closeItemBar
         }
     },
 }
@@ -422,15 +428,26 @@ input::-webkit-search-cancel-button{
 
     .itemBar{
         position: fixed;
+        visibility: visible;
         top: 0;
-        left: 0px;
+        left: 500px;
         transition: all .3s ease;
-        opacity: 1;
     }
 
+    /* .itemList:hover .itemBar{
+        left: 0;
+    } */
+
+    .itemBar.show{
+        left: 0;
+    }
+}
+
+@media(hover: hover) and (pointer: fine) {
     .itemList:hover .itemBar{
         left: 0;
     }
+
 }
 
 </style>

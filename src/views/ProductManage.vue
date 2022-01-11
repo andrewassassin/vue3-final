@@ -21,7 +21,7 @@
                                 </div>
                                 <Button :id="idx" @click="priceFilter(idx)" icon="pi pi-filter" class="p-button-rounded p-button-text p-button-plain "/>
                                 <transition>                           
-                                    <FilterPage v-click-outside="onClickOutside" v-if="isActive===idx"  @closeBtn="closeBtn" @apply="applyFilter" class="filter-page" />
+                                    <FilterPage v-click-outside="closeBtn" v-if="isActive===idx" @apply="applyFilter" class="filter-page" />
                                 </transition>
                             </div>
                         </th>
@@ -91,10 +91,6 @@ export default {
 			{ name: '落地喇叭', code: '落地喇叭' },
         ]);
 
-        function onClickOutside(){  
-                isActive.value = false        
-        }
-
         function editBtn(idx){
             selected.value =idx
         }
@@ -105,7 +101,7 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             };
-            axios.post(`http://localhost/Amitproject/productManege.php#/`, filterList.value[idx],config)
+            axios.post(`https://x-home.pcpogo.com/px/productManege.php?PDEBUG=andrewc`, filterList.value[idx],config)
                 .then((response) => {
                     console.log(response)
                 })
@@ -159,7 +155,7 @@ export default {
             }        
         }
         onMounted(() => {
-            axios.get(`http://localhost/Amitproject/${api.value}.php#/`)
+            axios.get(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`)
                 .then((response) => {
                     console.log("res  ", response);
                     response.data.forEach(item => {
@@ -182,7 +178,7 @@ export default {
             console.log("newVal: ", newVal);
         });
 
-        return{manageList,editBtn,productTitle,selected,saveBtn,sellings,filterPriceDown,inputTag,checkAll,selectAllCheck,onClickOutside,
+        return{manageList,editBtn,productTitle,selected,saveBtn,sellings,filterPriceDown,inputTag,checkAll,selectAllCheck,
         deleteSelect,filterList,priceFilter,priceLow,isActive,closeBtn,applyFilter}
     }
 }

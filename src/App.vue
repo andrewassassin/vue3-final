@@ -78,18 +78,14 @@ export default {
         },
         topFunction() {
             let st = window.scrollY
-            if(st > 500){
-                this.showTop =true
-            }else{
-                this.showTop =false
-            }
+            st > 500 ? this.showTop = true : this.showTop = false
         },
         clickTop(){
             scrollTo(0, 0);
         },
         showup(){
-            this.isRotate=!this.isRotate
-            let that =this
+            this.isRotate =! this.isRotate
+            let that = this
             if(that.animationList.length!==0){
                 this.animationList.forEach((item,i)=>{
                     setTimeout(function() {

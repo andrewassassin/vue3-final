@@ -133,7 +133,7 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             };
-            axios.post(`http://localhost/Amitproject/${this.api}.php#/`,product,config)
+            axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,product,config)
             .then((response) => {
                 console.log("res  ", response);
             })
