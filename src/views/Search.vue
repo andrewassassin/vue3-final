@@ -1,29 +1,29 @@
 <template>
-    <div class="p-my-5">
-        <aside class="multi">
-            <h5 class="p-mb-4 badge badge-secondary">進階搜尋</h5>
+    <div class="p-my-5 p-d-flex p-flex-wrap p-jc-center">
+        <aside class="p-mt-2 p-md-12 p-xl-3 p-lg-3 p-sm-12">
+            <h3 class="p-mb-4 badge badge-secondary">進階搜尋</h3>
             <div>
-                <h6>喇叭品牌</h6>
+                <h4>喇叭品牌</h4>
                 <MultiSelect v-model="selectedBrand" :options="brands" optionLabel="name" placeholder="Select Brand" display="chip" />
             </div>
             <div class="p-mt-5">
-                <h6>喇叭類別</h6>
+                <h4>喇叭類別</h4>
                 <MultiSelect v-model="selectCate" :options="category" optionLabel="category" placeholder="Select category" display="chip" />
             </div>
-            <button @click="goMultiSearch" class="p-mt-5 btn btn-info">搜尋</button>
+            <Button @click="goMultiSearch" label="搜尋" class="p-mt-5 p-btn -info"/>
         </aside>
-        <section class="p-mt-2" id="section">
-            <h4 class="p-text-left">搜尋: {{ itemName }}</h4>
-            <div class="row">
-                <div class="p-md-4 person" v-for="(product, index) in threeList" :key="index">
-                    <div class="card p-my-5 p-mx-2">
-                        <div class="slide-img">
-                            <img :src="require(`../assets/img/${product.image[1]}`)" class="card-img-top"/>
+        <section class="p-mt-2 p-xl-9 p-lg-12 p-md-12 p-sm-12">
+            <h2 class="p-text-left">搜尋: {{ itemName }}</h2>
+            <div class="p-d-flex p-flex-wrap p-px-4">
+                <div class="p-xl-4 p-lg-4 p-md-6 p-sm-12 p-col-12 person" v-for="(product, index) in threeList" :key="index">
+                    <div class="p-my-5 p-d-flex p-flex-wrap p-jc-center">
+                        <div class="slide-img p-d-flex p-jc-center p-ai-center p-mx-3 p-md-8">
+                            <img :src="require(`../assets/img/${product.image[1]}`)" class=""/>
                             <div class="overlay">
                                 <a :id="`${product.id}`" @click="goToProduct($event)" class="buy-btn">Buy Now</a>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body p-md-12 p-col-12">
                             <h4 class="card-title">{{ product.name }}</h4>
                             <h4>
                                 <span class="badge badge-info">
@@ -99,6 +99,7 @@ export default {
         });
 
         onMounted(async () => {
+            console.log('id.value',id.value)
             itemName.value = id.value.id;
             await axios
                 .post(
@@ -152,6 +153,7 @@ export default {
                 });
         }
         return {
+            itemName,
             productList,
             threeList,
             brandList,
@@ -171,27 +173,18 @@ header {
     display: flex;
 }
 
-#section {
-    width: 60%;
-}
-
-.multi {
-    margin-top: 80px;
-    width: 30%;
-}
-
 .p-multiselect {
     width: 20rem;
 }
 
 .slide-img {
-    height: 250px;
+    height: 400px;
+    /* width: 80%; */
     position: relative;
 }
 .slide-img img {
-    width: 50%;
-    height: 100%;
-    object-fit: cover;
+    height: 300px;
+    /* object-fit: cover; */
     box-sizing: border-box;
 }
 
@@ -241,9 +234,6 @@ header {
 }
 
 .person {
-    border-radius: 2px;
-    margin: 0 auto 15px auto;
-    padding: 15px;
     animation: fade 2s;
 }
 

@@ -30,10 +30,11 @@
                 <router-link to="/" style="text-decoration:none;">回到首頁</router-link>
             </li>
             <li>
-                <router-link @click="toItemBar" class="itemList" to="/product" style="text-decoration:none;">
+                <router-link class="itemList" to="/product" style="text-decoration:none;">
                     商品詳情
                     <Itembar class="itemBar" @closeItem="closeItemBar" :class="{ show: isShowItemBar }"/>
                 </router-link>
+                <a @click.prevent="toItemBar" href="">商品詳情2</a>
             </li>
             <li>
                 <router-link to="/create" style="text-decoration:none;">建立商品</router-link>
@@ -444,9 +445,9 @@ input::-webkit-search-cancel-button{
 }
 
 @media(hover: hover) and (pointer: fine) {
-    .itemList:hover .itemBar{
+    /* .itemList:hover .itemBar{
         left: 0;
-    }
+    } */
 
 }
 

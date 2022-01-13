@@ -1,23 +1,23 @@
 <template>
     <section class="p-py-3">
-        <div class="p-d-flex p-ai-center">
-            <div class="slide">
-            <div class="showImg">
-                <img v-if="showImg" :src="require(`../assets/img/${itemObj[focusIndex]}`)" alt="">
+        <div class="p-d-flex p-flex-wrap p-ai-center">
+            <div class="slide p-md-6 p-col-12">
+                <div class="showImg">
+                    <img v-if="showImg" :src="require(`../assets/img/${itemObj[focusIndex]}`)" alt="">
+                </div>
+                <div class="slide-item">
+                    <transition-group name="flip-list" tag="ul" class="slide-list">
+                    <li v-for="(item,index) in slideData" :key="item.id">                   
+                        <img :src="require(`../assets/img/${itemObj[item.ref]}`)" :name="`${itemObj[item.ref]}`" :id="`${index}`"  @click="clickImg($event,index)" alt="">          
+                    </li>
+                    </transition-group>
+                </div>
+                <div class="slide-ctrl">
+                    <div class="slide-prev" @click="slideCtrl(1)">Prev</div>
+                    <div class="slide-next" @click="slideCtrl(-1)">Next</div>
+                </div>
             </div>
-            <div class="slide-item">
-                <transition-group name="flip-list" tag="ul" class="slide-list">
-                <li v-for="(item,index) in slideData" :key="item.id">                   
-                    <img :src="require(`../assets/img/${itemObj[item.ref]}`)" :name="`${itemObj[item.ref]}`" :id="`${index}`"  @click="clickImg($event,index)" alt="">          
-                </li>
-                </transition-group>
-            </div>
-            <div class="slide-ctrl">
-                <div class="slide-prev" @click="slideCtrl(1)">Prev</div>
-                <div class="slide-next" @click="slideCtrl(-1)">Next</div>
-            </div>
-            </div>
-            <div class="p-md-6">
+            <div class="p-md-5 p-col-12">
             <form v-on:submit.prevent="addItem($event)" class="p-mt-3">
                 <h1 class="card-title">{{product.name}}</h1>
                 <Badge :value="product.category" class="p-mt-2" size="large" severity="info"></Badge>
