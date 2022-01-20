@@ -29,12 +29,9 @@
             <li>
                 <router-link to="/" style="text-decoration:none;">回到首頁</router-link>
             </li>
-            <li>
-                <router-link class="itemList" to="/product" style="text-decoration:none;">
-                    商品詳情
-                    <Itembar class="itemBar" @closeItem="closeItemBar" :class="{ show: isShowItemBar }"/>
-                </router-link>
-                <a @click.prevent="toItemBar" href="">商品詳情2</a>
+            <li class="itemList">       
+                <Itembar class="itemBar" @closeItem="closeItemBar" :class="{ show: isShowItemBar }"/>
+                <a @click.prevent="toItemBar" href="">商品詳情</a>
             </li>
             <li>
                 <router-link to="/create" style="text-decoration:none;">建立商品</router-link>
@@ -239,6 +236,7 @@ export default {
     width: 200px;
     margin: 0 30px;
     font-weight:bolder ;
+    text-decoration: none;
 
 }
 
@@ -382,8 +380,8 @@ input::-webkit-search-cancel-button{
     .close-btn{
         display: block;
         position: relative;
-        left: 230px;
-        top: -400px;
+        left: 250px;
+        top: -350px;
     }
 
     .nav-toggler{
@@ -433,11 +431,8 @@ input::-webkit-search-cancel-button{
         top: 0;
         left: 500px;
         transition: all .3s ease;
+        opacity: 1;
     }
-
-    /* .itemList:hover .itemBar{
-        left: 0;
-    } */
 
     .itemBar.show{
         left: 0;
