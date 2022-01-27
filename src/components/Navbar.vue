@@ -9,10 +9,10 @@
         <div class="work-brench p-d-flex p-ai-center">
             <form @submit.prevent="innerSearch($event)" class="search-bar p-mr-5">  
                 <input v-model="searchBar" ref="myinput" @blur="blurFocus" :class="{ show: isExtend }" class="s-input" type="search" placeholder="Search" aria-label="Search">
-                <i class="pi pi-search" @click="showInput" style="fontSize: 1.5rem" type="button"></i>          
+                <i class="pi pi-search" @click="showInput" style="fontSize: 1.5rem; cursor:pointer;" type="button"></i>          
             </form>
             <div class="cart-place p-mr-5" @click.prevent="openModal()" @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }">
-                <div id="cartNumber" type="button">{{changeCartNum}}</div>
+                <div id="cartNumber" type="button" style="cursor:pointer;">{{changeCartNum}}</div>
                 <i class="pi pi-shopping-cart" style="fontSize: 1.6rem;cursor:pointer" type="button"></i>  
             </div>
             <i v-if="isLogin" @click="toUserInfo" class="pi pi-user" style="fontSize: 1.6rem; cursor:pointer;" type="button" aria-current="page"></i>     
@@ -81,9 +81,7 @@ export default {
         })
 
         onMounted(()=>{
-            console.log('isShowItemBar前',isShowItemBar)
             // 取得購物車商品數量
-            console.log('nav mounted')
             store.dispatch("DataGetCart");
             // const itemListStr = localStorage.getItem("cart");
             // const defaultList = JSON.parse(itemListStr);
@@ -145,12 +143,10 @@ export default {
 
         function toItemBar(){
             isShowItemBar.value=true
-            console.log('isShowItemBar前',isShowItemBar)
         }
 
         function closeItemBar(){
             isShowItemBar.value=false
-            console.log('isShowItemBar',isShowItemBar)
         }
         return {
             myinput,
@@ -429,8 +425,8 @@ input::-webkit-search-cancel-button{
         position: fixed;
         visibility: visible;
         top: 0;
-        left: 500px;
-        transition: all .3s ease;
+        left: 900px;
+        transition: all .4s ease-in;
         opacity: 1;
     }
 
@@ -443,7 +439,6 @@ input::-webkit-search-cancel-button{
     /* .itemList:hover .itemBar{
         left: 0;
     } */
-
 }
 
 </style>

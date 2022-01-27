@@ -1,29 +1,29 @@
 <template>
-    <header @scroll="scrollEvent" class="header">
+    <div>
         <section class="p-d-flex p-flex-wrap p-jc-center">
             <div class="p-xl-7 p-lg-8 p-md-12 p-sm-12 p-col-12">
             <h2 class="p-text-center p-mb-2">產品列表</h2>
                 <SelectButton v-model="orderSort" :options="options" class="p-mt-5 p-mb-3" />
                 <div class="p-d-flex p-flex-wrap">
-                <div class="p-col-12 p-xl-4 p-lg-6 p-md-6 p-sm-12 person" v-for="(product,index) in threeList" :key="index">
-                    <div class="p-my-5 p-mx-3">
-                    <div class="slide-img">
-                        <img :src="require(`../assets/img/${product.image[1]}`)" class="">       
-                        <div class="overlay p-d-flex p-jc-center p-ai-center">
-                            <a :id="`${product.id}`" @click="goToProduct($event)" class="buy-btn">Buy Now</a>	
+                    <div class="p-col-12 p-xl-4 p-lg-6 p-md-6 p-sm-12 person" v-for="(product,index) in threeList" :key="index">
+                        <div class="p-my-5 p-mx-3">
+                            <div class="slide-img">
+                                <img :src="require(`../assets/img/${product.image[1]}`)">       
+                                <div class="overlay p-d-flex p-jc-center p-ai-center">
+                                    <a :id="`${product.id}`" @click="goToProduct($event)" class="buy-btn">Buy Now</a>	
+                                </div>
+                            </div>
+                            <div>
+                                <h4>{{product.name}}</h4>
+                                <Badge :value="product.category" class="p-mt-2" size="large" severity="info"></Badge>
+                                <p> $ {{product.price}} NTD</p>               
+                            </div>
                         </div>
                     </div>
-                    <div class="">
-                        <h4 class="">{{product.name}}</h4>
-                        <Badge :value="product.category" class="p-mt-2" size="large" severity="info"></Badge>
-                        <p class=""> $ {{product.price}} NTD</p>               
-                    </div>
-                    </div>
-                </div>
                 </div>
             </div>
         </section>
-    </header>
+    </div>
 </template>
 
 <script>
@@ -61,7 +61,6 @@ export default {
     methods:{
         getInitialUsers() {  
             this.count = 0
-            // console.log( 'mount count',this.count)
             axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,this.count.toString())
                 .then(response => {      
                     this.productList = response.data
@@ -106,7 +105,6 @@ export default {
         orderSort:async function(newVal){
             this.threeList=[]
             this.sortKey.name  = newVal
-            //  console.log('sortKey: ',this.sortKey)
             this.sortKey.count = "0"
             if(this.sortKey.name=="價格由低至高"){
                 this.api = 'sortByPrice'
@@ -117,10 +115,9 @@ export default {
             await axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,this.count.toString())
                 .then(response => {      
                     this.productList = response.data
-                    // console.log('watch res data',response.data)
                     this.productList.splice(0,6).forEach(item=>{
-                    item.image = JSON.parse(item.image);
-                    this.threeList.push(item)
+                        item.image = JSON.parse(item.image);
+                        this.threeList.push(item)
                     })
                 })    
         },

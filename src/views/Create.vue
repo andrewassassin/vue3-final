@@ -2,7 +2,7 @@
     <div>
         <h2>建立商品</h2>
         <section class="p-fluid p-d-flex p-jc-center section">
-            <form v-on:submit.prevent="createForm($event)" class="p-md-6 p-xl-3 p-lg-6 p-sm-12 p-col-12">
+            <form class="p-md-6 p-xl-3 p-lg-6 p-sm-12 p-col-12">
                 <div class="p-field p-grid">
                     <label for="productName" class="p-col-12 p-md-12 p-mb-md-0">
                         商品名稱
@@ -17,23 +17,23 @@
                     </label>
                     <div class="p-col-12 p-md-12 p-mt-2">
                         <InputText id="productPrice" v-model="product.price" min="1"
-                    max="90000" placeholder="商品價格" type="text" required/>
+                    max="90000" placeholder="商品價格" type="text"/>
                     </div>
                 </div>
                 <div class="p-field p-grid p-p-2">
-                    <label for="productName" class="p-col-12 p-md-12 p-mb-md-0 p-p-0">
+                    <label class="p-col-12 p-md-12 p-mb-md-0 p-p-0">
                         商品圖片
                     </label>
                     <div class="upload p-col-12 p-md-12 p-p-0 p-mt-2">
                         <div class="upload-head p-d-flex p-flex-wrap p-jc-center p-ai-center">
-                            <Button class="p-d-flex p-jc-center p-p-0">
+                            <Button class="p-d-flex p-jc-center p-p-0" :class="{'p-disabled':disable}">
                                 <label class="p-button-primary p-md-12 p-sm-12 p-col-12 choose-label" style="cursor:pointer">
                                     <input id="upload_img" style="display:none;" accept="image/*" @change="previewImage" type="file" multiple />
                                     選擇圖片
                                 </label>
                             </Button>
-                            <Button @click.prevent="upload" label="上傳圖片"  class="p-ml-3"/>
-                            <Button @click.prevent="removeAllImg" label="取消"  class="p-ml-3 "/>
+                            <Button @click.prevent="upload" label="上傳圖片" :class="{'p-disabled':Notupload}" class="p-ml-3"/>
+                            <Button @click.prevent="removeAllImg" label="取消"  :class="{'p-disabled':Notupload}" class="p-ml-3 "/>
                         </div>
                         <div class="upload-img p-d-flex p-jc-center">
                             <table id="cartTableBody" class="p-md-12 p-p-0">
@@ -52,13 +52,14 @@
                                             <Button @click.prevent="deleteItem(index)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"/>
                                         </td>
                                     </tr>
+                                    <div v-if="Notupload" class="p-mt-5">已上傳完畢</div>
                                 </ScrollPanel>
                             </table>
                         </div>
                     </div>
                 </div>    
                 <div class="p-field p-grid">
-                    <label for="firstname4" class="p-col-12 p-mb-2 p-md-12 p-mb-md-0">
+                    <label class="p-col-12 p-mb-2 p-md-12 p-mb-md-0">
                         商品分類
                     </label>
                     <div class="p-col-12 p-md-12 p-mt-2">
@@ -82,12 +83,13 @@
                 </div>
                 <div class="p-field p-grid p-d-flex p-jc-center">
                     <div class="p-col-12 p-md-3">
-                        <Button type="submit"  label="Submit"  class=""/>
+                        <Button type="submit" @click.prevent="createForm($event)" label="Submit"  class=""/>
                     </div>
                 </div>
             </form>
         </section>
     </div>
+    <Toast /> 
 </template>
 
 <script>
@@ -97,6 +99,8 @@ export default {
     data() {
         return {
             preview: [],
+            disable:false,
+            Notupload:false,
             imgList: [],
             speciTable: [],
             product: {
@@ -119,7 +123,20 @@ export default {
         this.$store.state.src='carousel-1.jpg'
     },
     methods: {
-        createForm() {
+        async createForm() {
+            if(this.product.category.length===0){
+                this.$toast.add({severity:'error', summary: 'Error Message', detail:'請選擇分類', life: 3000});
+                return;
+            }else if(this.product.image.length===0){
+                this.$toast.add({severity:'error', summary: 'Error Message', detail:'未上傳圖片', life: 3000});
+                return;
+            }else if(this.product.name===""){
+                this.$toast.add({severity:'error', summary: 'Error Message', detail:'未填寫名稱', life: 3000});
+                return;
+            }else if(this.product.price===""){
+                this.$toast.add({severity:'error', summary: 'Error Message', detail:'未填寫價格', life: 3000});
+                return;
+            }
             const product = {
                 name: this.product.name,
                 price: this.product.price,
@@ -133,9 +150,11 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             };
-            axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,product,config)
+            await axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,product,config)
             .then((response) => {
                 console.log("res  ", response);
+                this.$toast.add({severity:'success', summary: 'Success Message', detail:'上傳成功', life: 5000});
+                location.reload()
             })
             .catch((error) => {
                 console.log("err", error);
@@ -145,27 +164,34 @@ export default {
             var input = event.target;
             var reader = new FileReader();
             reader.onload = (e) => {
-                this.preview.push(e.target.result);
+                this.preview.push(e.target.result);          
             };
             reader.readAsDataURL(input.files[0]);
             this.imgList.push(input.files[0]);
         },
         upload() {
-            this.imgList.forEach((img) => {
-                if (this.product.image.indexOf(img.name) == -1) {
+            if( this.imgList.length===3){
+                this.imgList.forEach((img) => {
                     this.product.image.push(img.name);
-                }
-            });
+                });
+                this.imgList = [];
+                this.preview = [];
+                this.Notupload = true
+            }else{
+                this.$toast.add({severity:'error', summary: 'Error Message', detail:'至少上傳三張圖片', life: 3000});
+            }
         },
         deleteItem(idx) {
             this.preview.splice(idx, 1);
             this.imgList.splice(idx, 1);
             this.product.image.splice(idx, 1);
+            this.disable = false
         },
         removeAllImg() {
             this.imgList = [];
             this.preview = [];
             this.product.image = [];
+            this.disable = false
         },
         chooseExcel(event) {
             this.file = event.target.files ? event.target.files[0] : null;
@@ -185,34 +211,15 @@ export default {
                 reader.readAsBinaryString(this.file);
             }
         },
-        showup(){
-            this.isRotate=!this.isRotate
-            let that =this
-            if(that.animationList.length!==0){
-                this.animationList.forEach((item,i)=>{
-                    setTimeout(function() {
-                        that.animationList.pop()
-                    },i*40)
-                })
-            }else{
-                for(let i = 0; i < 6; i++) {
-                    setTimeout(function() {
-                        that.animationList.push(i)
-                    }, i*50 )
-                }
-            }
+    },
+    watch: {
+        preview:  {
+            handler: function () {
+                this.preview.length === 3 ? this.disable=true : 1  
+            },
+            deep: true, 
         },
-        onClickOutside(){
-            this.isRotate=false
-            let that =this
-            this.animationList.forEach((item,i)=>{
-                setTimeout(function() {
-                    that.animationList.pop()
-                },i*40)
-            })
-
-        }
-    }
+    },
 }
 </script>
 <style scoped>

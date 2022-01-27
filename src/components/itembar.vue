@@ -111,7 +111,7 @@ hr{
     display: none;
 }
 
-@media(max-width:600px){
+@media(max-width:900px){
     .itemBar{
         background:rgb(255, 255, 255);
         width: 100vw;
