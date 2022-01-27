@@ -7,8 +7,8 @@
             <Button @click="deleteSelect" label="刪除所選品項" class="p-ml-3 p-btn-warn filter-icon"/>
         </div>
         <section class="p-md-12 p-col-12 p-d-flex p-jc-center">
-            <table class="pro-table">
-                <thead class="p-md-12 p-col-10 p-py-0" style="display:block;">
+            <table :data="showList" class="pro-table">
+                <thead class="p-md-12 p-col-10 p-py-0">
                     <tr class="p-text-left">
                         <th class="">
                             <Checkbox :value="1" @click="checkAll()" :checked="true" v-model="selectAllCheck" />
@@ -28,7 +28,7 @@
                     </tr>
                 </thead>    
                 <tbody class="p-md-12 p-col-10 p-pt-0" >      
-                    <tr class="product-list" v-for="(item,idx) in filterList" :key="item">
+                    <tr class="product-list" v-for="(item,idx) in showList" :key="item">
                         <td>
                             <div class="p-field-checkbox p-m-0">
                                 <Checkbox :id="idx" :checked="true" :value="item.id" v-model="inputTag" />
@@ -58,17 +58,25 @@
                     </tr>         
                 </tbody>
             </table>
+            <div style="margin-top: 15px">
+                <Pagination
+                    :currentPage="pageInfo.current"
+                    :totalPage="pageInfo.totalPage"
+                    @toPage="toPage"/>
+			</div>
         </section>
     </div>
 </template>
 <script>
 import FilterPage from '@/components/FilterPage.vue'
+import Pagination from '@/components/Pagination.vue';
 import axios from "axios";
-import { ref,onMounted,watch } from 'vue';
+import { ref,onMounted,watch,reactive,computed } from 'vue';
 import store from "@/store";
 export default {
     components: {
       FilterPage,
+      Pagination
     },
     setup(){
         store.state.src="carousel-2.jpg"
@@ -89,6 +97,32 @@ export default {
             { name: '藍芽喇叭', code: '藍芽喇叭' },
 			{ name: '落地喇叭', code: '落地喇叭' },
         ]);
+        const showList = computed(() => {
+			const pageIndex = Math.floor(pageInfo.current % 5) === 0 ? 5 : Math.floor(pageInfo.current % 5);
+			const first = pageIndex + 4 * (pageIndex - 1) - 1;
+			const last = Math.min(pageIndex + 4 * pageIndex - 1, manageList.value.length - 1);
+			const pageMag = Math.floor((pageInfo.current - 1) / 5);
+
+			let tmp = [];
+			for (let index = first; index <= last; index++) {
+				let tmpres = JSON.parse(JSON.stringify(manageList.value));
+				tmpres[index]['index'] = index + 1 + pageMag * 200;
+				tmp.push(tmpres[index]);
+			}
+            console.log('tmp',tmp)
+			return tmp;
+		});
+
+        const pageInfo = reactive({
+			current: 1,
+			total: 0,
+			totalPage: 0,
+		});
+
+		function toPage(p) {
+			document.body.scrollTop = 0;
+			pageInfo.current = p;
+		}
 
         function editBtn(idx){
             selected.value =idx
@@ -154,6 +188,7 @@ export default {
             }        
         }
         onMounted(() => {
+            pageInfo.current = 1;
             axios.get(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`)
                 .then((response) => {
                     console.log("res  ", response);
@@ -162,6 +197,9 @@ export default {
                         delete item["createdAt"]
                         productTitle.value.push(Object.keys(item))
                         manageList.value.push(item)
+
+                        pageInfo.totalPage = 5;
+							pageInfo.total =manageList.value.length;
                     
                     });
                     productTitle.value = productTitle.value[0]
@@ -178,7 +216,8 @@ export default {
         });
 
         return{manageList,editBtn,productTitle,selected,saveBtn,sellings,filterPriceDown,inputTag,checkAll,selectAllCheck,
-        deleteSelect,filterList,priceFilter,priceLow,isActive,closeBtn,applyFilter}
+        deleteSelect,filterList,priceFilter,priceLow,isActive,closeBtn,applyFilter,
+        toPage,pageInfo,showList}
     }
 }
 </script>
@@ -206,9 +245,7 @@ td{
 }
 
 tbody{
-    overflow-y:auto;
     height:1000px;
-    display:block;
 }
 
 tbody tr:hover{
