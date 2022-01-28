@@ -39,7 +39,7 @@
         <h3>商品介紹</h3>
         <div class="top-sec">
             <div class="top-sec-img">
-            <img src="../assets/img/item-info.jpg" alt="">
+            <img src="../assets/img/carousel-4.jpg" alt="">
             </div>
             <div class="top-sec-text">
             <h4>CABINET DESIGN</h4>

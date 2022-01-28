@@ -2,14 +2,14 @@
     <div id="modal">
         <div class="DivOverlapMask">
             <div class="DivDialog p-md-6 p-col-12">
-                <div class="p-d-flex p-jc-between p-ai-center">
+                <header class="p-d-flex p-jc-between p-ai-center">
                     <h2 class="p-ml-3">
                          購物車
                     </h2>
                     <div class="p-mr-3">
                         <Button @click="closeBtn" icon="pi pi-times"  class="p-button-rounded p-button-plain p-button-text" />
                     </div>
-                </div>
+                </header>
                 <ScrollPanel class="custombar1">
                     <div v-if="cartNoItem" class="cart-empty">
                         <h6>購物車無商品</h6>
@@ -41,20 +41,19 @@
                         </div>
                     </div>
                 </ScrollPanel>
-                <footer class="cart-footer p-mt-2">
-                    <div class="cart-total-money">
-                        <p>總金額</p>
+                <footer class="p-d-flex p-flex-wrap p-mt-2">
+                    <div class="p-d-flex p-ai-center p-jc-center p-md-12 p-xl-4 p-lg-12 p-sm-12 p-col-12">
+                        <div class="p-mr-2">總金額</div>
                         <div> $ {{ getCartValue }}</div>
                     </div>
-                    <div class="p-d-flex p-ai-center">
-                        <button type="button" class="general-btn p-mr-3">
+                    <div class="p-d-flex p-flex-wrap p-jc-center p-ai-center p-xl-8 p-lg-12 p-md-12 p-sm-12 p-col-12">
+                        <button type="button" class="general-btn p-md-3 p-col-12 p-mx-2 p-my-1">
                             購買所選品項
                         </button>
-                        <button @click.prevent="deleteSelected($event)" type="button" class="general-btn">
+                        <button @click.prevent="deleteSelected($event)" type="button" class="general-btn p-md-3 p-col-12 p-mx-2 p-my-1">
                             刪除所選品項
                         </button>
-                        <Button class="p-mx-3 p-button-info" @click.prevent="selectAll($event)" label="全選" />
-                        <Button @click.prevent="closeBtn" label="關閉" />
+                        <Button class="p-md-2 p-col-12 p-button-info p-mx-2 p-my-1" @click.prevent="selectAll($event)" label="全選" />
                     </div> 
                 </footer>
             </div>
@@ -225,7 +224,9 @@ export default {
 
 .item-img img{
     width: 150px;
-    height: 150px;
+    /* height: 150px; */
+    /* object-fit: cover; */
+    box-sizing: border-box;
 }
 
 .item-content{
@@ -252,15 +253,6 @@ export default {
 
 }
 
-.cart-footer{
-    display: flex;
-    margin: 0px 0;
-}
-
-.cart-total-money{
-    width: 300px;
-}
-
 .p-scrollpanel{
     width: 100%;
     height: 630px;
@@ -275,11 +267,11 @@ export default {
     height: 100px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     .DivDialog {
         position: fixed;
         /* width: 500px; */
-        height: 600px;
+        height: 700px;
         margin: 0;
         padding: 20px;
         background-color: #ffffff;

@@ -14,15 +14,15 @@
                     <li @mouseover="changeBackground('029.jpg')" class="p-md-12 p-col-12 p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KLIPSCH</a>
                     </li>
-                    <li class="p-md-12 p-col-12  p-mt-3">
+                    <li @mouseover="changeBackground('037.jpg')" class="p-md-12 p-col-12  p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> EDIFIER</a>
                     </li>
                 </ul>
                 <ul class="p-mt-2 p-d-flex p-flex-wrap p-md-6 p-col-12">
-                    <li class="p-md-12 p-col-12">
+                    <li @mouseover="changeBackground('038.jpg')" class="p-md-12 p-col-12">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KEF</a>
                     </li>
-                    <li class="p-md-12 p-col-12 p-mt-3">
+                    <li @mouseover="changeBackground('039.jpg')" class="p-md-12 p-col-12 p-mt-3">
                         <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> WHARFEDALE</a>
                     </li>
                     <li class="p-md-12 p-col-12 p-mt-3">

@@ -1,6 +1,6 @@
 <template>
-    <div class="flex justify-middle" style="width: 100%">
-        <div class="page-controller flex">
+    <div class="p-d-flex p-justify-content-center" style="width: 100%">
+        <div class="page-controller p-d-flex">
             <button
                 class="icon-button icon-button--left"
                 @click="addPage(-10)"
@@ -8,28 +8,25 @@
             >
                 {{ prevTen }}
             </button>
-            <button
-                class="icon-button icon-button--left"
+            <Chip 
+                :label="prevOne" 
+                style="cursor:pointer;"
                 @click="addPage(-1)"
                 v-if="btnShow(-1)"
-            >
-                {{ prevOne }}
-            </button>
-            <button
-                v-for="p in pageArray"
+                class="p-mr-2 mb-2 custom-chip" />
+            <Chip  v-for="p in pageArray"
                 :key="p"
                 :class="pageStyle(p)"
-                @click="toPage(p)"
-            >
-                {{ p }}
-            </button>
-            <button
-                class="icon-button icon-button--right"
+                @click="toPage(p)" 
+                :label="p" 
+                style="cursor:pointer;"
+                class="p-mr-2 mb-2" />
+            <Chip
                 @click="addPage(1)"
                 v-if="btnShow(1)"
-            >
-                後一頁 >
-            </button>
+                style="cursor:pointer;"
+                label="後一頁 >"
+                class="p-ml-2 custom-chip" />
             <button
                 class="icon-button icon-button--right"
                 @click="addPage(10)"
@@ -150,4 +147,8 @@ export default {
 </script>
 
 <style scoped>
+    .p-chip.custom-chip {
+        background: var(--primary-color);
+        color: var(--primary-color-text);
+    }
 </style>

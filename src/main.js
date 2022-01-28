@@ -22,7 +22,7 @@ import Badge from 'primevue/badge';
 import TieredMenu from 'primevue/tieredmenu';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import Paginator from 'primevue/paginator';
+import Chip from 'primevue/chip';
 import "./index.css";
 const app = createApp(App);
 app.use(store)
@@ -42,6 +42,6 @@ app.component('Badge', Badge);
 app.component('TieredMenu', TieredMenu);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
-app.component('Paginator', Paginator)
+app.component('Chip', Chip)
 app.mount('#app');
 

@@ -58,13 +58,13 @@
                     </tr>         
                 </tbody>
             </table>
-            <div style="margin-top: 15px">
+        </section>
+        <div style="margin-top: 15px">
                 <Pagination
                     :currentPage="pageInfo.current"
                     :totalPage="pageInfo.totalPage"
                     @toPage="toPage"/>
 			</div>
-        </section>
     </div>
 </template>
 <script>
@@ -98,15 +98,15 @@ export default {
 			{ name: '落地喇叭', code: '落地喇叭' },
         ]);
         const showList = computed(() => {
-			const pageIndex = Math.floor(pageInfo.current % 5) === 0 ? 5 : Math.floor(pageInfo.current % 5);
-			const first = pageIndex + 4 * (pageIndex - 1) - 1;
-			const last = Math.min(pageIndex + 4 * pageIndex - 1, manageList.value.length - 1);
-			const pageMag = Math.floor((pageInfo.current - 1) / 5);
+			const pageIndex = Math.floor(pageInfo.current % 10) === 0 ? 10 : Math.floor(pageInfo.current % 10);
+			const first = pageIndex + 9 * (pageIndex - 1) - 1;
+			const last = Math.min(pageIndex + 9 * pageIndex - 1, manageList.value.length - 1);
+			// const pageMag = Math.floor((pageInfo.current - 1) / 10);
 
 			let tmp = [];
 			for (let index = first; index <= last; index++) {
 				let tmpres = JSON.parse(JSON.stringify(manageList.value));
-				tmpres[index]['index'] = index + 1 + pageMag * 200;
+				// tmpres[index]['index'] = index + 1 + pageMag * 200;
 				tmp.push(tmpres[index]);
 			}
             console.log('tmp',tmp)
@@ -134,7 +134,7 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             };
-            axios.post(`https://x-home.pcpogo.com/px/productManege.php?PDEBUG=andrewc`, filterList.value[idx],config)
+            axios.post(`https://x-home.pcpogo.com/px/productManege.php?PDEBUG=andrewc`, showList.value[idx],config)
                 .then((response) => {
                     console.log(response)
                 })
@@ -144,10 +144,10 @@ export default {
         }
         function filterPriceDown(){
             if(priceLow.value===false){
-                filterList.value = filterList.value.sort((a,b)=>a.price-b.price).reverse()
+                showList.value = showList.value.sort((a,b)=>a.price-b.price).reverse()
                 priceLow.value=true
             }else{
-                filterList.value.reverse()
+                showList.value.reverse()
                 priceLow.value=false
             }
         }
@@ -158,7 +158,7 @@ export default {
 
         function checkAll(){
             if(ifAllCheck.value===false){
-                inputTag.value = filterList.value.map(item=>item.id)
+                inputTag.value = showList.value.map(item=>item.id)
                 ifAllCheck.value=true
             }else{
                 inputTag.value=[]
@@ -180,11 +180,11 @@ export default {
 
         function applyFilter(res){
             if(res.formData.ifEqual==="b"){
-                filterList.value = manageList.value.filter(item=>item.price>parseInt(res.formData.count))
+                showList.value = manageList.value.filter(item=>item.price>parseInt(res.formData.count))
             }else if(res.formData.ifEqual==="s"){
-                filterList.value = manageList.value.filter(item=>item.price<parseInt(res.formData.count))
+                showList.value = manageList.value.filter(item=>item.price<parseInt(res.formData.count))
             }else{
-                filterList.value = manageList.value.filter(item=>item.price==parseInt(res.formData.count))
+                showList.value = manageList.value.filter(item=>item.price==parseInt(res.formData.count))
             }        
         }
         onMounted(() => {
@@ -198,12 +198,12 @@ export default {
                         productTitle.value.push(Object.keys(item))
                         manageList.value.push(item)
 
-                        pageInfo.totalPage = 5;
-							pageInfo.total =manageList.value.length;
+                        pageInfo.totalPage = 4;
                     
                     });
                     productTitle.value = productTitle.value[0]
-                    filterList.value = [...manageList.value]
+                    showList.value = [...manageList.value]
+                    pageInfo.total =showList.value.length;
                 })
                 .catch((error) => {
                     console.log("err", error);
@@ -245,7 +245,7 @@ td{
 }
 
 tbody{
-    height:1000px;
+    /* height:1000px; */
 }
 
 tbody tr:hover{

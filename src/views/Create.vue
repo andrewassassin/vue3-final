@@ -89,7 +89,7 @@
             </form>
         </section>
     </div>
-    <Toast /> 
+    <Toast baseZIndex=99 position="top-center" /> 
 </template>
 
 <script>
@@ -257,6 +257,11 @@ export default {
 
 .scroll-panel {
     height: 350px;
+}
+
+.p-toast{
+    top: 550px;
+    z-index: 999;
 }
 
 

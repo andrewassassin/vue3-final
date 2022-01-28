@@ -140,8 +140,9 @@ export default {
 }
 
 @media (max-width: 600px) {
-    .login-input,.loginBtn{
+    .login-input, .general-btn{
         width: 90vw;
+        height: 50px;
     }
 }
 
