@@ -1,65 +1,33 @@
 <template>
     <div class="p-d-flex p-justify-content-center" style="width: 100%">
         <div class="page-controller p-d-flex">
-            <button
-                class="icon-button icon-button--left"
-                @click="addPage(-10)"
-                v-if="btnShow(-10)"
-            >
+            <button class="icon-button icon-button--left" @click="addPage(-10)" v-if="btnShow(-10)">
                 {{ prevTen }}
             </button>
-            <Chip 
-                :label="prevOne" 
-                style="cursor:pointer;"
-                @click="addPage(-1)"
-                v-if="btnShow(-1)"
-                class="p-mr-2 mb-2 custom-chip" />
-            <Chip  v-for="p in pageArray"
-                :key="p"
-                :class="pageStyle(p)"
-                @click="toPage(p)" 
-                :label="p" 
-                style="cursor:pointer;"
-                class="p-mr-2 mb-2" />
-            <Chip
-                @click="addPage(1)"
-                v-if="btnShow(1)"
-                style="cursor:pointer;"
-                label="後一頁 >"
-                class="p-ml-2 custom-chip" />
-            <button
-                class="icon-button icon-button--right"
-                @click="addPage(10)"
-                v-if="btnShow(10)"
-            >
+            <Chip label="Prev" @click="addPage(-1)" v-if="btnShow(-1)" style="cursor:pointer;" class="p-mr-2 mb-2 custom-chip" />
+            <Chip :label="p" @click="toPage(p)" v-for="p in pageArray" :key="p" :class="pageStyle(p)" style="cursor:pointer;" class="p-mr-2 mb-2" />
+            <Chip label="Next" @click="addPage(1)" v-if="btnShow(1)" style="cursor:pointer;" class="p-ml-2 custom-chip" />
+            <button class="icon-button icon-button--right" @click="addPage(10)" v-if="btnShow(10)">
                 後十頁 >>
             </button>
         </div>
     </div>
 </template>
-
-
 <script>
 import { computed, toRefs, watch } from "@vue/runtime-core";
 export default {
     name: "Pagination",
-
     props: {
         currentPage: Number,
         totalPage: Number,
     },
-
     emits: ["toPage", "newTenPage"],
-
     setup(props, { emit }) {
         let { currentPage, totalPage } = toRefs(props);
 
         const prevTen = computed(() => {
             return "<< 前十頁";
-        });
-        const prevOne = computed(() => {
-            return "< 前一頁";
-        });
+        })
 
         const pageArray = computed(() => {
             let tmpPage = [];
@@ -84,9 +52,7 @@ export default {
         );
 
         function pageStyle(page) {
-            return page === currentPage.value
-                ? "button-solid button-solid-primary"
-                : "button-no-outline";
+            return page === currentPage.value ? "custom-chip" : "button-no-outline";
         }
 
         function btnShow(p) {
@@ -98,10 +64,7 @@ export default {
                     if (currentPage.value === 1) return false;
                     else return true;
                 case 10:
-                    if (
-                        totalPage.value <=
-                        pageArray.value[pageArray.value.length - 1]
-                    )
+                    if (totalPage.value <= pageArray.value[pageArray.value.length - 1])
                         return false;
                     else return true;
                 case 1:
@@ -119,10 +82,7 @@ export default {
         function addPage(num) {
             const nextPage = currentPage.value + num;
 
-            if (
-                Math.floor((nextPage - 1) / 10) !==
-                Math.floor((currentPage.value - 1) / 10)
-            ) {
+            if ( Math.floor((nextPage - 1) / 10) !== Math.floor((currentPage.value - 1) / 10) ) {
                 let i = Math.floor((nextPage - 1) / 10) * 10;
                 emit("newTenPage", i);
             }
@@ -134,7 +94,6 @@ export default {
 
             //computed
             prevTen,
-            prevOne,
 
             //function
             pageStyle,

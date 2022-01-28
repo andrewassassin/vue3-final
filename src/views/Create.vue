@@ -112,9 +112,8 @@ export default {
             api: "insert",
             sellings :[
                 { name: '書架喇叭', code: '書架喇叭' },
-                { name: '腳架', code: '腳架' },
-                { name: '墊材', code: '墊材' },
-                { name: '藍芽喇叭', code: '藍芽喇叭' },
+                { name: '擴大機', code: '擴大機' },
+                { name: '便攜式喇叭', code: '便攜式喇叭' },
                 { name: '落地喇叭', code: '落地喇叭' },
             ],
         };

@@ -25,11 +25,7 @@
                         </div>
                         <div class="card-body p-md-12 p-col-12">
                             <h4 class="card-title">{{ product.name }}</h4>
-                            <h4>
-                                <span class="badge badge-info">
-                                    {{ product.category }}
-                                </span>
-                            </h4>
+                            <Badge :value="product.category" class="p-mt-2" size="large" severity="info"></Badge>
                             <p class="card-text">$ {{ product.price }} NTD</p>
                         </div>
                     </div>
@@ -67,10 +63,9 @@ export default {
         ]);
         const category = ref([
             { category: "落地喇叭", code: "10" },
-            { category: "藍芽喇叭", code: "50" },
-            { category: "墊材", code: "60" },
+            { category: "便攜式喇叭", code: "50" },
+            { category: "擴大機", code: "60" },
             { category: "書架喇叭", code: "80" },
-            { category: "腳架", code: "80" },
         ]);
         const brandList = ref([]);
         const cateList = ref([]);
@@ -89,17 +84,14 @@ export default {
         });
 
         watch(selectedBrand, function (newVal) {
-            // console.log("newVal: ", newVal);
             brandList.value = newVal;
-            console.log("brandList: ", brandList.value);
         });
         watch(selectCate, function (newVal) {
             cateList.value = newVal;
-            console.log("cateList: ", cateList.value);
         });
 
         onMounted(async () => {
-            console.log('id.value',id.value)
+            // console.log('id.value',id.value)
             itemName.value = id.value.id;
             await axios
                 .post(

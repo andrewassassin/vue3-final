@@ -60,11 +60,11 @@
             </table>
         </section>
         <div style="margin-top: 15px">
-                <Pagination
-                    :currentPage="pageInfo.current"
-                    :totalPage="pageInfo.totalPage"
-                    @toPage="toPage"/>
-			</div>
+            <Pagination
+                :currentPage="pageInfo.current"
+                :totalPage="pageInfo.totalPage"
+                @toPage="toPage"/>
+		</div>
     </div>
 </template>
 <script>
@@ -91,11 +91,10 @@ export default {
         const inputTag = ref([]);
         const productTitle=  ref([]);
         const sellings = ref([
-			{ name: '書架喇叭', code: '書架喇叭' },
-			{ name: '腳架', code: '腳架' },
-			{ name: '墊材', code: '墊材' },
-            { name: '藍芽喇叭', code: '藍芽喇叭' },
-			{ name: '落地喇叭', code: '落地喇叭' },
+            { name: '書架喇叭', code: '書架喇叭' },
+            { name: '擴大機', code: '擴大機' },
+            { name: '便攜式喇叭', code: '便攜式喇叭' },
+            { name: '落地喇叭', code: '落地喇叭' },
         ]);
         const showList = computed(() => {
 			const pageIndex = Math.floor(pageInfo.current % 10) === 0 ? 10 : Math.floor(pageInfo.current % 10);
@@ -120,7 +119,7 @@ export default {
 		});
 
 		function toPage(p) {
-			document.body.scrollTop = 0;
+			scrollTo(0, 600);
 			pageInfo.current = p;
 		}
 
@@ -197,8 +196,7 @@ export default {
                         delete item["createdAt"]
                         productTitle.value.push(Object.keys(item))
                         manageList.value.push(item)
-
-                        pageInfo.totalPage = 4;
+                        pageInfo.totalPage = Math.ceil(manageList.value.length/10)
                     
                     });
                     productTitle.value = productTitle.value[0]
