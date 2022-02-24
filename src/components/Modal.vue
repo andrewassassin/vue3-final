@@ -4,7 +4,7 @@
             <div class="DivDialog p-md-6 p-col-12">
                 <header class="p-d-flex p-jc-between p-ai-center">
                     <h2 class="p-ml-3">
-                         購物車
+                        購物車
                     </h2>
                     <div class="p-mr-3">
                         <Button @click="closeBtn" icon="pi pi-times"  class="p-button-rounded p-button-plain p-button-text" />

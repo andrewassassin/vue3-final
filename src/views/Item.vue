@@ -5,7 +5,7 @@
                 <div class="showImg">
                     <img v-if="showImg" :src="require(`../assets/img/${itemObj[focusIndex]}`)" alt="">
                 </div>
-                <div class="slide-item">
+                <div class="slide-item p-md-9 p-col-12 p-ml-10">
                     <transition-group name="flip-list" tag="ul" class="slide-list">
                     <li v-for="(item,index) in slideData" :key="item.id">                   
                         <img :src="require(`../assets/img/${itemObj[item.ref]}`)" :name="`${itemObj[item.ref]}`" :id="`${index}`"  @click="clickImg($event,index)" alt="">          
@@ -89,13 +89,14 @@ export default {
     },
     async created() {
         this.$store.dispatch("DataGetCart");
+        this.$emit("closeHeader");
         // const itemListStr = localStorage.getItem(this.key);
         // const defaultList = JSON.parse(itemListStr);
         // this.$store.state.itemList = defaultList || []; 
         await axios.get(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`)
             .then(response => {
                 const item = response.data.find(item=>{
-                return item.id == this.id
+                    return item.id == this.id
                 })
                 if(item){
                     this.itemObj  = JSON.parse(item.image)   
@@ -159,8 +160,7 @@ a {
 }
 /* slide ctrl */
 .slide{
-    width: 800px;
-    margin-left:200px;
+
 }
 
 .slide-prev,
@@ -195,7 +195,6 @@ a {
 }
 /* slide */
 .slide-item{
-    width:680px;
     height: 163px;
     margin: 20px 0 0 60px;
     background-color: rgb(255, 255, 255);
@@ -260,7 +259,6 @@ a {
     bottom: 45px;
     left: 390px;
 }
-
 
 .input-box{
     width: 150px;
@@ -353,4 +351,24 @@ a {
     margin-bottom: 30px;
 }
 
+@media(max-width:600px){
+    .slide-list img{
+        width: 50px;
+        height: 50px;
+    }
+
+    .slide-list {
+        display: flex;
+        margin: 0px 0px;
+        padding: 0px 0px;
+        height: 150px;
+    }
+
+    .amount-buy label{
+        font-size: 10px;
+        position: absolute;
+        bottom: 45px;
+        left: 50vw;
+    }
+}
 </style>

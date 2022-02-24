@@ -3,11 +3,11 @@
         <nav class="nav-bar" :class="{hideUp:active}">
             <Navbar />
         </nav>
-        <header class="header-bar">
+        <header v-if="showHeader" class="header-bar">
             <Header/>
         </header>
-        <section class="content p-my-3">
-            <router-view v-if="isRouterAlive"/>
+        <section  class="content p-my-3">
+            <router-view @closeHeader="closeHeader" @showUpHeader="showUpHeader"  v-if="isRouterAlive"/>
         </section>
         <footer>
             <Footer/>
@@ -29,7 +29,6 @@
 </template>
 
 <script>
-
 import Navbar from '@/components/Navbar'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
@@ -53,6 +52,7 @@ export default {
             showTop:false,
             animationList:[],
             isRotate: false,
+            showHeader:true,
             workbrench:[
                 {name:'pi-heart-fill'},{name:'pi-moon'},{name:'pi-github'},{name:'pi-facebook'},{name:'pi-google'}
             ]
@@ -109,6 +109,13 @@ export default {
                 },i*40)
             })
 
+        },
+        closeHeader(){
+            console.log('close header')
+            this.showHeader = false
+        },
+        showUpHeader(){
+            this.showHeader = true
         }
     },
     created() {

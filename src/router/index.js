@@ -10,81 +10,81 @@ import Register from '../views/Register'
 import UserInfo from '../views/UserInfo'
 import ProductManage from '../views/ProductManage'
 const routes = [
-  {
-    path: '/',
-    name: 'Index',
-    component: Index
-  },
-  {
-    path: '/product',
-    name: 'product',
-    component: Product
-  },
-  {
-    path: `/product/:id`,
-    name: 'item',
-    props: true,
-    component: Item
-  },
-  {
-    path: `/search/:id`,
-    name: 'search',
-    props: true,
-    component: Search
-  },
-  {
-    path: `/multi`,
-    name: 'multi',
-    props: true,
-    component: multi
-  },
-  {
-    path: '/create',
-    name: 'create',
-    component: Create,
-    meta: {
-      requiresAuth: true,
-    }
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: Login
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: Register
-  },
-  {
-    path: '/userinfo',
-    name: 'userinfo',
-    component: UserInfo,
-    redirect: '/userinfo/info',
-    children: [{
-      path: 'info',
-      component: () => import('../views/Info.vue'),
-      meta: {
-        requiresAuth: true,
-      }
-    }],
-  },
-  {
-    path: '/productManage',
-    name: 'ProductManage',
-    component: ProductManage,
-    meta: {
-      requiresAuth: true,
-    }
-  },
+    {
+        path: '/',
+        name: 'Index',
+        component: Index
+    },
+    {
+        path: '/product',
+        name: 'product',
+        component: Product
+    },
+    {
+        path: `/product/:id`,
+        name: 'item',
+        props: true,
+        component: Item
+    },
+    {
+        path: `/search/:id`,
+        name: 'search',
+        props: true,
+        component: Search
+    },
+    {
+        path: `/multi`,
+        name: 'multi',
+        props: true,
+        component: multi
+    },
+    {
+        path: '/create',
+        name: 'create',
+        component: Create,
+        meta: {
+            requiresAuth: true,
+        }
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: Login
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: Register
+    },
+    {
+        path: '/userinfo',
+        name: 'userinfo',
+        component: UserInfo,
+        redirect: '/userinfo/info',
+        children: [{
+            path: 'info',
+            component: () => import('../views/Info.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        }],
+    },
+    {
+        path: '/productManage',
+        name: 'ProductManage',
+        component: ProductManage,
+        meta: {
+            requiresAuth: true,
+        }
+    },
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes,
-  scrollBehavior() {
-    return { left: 0, top: 0, behavior: "smooth" };
-  },
+    history: createWebHistory(process.env.BASE_URL),
+    routes,
+    scrollBehavior() {
+        return { left: 0, top: 0, behavior: "smooth" };
+    },
 })
 
 // router.beforeEach((to, from, next) => {

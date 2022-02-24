@@ -1,6 +1,4 @@
-import {
-    createStore
-} from 'vuex'
+import { createStore } from 'vuex'
 
 import axios from 'axios'
 export default createStore({
@@ -54,7 +52,6 @@ export default createStore({
                 uid: this.state.user.id,
                 itemList: this.state.itemList
             }
-            console.log('cartItem',cartItem)
             axios.post("https://x-home.pcpogo.com/px/create.php?PDEBUG=andrewc", cartItem, config)
                 .then(res => {
                     console.log(res)

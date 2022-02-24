@@ -50,6 +50,7 @@ export default {
         }
     },
     created(){
+        this.$emit("showUpHeader");
         this.$store.state.src='carousel-3.jpg'
     },
     beforeMount() {
@@ -94,7 +95,7 @@ export default {
                         that.productList.splice(0,6).forEach(item=>{
                             item.image = JSON.parse(item.image);
                             that.threeList.push(item)
-                        })            
+                        })
                     })        
                     isLoading = false
                 }         
