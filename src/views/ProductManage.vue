@@ -5,7 +5,7 @@
         </div>
         <section class="p-md-8 p-col-12 p-d-flex p-jc-center">
             <DataTable :value="products" :paginator="true" class="p-md-12 p-col-12" :rows="10"
-                dataKey="id" :rowHover="true" v-model:selection="selectedCustomers" v-model:filters="filters" filterDisplay="menu" :loading="loading"
+                dataKey="id" :rowHover="true" v-model:selection="selectedItem" v-model:filters="filters" filterDisplay="menu" :loading="loading"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[10,25,50]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 :globalFilterFields="['name','country.name','representative.name','status']"
@@ -17,7 +17,7 @@
                         <i class="pi pi-search" />
                         <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
                     </span>
-                    <Button type="submit" @click.prevent="createForm($event)" label="刪除所選品項"  class="p-ml-5 p-button-info"/>
+                    <Button type="click" @click.prevent="deleteItem()" label="刪除所選品項"  class="p-ml-5 p-button-info"/>
                  </div>
                 </template>
                 <template #empty>
@@ -29,30 +29,34 @@
                 <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
                 <Column field="id" header="Id"></Column>
                 <Column field="name" header="Name">
-                    <template #body="{data}" >
+                    <template #body="{data}">
                         <div v-if="selected !== data.id">{{data.name}}</div>
                         <InputText v-model="data.name" v-if="selected === data.id" />
                     </template>
                 </Column>
                 <Column field="price" header="Price" sortable dataType="numeric">
-                    <template #body="{data}" >
+                    <template #body="{data}">
                         <div v-if="selected !== data.id">{{data.price}}</div>
-                        <InputText v-model="data.price" v-if="selected === data.id" />
+                        <InputText v-model="data.price" v-if="selected === data.id" style="max-width:8rem;"/>
                     </template>
                     <template #filter="{filterModel}">
                         <InputNumber v-model="filterModel.value" />
                     </template>
                 </Column>
-                <Column field="image" header="Image">
-                    <template #body="{data}" >
+                <Column field="image" header="Image" sortable>
+                    <template #body="{data}">
                         <div v-if="selected !== data.id">{{data.image}}</div>
                         <InputText v-model="data.image" v-if="selected === data.id" />
                     </template>
+                    <template #filter="{filterModel}">
+                        <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by Image"/>
+                    </template>
                 </Column>
                 <Column field="category" header="Category">
-                    <template #body="{data}" >
+                    <template #body="{data}">
                         <div v-if="selected !== data.id">{{data.category}}</div>
-                        <InputText v-model="data.category" v-if="selected === data.id" />
+                        <Dropdown v-model="data.category" v-if="selected === data.id" :options="sellings" optionLabel="name"
+                            optionValue="code" />
                     </template>
                 </Column>
                 <Column field="action" header="Action">
@@ -76,7 +80,7 @@ export default {
         store.state.src="carousel-2.jpg"
         const api = ref('product')
         const products = ref();
-        const selectedCustomers = ref();
+        const selectedItem = ref();
         const selected = ref();
         const loading = ref(true);
         onMounted(() => {
@@ -100,7 +104,18 @@ export default {
                 operator: FilterOperator.AND,
                 constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
             },
+            image: {
+                operator: FilterOperator.AND,
+                constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
+            },
         });
+
+        const sellings =ref([
+            { name: '書架喇叭', code: '書架喇叭' },
+            { name: '擴大機', code: '擴大機' },
+            { name: '便攜式喇叭', code: '便攜式喇叭' },
+            { name: '落地喇叭', code: '落地喇叭' },
+        ])
 
         function editBtn(pid){
             selected.value = pid
@@ -110,7 +125,7 @@ export default {
             selected.value = 10000
             const product = JSON.stringify(products.value.filter(item=>item.id===pid)[0])
             const options = {
-				method: 'post',
+				method: 'get',
 				url: `https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,
 				params: {
 					cmd: 'save',
@@ -122,16 +137,24 @@ export default {
 			};
 			await axios(options)
 				.then(function (res) {
-					console.log(res)
-            
+					console.log(res)     
 				})
 				.catch(error => {
 					console.log(error);
 				})
         }
 
+        function deleteItem(){
+            console.log('selectedItem',selectedItem.value)
+            selectedItem.value.forEach(item => {
+                const index = products.value.map(ele=>ele.id).indexOf(item.id)
+                products.value.splice(index,1)
+            });
+            selectedItem.value=[]
+        }
 
-        return{products,selectedCustomers,filters,loading,selected,editBtn,saveBtn}
+
+        return{products,selectedItem,filters,loading,selected,sellings,editBtn,saveBtn,deleteItem}
     }
 }
 </script>
