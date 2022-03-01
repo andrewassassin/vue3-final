@@ -50,7 +50,6 @@ export default {
         }
     },
     created(){
-        this.$emit("showUpHeader");
         this.$store.state.src='carousel-3.jpg'
     },
     beforeMount() {

@@ -26,19 +26,22 @@
             <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
         </div>            
         <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0">
-            <li>
-                <router-link to="/" style="text-decoration:none;">回到首頁</router-link>
+            <li class="itemList">       
+                <Itembar class="itemBar" @closeItem="closeItemBar" :class="{ show: isShowItemBar }"/>
+                <a @click.prevent="toItemBar" href="">便攜式喇叭</a>
             </li>
             <li class="itemList">       
                 <Itembar class="itemBar" @closeItem="closeItemBar" :class="{ show: isShowItemBar }"/>
-                <a @click.prevent="toItemBar" href="">商品詳情</a>
+                <a @click.prevent="toItemBar" href="">書架喇叭</a>
             </li>
-            <li>
-                <router-link to="/create" style="text-decoration:none;">建立商品</router-link>
+            <li class="itemList">       
+                <Itembar class="itemBar" @closeItem="closeItemBar" :class="{ show: isShowItemBar }"/>
+                <a @click.prevent="toItemBar" href="">擴大機</a>
             </li>
-            <li>
-                <router-link to="/productManage" style="text-decoration:none;">商品管理</router-link>
-            </li>        
+            <li class="itemList">       
+                <Itembar class="itemBar" @closeItem="closeItemBar" :class="{ show: isShowItemBar }"/>
+                <a @click.prevent="toItemBar" href="">落地喇叭</a>
+            </li>      
         </ul>
     </nav>
     <transition>

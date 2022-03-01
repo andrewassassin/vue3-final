@@ -21,7 +21,7 @@
                 <i class="pi pi-plus" style="fontSize: 1.3rem;" :class="{rotate:isRotate}"></i>
         </Button>
         <transition-group name="show" tag="div" class="p-d-flex">
-            <div v-for="(item,idx) in workbrench" v-show="animationList.indexOf(idx)!==-1" class=" p-mr-2" :key="idx">
+            <div v-for="(item,idx) in workbrench" v-show="animationList.indexOf(idx)!==-1" class=" p-mr-2" @click="functionLink(idx)" :key="idx" style="cursor:pointer;">
                 <i class="pi round p-d-flex p-ai-center p-jc-center" :class="item.name" style="font-size: 1.5rem"></i>
             </div>
         </transition-group> 
@@ -32,6 +32,8 @@
 import Navbar from '@/components/Navbar'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
+import Create from '@/views/Create'
+import ProductManage from '@/views/ProductManage'
 export default {
     name: 'App',
     components: {
@@ -116,6 +118,19 @@ export default {
         },
         showUpHeader(){
             this.showHeader = true
+        },
+        functionLink(idx){
+            if(idx===0){
+                this.$router.push({
+                    path: `/create`,
+                    component: Create,
+                })  
+            }else if(idx===1){
+                this.$router.push({
+                    path: `/productManage`,
+                    component: ProductManage,
+                })  
+            }
         }
     },
     created() {

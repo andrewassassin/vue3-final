@@ -1,5 +1,5 @@
 <template>
-    <section class="p-py-3">
+    <section class="p-py-3 section">
         <div class="p-d-flex p-flex-wrap p-ai-center">
             <div class="slide p-md-6 p-col-12">
                 <div class="showImg">
@@ -39,11 +39,11 @@
         <h3>商品介紹</h3>
         <div class="top-sec">
             <div class="top-sec-img">
-            <img src="../assets/img/carousel-4.jpg" alt="">
+                <img src="../assets/img/carousel-4.jpg" alt="">
             </div>
             <div class="top-sec-text">
-            <h4>CABINET DESIGN</h4>
-            <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
+                <h4>CABINET DESIGN</h4>
+                <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
             </div>
         </div>
     </article>
@@ -52,14 +52,14 @@
         <table class="table table-border p-md-6">
             <thead >
                 <tr>
-                <th v-for="item in columnCnt" :key="item.key" class="text-right">{{item}}</th>
+                    <th v-for="item in columnCnt" :key="item.key" class="text-right">{{item}}</th>
                 </tr>
             </thead>
             <tbody id="cartTableBody" v-for="item in specification" :key="item.key">      
                 <tr>
-                <td v-for="column in item" :key="column.key">                                      
-                    <p class="m-0 text-right">{{column}}</p> 
-                </td>      
+                    <td v-for="column in item" :key="column.key">                                      
+                        <p class="m-0 text-right">{{column}}</p> 
+                    </td>      
                 </tr>         
             </tbody>
         </table>
@@ -70,6 +70,12 @@ import axios from 'axios'
 import slider from "../mixin/slider";
 export default {
     mixins: [slider],
+    emits: ["showUpHeader","closeHeader"], 
+    beforeRouteLeave(to, from, next) { 
+        // setting next meta.keepAlive to true 
+        this.$emit("showUpHeader");
+        next(); 
+    },
     props: {
         id: {
             type: String,
@@ -159,8 +165,8 @@ a {
     color: #42b983;  
 }
 /* slide ctrl */
-.slide{
-
+.section{
+    margin-top: 100px;
 }
 
 .slide-prev,

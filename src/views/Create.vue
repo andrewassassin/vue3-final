@@ -119,7 +119,7 @@ export default {
         };
     },
     created(){
-        this.$emit("showUpHeader");
+        // this.$emit("showUpHeader");
         this.$store.state.src='carousel-1.jpg'
     },
     methods: {

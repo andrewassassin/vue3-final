@@ -9,6 +9,7 @@ import Login from '../views/Login'
 import Register from '../views/Register'
 import UserInfo from '../views/UserInfo'
 import ProductManage from '../views/ProductManage'
+import Payment from '../views/Payment'
 const routes = [
     {
         path: '/',
@@ -76,6 +77,11 @@ const routes = [
         meta: {
             requiresAuth: true,
         }
+    },
+    {
+        path: '/Payment',
+        name: 'Payment',
+        component: Payment,
     },
 ]
 
