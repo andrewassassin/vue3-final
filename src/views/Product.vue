@@ -87,16 +87,15 @@ export default {
                     that.showTop=true
                     isLoading = true
                     that.count += 6
-                    // console.log('count scroll',that.count)
-                await axios.post(`https://x-home.pcpogo.com/px/${that.api}.php?PDEBUG=andrewc`, that.count.toString())
-                    .then(response => {
-                        that.productList = response.data
-                        that.productList.splice(0,6).forEach(item=>{
-                            item.image = JSON.parse(item.image);
-                            that.threeList.push(item)
-                        })
-                    })        
-                    isLoading = false
+                    await axios.post(`https://x-home.pcpogo.com/px/${that.api}.php?PDEBUG=andrewc`, that.count.toString())
+                        .then(response => {
+                            that.productList = response.data
+                            that.productList.splice(0,6).forEach(item=>{
+                                item.image = JSON.parse(item.image);
+                                that.threeList.push(item)
+                            })
+                        })        
+                        isLoading = false
                 }         
             }
         }

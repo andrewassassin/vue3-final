@@ -13,33 +13,24 @@
             <Footer/>
         </footer>
     </div>
-    <button v-if="showTop" @click="clickTop" class="top-btn">
-        <i class="pi pi-angle-up" style="fontSize: 1.3rem;color:white;"></i>
-    </button>
-    <div v-click-outside="onClickOutside" class="p-d-flex p-ai-center work-bar p-pl-3">
-        <Button @click.prevent="showup()" class="speeddial p-mr-2 p-button-info">
-                <i class="pi pi-plus" style="fontSize: 1.3rem;" :class="{rotate:isRotate}"></i>
-        </Button>
-        <transition-group name="show" tag="div" class="p-d-flex">
-            <div v-for="(item,idx) in workbrench" v-show="animationList.indexOf(idx)!==-1" class=" p-mr-2" @click="functionLink(idx)" :key="idx" style="cursor:pointer;">
-                <i class="pi round p-d-flex p-ai-center p-jc-center" :class="item.name" style="font-size: 1.5rem"></i>
-            </div>
-        </transition-group> 
-    </div>
+    <TopBtn/>
+    <SpeedDial/>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar'
+import TopBtn from '@/components/TopBtn'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
-import Create from '@/views/Create'
-import ProductManage from '@/views/ProductManage'
+import SpeedDial from '@/components/SpeedDial.vue'
 export default {
     name: 'App',
     components: {
         Navbar,
         Header,
-        Footer
+        Footer,
+        SpeedDial,
+        TopBtn
     }, 
     provide() {
         return {
@@ -51,13 +42,7 @@ export default {
             isRouterAlive: true,
             active:false,
             lastScrollY : 250,
-            showTop:false,
-            animationList:[],
-            isRotate: false,
             showHeader:true,
-            workbrench:[
-                {name:'pi-heart-fill'},{name:'pi-moon'},{name:'pi-github'},{name:'pi-facebook'},{name:'pi-google'}
-            ]
         };
     },
     methods: {
@@ -78,40 +63,6 @@ export default {
                 this.lastScrollY = st;
             }
         },
-        topFunction() {
-            let st = window.scrollY
-            st > 500 ? this.showTop = true : this.showTop = false
-        },
-        clickTop(){
-            scrollTo(0, 0);
-        },
-        showup(){
-            this.isRotate =! this.isRotate
-            let that = this
-            if(that.animationList.length!==0){
-                this.animationList.forEach((item,i)=>{
-                    setTimeout(function() {
-                        that.animationList.pop()
-                    },i*40)
-                })
-            }else{
-                for(let i = 0; i < 6; i++) {
-                    setTimeout(function() {
-                        that.animationList.push(i)
-                    }, i*50 )
-                }
-            }
-        },
-        onClickOutside(){
-            this.isRotate=false
-            let that =this
-            this.animationList.forEach((item,i)=>{
-                setTimeout(function() {
-                    that.animationList.pop()
-                },i*40)
-            })
-
-        },
         closeHeader(){
             console.log('close header')
             this.showHeader = false
@@ -119,23 +70,9 @@ export default {
         showUpHeader(){
             this.showHeader = true
         },
-        functionLink(idx){
-            if(idx===0){
-                this.$router.push({
-                    path: `/create`,
-                    component: Create,
-                })  
-            }else if(idx===1){
-                this.$router.push({
-                    path: `/productManage`,
-                    component: ProductManage,
-                })  
-            }
-        }
     },
     created() {
         window.addEventListener("scroll", this.handleScroll);
-        window.addEventListener("scroll", this.topFunction);
     },
 }
 </script>
@@ -171,7 +108,6 @@ export default {
     margin-top: 175px;
 }
 
-
 #nav a {
     font-weight: bold;
     color: #2c3e50;
@@ -180,29 +116,6 @@ export default {
 #nav a.router-link-exact-active {
     color: #42b983;
 }
-
-.round{
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    background: rgb(231, 231, 231);
-    opacity: 1;
-    transform: scale(1);
-}
-
-.show-enter-active,.show-leave-active {
-    transition: all .3s ease;
-}
-
-.show-enter-from, .show-leave-to {
-    transform: scale(0);
-}
-
-.show-enter-from{
-    opacity: 0;
-}
-
-
 
 @media(max-width:900px){
     .header-bar{

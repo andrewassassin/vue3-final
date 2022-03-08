@@ -21,10 +21,10 @@
                  </div>
                 </template>
                 <template #empty>
-                    No customers found.
+                    No products found.
                 </template>
                 <template #loading>
-                    Loading customers data. Please wait.
+                    Loading products data. Please wait.
                 </template>
                 <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
                 <Column field="id" header="Id"></Column>

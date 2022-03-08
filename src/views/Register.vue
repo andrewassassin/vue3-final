@@ -3,34 +3,41 @@
         <h2>註冊</h2>
         <section class="p-py-3 section">
             <form @submit.prevent="registerForm($event)" class="register-form">
-                <div v-if="repeatAccount" class="input-group">
-                    帳號已有人使用
-                </div>
                 <div class="input-group">
                     <input type="text" v-model="user.name" class="register-input" placeholder="姓名" required/>
                 </div>
                 <div class="input-group">
-                    <input type="text" v-model="user.phone" class="register-input" placeholder="手機號碼" required/>
+                    <input type="number" v-model="user.phone" class="register-input" placeholder="手機號碼" required/>
                 </div>
-                <div class="input-group account-group">
+                <div class="input-group account-group p-d-flex p-flex-wrap">
                     <input type="email" v-model="user.username" placeholder="E-mail" id="userName" class="register-input account-group" required/>
+                    <small v-if="repeatAccount" class="p-error">
+                        帳號已有人使用
+                    </small>
                 </div>
                 <div class="input-group pwd-group">
                     <input :type="typePwd" v-model="user.password" placeholder="密碼" id="userPwd" class="register-input" @focus="focusPwd" @keyup="pwdAuth" @blur="blur" required/>
-                    <i class="pi" :class="{'pi-eye': isActive,'pi-eye-slash': notActive,}" @click="showPwd()" style="fontsize: 1.2rem"></i>
-                <transition>
-                    <div v-show="showHint" class="pwd-hint">
-                        <div class="textarea">Pick a password</div>
-                        <ProgressBar :value="progressRate" :showValue="false" :class="{ safecolor: activeColor, color: middle }"/>
-                        <div>{{ pwdHint }}</div>
-                    </div>
-                </transition>
+                    <i class="pi p-eye" :class="{'pi-eye': hidePwd,'pi-eye-slash': showPwd}" @click="visiblePwd()" style="fontsize: 1.2rem"></i>
+                    <transition>
+                        <div v-show="showHint" class="pwd-hint">
+                            <div class="textarea">Pick a password</div>
+                            <ProgressBar :value="progressRate" :showValue="false" :class="{ safecolor: activeColor, color: middle }"/>
+                            <div>{{ pwdHint }}</div>
+                        </div>
+                    </transition>
                 </div>
                 <div class="input-group">
                     <input :type="typePwd" placeholder="請再次輸入密碼" class="register-input" required/>
                 </div>
-                <div class="input-group">
-                    <button type="submit" class="registerBtn">註冊</button>
+                <div class="input-group p-d-flex p-flex-wrap p-jc-center">
+                    <button type="submit" class="general-btn" :class="{ color: spinActive }">
+                        <div class="p-d-flex p-jc-center p-ai-center" v-if="spinActive" role="status">
+                            <i class="pi pi-spin pi-spinner" style="fontSize: 2rem"></i>
+                        </div>{{loginText}}
+                    </button>
+                    <small v-if="failAccount" class="p-error">
+                        註冊失敗
+                    </small>
                 </div>
             </form>
         </section>
@@ -39,15 +46,18 @@
 
 <script>
 import axios from "axios";
+import Login from '@/views/Login'
 export default {
     name: "Register",
     data() {
         return {
+            loginText:'註冊',
             spinActive: false,
+            failAccount:false,
             typePwd: "password",
             showHint: false,
-            isActive: true,
-            notActive: false,
+            hidePwd: true,
+            showPwd: false,
             repeatAccount:false,
             pwdHint: "Enter a password",
             user: {
@@ -66,33 +76,51 @@ export default {
         this.$store.state.src='carousel-4.jpg'
     },
     methods: {
-        registerForm() {
-        console.log("submit");
-        const data = {
-            username: this.user.username,
-            password: this.user.password,
-            name: this.user.name,
-            phone: this.user.phone,
-        };
-        const config = {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-        };
-        axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,data,config)
-            .then((response) => {
-                if(response.data.msg==='帳號已有人註冊'){
-                    this.repeatAccount = true
-                }
+        async registerForm() {
+            this.spinActive = true
+            this.loginText=''
+            const data = {
+                username: this.user.username,
+                password: this.user.password,
+                name: this.user.name,
+                phone: this.user.phone,
+            };
+            const config = {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            };
+
+            await new Promise(resolve => {
+              setTimeout(resolve, 3000)
             })
-            .catch((error) => {
-                console.log("err", error);
-            });
+            await axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,data,config)
+                .then((response) => {
+                    this.spinActive = false
+                    this.loginText='註冊'
+                    if(response.data.msg==='帳號已有人註冊'){
+                        this.repeatAccount = true
+                    }else if(response.data.msg==='ok'){
+                        console.log('註冊成功!')
+                        this.$router.push({
+                            path: `/login`,
+                            component: Login,
+                        })           
+                    }else{
+                        console.log('msg',response.data.msg)
+                    }
+                })
+                .catch((error) => {
+                    console.log("err", error);
+                    this.failAccount = true
+                    this.spinActive = false
+                    this.loginText='註冊'
+                });
         },
-        showPwd() {
+        visiblePwd() {
             this.typePwd = this.typePwd === "password" ? "text" : "password";
-            this.isActive = !this.isActive;
-            this.notActive = !this.notActive;
+            this.hidePwd = !this.hidePwd;
+            this.showPwd = !this.showPwd;
         },
         focusPwd() {
             this.showHint = true;
@@ -136,7 +164,7 @@ export default {
     width: 600px;
 }
 
-.pi {
+.p-eye {
     position: absolute;
     top: 50%;
     transform: translate(-50%,-50%);
@@ -150,6 +178,13 @@ export default {
 .input-group {
     width: 500px;
     margin: 10px 0px;
+    position: relative;
+}
+
+.p-error{
+    position: absolute;
+    width: 120px;
+    top: 50px;
 }
 
 ::-webkit-input-placeholder { /* Chrome, Safari */
@@ -213,11 +248,6 @@ export default {
     opacity: 1;
 }
 
-.spinner-border {
-    width: 22px;
-    height: 22px;
-}
-
 .register-input{
     background: rgb(241, 241, 241);
     width: 500px;
@@ -232,22 +262,27 @@ export default {
 }
     
 
-.registerBtn{
+.general-btn{
     width: 500px;
     height: 50px;
-    border: 1px #000000 solid;
-    background: rgb(255, 255, 255);
-    border-radius: 0;
-    font-weight: bold;
-    transition: 0.3s ease;
-    color: black;
-    font-size: 16px;
 }
 
-.registerBtn:hover {
-    background: black;
-    color: #fff;
-    cursor: pointer;
+.general-btn.color{
+    opacity: .7;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.general-btn{
+    width: 500px;
+    height: 50px;
+}
+
+.general-btn.color{
+    opacity: .7;
 }
 
 @media (max-width: 600px) {
