@@ -1,45 +1,51 @@
 <template>
-    <div class="itemBar p-d-flex p-flex-wrap">   
-        <section class="p-md-6">
-            <div class="p-mr-3 close-btn">
-                <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
-            </div> 
-            <h2 class="p-mt-5 p-md-6 p-col-12">代理品牌</h2>
-            <hr size="8px" align="center" width="400px" class="p-my-4 p-mx-3">  
-            <div class="p-mt-4 bar-list">              
-                <ul class="p-mt-2 p-d-flex p-flex-wrap p-md-6 p-col-12">
-                    <li class="p-md-12 p-col-12">
-                        <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem;"></i> DALI</a>
-                    </li>
-                    <li @mouseover="changeBackground('029.jpg')" class="p-md-12 p-col-12 p-mt-3">
-                        <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KLIPSCH</a>
-                    </li>
-                    <li @mouseover="changeBackground('037.jpg')" class="p-md-12 p-col-12  p-mt-3">
-                        <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> EDIFIER</a>
-                    </li>
-                </ul>
-                <ul class="p-mt-2 p-d-flex p-flex-wrap p-md-6 p-col-12">
-                    <li @mouseover="changeBackground('038.jpg')" class="p-md-12 p-col-12">
-                        <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KEF</a>
-                    </li>
-                    <li @mouseover="changeBackground('039.jpg')" class="p-md-12 p-col-12 p-mt-3">
-                        <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> WHARFEDALE</a>
-                    </li>
-                    <li class="p-md-12 p-col-12 p-mt-3">
-                        <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> YAMAHA</a>
-                    </li>            
-                </ul>
-            </div>
-        </section>
-        <section class="theme-page p-md-6" :style="inlineBgImage(src)"></section>
-    </div>
+        <div class="Dialog p-d-flex p-flex-wrap" :class="{movemask:ifMovemask}">   
+            <section class="p-md-6">
+                <div class="p-mr-3 close-btn">
+                    <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
+                </div> 
+                <h2 class="p-mt-5 p-md-6 p-col-12">代理品牌</h2>
+                <hr size="8px" align="center" width="400px" class="p-my-4 p-mx-3">  
+                <div class="p-mt-4 bar-list">              
+                    <ul class="p-mt-2 p-d-flex p-flex-wrap p-md-6 p-col-12">
+                        <li class="p-md-12 p-col-12">
+                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem;"></i> DALI</a>
+                        </li>
+                        <li @mouseover="changeBackground('029.jpg')" class="p-md-12 p-col-12 p-mt-3">
+                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KLIPSCH</a>
+                        </li>
+                        <li @mouseover="changeBackground('037.jpg')" class="p-md-12 p-col-12  p-mt-3">
+                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> EDIFIER</a>
+                        </li>
+                    </ul>
+                    <ul class="p-mt-2 p-d-flex p-flex-wrap p-md-6 p-col-12">
+                        <li @mouseover="changeBackground('038.jpg')" class="p-md-12 p-col-12">
+                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KEF</a>
+                        </li>
+                        <li @mouseover="changeBackground('039.jpg')" class="p-md-12 p-col-12 p-mt-3">
+                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> WHARFEDALE</a>
+                        </li>
+                        <li class="p-md-12 p-col-12 p-mt-3">
+                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> YAMAHA</a>
+                        </li>            
+                    </ul>
+                </div>
+            </section>
+            <section class="theme-page p-md-6" :style="inlineBgImage(src)"></section>
+        </div>
 </template>
 <script>
 export default {
     data(){
         return{
-            src:'033.jpg'
+            src:'033.jpg',
+            ifMovemask:false
         }
+    },
+    props:{
+       moveMask: {
+            type: String
+        } 
     },
     methods: {
         inlineBgImage(image) {
@@ -56,18 +62,31 @@ export default {
             this.$emit("closeItem");
         }
     },
+    watch:{
+        moveMask:function(newval){
+            //  console.log('變了')
+            if(newval==='50'){
+                console.log('變了')
+                this.ifMovemask = true
+            }else{
+                this.ifMovemask = false
+            }
+        }
+    }
 }
 </script>
 
 <style scoped>
-.itemBar{
-    background:rgb(3, 8, 53);
-    top: 55px;
-    left: 0px;
-    z-index: 5;
+
+.Dialog{
+    position: absolute;
+    top: 175px;
     width: 900px;
     height: 400px;
-    border-radius: 10px;
+    background: #ffffff;
+}
+.Dialog.movemask{
+    top: 0px;
 }
 
 .theme-page{
@@ -79,13 +98,13 @@ export default {
 }
 
 hr{
-    background: blanchedalmond;
+    background: rgb(0, 0, 0);
     float: left;
     margin-left:40px ;
 }
 
 .itemBar h2 {
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     text-align: left;
     margin-left: 40px;
 }
@@ -103,7 +122,7 @@ hr{
 
 .bar-list a{
     text-decoration: none;
-    color: rgb(240, 232, 232);
+    color: rgb(0, 0, 0);
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
@@ -112,14 +131,14 @@ hr{
 }
 
 @media(max-width:900px){
-    .itemBar{
+    .Dialog{
         background:rgb(255, 255, 255);
         width: 100vw;
         height: 100vh;
         border-radius: 0px;
     }
 
-    .itemBar h2 {
+    .Dialog h2 {
         color: black;
         text-align: left;
         margin-left: 40px;

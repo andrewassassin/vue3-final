@@ -25,23 +25,24 @@
         <div class="p-mr-3 close-btn">
             <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
         </div>            
-        <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0">
-            <li class="itemList">       
-                <Itembar class="itemBar" @closeItem="closeItemBar" :class="{ show: isShowItemBar }"/>
+        <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0 itemList">
+            <li class="itemList"> 
+                <Itembar class="itemBar" :moveMask="moveMask" @closeItem="closeBarDrawer" :class="{ show: barDrawer }"/>    
                 <a @click.prevent="toItemBar" href="">便攜式喇叭</a>
             </li>
+            <div class="DivOverlapMask" :class="{moveAll: moveAll}"></div>  
             <li class="itemList">       
-                <Itembar class="itemBar" @closeItem="closeItemBar" :class="{ show: isShowItemBar }"/>
                 <a @click.prevent="toItemBar" href="">書架喇叭</a>
             </li>
+            <div class="DivOverlapMask"></div>  
             <li class="itemList">       
-                <Itembar class="itemBar" @closeItem="closeItemBar" :class="{ show: isShowItemBar }"/>
                 <a @click.prevent="toItemBar" href="">擴大機</a>
             </li>
+            <div class="DivOverlapMask"></div>  
             <li class="itemList">       
-                <Itembar class="itemBar" @closeItem="closeItemBar" :class="{ show: isShowItemBar }"/>
                 <a @click.prevent="toItemBar" href="">落地喇叭</a>
-            </li>      
+            </li>    
+            <div class="DivOverlapMask"></div>   
         </ul>
     </nav>
     <transition>
@@ -55,7 +56,7 @@ import Itembar from '@/components/Itembar'
 import Search from '@/views/Search'
 import UserInfo from '@/views/UserInfo'
 import Login from '@/views/Login'
-import { ref,computed,onMounted  } from "vue";
+import { ref,computed,onMounted,watch  } from "vue";
 import { useRouter, useRoute } from "vue-router";
 export default {  
     name: 'Navbar',
@@ -63,7 +64,12 @@ export default {
         Modal,
         Itembar,
     },
-    setup(){
+    props: {
+        move: Boolean,
+	},
+    setup(props){
+        const moveAll = ref(false)
+        const moveMask= ref('99')
         const myinput = ref(null);
         const router = useRouter();
         const route = useRoute();
@@ -71,7 +77,7 @@ export default {
         const searchBar = ref("");
         const isActive = ref(false);
         const isExtend = ref(false);
-        const isShowItemBar = ref(false);
+        const barDrawer = ref(false);
         const isHoverCart = ref(false);
         const isLogin = ref(true);
         const loginState = computed(()=>{
@@ -82,6 +88,18 @@ export default {
         // 監聽購物車商品數量
             return store.getters.changeCartNum;
         })
+        watch(
+			() => props.move,
+			val => {
+				if (val === true ) {
+                    moveAll.value = true
+                    moveMask.value = '50'
+				} else{
+                    moveAll.value = false
+                    moveMask.value = '99'
+                }
+			}
+		);
 
         onMounted(()=>{
             // 取得購物車商品數量
@@ -145,11 +163,11 @@ export default {
         }
 
         function toItemBar(){
-            isShowItemBar.value=true
+            barDrawer.value=true
         }
 
-        function closeItemBar(){
-            isShowItemBar.value=false
+        function closeBarDrawer(){
+            barDrawer.value=false
         }
         return {
             myinput,
@@ -163,14 +181,16 @@ export default {
             isExtend,
             toggleBar,
             isHoverCart,
-            isShowItemBar,
+            barDrawer,
             isLogin,
             showInput,
             blurFocus,
             toUserInfo,
             closeLeftMenu,
             toItemBar,
-            closeItemBar
+            closeBarDrawer,
+            moveAll,
+            moveMask
         }
     },
 }
@@ -211,7 +231,7 @@ export default {
 }
 
 #modal{
-    z-index: 500000000000;  
+    z-index: 5000000000;  
 }
 
 .v-enter-active,.v-leave-active {
@@ -232,11 +252,10 @@ export default {
     justify-content: center;
     align-items: center;
     height: 55px;
-    width: 200px;
+    width: 150px;
     margin: 0 30px;
     font-weight:bolder ;
     text-decoration: none;
-
 }
 
 .nav-toggler {
@@ -314,22 +333,38 @@ input::-webkit-search-cancel-button{
     color: white;
     transform: scale(.6);
 }
+.itemList:hover .itemBar{
+    visibility: visible;
+    opacity: 1;
+}
 
-.itemList{
-    position: relative;
+.itemList:hover+.DivOverlapMask{
+    background: rgba(46, 46, 46, 0.7);
+    display: block;
 }
 
 .itemBar{
-    position: absolute;
-    visibility: hidden;
-    transition: .2s ease;
+    transition: all .2s ease-in;
     opacity: 0;
+    visibility: hidden;
+    /* position: fixed; */
+    z-index: 4;
 }
 
-.itemList:hover .itemBar{
-    visibility: visible;
-    transition: .6s ease;
-    opacity: 1;
+.DivOverlapMask {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    top: 175px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    display: none;
+}
+
+.DivOverlapMask.moveAll{
+    top: 0;
 }
 
 @media (max-width: 900px){
