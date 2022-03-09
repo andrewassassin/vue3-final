@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <nav class="nav-bar" :class="{hideUp:active}">
-            <Navbar :move="move" />
+            <Navbar />
         </nav>
         <header v-if="showHeader" class="header-bar">
             <Header/>
@@ -57,10 +57,8 @@ export default {
             let st = window.scrollY
             if(st > this.lastScrollY){
                 this.active =true
-                this.move = true
             }else{
                 this.active =false
-                this.move = false
             }
             if(st>200){
                 this.lastScrollY = st;
@@ -105,7 +103,6 @@ export default {
 .nav-bar.hideUp{
     top: -175px;
 }
-
 
 .header-bar{
     margin-top: 175px;

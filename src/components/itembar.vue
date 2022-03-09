@@ -42,11 +42,6 @@ export default {
             ifMovemask:false
         }
     },
-    props:{
-       moveMask: {
-            type: String
-        } 
-    },
     methods: {
         inlineBgImage(image) {
             let bgImage = require('@/assets/img/' + image)
@@ -62,17 +57,6 @@ export default {
             this.$emit("closeItem");
         }
     },
-    watch:{
-        moveMask:function(newval){
-            //  console.log('變了')
-            if(newval==='50'){
-                console.log('變了')
-                this.ifMovemask = true
-            }else{
-                this.ifMovemask = false
-            }
-        }
-    }
 }
 </script>
 
@@ -83,10 +67,6 @@ export default {
     height: 400px;
     background: #ffffff;
 }
-
-/* .Dialog.movemask{
-    top: 0px;
-} */
 
 .theme-page{
     border-radius: 10px;

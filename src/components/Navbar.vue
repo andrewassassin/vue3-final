@@ -25,26 +25,27 @@
         <div class="p-mr-3 close-btn">
             <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
         </div>            
-        <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0 itemList">
-            <li class="itemList"> 
-                <Itembar class="itemBar" :moveMask="moveMask" @closeItem="closeBarDrawer" :class="{ show: barDrawer,moveAll: moveAll }"/>    
-                <a @click.prevent="toItemBar" href="">便攜式喇叭</a>
+        <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0">
+            <li class="itemList" @mouseenter="showUpMask" @mouseleave="showMask=false"> 
+                <Itembar class="itemBar" @closeItem="closeBarDrawer" :class="{ show: barDrawer }"/>    
+                <a @click.prevent="toItemBar" style="cursor:pointer;">便攜式喇叭</a> 
             </li>
-            <div class="DivOverlapMask" :class="{moveAll: moveAll}"></div>  
             <li class="itemList">       
-                <a @click.prevent="toItemBar" href="">書架喇叭</a>
+                <a @click.prevent="toItemBar">書架喇叭</a>
             </li>
-            <div class="DivOverlapMask"></div>  
+             
             <li class="itemList">       
-                <a @click.prevent="toItemBar" href="">擴大機</a>
+                <a @click.prevent="toItemBar">擴大機</a>
             </li>
-            <div class="DivOverlapMask"></div>  
+             
             <li class="itemList">       
-                <a @click.prevent="toItemBar" href="">落地喇叭</a>
-            </li>    
-            <div class="DivOverlapMask"></div>   
+                <a @click.prevent="toItemBar">落地喇叭</a>
+            </li>             
         </ul>
     </nav>
+    <transition name="mask">
+        <div class="DivOverlapMask" @mouseenter="showMask=false" v-if="showMask"></div> 
+    </transition>
     <transition>
         <Modal v-if="isClickCart" @closeBtn="closeModal" />
     </transition>
@@ -56,7 +57,7 @@ import Itembar from '@/components/Itembar'
 import Search from '@/views/Search'
 import UserInfo from '@/views/UserInfo'
 import Login from '@/views/Login'
-import { ref,computed,onMounted,watch  } from "vue";
+import { ref,computed,onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 export default {  
     name: 'Navbar',
@@ -64,12 +65,8 @@ export default {
         Modal,
         Itembar,
     },
-    props: {
-        move: Boolean,
-	},
-    setup(props){
-        const moveAll = ref(false)
-        const moveMask= ref('99')
+    setup(){
+        const showMask = ref(false)
         const myinput = ref(null);
         const router = useRouter();
         const route = useRoute();
@@ -88,18 +85,6 @@ export default {
         // 監聽購物車商品數量
             return store.getters.changeCartNum;
         })
-        watch(
-			() => props.move,
-			val => {
-				if (val === true ) {
-                    moveAll.value = true
-                    moveMask.value = '50'
-				} else{
-                    moveAll.value = false
-                    moveMask.value = '99'
-                }
-			}
-		);
 
         onMounted(()=>{
             // 取得購物車商品數量
@@ -111,6 +96,12 @@ export default {
 
         function closeLeftMenu(){
             isActive.value=false
+        }
+
+        function showUpMask(){
+            setTimeout(() => {
+                showMask.value=true
+            }, 300)
         }
 
         function openModal () {
@@ -171,6 +162,7 @@ export default {
         }
         return {
             myinput,
+            showUpMask,
             isClickCart,
             searchBar,
             openModal,
@@ -189,8 +181,7 @@ export default {
             closeLeftMenu,
             toItemBar,
             closeBarDrawer,
-            moveAll,
-            moveMask
+            showMask,
         }
     },
 }
@@ -218,7 +209,7 @@ export default {
 
 .nav-top {
     background:  white;
-    z-index: 50;
+    z-index: 2;
     height:55px; 
     border-bottom: 1px solid rgb(243, 243, 243) ;
     position: fixed;
@@ -254,7 +245,7 @@ export default {
     height: 55px;
     width: 150px;
     margin: 0 30px;
-    font-weight:bolder ;
+    font-weight:bolder;
     text-decoration: none;
 }
 
@@ -336,41 +327,34 @@ input::-webkit-search-cancel-button{
 .itemList:hover .itemBar{
     visibility: visible;
     opacity: 1;
-}
-
-.itemList:hover+.DivOverlapMask{
-    background: rgba(46, 46, 46, 0.7);
-    display: block;
+    transition-delay: .3s;
 }
 
 .itemBar{
-    transition: all .3s ease;
+    transition: all .1s ease;
     opacity: 0;
     visibility: hidden;
     position: fixed;
-    top: 175px;
-    z-index: 4;
+    margin-top: 55px;
 }
 
 .DivOverlapMask {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    top: 175px;
+    position: fixed;
+    top: 0px;
     left: 0px;
     height: 100%;
     width: 100%;
-    display: none;
+    background: rgba(32, 32, 32, 0.7);
 }
 
-.DivOverlapMask.moveAll{
-    top: 0;
+.mask-enter-active,.mask-leave-active {
+    transition: opacity .2s;
 }
 
-.itemBar.moveAll{
-    top: 0;
+.mask-enter-from, .mask-leave-to {
+    opacity: 0;
 }
+
 
 @media (max-width: 900px){
     .pi-apple{
@@ -402,7 +386,6 @@ input::-webkit-search-cancel-button{
     .nav-ul{
         margin-left: 85px;
         flex-wrap: wrap;
-        /* position: relative; */
         width: 150px;
         top: 100px;
         left: 150px;
