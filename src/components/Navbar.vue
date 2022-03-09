@@ -27,7 +27,7 @@
         </div>            
         <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0 itemList">
             <li class="itemList"> 
-                <Itembar class="itemBar" :moveMask="moveMask" @closeItem="closeBarDrawer" :class="{ show: barDrawer }"/>    
+                <Itembar class="itemBar" :moveMask="moveMask" @closeItem="closeBarDrawer" :class="{ show: barDrawer,moveAll: moveAll }"/>    
                 <a @click.prevent="toItemBar" href="">便攜式喇叭</a>
             </li>
             <div class="DivOverlapMask" :class="{moveAll: moveAll}"></div>  
@@ -344,10 +344,11 @@ input::-webkit-search-cancel-button{
 }
 
 .itemBar{
-    transition: all .2s ease-in;
+    transition: all .3s ease;
     opacity: 0;
     visibility: hidden;
-    /* position: fixed; */
+    position: fixed;
+    top: 175px;
     z-index: 4;
 }
 
@@ -364,6 +365,10 @@ input::-webkit-search-cancel-button{
 }
 
 .DivOverlapMask.moveAll{
+    top: 0;
+}
+
+.itemBar.moveAll{
     top: 0;
 }
 

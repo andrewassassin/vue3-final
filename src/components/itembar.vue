@@ -79,15 +79,14 @@ export default {
 <style scoped>
 
 .Dialog{
-    position: absolute;
-    top: 175px;
     width: 900px;
     height: 400px;
     background: #ffffff;
 }
-.Dialog.movemask{
+
+/* .Dialog.movemask{
     top: 0px;
-}
+} */
 
 .theme-page{
     border-radius: 10px;
