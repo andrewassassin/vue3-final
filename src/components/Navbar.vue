@@ -25,22 +25,11 @@
         <div class="p-mr-3 close-btn">
             <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
         </div>            
-        <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0">
-            <li class="itemList" @mouseenter="showUpMask" @mouseleave="showMask=false"> 
+        <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0" @mouseleave="showMask=false,hoverNav = false">
+            <li class="itemList" v-for="(item,idx) in navList" :key="item" @mouseenter="showUpMask($event)" :id="`${idx}`"> 
                 <Itembar class="itemBar" @closeItem="closeBarDrawer" :class="{ show: barDrawer }"/>    
-                <a @click.prevent="toItemBar" style="cursor:pointer;">便攜式喇叭</a> 
+                <a @click.prevent="toItemBar" style="cursor:pointer;"  :class="{color:chooseNav!==idx&&hoverNav}">{{item}}</a> 
             </li>
-            <li class="itemList">       
-                <a @click.prevent="toItemBar">書架喇叭</a>
-            </li>
-             
-            <li class="itemList">       
-                <a @click.prevent="toItemBar">擴大機</a>
-            </li>
-             
-            <li class="itemList">       
-                <a @click.prevent="toItemBar">落地喇叭</a>
-            </li>             
         </ul>
     </nav>
     <transition name="mask">
@@ -66,7 +55,10 @@ export default {
         Itembar,
     },
     setup(){
-        const showMask = ref(false)
+        const showMask = ref(false);
+        const hoverNav = ref(false)
+        const chooseNav = ref(Number);
+        const textColor = ref(false);
         const myinput = ref(null);
         const router = useRouter();
         const route = useRoute();
@@ -77,6 +69,9 @@ export default {
         const barDrawer = ref(false);
         const isHoverCart = ref(false);
         const isLogin = ref(true);
+        const navList = ref([
+            '便攜式喇叭', '書架喇叭', '擴大機', '落地喇叭'
+        ])
         const loginState = computed(()=>{
             return store.getters.loginState;
         })
@@ -98,10 +93,13 @@ export default {
             isActive.value=false
         }
 
-        function showUpMask(){
+        function showUpMask(event){
+            // console.log('event', typeof event.currentTarget.id)
+            hoverNav.value = true
+            chooseNav.value = parseInt(event.currentTarget.id)
             setTimeout(() => {
                 showMask.value=true
-            }, 300)
+            }, 400)
         }
 
         function openModal () {
@@ -161,7 +159,11 @@ export default {
             barDrawer.value=false
         }
         return {
+            chooseNav,
             myinput,
+            textColor,
+            navList,
+            hoverNav,
             showUpMask,
             isClickCart,
             searchBar,
@@ -238,7 +240,7 @@ export default {
 }
 
 .nav-ul a{
-    color: rgb(82, 82, 82);
+    color: black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -247,6 +249,11 @@ export default {
     margin: 0 30px;
     font-weight:bolder;
     text-decoration: none;
+    transition: .1s ease-in;
+}
+
+.nav-ul a.color{
+    color:rgb(173, 173, 173);
 }
 
 .nav-toggler {
@@ -327,7 +334,7 @@ input::-webkit-search-cancel-button{
 .itemList:hover .itemBar{
     visibility: visible;
     opacity: 1;
-    transition-delay: .3s;
+    transition-delay: .4s;
 }
 
 .itemBar{
@@ -336,6 +343,8 @@ input::-webkit-search-cancel-button{
     visibility: hidden;
     position: fixed;
     margin-top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .DivOverlapMask {
@@ -395,6 +404,7 @@ input::-webkit-search-cancel-button{
    .nav-ul li{
         width: auto;
     }
+
     .nav-top.active {
         left: -150px;
     }
@@ -450,10 +460,20 @@ input::-webkit-search-cancel-button{
     .itemBar{
         position: fixed;
         visibility: visible;
+        height: 100vh;
+        width: 100vw;
         top: 0;
         left: 900px;
-        transition: all .4s ease-in;
+        transition: all .3s ease;
         opacity: 1;
+        background:rgb(255, 255, 255);
+        margin-top:0;
+        transform: translateX(0%);
+        transition-delay: 0s;
+    }
+
+    .itemList:hover .itemBar{
+        transition-delay: 0s;
     }
 
     .itemBar.show{

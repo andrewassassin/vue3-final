@@ -110,13 +110,6 @@ hr{
 }
 
 @media(max-width:900px){
-    .Dialog{
-        background:rgb(255, 255, 255);
-        width: 100vw;
-        height: 100vh;
-        border-radius: 0px;
-    }
-
     .Dialog h2 {
         color: black;
         text-align: left;
