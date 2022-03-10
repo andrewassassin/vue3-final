@@ -1,33 +1,21 @@
 <template>
-        <div class="Dialog p-d-flex p-flex-wrap" :class="{movemask:ifMovemask}">   
+        <div class="Dialog p-d-flex p-flex-wrap">   
             <section class="p-md-6">
                 <div class="p-mr-3 close-btn">
                     <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
                 </div> 
-                <h2 class="p-mt-5 p-md-6 p-col-12">代理品牌</h2>
+                <h2 class="p-mt-5 p-md-6 p-col-12">{{navTitle}}</h2>
                 <hr size="8px" align="center" width="400px" class="p-my-4 p-mx-3">  
                 <div class="p-mt-4 bar-list">              
                     <ul class="p-mt-2 p-d-flex p-flex-wrap p-md-6 p-col-12">
-                        <li class="p-md-12 p-col-12">
-                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem;"></i> DALI</a>
-                        </li>
-                        <li @mouseover="changeBackground('029.jpg')" class="p-md-12 p-col-12 p-mt-3">
-                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KLIPSCH</a>
-                        </li>
-                        <li @mouseover="changeBackground('037.jpg')" class="p-md-12 p-col-12  p-mt-3">
-                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> EDIFIER</a>
+                        <li v-for="item in navList1" :key="item" @mouseover="changeBackground(item.bg)" class="p-md-12 p-col-12 p-mt-3 link">
+                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> {{item.name}}</a>
                         </li>
                     </ul>
                     <ul class="p-mt-2 p-d-flex p-flex-wrap p-md-6 p-col-12">
-                        <li @mouseover="changeBackground('038.jpg')" class="p-md-12 p-col-12">
-                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> KEF</a>
+                        <li v-for="item in navList2" :key="item" @mouseover="changeBackground(item.bg)" class="p-md-12 p-col-12 p-mt-3 link">
+                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> {{item.name}}</a>
                         </li>
-                        <li @mouseover="changeBackground('039.jpg')" class="p-md-12 p-col-12 p-mt-3">
-                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> WHARFEDALE</a>
-                        </li>
-                        <li class="p-md-12 p-col-12 p-mt-3">
-                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> YAMAHA</a>
-                        </li>            
                     </ul>
                 </div>
             </section>
@@ -39,8 +27,13 @@ export default {
     data(){
         return{
             src:'033.jpg',
-            ifMovemask:false
+            navTitle:'',
+            navList1:[],
+            navList2:[]
         }
+    },
+    props:{
+        navObj: Object
     },
     methods: {
         inlineBgImage(image) {
@@ -55,8 +48,23 @@ export default {
         },
         closeLeftMenu(){
             this.$emit("closeItem");
-        }
+        },
     },
+    watch:{
+        navObj: {
+            immediate: true,
+            deep: true,
+            handler(newValue) {
+                console.log('newValue',newValue)
+                this.navTitle = newValue.title
+                // console.log('55',newValue.content.splice(0,3))
+                this.navList1 = newValue.content.slice(0,3)
+                this.navList2 = newValue.content.slice(3,6)
+                console.log('navList1:  ',this.navList1,'   navList2:',this.navList2)
+            }
+        }
+    }
+    
 }
 </script>
 
@@ -107,6 +115,18 @@ hr{
 
 .close-btn{
     display: none;
+}
+
+.pi-caret-right{
+    visibility: hidden;
+    opacity: 0;
+    transition: all .3s ease;
+    
+}
+
+.link:hover .pi-caret-right{
+    visibility: visible;
+    opacity: 1;
 }
 
 @media(max-width:900px){

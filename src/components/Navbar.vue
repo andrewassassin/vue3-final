@@ -25,10 +25,10 @@
         <div class="p-mr-3 close-btn">
             <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
         </div>            
-        <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0" @mouseleave="showMask=false,hoverNav = false">
+        <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0" @mouseleave="showMask = false,hoverNav = false">
             <li class="itemList" v-for="(item,idx) in navList" :key="item" @mouseenter="showUpMask($event)" :id="`${idx}`"> 
-                <Itembar class="itemBar" @closeItem="closeBarDrawer" :class="{ show: barDrawer }"/>    
-                <a @click.prevent="toItemBar" style="cursor:pointer;"  :class="{color:chooseNav!==idx&&hoverNav}">{{item}}</a> 
+                <Itembar class="itemBar" @closeItem="closeBarDrawer" :class="{ show: barDrawer }" :navObj="navObj"/>    
+                <a @click.prevent="toItemBar" style="cursor:pointer;"  :class="{color:chooseNav!==idx&&hoverNav}">{{item.title}}</a> 
             </li>
         </ul>
     </nav>
@@ -46,8 +46,9 @@ import Itembar from '@/components/Itembar'
 import Search from '@/views/Search'
 import UserInfo from '@/views/UserInfo'
 import Login from '@/views/Login'
-import { ref,computed,onMounted } from "vue";
+import { ref,computed,onMounted, reactive } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { navBarList } from "@/js/navList.js";
 export default {  
     name: 'Navbar',
     components: {
@@ -69,19 +70,21 @@ export default {
         const barDrawer = ref(false);
         const isHoverCart = ref(false);
         const isLogin = ref(true);
-        const navList = ref([
-            '便攜式喇叭', '書架喇叭', '擴大機', '落地喇叭'
-        ])
+        const navObj = reactive({
+            title:'',
+            content:[]
+        })
+        const navList = ref(navBarList)
         const loginState = computed(()=>{
             return store.getters.loginState;
         })
-
         const changeCartNum = computed(()=>{
-        // 監聽購物車商品數量
+            // 監聽購物車商品數量
             return store.getters.changeCartNum;
         })
 
         onMounted(()=>{
+            console.log('navList~~',navList.value)
             // 取得購物車商品數量
             store.dispatch("DataGetCart");
             // const itemListStr = localStorage.getItem("cart");
@@ -94,7 +97,9 @@ export default {
         }
 
         function showUpMask(event){
-            // console.log('event', typeof event.currentTarget.id)
+            let idx = event.currentTarget.id
+            navObj.title = navList.value[idx].title
+            navObj.content = navList.value[idx].content
             hoverNav.value = true
             chooseNav.value = parseInt(event.currentTarget.id)
             setTimeout(() => {
@@ -162,6 +167,7 @@ export default {
             chooseNav,
             myinput,
             textColor,
+            navObj,
             navList,
             hoverNav,
             showUpMask,
@@ -250,6 +256,7 @@ export default {
     font-weight:bolder;
     text-decoration: none;
     transition: .1s ease-in;
+    font-size: 18px;
 }
 
 .nav-ul a.color{
@@ -481,10 +488,5 @@ input::-webkit-search-cancel-button{
     }
 }
 
-@media(hover: hover) and (pointer: fine) {
-    /* .itemList:hover .itemBar{
-        left: 0;
-    } */
-}
 
 </style>
