@@ -276,6 +276,11 @@ export default {
     height: 100px;
 }
 
+.general-btn{
+    width: 150px; 
+    height: 40px;
+}
+
 @media (max-width: 900px) {
     .DivDialog {
         position: fixed;

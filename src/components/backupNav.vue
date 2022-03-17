@@ -5,7 +5,7 @@
             <i class="pi pi-map-marker p-mr-5" style="fontSize: 1.6rem"></i>
             <i class="pi pi-heart" style="fontSize: 1.6rem"></i>
         </div>
-        <i @click="goIndex()" class="pi pi-apple p-ml-lg-2" style="fontSize: 2.5rem;cursor:pointer;"></i>
+        <i class="pi pi-apple p-ml-lg-2" style="fontSize: 2.5rem"></i>
         <div class="work-brench p-d-flex p-ai-center">
             <form @submit.prevent="innerSearch($event)" class="search-bar p-mr-5">  
                 <input v-model="searchBar" ref="myinput" @blur="blurFocus" :class="{ show: isExtend }" class="s-input" type="search" placeholder="Search" aria-label="Search">
@@ -25,10 +25,12 @@
         <div class="p-mr-3 close-btn">
             <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
         </div>            
-        <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0" @mouseleave="showMask = false,hoverNav = false">
-            <li class="itemList" v-for="(item,idx) in navList" :key="item" @mouseenter="showUpMask($event)" :id="`${idx}`"> 
-                <Itembar class="itemBar" @closeItem="closeBarDrawer" :class="{ show: barDrawer }" :navObj="navObj"/>    
-                <a @click.prevent="toItemBar" style="cursor:pointer;" class="navTitle" :class="{color:chooseNav!==idx&&hoverNav}">{{item.title}}</a> 
+        <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0" @mouseleave.self="showMask = false,hoverNav = false,showNavList = false">
+            <li class="itemList" v-for="(item,idx) in navList" :key="item" @mouseenter="showUpMask(),showUpNav($event)" @mouseleave.capture="hoverNav = false,showNavList = false" :id="`${idx}`"> 
+  
+                    <Itembar v-if="showNavList" class="itemBar" @closeItem="closeBarDrawer" :class="{ show: barDrawer }" :navObj="navObj"/>   
+    
+                <a @click.prevent="toItemBar" style="cursor:pointer;"  :class="{color:chooseNav!==idx&&hoverNav}">{{item.title}}</a> 
             </li>
         </ul>
     </nav>
@@ -55,8 +57,9 @@ export default {
         Modal,
         Itembar,
     },
-    setup(props, { emit }){
+    setup(){
         const showMask = ref(false);
+        const showNavList = ref(false);
         const hoverNav = ref(false)
         const chooseNav = ref(Number);
         const textColor = ref(false);
@@ -82,7 +85,7 @@ export default {
             // 監聽購物車商品數量
             return store.getters.changeCartNum;
         })
-        
+
         onMounted(()=>{
             console.log('navList~~',navList.value)
             // 取得購物車商品數量
@@ -96,14 +99,22 @@ export default {
             isActive.value=false
         }
 
-        function showUpMask(event){
+        function showUpMask(){
+
+            setTimeout(() => {
+                showMask.value=true
+            }, 400)
+        }
+
+        function showUpNav(event){
             let idx = event.currentTarget.id
+            console.log('idx',idx)
             navObj.title = navList.value[idx].title
             navObj.content = navList.value[idx].content
             hoverNav.value = true
             chooseNav.value = parseInt(event.currentTarget.id)
             setTimeout(() => {
-                showMask.value=true
+                showNavList.value=true
             }, 400)
         }
 
@@ -112,11 +123,6 @@ export default {
         }
         function closeModal(){
             isClickCart.value = false
-        }
-        function goIndex(){
-            router.push({
-                path: `/`,
-            }) 
         }
 
         function innerSearch(){
@@ -139,13 +145,11 @@ export default {
         }
 
         function showInput(){
-            emit("searchColor");
             isExtend.value = true
             myinput.value.focus()
         }
         
         function blurFocus(){
-            emit("searchColor");
             isExtend.value =false
         }
 
@@ -177,6 +181,8 @@ export default {
             navObj,
             navList,
             hoverNav,
+            showUpNav,
+            showNavList,
             showUpMask,
             isClickCart,
             searchBar,
@@ -197,7 +203,6 @@ export default {
             toItemBar,
             closeBarDrawer,
             showMask,
-            goIndex
         }
     },
 }
@@ -221,7 +226,6 @@ export default {
     position: fixed;
     margin-top: 45px;
     z-index: 50;
-    transition: .3s ease;
 }
 
 .nav-top {
@@ -232,7 +236,6 @@ export default {
     position: fixed;
     width: 100%;
     margin-top: 120px;
-    transition: .3s ease;
 }
 
 .close-btn{
@@ -348,16 +351,16 @@ input::-webkit-search-cancel-button{
     color: white;
     transform: scale(.6);
 }
-.itemList:hover .itemBar{
+/* .itemList:hover .itemBar{
     visibility: visible;
     opacity: 1;
     transition-delay: .4s;
-}
+} */
 
 .itemBar{
-    transition: all .1s ease;
+    /* transition: all .1s ease;
     opacity: 0;
-    visibility: hidden;
+    visibility: hidden; */
     position: fixed;
     margin-top: 55px;
     left: 50%;

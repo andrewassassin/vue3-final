@@ -9,7 +9,9 @@ export default createStore({
         user: {
 
         },
-        src:'header1.jpg'
+        src:'header1.jpg',
+        navInVisible:false,
+        showHeader:true
     },
 
     mutations: {

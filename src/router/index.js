@@ -93,6 +93,13 @@ const router = createRouter({
     },
 })
 
+// router.beforeEach((to) => {
+//     console.log('to=>', to.path);
+//     if(to.path==="/"){
+//         console.log('進入首頁')
+//     }
+// })
+
 // router.beforeEach((to, from, next) => {
 //   window.scrollTo(0, 0);
 //   console.log('to=>', to);
