@@ -51,6 +51,7 @@ import { useRouter, useRoute } from "vue-router";
 import { navBarList } from "@/js/navList.js";
 export default {  
     name: 'Navbar',
+    emits: ["searchColor"], 
     components: {
         Modal,
         Itembar,

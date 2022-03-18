@@ -1,53 +1,56 @@
 <template>
-    <div class="p-mt-5 p-d-flex p-flex-wrap p-jc-center p-md-6">
-        <div class="p-md-12">
-            <h3>會員資料</h3>
-        </div>
-        <div class="p-text-left">
-            <div>
-                <div class="p-mb-1">E-mail</div>
-                <p v-if="changeInfo">{{user.username}}</p>
-                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12" v-model="user.username" placeholder="" type="text" />
+    <div class="p-mt-2 p-d-flex p-flex-wrap">
+        <form class="p-text-left p-md-12">
+            <div class="p-d-flex p-ai-center userData">
+                <label class="p-md-2 p-mb-3 p-text-bold">EMAIL</label>
+                <label v-if="changeInfo" class="p-mb-3">{{user.username}}</label>
+                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12 p-mb-3" v-model="user.username" placeholder="" type="text" />
             </div>
-            <hr size="1px" align="left" class="p-my-4">
-            <div>
-                <div class="p-mb-1">姓名</div>
-                <p v-if="changeInfo">{{user.name}}</p>
-                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12" v-model="user.name" placeholder="" type="text" />
+            <div class="p-d-flex p-ai-center userData">
+                <label class="p-md-2 p-mb-3 p-text-bold">電話</label>
+                <label v-if="changeInfo" class="p-mb-3">{{user.phone}}</label>
+                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12 p-mb-3" v-model="user.phone" type="text" />
             </div>
-            <hr size="1px" align="left" width="100%" class="p-my-4">
-            <div>
-                <div class="p-mb-1">電話</div>
-                <p v-if="changeInfo">{{user.phone}}</p>
-                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12" v-model="user.phone" type="text" />
+            <div class="p-d-flex p-ai-center userData">
+                <label class="p-md-2 p-mb-3 p-text-bold">名字</label>
+                <label v-if="changeInfo" class="p-mb-3">{{user.name}}</label>
+                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12 p-mb-3" v-model="user.name" placeholder="" type="text" />
             </div>
-            <hr size="1px" align="left" width="100%" class="p-my-4">
-            <button type="submit" class="general-btn" @click="changeInfo?editInfo():saveInfo()">{{changeInfo?'編輯':'儲存'}}
+            <div class="p-d-flex p-ai-center userData">
+                <label class="p-md-2 p-mb-3 p-text-bold">姓氏</label>
+                <label v-if="changeInfo" class="p-mb-3">{{user.name}}</label>
+                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12 p-mb-3" v-model="user.name" placeholder="" type="text" />
+            </div>
+            <div class="p-d-flex p-ai-center userData">
+                <label class="p-md-2 p-mb-3 p-text-bold">生日</label>
+                <label v-if="changeInfo" class="p-mb-3">{{user.phone}}</label>
+                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12 p-mb-3" v-model="user.phone" type="text" />
+            </div>
+            <button type="submit" class="general-btn" @click.prevent="changeInfo?editInfo():saveInfo()">
+                {{changeInfo?'編輯':'儲存'}}
             </button>
-        </div>
+        </form>
     </div>
 </template>
 <script>
+import { ref,computed } from 'vue';
+import store from "@/store";
   export default {
-    data () {
+    setup () {
+        const changeInfo = ref(true)
+        const user = computed(()=>{
+            return store.state.user;
+        })
+        function editInfo(){
+            changeInfo.value = false
+        }
+        function saveInfo(){
+            localStorage.setItem('user', JSON.stringify(user))
+            changeInfo.value=true
+        }
         return {
-            changeInfo:true
+            changeInfo,user,editInfo,saveInfo
         }
-    },
-    methods:{
-        editInfo(){
-            this.changeInfo = false
-        },
-        saveInfo(){
-            localStorage.setItem('user', JSON.stringify(this.user))
-            this.changeInfo=true
-        }
-    },
-    computed: {
-        user() {
-            console.log('userid info ',this.$store.state.user)  
-            return this.$store.state.user;
-        },
     }
 }
 </script>
@@ -55,5 +58,10 @@
 .general-btn{
     width: 500px;
     height: 50px;
+}
+
+.userData{
+    margin: 20px 0;
+    border-bottom: 1px solid rgb(233, 233, 233);
 }
 </style>

@@ -65,9 +65,10 @@ const routes = [
         children: [{
             path: 'info',
             component: () => import('../views/Info.vue'),
-            meta: {
-                requiresAuth: true,
-            }
+        },
+        {
+            path: 'Payment',
+            component: () => import('../views/Payment.vue'),
         }],
     },
     {

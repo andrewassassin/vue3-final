@@ -24,6 +24,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Chip from 'primevue/chip';
 import InputNumber from 'primevue/inputnumber';
+import TabMenu from 'primevue/tabmenu';
 import "./index.css";
 const app = createApp(App);
 app.use(store)
@@ -45,5 +46,6 @@ app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('Chip', Chip)
 app.component('InputNumber', InputNumber)
+app.component('TabMenu', TabMenu)
 app.mount('#app');
 

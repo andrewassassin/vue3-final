@@ -55,7 +55,6 @@
 <script>
 // import axios from 'axios'
 import { Carousel, Pagination, Slide } from 'vue3-carousel';
-import store from "@/store";
 import 'vue3-carousel/dist/carousel.css';
 import { ref, onMounted } from "vue";
 export default {
@@ -64,12 +63,7 @@ export default {
         Slide,
         Pagination,
     },
-    beforeRouteLeave(to, from, next) { 
-        store.state.navInVisible = false
-        next(); 
-    },
     setup(){
-        store.state.navInVisible = true
         const imgItem = ref([
             {
                 title:'What Hi-Fi? Awards 2021',
@@ -287,6 +281,10 @@ ul {
     border: 1px solid rgb(243, 243, 243);
     padding: 14px 40px;
     font-size: 16px;
+}
+
+::v-deep(.carousel__pagination-button){
+    display: none;
 }
 
 @media (max-width: 900px) {

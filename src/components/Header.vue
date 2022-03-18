@@ -24,18 +24,17 @@ export default {
 		);
 
         watch(route, function (newVal) {
-            newVal.name ==='Index' ? show.value = false : show.value = true
+            newVal.name ==='Index'|| newVal.name ==='userinfo'? show.value = false : show.value = true
         });
 
         function inlineBgImage(image) {
             let bgImage = require('@/assets/img/' + image)
-
             return {
                 backgroundImage: `url("${bgImage}")`,
             }
         }
 
-        return { inlineBgImage  , src,show}
+        return { inlineBgImage  , src, show}
     }
 }
 </script>
