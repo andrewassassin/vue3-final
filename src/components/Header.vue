@@ -24,7 +24,9 @@ export default {
 		);
 
         watch(route, function (newVal) {
-            newVal.name ==='Index'|| newVal.name ==='userinfo'? show.value = false : show.value = true
+            newVal.name ==='Index'|| newVal.name.includes('userinfo') ===true ||  newVal.name ==='CreatePrd'||newVal.name ==='PrdManage'
+            ? show.value = false : show.value = true
+            console.log('newVal r',newVal.name)
         });
 
         function inlineBgImage(image) {

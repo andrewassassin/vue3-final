@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="createPage">
         <h2>建立商品</h2>
         <section class="p-fluid p-d-flex p-jc-center section">
             <form class="p-md-6 p-xl-3 p-lg-6 p-sm-12 p-col-12">
@@ -16,8 +16,7 @@
                         商品價格
                     </label>
                     <div class="p-col-12 p-md-12 p-mt-2">
-                        <InputText id="productPrice" v-model="product.price" min="1"
-                    max="90000" placeholder="商品價格" type="text"/>
+                        <InputText id="productPrice" v-model="product.price" min="1" max="90000" placeholder="商品價格" type="text"/>
                     </div>
                 </div>
                 <div class="p-field p-grid p-p-2">
@@ -223,6 +222,10 @@ export default {
 }
 </script>
 <style scoped>
+.createPage{
+    margin: 200px 0 50px 0;
+}
+
 .upload {
     border: 1px solid black;
     margin: 0;
@@ -266,6 +269,10 @@ export default {
 
 
 @media(max-width: 600px){
+    .createPage{
+        margin: 150px 0 50px 0;
+    }
+
     .section{
         padding: 0 20px;
     }

@@ -55,8 +55,7 @@ export default {
             immediate: true,
             deep: true,
             handler(newValue) {
-                // this.src = newValue.content[0]
-                console.log('newValue',newValue)
+                // console.log('newValue',newValue)
                 this.navTitle = newValue.title
                 this.navList1 = newValue.content.slice(0,3)
                 this.navList2 = newValue.content.slice(3,6)
@@ -64,9 +63,8 @@ export default {
                 this.navList1.forEach((item,idx)=>{
                     idx===0 ?this.src = item.bg:1
                 })
-                console.log('this.src',this.src)
-                console.log('navList1 content  ',this.navList1[0])
-                // console.log('navList1:  ',this.navList1,'   navList2:',this.navList2)
+                // console.log('this.src',this.src)
+                // console.log('navList1 content  ',this.navList1[0])
             }
         }
     }

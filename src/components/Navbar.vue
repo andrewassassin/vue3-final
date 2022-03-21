@@ -26,7 +26,7 @@
             <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
         </div>            
         <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0" @mouseleave="showMask = false,hoverNav = false">
-            <li class="itemList" v-for="(item,idx) in navList" :key="item" @mouseenter="showUpMask($event)" :id="`${idx}`"> 
+            <li class="itemList" v-for="(item,idx) in navList" :key="item" @mouseleave="navObj.title =''" @mouseenter="showUpMask($event)" :id="`${idx}`"> 
                 <Itembar class="itemBar" @closeItem="closeBarDrawer" :class="{ show: barDrawer }" :navObj="navObj"/>    
                 <a @click.prevent="toItemBar" style="cursor:pointer;" class="navTitle" :class="{color:chooseNav!==idx&&hoverNav}">{{item.title}}</a> 
             </li>
@@ -103,9 +103,12 @@ export default {
             navObj.content = navList.value[idx].content
             hoverNav.value = true
             chooseNav.value = parseInt(event.currentTarget.id)
-            setTimeout(() => {
+            let delay = setTimeout(() => {
                 showMask.value=true
             }, 400)
+            document.getElementById(`${idx}`).onmouseleave = function() {
+                clearTimeout(delay);
+            }
         }
 
         function openModal () {

@@ -12,8 +12,8 @@
 </template>
 <script>
 import { ref } from 'vue';
-import Create from '@/views/Create'
-import ProductManage from '@/views/ProductManage'
+import CreatePrd from '@/views/CreatePrd'
+import PrdManage from '@/views/PrdManage'
 import { useRouter } from "vue-router";
 export default {
     setup(){
@@ -53,13 +53,13 @@ export default {
         function functionLink(idx){
             if(idx===0){
                 router.push({
-                    path: `/create`,
-                    component: Create,
+                    path: `/CreatePrd`,
+                    component: CreatePrd,
                 })  
             }else if(idx===1){
                 router.push({
-                    path: `/productManage`,
-                    component: ProductManage,
+                    path: `/PrdManage`,
+                    component: PrdManage,
                 })  
             }
         }

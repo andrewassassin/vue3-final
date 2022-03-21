@@ -44,7 +44,6 @@ export default {
         const route =useRoute();
     
         function handleScroll(){
-            console.log('handleScroll')
             let st = window.scrollY
             if(st > lastScrollY.value){
                 active.value =true
@@ -60,7 +59,6 @@ export default {
         }
 
         function closeHeader(){
-            console.log('close header')
             showHeader.value = false
         }
 
@@ -72,7 +70,6 @@ export default {
             showHeader.value = true
         }
         watch(route, function (newVal) {
-            console.log('new',newVal.name )
             newVal.name ==='Index' ? transparentNav.value = true : transparentNav.value = false
         });
 

@@ -4,11 +4,11 @@ import Product from '../views/Product'
 import Item from '../views/Item'
 import Search from '../views/Search'
 import multi from '../views/multi'
-import Create from '../views/Create'
+import CreatePrd from '../views/CreatePrd'
 import Login from '../views/Login'
 import Register from '../views/Register'
 import UserInfo from '../views/UserInfo'
-import ProductManage from '../views/ProductManage'
+import PrdManage from '../views/PrdManage'
 import Payment from '../views/Payment'
 const routes = [
     {
@@ -40,9 +40,9 @@ const routes = [
         component: multi
     },
     {
-        path: '/create',
-        name: 'create',
-        component: Create,
+        path: '/CreatePrd',
+        name: 'CreatePrd',
+        component: CreatePrd,
         meta: {
             requiresAuth: true,
         }
@@ -63,18 +63,20 @@ const routes = [
         component: UserInfo,
         redirect: '/userinfo/info',
         children: [{
-            path: 'info',
+            path: '/userinfo/info',
+            name:'userinfo_info',
             component: () => import('../views/Info.vue'),
         },
         {
-            path: 'Payment',
+            path: '/userinfo/Payment',
+            name:'userinfo_pay',
             component: () => import('../views/Payment.vue'),
         }],
     },
     {
-        path: '/productManage',
-        name: 'ProductManage',
-        component: ProductManage,
+        path: '/PrdManage',
+        name: 'PrdManage',
+        component: PrdManage,
         meta: {
             requiresAuth: true,
         }

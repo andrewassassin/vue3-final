@@ -16,11 +16,11 @@
         </Carousel>
     </div>
     <section id="introSection" class="p-d-flex p-ai-center p-jc-center p-flex-wrap" >
-        <div class="top-sec">
-            <div class="top-sec-img">
+        <div class="top-sec" id="topSec">
+            <div class="top-sec-img" :class="{show:showImg}">
                 <img src="../assets/img/oberon-grille-closeup.jpg" alt="">
             </div>
-            <div class="top-sec-text">
+            <div class="top-sec-text" :class="{show:showImg}">
                 <h4>CABINET DESIGN</h4>
                 <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
             </div>
@@ -56,7 +56,7 @@
 // import axios from 'axios'
 import { Carousel, Pagination, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
-import { ref, onMounted } from "vue";
+import { ref, onMounted,onBeforeUnmount } from "vue";
 export default {
     components: {
         Carousel,
@@ -64,6 +64,7 @@ export default {
         Pagination,
     },
     setup(){
+        window.addEventListener("scroll", handleScroll);
         const imgItem = ref([
             {
                 title:'What Hi-Fi? Awards 2021',
@@ -78,6 +79,17 @@ export default {
                 text:'',
                 bgi:'carousel-3.jpg'
             }])
+
+        const showImg = ref(false)
+
+        const position = ref([
+            {
+                name:'topsec',
+                top:Number,
+                btm:Number
+            }
+        ])
+
         function inlineBgImage(image) {
             let bgImage = require('@/assets/img/' + image)
 
@@ -85,10 +97,32 @@ export default {
                 backgroundImage: `url("${bgImage}")`,
             }
         }
+
+        function handleScroll(){
+            const topsec = document.getElementById('topSec')
+            // console.log('handleScroll index',topsec.offsetHeight )
+            // const top = topsec.offsetTop
+            // const btm = top + topsec.offsetHeight;
+            let st = window.scrollY
+            const slideInAt = (window.scrollY + window.innerHeight) 
+            if (slideInAt> position.value[0].top + topsec.offsetHeight/ 2 && st<position.value[0].btm-topsec.offsetHeight/ 2) {
+                showImg.value = true
+            } else {
+                showImg.value = false
+            }
+        }
         onMounted(()=>{
+            const topsec = document.getElementById('topSec')
+            position.value[0].top = topsec.offsetTop
+            position.value[0].btm = position.value[0].top + topsec.offsetHeight;
+            console.log('position.value',position.value)
+        })
+
+        onBeforeUnmount(()=>{
+            window.removeEventListener("scroll", handleScroll)
         })
         
-        return {inlineBgImage,imgItem}
+        return {inlineBgImage,imgItem,showImg}
     }
 }
 </script>
@@ -196,13 +230,33 @@ export default {
     max-width: 100%;
     height: auto;
     padding: 150px;
+    position: relative;
+    opacity: 0;
+    /* left: -50px; */
+    left: 50%;
+    transform: translateX(-55%);
+    transition: all .5s ease-in;
+}
+
+.top-sec-img.show img{
+    opacity: 1;
+    /* left: 0px; */
+    transform: translateX(-50%);
 }
 
 .top-sec-text{
     position: relative;
+    right: -50px;
+    opacity: 0;
     color: rgb(0, 0, 0);
     margin-right: 200px;
     font-family: 'Helvetica', sans-serif;
+    transition: all .5s ease-in;
+}
+
+.top-sec-text.show{
+    opacity: 1;
+    right: 0px;
 }
 
 .top-sec h4 {

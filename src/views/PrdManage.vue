@@ -1,5 +1,5 @@
 <template>
-    <div class="p-d-flex p-flex-wrap p-jc-center">
+    <div class="ManagePage p-d-flex p-flex-wrap p-jc-center">
         <div class="p-md-12 p-col-12">
             <h2>商品管理</h2>
         </div>
@@ -11,14 +11,14 @@
                 :globalFilterFields="['name','country.name','representative.name','status']"
                 responsiveLayout="scroll">
                 <template #header>
-                 <div class="p-d-flex p-flex-wrap p-jc-center p-ai-center">
-                    <h5 class="p-mx-3">搜尋產品</h5>
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
-                    </span>
-                    <Button type="click" @click.prevent="deleteItem()" label="刪除所選品項"  class="p-ml-5 p-button-info"/>
-                 </div>
+                    <div class="p-d-flex p-flex-wrap p-jc-center p-ai-center">
+                        <h5 class="p-mx-3">搜尋產品</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search" />
+                            <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+                        </span>
+                        <Button type="click" @click.prevent="deleteItem()" label="刪除所選品項"  class="p-ml-5 p-button-info"/>
+                    </div>
                 </template>
                 <template #empty>
                     No products found.
@@ -159,9 +159,13 @@ export default {
 }
 </script>
 <style scoped>
-
+.ManagePage{
+    margin: 200px 0 50px 0;
+}
 @media(max-width:600px){
-
+    .ManagePage{
+        margin: 150px 0 50px 0;
+    }
 }
 
 

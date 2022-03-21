@@ -1,5 +1,5 @@
 <template>
-    <div class="p-my-5 p-d-flex p-jc-center p-ai-center" >
+    <div class="infoPage p-d-flex p-jc-center p-ai-center" >
         <div class="p-md-8">
             <div class="p-text-left textHello p-mb-3">HELLO, {{userFromVuex.name}}</div>
             <TabMenu :model="items" />
@@ -74,6 +74,10 @@ export default {
 }
 </script>
 <style scoped>
+.infoPage{
+    margin: 200px 50px 0 0;
+}
+
 .left-menu{
     position: fixed;
     left: 400px;
