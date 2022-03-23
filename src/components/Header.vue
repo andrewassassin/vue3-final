@@ -1,33 +1,15 @@
 <template>
-    <header v-if="show" class="header" :style="inlineBgImage(src)"/>
+    <header class="header" :style="inlineBgImage(src)"/>
 </template>
 <script>
-import {computed,ref,watch} from "vue";
+import {computed,ref} from "vue";
 import store from "@/store";
-import {useRoute} from 'vue-router'
 export default {
-    props:{
-        showHeader:Boolean
-    },
-    setup(props){
+    setup(){
         const show = ref(true)
-        const route =useRoute();
         const src = computed(()=>{
             return store.state.src;
         })
-        // show.value=store.state.showHeader
-        
-        watch(() => props.showHeader,
-			val => {
-                show.value = val;
-			}
-		);
-
-        watch(route, function (newVal) {
-            newVal.name ==='Index'|| newVal.name.includes('userinfo') ===true ||  newVal.name ==='CreatePrd'||newVal.name ==='PrdManage'
-            ? show.value = false : show.value = true
-            console.log('newVal r',newVal.name)
-        });
 
         function inlineBgImage(image) {
             let bgImage = require('@/assets/img/' + image)

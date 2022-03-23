@@ -47,7 +47,7 @@
                         <div> $ {{ getCartValue }}</div>
                     </div>
                     <div class="p-d-flex p-flex-wrap p-jc-center p-ai-center p-xl-8 p-lg-12 p-md-12 p-sm-12 p-col-12">
-                        <button @click="buyItem($event)" type="button" class="general-btn p-md-3 p-col-12 p-mx-2 p-my-1">
+                        <button @click="buyItem" type="button" class="general-btn p-md-3 p-col-12 p-mx-2 p-my-1">
                             購買所選品項
                         </button>
                         <button @click.prevent="deleteSelected($event)" type="button" class="general-btn p-md-3 p-col-12 p-mx-2 p-my-1">
@@ -61,7 +61,7 @@
     </div>
 </template>
 <script>
-import Payment from '@/views/Payment'
+import Order from '@/views/Order'
 import Product from '@/views/Product'
 export default {
     data() {
@@ -116,9 +116,12 @@ export default {
             this.$emit("closeBtn");
         },
         buyItem(){
+            const buyItem = this.itemList.filter(item=>this.inputTag.indexOf(item.id)!==-1)
+            this.$store.state.orderList = buyItem
+            // this.$store.dispatch("createOrder");
             this.$router.push({
-                path: `/Payment`,
-                component: Payment,
+                path: `/Order`,
+                component: Order,
             }) 
             this.$emit("closeBtn");
             console.log('buy')

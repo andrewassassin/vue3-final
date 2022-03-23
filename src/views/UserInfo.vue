@@ -1,12 +1,19 @@
 <template>
-    <div class="infoPage p-d-flex p-jc-center p-ai-center" >
+    <div class="infoPage">
         <div class="p-md-8">
-            <div class="p-text-left textHello p-mb-3">HELLO, {{userFromVuex.name}}</div>
-            <TabMenu :model="items" />
-            <router-view></router-view>
-        </div>
-        <div class="">
-            <Button @click.prevent="logOut" label="登出"  class="p-ml-3"/>
+            <div class="textHello p-mb-3 p-d-flex p-flex-wrap p-ai-center">
+                HELLO, {{userFromVuex.first_name}}
+                <div class="p-md-2 p-col-12">
+                    <Button @click.prevent="logOut" label="登出"  class="p-ml-3 p-md-4 p-col-10 p-button-info"/>
+                </div>
+            </div>
+            <TabMenu v-if="!isMobile" :model="items" class="p-md-6 p-sm-12"/>
+            <div v-else class="p-d-flex p-flex-wrap p-jc-start">
+                <div v-for="item in items" :key="item" class="infoBar p-col-12">
+                    <label @click="herfContent" for="">{{item.label}}</label>
+                </div>
+            </div>
+            <router-view class="infoContent" :class="{show:showContent}"></router-view>
         </div>
     </div>
 </template>
@@ -21,6 +28,7 @@ export default {
         const logOutText = ref('編輯')
         const isShowLogOut = ref(false)
         const spinActive = ref(false)
+        const showContent = ref(false)
         const items = ref([
             {
                 label: '帳戶詳細資料',
@@ -48,6 +56,14 @@ export default {
             return store.state.user;
         })
 
+        const isMobile = computed(()=>{
+            if (screen.width <= 900) {
+                return true
+            }else {
+                return false
+            }
+        })
+
         onMounted(()=>{
             if(Object.entries(userFromVuex).length !==0){
                 isShowLogOut.value = true
@@ -55,6 +71,10 @@ export default {
                 isShowLogOut.value = false
             }
         })
+
+        function herfContent(){
+            showContent.value = true
+        }
 
         function logOut(){
             spinActive.value = true
@@ -69,18 +89,20 @@ export default {
                 })  
             }, 1000);   
         }
-        return {logOutText, isShowLogOut, spinActive,items,userFromVuex,logOut}
+        return {logOutText, isShowLogOut, showContent, spinActive,items,userFromVuex,isMobile, logOut,herfContent}
     }
 }
 </script>
 <style scoped>
-.infoPage{
-    margin: 200px 50px 0 0;
+.infoContent{
+    position: relative;        
 }
 
-.left-menu{
-    position: fixed;
-    left: 400px;
+.infoPage{
+    display: flex;
+    margin: 200px 50px 0 0;
+    justify-content: center;
+    align-items: center;
 }
 
 .logout-Btn{
@@ -102,6 +124,32 @@ export default {
 }
 
 .textHello{
-    font-size: 40px;
+    font-size: 35px;
+    text-align: left;
+}
+
+@media(max-width:900px){
+    .infoPage{
+        margin: 130px 0 50px 0;
+        justify-content: start;
+    }
+
+    .infoContent{
+        position: relative;
+        top: -150px;
+        left: 900px;
+        height: 300px;
+        transition: all .3s ease;
+        background:white;
+    }
+
+    .infoContent.show{
+        left: 0;
+    }
+
+    .infoBar{
+        text-align: left;
+    }
+
 }
 </style>

@@ -11,7 +11,8 @@ export default createStore({
         },
         src:'header1.jpg',
         navInVisible:false,
-        showHeader:true
+        showHeader:true,
+        orderList:[]
     },
 
     mutations: {
@@ -67,6 +68,7 @@ export default createStore({
             if (localStorage["user"]) {
                 const userInfo = localStorage.getItem('user')
                 context.commit('user', JSON.parse(userInfo))
+                console.log('this.state.user',this.state.user)
                 uid = this.state.user.id
             } else {
                 context.commit('user', {})
@@ -91,7 +93,7 @@ export default createStore({
                     console.log('err', error);
                 });
         },
-        changeUserInfo(){
+        createOrder(){
             
         }
     }

@@ -70,12 +70,6 @@ import axios from 'axios'
 import slider from "../mixin/slider";
 export default {
     mixins: [slider],
-    emits: ["showUpHeader","closeHeader"], 
-    beforeRouteLeave(to, from, next) { 
-        // setting next meta.keepAlive to true 
-        this.$emit("showUpHeader");
-        next(); 
-    },
     props: {
         id: {
             type: String,
@@ -95,7 +89,6 @@ export default {
     },
     async created() {
         this.$store.dispatch("DataGetCart");
-        this.$emit("closeHeader");
         // const itemListStr = localStorage.getItem(this.key);
         // const defaultList = JSON.parse(itemListStr);
         // this.$store.state.itemList = defaultList || []; 

@@ -9,12 +9,15 @@ import Login from '../views/Login'
 import Register from '../views/Register'
 import UserInfo from '../views/UserInfo'
 import PrdManage from '../views/PrdManage'
-import Payment from '../views/Payment'
+import Order from '../views/Order'
 const routes = [
     {
         path: '/',
         name: 'Index',
-        component: Index
+        component: Index,
+        meta:{
+            m_hideHeader:true
+        }
     },
     {
         path: '/product',
@@ -25,7 +28,10 @@ const routes = [
         path: `/product/:id`,
         name: 'item',
         props: true,
-        component: Item
+        component: Item,
+        meta: {
+            m_hideHeader: true,
+        }
     },
     {
         path: `/search/:id`,
@@ -45,6 +51,7 @@ const routes = [
         component: CreatePrd,
         meta: {
             requiresAuth: true,
+            m_hideHeader: true,
         }
     },
     {
@@ -72,6 +79,9 @@ const routes = [
             name:'userinfo_pay',
             component: () => import('../views/Payment.vue'),
         }],
+        meta:{
+            m_hideHeader:true
+        }
     },
     {
         path: '/PrdManage',
@@ -79,12 +89,17 @@ const routes = [
         component: PrdManage,
         meta: {
             requiresAuth: true,
+            m_hideHeader:true
         }
     },
     {
-        path: '/Payment',
-        name: 'Payment',
-        component: Payment,
+        path: '/Order',
+        name: 'Order',
+        component: Order,
+        meta:{
+            m_hideNavAll:true,
+            m_hideHeader:true
+        }
     },
 ]
 

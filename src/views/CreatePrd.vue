@@ -117,10 +117,6 @@ export default {
             ],
         };
     },
-    created(){
-        // this.$emit("showUpHeader");
-        this.$store.state.src='carousel-1.jpg'
-    },
     methods: {
         async createForm() {
             if(this.product.category.length===0){

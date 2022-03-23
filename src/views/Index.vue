@@ -17,23 +17,23 @@
     </div>
     <section id="introSection" class="p-d-flex p-ai-center p-jc-center p-flex-wrap" >
         <div class="top-sec" id="topSec">
-            <div class="top-sec-img" :class="{show:showImg}">
+            <div class="top-sec-img" :class="{show:showTopImg}">
                 <img src="../assets/img/oberon-grille-closeup.jpg" alt="">
             </div>
-            <div class="top-sec-text" :class="{show:showImg}">
+            <div class="top-sec-text" :class="{show:showTopText}">
                 <h4>CABINET DESIGN</h4>
                 <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
             </div>
         </div>
-        <div class="pro-sec">
-            <div class="pro-sec-text">
+        <div class="pro-sec" id="proSec">
+            <div class="pro-sec-text" :class="{show:showPro}">
                 <h4>A SPEAKER FOR EVERY USE</h4>
                 <p>The OBERON series presents a ‘speaker for every use’ line-up of models. With two compact stand-mounts, an on-wall, two floor-standing and a centre channel, the OBERON range has something for every need. Every speaker model is perfect for stereo use and is able to fill everything from small apartments to large living rooms with high-quality sound.</p>
             </div>
-            <div class="pro-sec-img">
+            <div class="pro-sec-img" :class="{show:showPro}">
                 <img src="../assets/img/pro-sec-img.jpg" alt="">
             </div>
-            </div>
+        </div>
         <div class="ad-sec">
             <div class="ad-sec-img">
                 <img src="../assets/img/cabinet-design.jpg" alt="">
@@ -80,13 +80,21 @@ export default {
                 bgi:'carousel-3.jpg'
             }])
 
-        const showImg = ref(false)
-
+        const showTopImg = ref(false)
+        const showTopText= ref(false)
+        const showPro = ref(false)
         const position = ref([
             {
                 name:'topsec',
                 top:Number,
-                btm:Number
+                btm:Number,
+                offHeight:Number
+            },
+            {
+                name:'prosec',
+                top:Number,
+                btm:Number,
+                offHeight:Number
             }
         ])
 
@@ -99,30 +107,42 @@ export default {
         }
 
         function handleScroll(){
-            const topsec = document.getElementById('topSec')
-            // console.log('handleScroll index',topsec.offsetHeight )
-            // const top = topsec.offsetTop
-            // const btm = top + topsec.offsetHeight;
             let st = window.scrollY
             const slideInAt = (window.scrollY + window.innerHeight) 
-            if (slideInAt> position.value[0].top + topsec.offsetHeight/ 2 && st<position.value[0].btm-topsec.offsetHeight/ 2) {
-                showImg.value = true
+            if (slideInAt> position.value[0].top + position.value[0].offHeight && st<position.value[0].btm) { 
+                showTopText.value = true
+                setTimeout(function() {
+                    showTopImg.value = true
+                },400)
             } else {
-                showImg.value = false
+                console.log('小於')
+                showTopImg.value = false
+                showTopText.value = false
+            }
+            if (slideInAt> position.value[1].top + position.value[1].offHeight && st<position.value[1].btm) {
+                showPro.value = true
+            } else {
+                showPro.value = false
             }
         }
+
+        function animation(idName,idx){
+            const item =  document.getElementById(idName)
+            position.value[idx].top = item.offsetTop
+            position.value[idx].btm = position.value[idx].top + item.offsetHeight;
+            position.value[idx].offHeight = item.offsetHeight/ 2
+        }
+
         onMounted(()=>{
-            const topsec = document.getElementById('topSec')
-            position.value[0].top = topsec.offsetTop
-            position.value[0].btm = position.value[0].top + topsec.offsetHeight;
-            console.log('position.value',position.value)
+            animation('topSec',0)
+            animation('proSec',1)
         })
 
         onBeforeUnmount(()=>{
             window.removeEventListener("scroll", handleScroll)
         })
         
-        return {inlineBgImage,imgItem,showImg}
+        return {inlineBgImage,imgItem,showTopImg,showTopText,showPro}
     }
 }
 </script>
@@ -162,7 +182,7 @@ export default {
     position: relative;
     color: aliceblue;
     margin-right: 200px;
-    font-family: 'Helvetica', sans-serif;
+    font-family: 'Courier New','Helvetica', sans-serif;
 }
 
 .ad-sec h4 {
@@ -186,16 +206,38 @@ export default {
 }
 
 .pro-sec-text{
+    position: relative;
+    left: 50%;
+    transform: translateX(-140%);
+    opacity: 0;
     flex: 0 0 35%;
     align-items: center;
     margin-left:160px ;
+    transition: all .5s ease-in;
+}
+
+
+.pro-sec-text.show{
+    opacity: 1;
+    transform: translateX(-135%);
 }
 
 .pro-sec-img img{
+    position: relative;
+    left: 50%;
+    transform: translateX(-40%);
+    opacity: 0;
     max-width: 100%;
     height: auto;
     padding: 180px;
+    transition: all .5s ease-in;
 }
+
+.pro-sec-img.show img{
+    opacity: 1;
+    transform: translateX(-45%);
+}
+
 
 .pro-sec h4 {
     font-weight: 900;
@@ -207,6 +249,8 @@ export default {
     /* display: block; */
     text-align: left;
     font-weight: 500;
+    line-height:1.5; 
+    font-family: 'Arial',Charcoal,'Helvetica', 'sans-serif';
 }
 
 
@@ -232,7 +276,6 @@ export default {
     padding: 150px;
     position: relative;
     opacity: 0;
-    /* left: -50px; */
     left: 50%;
     transform: translateX(-55%);
     transition: all .5s ease-in;
@@ -240,23 +283,24 @@ export default {
 
 .top-sec-img.show img{
     opacity: 1;
-    /* left: 0px; */
     transform: translateX(-50%);
 }
 
 .top-sec-text{
     position: relative;
-    right: -50px;
+    left: 50%;
+    transform: translateX(-100%);
     opacity: 0;
     color: rgb(0, 0, 0);
     margin-right: 200px;
-    font-family: 'Helvetica', sans-serif;
+    font-family: 'Arial',Charcoal,'Helvetica', 'sans-serif';
+    line-height:1.5; 
     transition: all .5s ease-in;
 }
 
 .top-sec-text.show{
     opacity: 1;
-    right: 0px;
+    transform: translateX(-110%);
 }
 
 .top-sec h4 {

@@ -1,15 +1,15 @@
 <template>
     <div id="app" >
-        <nav class="nav-bar" :class="{hideUp:active,trans: transparentNav,search:changeColor }">
+        <nav class="nav-bar" v-if="!$route.meta.m_hideNavAll" :class="{hideUp:active,trans: transparentNav,search:changeColor }">
             <Navbar @searchColor="searchColor"/>
         </nav>
-        <header class="header-bar">
-            <Header :showHeader="showHeader"/>
+        <header v-if="!$route.meta.m_hideHeader" class="header-bar">
+            <Header/>
         </header>
         <section class="content p-mb-3">
-            <router-view @closeHeader="closeHeader" @showUpHeader="showUpHeader"/>
+            <router-view />
         </section>
-        <footer>
+        <footer v-if="!$route.meta.m_hideNavAll">
             <Footer/>
         </footer>
     </div>
@@ -37,7 +37,6 @@ export default {
         window.addEventListener("scroll", handleScroll);
         const active= ref(false)
         const lastScrollY = ref(250)
-        const showHeader = ref(true)
         const changeColor = ref(false)
         const move= ref(false)
         const transparentNav = ref(true)
@@ -58,22 +57,15 @@ export default {
             }
         }
 
-        function closeHeader(){
-            showHeader.value = false
-        }
-
         function searchColor(){
             changeColor.value =! changeColor.value
         }
 
-        function showUpHeader(){
-            showHeader.value = true
-        }
         watch(route, function (newVal) {
             newVal.name ==='Index' ? transparentNav.value = true : transparentNav.value = false
         });
 
-        return{active,showHeader,move,transparentNav,changeColor,closeHeader,showUpHeader,searchColor}
+        return{active,move,transparentNav,changeColor,searchColor}
     },
 }
 </script>
@@ -90,6 +82,7 @@ export default {
 .nav-bar{
     position: fixed;
     z-index: 99999;
+    width: 100%;
     top: 0;
     left: 0;
     transition: .3s ease;
@@ -108,7 +101,7 @@ export default {
 }
 
 .nav-bar.hideUp{
-    top: -175px;
+    transform: translateY(-175px);
 }
 
 .nav-bar.search .pi-search{

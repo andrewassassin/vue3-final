@@ -72,12 +72,10 @@
 import axios from "axios";
 import { ref,onMounted } from 'vue';
 import { FilterMatchMode, FilterOperator } from "primevue/api";
-import store from "@/store";
 export default {
     components: {
     },
     setup(){
-        store.state.src="carousel-2.jpg"
         const api = ref('product')
         const products = ref();
         const selectedItem = ref();

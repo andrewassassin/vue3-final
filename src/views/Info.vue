@@ -13,12 +13,12 @@
             </div>
             <div class="p-d-flex p-ai-center userData">
                 <label class="p-md-2 p-mb-3 p-text-bold">名字</label>
-                <label v-if="changeInfo" class="p-mb-3">{{user.name}}</label>
+                <label v-if="changeInfo" class="p-mb-3">{{user.first_name}}</label>
                 <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12 p-mb-3" v-model="user.name" placeholder="" type="text" />
             </div>
             <div class="p-d-flex p-ai-center userData">
                 <label class="p-md-2 p-mb-3 p-text-bold">姓氏</label>
-                <label v-if="changeInfo" class="p-mb-3">{{user.name}}</label>
+                <label v-if="changeInfo" class="p-mb-3">{{user.last_name}}</label>
                 <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12 p-mb-3" v-model="user.name" placeholder="" type="text" />
             </div>
             <div class="p-d-flex p-ai-center userData">
@@ -45,7 +45,7 @@ import store from "@/store";
             changeInfo.value = false
         }
         function saveInfo(){
-            localStorage.setItem('user', JSON.stringify(user))
+            // localStorage.setItem('user', JSON.stringify(user))
             changeInfo.value=true
         }
         return {
@@ -63,5 +63,11 @@ import store from "@/store";
 .userData{
     margin: 20px 0;
     border-bottom: 1px solid rgb(233, 233, 233);
+}
+
+@media(max-width:900px){
+    .general-btn{
+        width: 80vw;
+    }
 }
 </style>
