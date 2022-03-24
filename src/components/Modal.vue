@@ -131,7 +131,7 @@ export default {
         await this.$store.dispatch("DataGetCart");
         this.isShowImg = true;
         if(this.itemList.length!==0){
-            // this.cartNoItem = false
+            this.cartNoItem = false
             this.inputTag.push(this.itemList[0].id)   
         }
         // const itemListStr = localStorage.getItem(this.key);

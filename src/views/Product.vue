@@ -53,34 +53,17 @@ export default {
         this.$store.state.src='carousel-3.jpg'
     },
     beforeMount() {
-        this.getInitialUsers()
+        this.count = 0
+        this.cmd = 'searchNew'
+        this.showPrdApi()
     },
-    mounted(){
-        this.scroll()    
+    mounted(){ 
+        window.addEventListener("scroll", this.scroll);
+    },
+    beforeUnmount() {
+        window.removeEventListener('scroll',this.scroll);
     },
     methods:{
-        getInitialUsers() {  
-            this.count = 0
-            const options = {
-				method: 'get',
-				url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
-				params: {
-					cmd: 'lazy',
-                    count:this.count.toString()
-				},
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
-				}
-			}
-            axios(options)
-                .then(response => {      
-                    this.productList = response.data
-                    this.productList.reverse().splice(0,6).forEach(item=>{
-                        item.image = JSON.parse(item.image);
-                        this.threeList.push(item)
-                    })
-                })       
-        },
         goToProduct(event){   
             const id = event.currentTarget.id
             this.$router.push({
@@ -91,36 +74,38 @@ export default {
         scroll() {   
             let isLoading = false
             var that = this
-            window.onscroll = async function() {
                 // 距離底部200px加載一次
                 let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 400
                 if (bottomOfWindow && isLoading == false) {
                     that.showTop=true
                     isLoading = true
                     that.count += 6
-                    const options = {
-                        method: 'get',
-                        url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
-                        params: {
-                            cmd: 'searchNew',
-                            count:that.count.toString()
-                        },
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded",
-                        }
-                    }
-                    await axios(options)
-                        .then(response => {
-                            that.productList = response.data
-                            that.productList.splice(0,6).forEach(item=>{
-                                item.image = JSON.parse(item.image);
-                                that.threeList.push(item)
-                            })
-                        })        
-                        isLoading = false
-                }         
-            }
+                    that.showPrdApi()
+                    isLoading = false
+                }               
         },
+        async showPrdApi(){
+            var that = this
+             const options = {
+                method: 'get',
+                url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+                params: {
+                    cmd: that.cmd,
+                    count:that.count.toString()
+                },
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                }
+            }
+            await axios(options)
+                .then(response => {
+                    that.productList = response.data
+                    that.productList.splice(0,6).forEach(item=>{
+                        item.image = JSON.parse(item.image);
+                        that.threeList.push(item)
+                    })
+                })        
+        }
     },
     watch:{
         orderSort:async function(newVal){
@@ -133,25 +118,7 @@ export default {
                 this.cmd = 'searchNew'
             }
             this.count = 0
-            const options = {
-                method: 'get',
-                url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
-                params: {
-                    cmd: this.cmd,
-                    count:this.count.toString()
-                },
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                }
-            }
-            await axios(options)
-                .then(response => {      
-                    this.productList = response.data
-                    this.productList.splice(0,6).forEach(item=>{
-                        item.image = JSON.parse(item.image);
-                        this.threeList.push(item)
-                    })
-                })    
+            this.showPrdApi()
         },
     }
 }
