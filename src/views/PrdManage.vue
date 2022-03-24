@@ -76,20 +76,30 @@ export default {
     components: {
     },
     setup(){
-        const api = ref('product')
         const products = ref();
         const selectedItem = ref();
         const selected = ref();
         const loading = ref(true);
         onMounted(() => {
-            axios.get(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`)
-                .then((response) => {
-                    products.value =response.data
-                    loading.value = false;
-                })
-                .catch((error) => {
-                    console.log("err", error);
-                });
+            const options = {
+				method: 'get',
+				url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+				params: {
+					cmd: 'show',
+				},
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				}
+			}
+            axios(options)
+				.then(function (res) {
+					console.log(res)    
+                    products.value =res.data
+                    loading.value = false; 
+				})
+				.catch(error => {
+					console.log(error);
+				})
 			
 		});
         const filters = ref({
@@ -124,7 +134,7 @@ export default {
             const product = JSON.stringify(products.value.filter(item=>item.id===pid)[0])
             const options = {
 				method: 'get',
-				url: `https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,
+				url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
 				params: {
 					cmd: 'save',
                     data: product
@@ -135,7 +145,7 @@ export default {
 			};
 			await axios(options)
 				.then(function (res) {
-					console.log(res)     
+                    res.data.st==='OK'?console.log('修改成功'):1
 				})
 				.catch(error => {
 					console.log(error);
@@ -143,7 +153,7 @@ export default {
         }
 
         function deleteItem(){
-            console.log('selectedItem',selectedItem.value)
+            // console.log('selectedItem',selectedItem.value)
             selectedItem.value.forEach(item => {
                 const index = products.value.map(ele=>ele.id).indexOf(item.id)
                 products.value.splice(index,1)

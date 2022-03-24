@@ -89,10 +89,20 @@ export default {
     },
     async created() {
         this.$store.dispatch("DataGetCart");
+         const options = {
+            method: 'get',
+            url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+            params: {
+                cmd: 'show',
+            },
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            }
+        }
         // const itemListStr = localStorage.getItem(this.key);
         // const defaultList = JSON.parse(itemListStr);
         // this.$store.state.itemList = defaultList || []; 
-        await axios.get(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`)
+        await axios(options)
             .then(response => {
                 const item = response.data.find(item=>{
                     return item.id == this.id

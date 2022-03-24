@@ -44,7 +44,7 @@ export default {
             sortKey:{
             name:""
             },
-            api:"product",
+            cmd:"",
             count:0,
             showTop:false
         }
@@ -61,7 +61,18 @@ export default {
     methods:{
         getInitialUsers() {  
             this.count = 0
-            axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,this.count.toString())
+            const options = {
+				method: 'get',
+				url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+				params: {
+					cmd: 'lazy',
+                    count:this.count.toString()
+				},
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				}
+			}
+            axios(options)
                 .then(response => {      
                     this.productList = response.data
                     this.productList.reverse().splice(0,6).forEach(item=>{
@@ -87,7 +98,18 @@ export default {
                     that.showTop=true
                     isLoading = true
                     that.count += 6
-                    await axios.post(`https://x-home.pcpogo.com/px/${that.api}.php?PDEBUG=andrewc`, that.count.toString())
+                    const options = {
+                        method: 'get',
+                        url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+                        params: {
+                            cmd: 'searchNew',
+                            count:that.count.toString()
+                        },
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                        }
+                    }
+                    await axios(options)
                         .then(response => {
                             that.productList = response.data
                             that.productList.splice(0,6).forEach(item=>{
@@ -98,7 +120,7 @@ export default {
                         isLoading = false
                 }         
             }
-        }
+        },
     },
     watch:{
         orderSort:async function(newVal){
@@ -106,12 +128,23 @@ export default {
             this.sortKey.name  = newVal
             this.sortKey.count = "0"
             if(this.sortKey.name=="價格由低至高"){
-                this.api = 'sortByPrice'
+                this.cmd = 'sortByPrice'
             }else if(this.sortKey.name=="最新上架"){
-                this.api = 'product'
+                this.cmd = 'searchNew'
             }
             this.count = 0
-            await axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,this.count.toString())
+            const options = {
+                method: 'get',
+                url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+                params: {
+                    cmd: this.cmd,
+                    count:this.count.toString()
+                },
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                }
+            }
+            await axios(options)
                 .then(response => {      
                     this.productList = response.data
                     this.productList.splice(0,6).forEach(item=>{

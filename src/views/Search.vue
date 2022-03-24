@@ -49,7 +49,6 @@ export default {
     setup(props) {
         const id = ref(props, "id");
         const itemName = ref("");
-        const api = ref("search");
         const selectedBrand = ref();
         const selectCate = ref();
         const router = useRouter();
@@ -70,17 +69,8 @@ export default {
         const brandList = ref([]);
         const cateList = ref([]);
         watch(id.value, async () => {
-            itemName.value = id.value.id;
             threeList.value = [];
-            api.value = "search";
-            await axios.post(`https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`, id.value.id)
-                .then((response) => {
-                    productList.value = response.data;
-                    productList.value.forEach((item) => {
-                        item.image = JSON.parse(item.image);
-                        threeList.value.push(item);
-                    });
-                });
+            searchApi()
         });
 
         watch(selectedBrand, function (newVal) {
@@ -91,13 +81,23 @@ export default {
         });
 
         onMounted(async () => {
-            // console.log('id.value',id.value)
+            searchApi()
+        });
+
+        async function searchApi(){
             itemName.value = id.value.id;
-            await axios
-                .post(
-                    `https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,
-                    id.value.id
-                )
+            const options = {
+                method: 'get',
+                url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+                params: {
+                    cmd: 'webSearch',
+                    data: id.value.id
+                },
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                }
+            }
+            await axios(options)
                 .then((response) => {
                     productList.value = response.data;
                     productList.value.forEach((item) => {
@@ -105,7 +105,8 @@ export default {
                         threeList.value.push(item);
                     });
                 });
-        });
+        }
+        
         function goToProduct(event) {
             const id = event.currentTarget.id;
             router.push({
@@ -117,26 +118,23 @@ export default {
         function goMultiSearch() {
             threeList.value = [];
             itemName.value = "";
-            console.log(" id.value", id.value);
-            const config = {
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-            };
             const product = {
                 name: brandList.value,
                 category: cateList.value,
             };
-            // console.log('product~',product)
-            api.value = "multi";
-            axios
-                .post(
-                    `https://x-home.pcpogo.com/px/${api.value}.php?PDEBUG=andrewc`,
-                    product,
-                    config
-                )
+            const options = {
+                method: 'get',
+                url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+                params: {
+                    cmd: 'multi',
+                    data: product
+                },
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                }
+            }
+            axios(options)
                 .then((response) => {
-                    // console.log("res", response.data);
                     productList.value = response.data;
                     productList.value.forEach((item) => {
                         item.image = JSON.parse(item.image);

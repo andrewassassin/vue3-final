@@ -39,12 +39,6 @@ export default createStore({
     },
     actions: {
         productToData(context) {
-            const config = {
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                }
-            }
-
             const userInfo = localStorage.getItem('user')
 
             if (userInfo) {
@@ -55,7 +49,18 @@ export default createStore({
                 uid: this.state.user.id,
                 itemList: this.state.itemList
             }
-            axios.post("https://x-home.pcpogo.com/px/create.php?PDEBUG=andrewc", cartItem, config)
+            const options = {
+                method: 'get',
+                url: `https://x-home.pcpogo.com/px/create.php?PDEBUG=andrewc`,
+                params: {
+                    cmd: 'saveUserCart',
+                    data: cartItem
+                },
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                }
+            }
+            axios(options)
                 .then(res => {
                     console.log(res)
                 })
@@ -74,15 +79,19 @@ export default createStore({
                 context.commit('user', {})
                 uid = []
             }
-            const config = {
+            const options = {
+                method: 'get',
+                url: `https://x-home.pcpogo.com/px/create.php?PDEBUG=andrewc`,
+                params: {
+                    cmd: 'findUserCart',
+                    data: uid
+                },
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                 }
             }
-
-            await axios.post("https://x-home.pcpogo.com/px/create.php?PDEBUG=andrewc", uid, config)
+            await axios(options)
                 .then(res => {
-                    // console.log('cart item',res.data)
                     res.data.forEach(item => {
                         item.image = JSON.parse(item.image);
                     })

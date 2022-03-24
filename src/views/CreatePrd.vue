@@ -31,7 +31,7 @@
                                     選擇圖片
                                 </label>
                             </Button>
-                            <Button @click.prevent="upload" label="上傳圖片" :class="{'p-disabled':Notupload}" class="p-ml-3"/>
+                            <Button @click.prevent="upload" :label="!Notupload?'上傳圖片':'上傳完畢'" :class="{'p-disabled':Notupload}" class="p-ml-3"/>
                             <Button @click.prevent="removeAllImg" label="取消"  :class="{'p-disabled':Notupload}" class="p-ml-3 "/>
                         </div>
                         <div class="upload-img p-d-flex p-jc-center">
@@ -48,10 +48,10 @@
                                             {{ Math.round((imgList[index].size / 1024) * 10) / 10 }}KB
                                         </td>
                                         <td class="p-md-4 p-col-3 p-d-flex p-jc-center p-ai-center">
-                                            <Button @click.prevent="deleteItem(index)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"/>
+                                            <Button v-if="!Notupload" @click.prevent="deleteItem(index)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"/>
                                         </td>
                                     </tr>
-                                    <div v-if="Notupload" class="p-mt-5">已上傳完畢</div>
+                                    <!-- <div v-if="Notupload" class="p-mt-5">已上傳完畢</div> -->
                                 </ScrollPanel>
                             </table>
                         </div>
@@ -108,7 +108,7 @@ export default {
                 image: [],
                 category: "",
             },
-            api: "insert",
+            api: "product",
             sellings :[
                 { name: '書架喇叭', code: '書架喇叭' },
                 { name: '擴大機', code: '擴大機' },
@@ -132,6 +132,8 @@ export default {
                 this.$toast.add({severity:'error', summary: 'Error Message', detail:'未填寫價格', life: 3000});
                 return;
             }
+            this.imgList = [];
+            this.preview = [];
             const product = {
                 name: this.product.name,
                 price: this.product.price,
@@ -140,20 +142,26 @@ export default {
                 createdAt: new Date().getTime(),
                 specification: this.speciTable,
             };
-            const config = {
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-            };
-            await axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,product,config)
-            .then((response) => {
-                console.log("res  ", response);
-                this.$toast.add({severity:'success', summary: 'Success Message', detail:'上傳成功', life: 5000});
-                location.reload()
-            })
-            .catch((error) => {
-                console.log("err", error);
-            });
+            const options = {
+				method: 'get',
+				url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+				params: {
+					cmd: 'createPrd',
+                    data:product
+				},
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				}
+			}
+            axios(options)
+                .then(response => {      
+                    console.log("res  ", response);
+                    this.$toast.add({severity:'success', summary: 'Success Message', detail:'上傳成功', life: 5000});
+                    // location.reload()
+                })    
+                .catch((error) => {
+                    console.log("err", error);
+                });   
         },
         previewImage(event) {
             var input = event.target;
@@ -169,8 +177,6 @@ export default {
                 this.imgList.forEach((img) => {
                     this.product.image.push(img.name);
                 });
-                this.imgList = [];
-                this.preview = [];
                 this.Notupload = true
             }else{
                 this.$toast.add({severity:'error', summary: 'Error Message', detail:'至少上傳三張圖片', life: 3000});
@@ -210,7 +216,7 @@ export default {
     watch: {
         preview:  {
             handler: function () {
-                this.preview.length === 3 ? this.disable=true : 1  
+                this.preview.length === 3 ? this.disable = true : 1  
             },
             deep: true, 
         },
