@@ -47,8 +47,8 @@ export default {
                 username:'',
                 password:'',
             }, 
-            api:'login',
             messages: [],
+            cmd:'login'
         }
     }, 
     methods:{
@@ -59,12 +59,18 @@ export default {
                 username: this.user.username,
                 password: this.user.password,
             }
-            const config = {
+            const options = {
+                method: 'get',
+                url: `https://x-home.pcpogo.com/px/account.php?PDEBUG=andrewc`,
+                params: {
+                    cmd: this.cmd,
+                    data: data
+                },
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                 }
-            };                
-            axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`, data, config)
+            }            
+            axios(options)
                 .then(response => {
                     if(response.data.msg==="密碼錯誤"){
                         this.$toast.add({severity:'error', summary: 'Error Message', detail:'密碼輸入錯誤', life: 3000});

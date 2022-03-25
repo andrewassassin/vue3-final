@@ -1,7 +1,7 @@
 <template>
     <div id="app" >
         <nav class="nav-bar" v-if="!$route.meta.m_hideNavAll" :class="{hideUp:active,trans: transparentNav,search:changeColor }">
-            <Navbar @searchColor="searchColor"/>
+            <Navbar @searchColor="searchColor" />
         </nav>
         <header v-if="!$route.meta.m_hideHeader" class="header-bar">
             <Header/>

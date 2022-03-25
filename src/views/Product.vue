@@ -27,6 +27,9 @@
 </template>
 
 <script>
+import { watch,onMounted,onBeforeUnmount,reactive,ref  } from 'vue';
+import store from "@/store";
+import { useRouter } from "vue-router";
 import SelectButton from 'primevue/selectbutton';
 import axios from 'axios'
 import Item from '@/views/Item'
@@ -35,63 +38,48 @@ export default {
     components: {
         SelectButton
     },
-    data () {
-        return {
-            orderSort: '最新上架',
-            productList:[],
-            threeList: [],
-            options: ['價格由低至高', '最新上架','熱門排行'],
-            sortKey:{
-            name:""
-            },
-            cmd:"",
-            count:0,
-            showTop:false
-        }
-    },
-    created(){
-        this.$store.state.src='carousel-3.jpg'
-    },
-    beforeMount() {
-        this.count = 0
-        this.cmd = 'searchNew'
-        this.showPrdApi()
-    },
-    mounted(){ 
-        window.addEventListener("scroll", this.scroll);
-    },
-    beforeUnmount() {
-        window.removeEventListener('scroll',this.scroll);
-    },
-    methods:{
-        goToProduct(event){   
-            const id = event.currentTarget.id
-            this.$router.push({
-                path: `/product/${id}`,
-                component: Item,
-            })    
-        },
-        scroll() {   
+    setup () {
+        store.state.src='carousel-3.jpg'
+        const router = useRouter();
+        const orderSort = ref('最新上架')
+        const productList = ref([])
+        const threeList = ref([])
+        const options = ref(['價格由低至高', '最新上架','熱門排行'])
+        const sortKey = reactive({name:""})
+        const cmd =ref('')
+        const count = ref(0)
+        const showTop = ref(false)
+     
+        count.value = 0
+        cmd.value = 'searchNew'
+        showPrdApi()
+        onMounted(()=>{
+            window.addEventListener("scroll", scroll);
+        })
+
+        onBeforeUnmount(()=>{
+            window.removeEventListener('scroll',scroll);
+        })
+        function scroll() {   
             let isLoading = false
-            var that = this
-                // 距離底部200px加載一次
-                let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 400
-                if (bottomOfWindow && isLoading == false) {
-                    that.showTop=true
-                    isLoading = true
-                    that.count += 6
-                    that.showPrdApi()
-                    isLoading = false
-                }               
-        },
-        async showPrdApi(){
-            var that = this
-             const options = {
+            // 距離底部200px加載一次
+            let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 400
+            if (bottomOfWindow && isLoading == false) {
+                showTop.value=true
+                isLoading = true
+                count.value += 6
+                showPrdApi()
+                isLoading = false
+            }               
+        }
+
+        async function showPrdApi(){
+            const options = {
                 method: 'get',
                 url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
                 params: {
-                    cmd: that.cmd,
-                    count:that.count.toString()
+                    cmd: cmd.value,
+                    count:count.value.toString()
                 },
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
@@ -99,27 +87,45 @@ export default {
             }
             await axios(options)
                 .then(response => {
-                    that.productList = response.data
-                    that.productList.splice(0,6).forEach(item=>{
+                    productList.value = response.data
+                    productList.value.splice(0,6).forEach(item=>{
                         item.image = JSON.parse(item.image);
-                        that.threeList.push(item)
+                        threeList.value.push(item)
                     })
                 })        
         }
-    },
-    watch:{
-        orderSort:async function(newVal){
-            this.threeList=[]
-            this.sortKey.name  = newVal
-            this.sortKey.count = "0"
-            if(this.sortKey.name=="價格由低至高"){
-                this.cmd = 'sortByPrice'
-            }else if(this.sortKey.name=="最新上架"){
-                this.cmd = 'searchNew'
+
+        function goToProduct(event){   
+            const id = event.currentTarget.id
+            router.push({
+                path: `/product/${id}`,
+                component: Item,
+            })    
+        }
+
+        watch(orderSort, function (newVal) {
+            threeList.value=[]
+            sortKey.name  = newVal
+            if(sortKey.name=="價格由低至高"){
+                cmd.value = 'sortByPrice'
+            }else if(sortKey.name=="最新上架"){
+                cmd.value = 'searchNew'
             }
-            this.count = 0
-            this.showPrdApi()
-        },
+            count.value = 0
+            showPrdApi()
+        });
+
+        return {
+            orderSort,
+            productList,
+            threeList,
+            options,
+            sortKey,
+            cmd,
+            count,
+            showTop,
+            goToProduct,
+        }
     }
 }
 

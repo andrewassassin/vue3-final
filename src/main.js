@@ -25,6 +25,7 @@ import Column from 'primevue/column';
 import Chip from 'primevue/chip';
 import InputNumber from 'primevue/inputnumber';
 import TabMenu from 'primevue/tabmenu';
+import InputMask from 'primevue/inputmask';
 import "./index.css";
 const app = createApp(App);
 app.use(store)
@@ -47,5 +48,6 @@ app.component('Column', Column);
 app.component('Chip', Chip)
 app.component('InputNumber', InputNumber)
 app.component('TabMenu', TabMenu)
+app.component('InputMask', InputMask)
 app.mount('#app');
 

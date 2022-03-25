@@ -1,6 +1,6 @@
 <template >
     <div>
-        <Carousel :autoplay="2000" :wrap-around="true">
+        <Carousel :autoplay="3000" :wrap-around="true">
             <Slide v-for="item in imgItem" :key="item">
                 <div class="carousel__item" :style="inlineBgImage(item.bgi)">
                     <div class="p-md-4 container">
@@ -88,7 +88,7 @@ export default {
                 name:'topsec',
                 top:Number,
                 btm:Number,
-                offHeight:Number
+                offHeight:Number,
             },
             {
                 name:'prosec',
@@ -115,7 +115,6 @@ export default {
                     showTopImg.value = true
                 },400)
             } else {
-                console.log('小於')
                 showTopImg.value = false
                 showTopText.value = false
             }

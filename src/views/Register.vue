@@ -69,7 +69,7 @@ export default {
             progressRate: 0,
             activeColor: false,
             middle: false,
-            api: "register",
+            cmd: "register",
         };
     },
     created(){
@@ -85,16 +85,23 @@ export default {
                 name: this.user.name,
                 phone: this.user.phone,
             };
-            const config = {
+
+            const options = {
+                method: 'get',
+                url: `https://x-home.pcpogo.com/px/account.php?PDEBUG=andrewc`,
+                params: {
+                    cmd: this.cmd,
+                    data: data
+                },
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                },
-            };
+                }
+            }
 
             await new Promise(resolve => {
-              setTimeout(resolve, 3000)
+                setTimeout(resolve, 3000)
             })
-            await axios.post(`https://x-home.pcpogo.com/px/${this.api}.php?PDEBUG=andrewc`,data,config)
+            await axios(options)
                 .then((response) => {
                     this.spinActive = false
                     this.loginText='註冊'
