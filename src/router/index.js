@@ -16,7 +16,8 @@ const routes = [
         name: 'Index',
         component: Index,
         meta:{
-            m_hideHeader:true
+            m_hideHeader:true,
+            transparentNav:true
         }
     },
     {

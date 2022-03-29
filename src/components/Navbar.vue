@@ -28,7 +28,8 @@
         <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0" @mouseleave="showMask = false,hoverNav = false">
             <li class="itemList" v-for="(item,idx) in navList" :key="item" @mouseleave="navObj.title =''" @mouseenter="showUpMask($event)" :id="`${idx}`"> 
                 <Itembar class="itemBar" @closeItem="closeBarDrawer" :class="{ show: barDrawer }" :navObj="navObj"/>    
-                <a @click.prevent="toItemBar" style="cursor:pointer;" class="navTitle" :class="{color:chooseNav!==idx&&hoverNav}">{{item.title}}</a> 
+                <a @click.prevent="toItemBar" style="cursor:pointer;" class="navTitle"
+                :class="{color:chooseNav!==idx&&hoverNav}">{{item.title}}</a> 
             </li>
         </ul>
     </nav>
@@ -259,7 +260,7 @@ export default {
     list-style-type:none;
 }
 
-.nav-ul a{
+.nav-ul .navTitle{
     color: black;
     display: flex;
     justify-content: center;
@@ -273,7 +274,7 @@ export default {
     font-size: 18px;
 }
 
-.nav-ul a.color{
+.navTitle.color{
     color:rgb(173, 173, 173);
 }
 

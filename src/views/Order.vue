@@ -1,55 +1,34 @@
 <template>
     <div class="p-d-flex p-flex-wrap">
-        <section class="section p-d-flex p-flex-wrap p-jc-end">
-            <div class="p-md-7 p-text-left leftSide p-px-0"><i class="pi pi-apple" style="fontSize: 2.5rem;cursor:pointer;"></i></div>
-            <form class="p-text-left p-md-7 cForm">
-                <div class="p-d-flex p-ai-center">
-                    <label class="p-md-2 formText">聯絡</label>
-                    <label class="formText">{{user.username}}</label>
-                </div>
-                <div class="p-d-flex p-ai-center userData">
-                    <label class="p-md-2 formText">電話</label>
-                    <label class="formText">{{user.phone}}</label>
-                </div>
-                <div class="p-d-flex p-ai-center userData">
-                    <label class="p-md-2 formText">名字</label>
-                    <label class="formText">{{user.first_name}}</label>
-                </div>
-            </form>
-            <div class="p-d-flex p-jc-center p-flex-wrap p-px-0 p-md-7 cardSec">
-					<!-- .d:白底紅匡, .dd:紅底紅匡 -->
-				<div class="p-md-12 p-px-0">
-					<div class="p-d-flex">
-						<label class="form-label">Credit Card Number</label>
-					</div>
-					<InputMask
-						mask="9999 9999 9999 9999"
-						class=""
-						placeholder="0000 0000 0000 0000"
-						required
-						style="width: 100%" />
-				</div>
-				<div class="p-d-flex p-md-12 p-px-0">
-					<div class="p-d-flex p-flex-wrap p-md-6 p-px-0" style="margin-top: 0px">
-						<div class="p-md-12 p-d-flex p-jc-start p-px-0">
-							<label class="form-label">Expire Date</label>
-						</div>
-						<InputMask mask="99/99" class="" placeholder="MM/YY" required />
-					</div>
-					<div class="p-d-flex p-flex-wrap p-md-6 p-px-0">
-						<div class="p-md-12 p-d-flex p-jc-start p-px-0">
-							<label class="form-label">CVC</label>
-						</div>
-						<InputMask mask="999" class="" placeholder="000" required style="width: 100%" />
-					</div>
-				</div>
-				<div class="p-md-12 p-px-0">
-					<div class="p-d-flex">
-						<label class="form-label">Card Holder's Name</label>
-					</div>
-					<InputText class="" placeholder="Name" maxlength="40" style="width: 100%" required />
-				</div>
+        <section class="section p-d-flex p-flex-wrap">
+            <div class="p-md-4"></div>
+            <div class="p-md-7 p-col-12">
+                <div class="p-text-left leftSide p-px-0"><i class="pi pi-apple" style="fontSize: 2.5rem;cursor:pointer;"></i></div>
+                <form class="p-text-left">
+                    <div class="p-d-flex p-ai-center" style="height:2.5rem;">
+                        <label class="p-md-2 formText">聯絡</label>
+                        <label class="formText" >{{user.username}}</label>
+                    </div>
+                    <div class="p-d-flex p-ai-center userData" style="height:2.5rem;">
+                        <label class="p-md-2 formText">電話</label>
+                        <label class="formText">{{user.phone}}</label>
+                    </div>
+                    <div class="p-d-flex p-ai-center userData" style="height:2.5rem;">
+                        <label class="p-md-2 formText">名字</label>
+                        <label class="formText">{{user.first_name}}</label>
+                    </div>
+                </form>
+                <div class="p-mt-5 p-mb-3 title p-text-left">付款方法</div>
+                <form class="p-text-left cForm p-p-0">
+                    <div class="p-ml-2 p-md-10 p-py-3 formText p-d-flex p-jc-between">信用卡<i class="pi pi-credit-card"></i></div>
+                    <div class="p-d-flex p-flex-wrap p-ai-center card-content p-p-2">
+                        <div class="p-md-12 p-pb-0"><InputText placeholder="卡號" class="p-md-12" style="height:3rem;border-radius: 5px;"/></div>
+                        <div class="p-md-12 p-pb-0"><InputText placeholder="持卡人姓名" class="p-md-12" style="height:3rem; border-radius: 5px;"/></div>
+                        <div class="p-md-12"><InputText placeholder="MM/YY" class="p-md-12" style="height:3rem; border-radius: 5px;"/></div>
+                    </div>
+                </form>
             </div>
+            <div class="p-md-1"></div>
         </section>
         <aside class="aside">
             <div class="container p-md-6 p-px-0">
@@ -138,6 +117,10 @@ import store from "@/store";
 .cForm{
     border: 1px solid #d9d9d9;
     border-radius: 5px;
+    /* margin-right: 60px; */
+}
+
+.title{
     margin-right: 60px;
 }
 
@@ -231,6 +214,10 @@ import store from "@/store";
     font-family: 'Segoe UI';
 }
 
+.card-content{
+    border-top: 1px solid rgb(204, 203, 203);
+    background: rgb(245, 245, 245);
+}
 
 @media(max-width:600px){
     .section{

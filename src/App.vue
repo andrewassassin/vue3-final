@@ -77,6 +77,7 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     text-align: center;
+    overflow: hidden;
 }
 
 .nav-bar{
@@ -96,8 +97,12 @@ export default {
 
 .nav-bar.trans .pi-search,.nav-bar.trans .pi-shopping-cart,.nav-bar.trans .pi-map-marker,
 .nav-bar.trans .pi-map-marker, .nav-bar.trans .pi-user,.nav-bar.trans .pi-heart,
-.nav-bar.trans .pi-apple,.nav-bar.trans .nav-ul .navTitle {
+.nav-bar.trans .pi-apple, .nav-bar.trans .navTitle{
     color: white;
+}
+
+.nav-bar.trans  .navTitle.color{
+    color:rgb(173, 173, 173);
 }
 
 .nav-bar.hideUp{
