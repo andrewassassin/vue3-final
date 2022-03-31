@@ -34,7 +34,7 @@
         </ul>
     </nav>
     <transition name="mask">
-        <div class="DivOverlapMask" @mouseenter="showMask=false" v-if="showMask"></div> 
+        <div class="DivOverlapMask" @mouseenter="showMask=false" v-show="showMask"></div> 
     </transition>
     <transition>
         <Modal v-if="isClickCart" @closeBtn="closeModal" />

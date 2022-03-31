@@ -23,9 +23,10 @@
                             </div>
                             <div class="item-img">
                                 <img
-                                    v-if="isShowImg"
+                                    v-show="!preLoad"
                                     :src="require(`../assets/img/${item.image[1]}`)"
                                 />
+                                <Skeleton v-show="preLoad" width="150px" height="150px" class="skeleton-img" />
                             </div>
                             <div class="item-content">
                                 <p>{{ item.name }}</p>
@@ -69,7 +70,8 @@ export default {
             key: "cart",
             inputTag: [],
             isShowImg: false,
-            cartNoItem:true
+            cartNoItem:true,
+            preLoad:true
         };
     },
     methods: {
@@ -127,9 +129,11 @@ export default {
             console.log('buy')
         }
     },
-    async created() {
+    async mounted() {
         await this.$store.dispatch("DataGetCart");
-        this.isShowImg = true;
+        this.preLoad = false;
+        
+        // this.preLoad = false;
         if(this.itemList.length!==0){
             this.cartNoItem = false
             this.inputTag.push(this.itemList[0].id)   

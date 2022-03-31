@@ -82,7 +82,7 @@ export default {
 
 .nav-bar{
     position: fixed;
-    z-index: 99999;
+    z-index: 50;
     width: 100%;
     top: 0;
     left: 0;

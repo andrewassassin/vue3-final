@@ -1,24 +1,34 @@
 <template>
-    <section class="p-py-3 section">
-        <div class="p-d-flex p-flex-wrap p-ai-center">
-            <div class="slide p-md-6 p-col-12">
-                <div class="showImg">
-                    <img v-if="showImg" :src="require(`../assets/img/${itemObj[focusIndex]}`)" alt="">
+    <section class="p-py-3 section p-d-flex p-flex-wrap p-ai-center p-jc-center">
+        <div class="p-md-6 p-col-12 p-d-flex p-flex-wrap p-jc-center">
+            <div class="showImg p-md-12 p-col-12 p-d-flex p-jc-center">
+                <!-- <img v-if="!preLoad" :src="require(`../assets/img/${focusIndex}`)" alt=""> -->
+                <Image v-if="!preLoad" :src="require(`../assets/img/${focusIndex}`)" alt="Image" width="400" preview />
+                <Skeleton v-if="preLoad" width="400px" height="400px" class="skeleton-img" />   
+            </div>
+            <div class="p-d-flex p-ai-center p-md-12 p-jc-center">
+                <div class="slide-prev p-d-flex p-ai-center">
+                    <i @click="slideCtrl(1)" class="pi pi-chevron-left" style="font-size: 2rem"></i>
                 </div>
-                <div class="slide-item p-md-9 p-col-12 p-ml-10">
-                    <transition-group name="flip-list" tag="ul" class="slide-list">
-                    <li v-for="(item,index) in slideData" :key="item.id">                   
-                        <img :src="require(`../assets/img/${itemObj[item.ref]}`)" :name="`${itemObj[item.ref]}`" :id="`${index}`"  @click="clickImg($event,index)" alt="">          
-                    </li>
-                    </transition-group>
+                <div class="slide-item p-md-8 p-col-8 p-d-flex p-jc-start p-mr-3">
+                    <div id="slideList" class="slide-list p-d-flex p-jc-center p-my-1" >
+                        <li 
+                            v-for="(item,index) in slideData" :key="item.id"  
+                            @click="clickImg(index)" 
+                            :class="{box:chooseImg==index}"
+                            class="p-d-flex p-jc-center p-ai-center p-mx-3">                   
+                            <img v-if="!preLoad" :src="require(`../assets/img/${item}`)" :id="`${index}`" alt="">
+                            <Skeleton v-if="preLoad" width="100px" height="100px" class="skeleton-img" />      
+                        </li>
+                    </div>
                 </div>
-                <div class="slide-ctrl">
-                    <div class="slide-prev" @click="slideCtrl(1)">Prev</div>
-                    <div class="slide-next" @click="slideCtrl(-1)">Next</div>
+                <div class="slide-prev p-d-flex p-ai-center">
+                    <i @click="slideCtrl(-1)" class="pi pi-chevron-right" style="font-size: 2rem"></i>
                 </div>
             </div>
-            <div class="p-md-5 p-col-12">
-            <form v-on:submit.prevent="addItem($event)" class="p-mt-3">
+        </div>
+        <div class="p-md-5 p-col-12">
+            <form v-on:submit.prevent="addItem($event)" class="">
                 <h1 class="card-title">{{product.name}}</h1>
                 <Badge :value="product.category" class="p-mt-2" size="large" severity="info"></Badge>
                 <h2 class="p-mt-3">TWD ${{product.price}}</h2>
@@ -30,20 +40,21 @@
                     <button class="general-btn" type="submit">
                     加入購物車
                     </button>
-                </div> 
-            </form>          
-            </div>
+                </div>
+            </form>
         </div>
     </section>
-    <article class="my-5">
+    <article class="p-my-5">
         <h3>商品介紹</h3>
-        <div class="top-sec">
-            <div class="top-sec-img">
+        <div class="top-sec p-d-flex p-flex-wrap p-md-12 p-p-0">
+            <div class="top-sec-img p-md-5 p-col-12 p-p-0">
                 <img src="../assets/img/carousel-4.jpg" alt="">
             </div>
-            <div class="top-sec-text">
-                <h4>CABINET DESIGN</h4>
-                <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
+            <div class="top-sec-text p-md-7 p-col-12 p-d-flex p-ai-center">
+                <div class="">
+                    <h4>CABINET DESIGN</h4>
+                    <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
+                </div>
             </div>
         </div>
     </article>
@@ -67,9 +78,7 @@
 </template>
 <script>
 import axios from 'axios'
-import slider from "../mixin/slider";
 export default {
-    mixins: [slider],
     props: {
         id: {
             type: String,
@@ -81,15 +90,21 @@ export default {
             product:{},
             amount:'',
             key:'cart',
-            spin: true,
             api:'product',
             specification:[],
-            columnCnt:[]
+            columnCnt:[],
+            clickWait: false,
+            timer: {},
+            slideData: [],
+            focusIndex:'',
+            preLoad:true,
+            chooseImg:0,
+            init:30
         }
     },
     async created() {
         this.$store.dispatch("DataGetCart");
-         const options = {
+        const options = {
             method: 'get',
             url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
             params: {
@@ -102,33 +117,24 @@ export default {
         // const itemListStr = localStorage.getItem(this.key);
         // const defaultList = JSON.parse(itemListStr);
         // this.$store.state.itemList = defaultList || []; 
-        await axios(options)
+        axios(options)
             .then(response => {
                 const item = response.data.find(item=>{
                     return item.id == this.id
                 })
                 if(item){
-                    this.itemObj  = JSON.parse(item.image)   
+                    this.slideData = Object.values(JSON.parse(item.image))
                     this.product = item
-                    this.specification = JSON.parse(item.specification)
-                    this.columnCnt = this.specification[0]
-                    this.specification.splice(0,1)
+                    // this.specification = JSON.parse(item.specification)
+                    // this.columnCnt = this.specification[0]
+                    // this.specification.splice(0,1)
                 }
-                this.spin = false
+                this.focusIndex = this.slideData[0]
+                this.preLoad = false
             })
             .catch(error => {
                 console.log('err',error);
             });
-        if(this.itemObj.length!==0){
-            this.showImg = true
-        }
-        for (let i = 0; i < this.itemObj.length * 5; i++) {
-            let obj = {};
-            obj.id = i;
-            // length除以i的餘數， 如果length=25，代表ref到24之後會重輪一次
-            obj.ref = i % this.itemObj.length;
-            this.slideData.push(obj);
-        }
     },
     methods: {
         addItem() {
@@ -153,8 +159,48 @@ export default {
             localStorage.setItem(this.key, itemListStr);
             this.$store.dispatch("productToData");
         },
-        loaded() {
-            this.spin = false
+        setTime() {
+            this.timer = setTimeout(() => {
+                this.clickWait = false;
+            }, 500);
+        },
+        stopTime() {
+            window.clearInterval(this.timer);
+        },
+        slideCtrl(slidesToShow=1) {
+            if (this.clickWait) {
+                return;
+            }
+            this.stopTime();
+            this.clickWait = true;
+    
+            if (slidesToShow > 0) {
+                if(this.init<60){
+                    let ul  = document.getElementById("slideList")
+                    ul.style.transform = "translateX(" + this.init + "%)";
+                    this.init+=30
+                    this.setTime();
+                    return;
+                }else{
+                    this.init = 0
+                }
+            }
+            if (slidesToShow < 0) {
+                let ul  = document.getElementById("slideList")
+                if(ul.style.transform!=='translateX(-90%)'){
+                    ul.style.transform = "translateX(-" + this.init + "%)";
+                    console.log('ul',ul.style.transform)
+                    this.init+=30
+                    this.setTime();
+                    return;
+                }else{
+                    this.init = 0
+                }
+            }
+        },
+        clickImg(index) {
+            this.chooseImg=index
+            this.focusIndex = this.slideData[index]
         }
     }
 }
@@ -169,74 +215,42 @@ a {
 }
 /* slide ctrl */
 .section{
-    margin-top: 100px;
+    margin-top: 180px;
 }
 
-.slide-prev,
-.slide-next {
-    user-select: none;
-    width: 50px;
-    display: inline-block;
-    background-color: #000;
-    color: #fff;
-    margin: 0 10px;
-    padding: 5px 15px;
-    border-radius: 50px;
-    cursor: pointer;
-}
-
-.slide-prev{
-    position: relative;
-    right:410px;
-    bottom: 100px;
-
-}
-
-.slide-next{
-    position: relative;
-    left: 350px;
-    bottom: 100px;
-}
-
-.slide-prev:hover,
-.slide-next:hover {
-    color: #ff0;
-}
 /* slide */
 .slide-item{
-    height: 163px;
-    margin: 20px 0 0 60px;
     background-color: rgb(255, 255, 255);
     overflow: hidden;
 }
 
-.slide-list {
-    display: flex;
-    margin: 10px 0px;
-    padding: 5px 0px;
-    height: 150px;
-}
-.slide-list li {
-    position: relative;
-    flex: 1 0 0;
-    left:calc(-100% /5.3 * 5);
-    opacity: 0.3;
-    margin: 15px;
+.slide-list{
+    transform: translateX(2%);
+    cursor: pointer;
+    transition: all .3s ease;
+    position: relative; 
 }
 
-.slide-list li:nth-child(8) {
+.slide-list li {
+    opacity: 0.3;
+}
+
+.slide-list li.box{
     opacity: 1;
     border: black 4px solid;
-    z-index: 5;
 }
 
-.slide-list li:nth-child(1),
-.slide-list li:nth-child(2),
-.slide-list li:nth-child(14),
-.slide-list li:nth-child(15){
-    z-index: 0;
-    opacity: 0;
-} 
+.slide-prev{
+    height: 100px;
+    width: 30px;
+    background: transparent;
+    cursor: pointer;
+}
+
+::v-deep(.p-image-mask .p-component-overlay){
+    position: relative;
+    z-index: 999999;
+}
 
 .slide-list img{
     width: 100px;
@@ -276,12 +290,6 @@ a {
     /* left: 36%; */
 }
 
-.spinner{
-    position: relative;
-    left: 200px;
-    z-index: 5;
-}
-
 .showImg img{
     width:400px;
     height:400px;
@@ -298,9 +306,6 @@ a {
 }
 
 .top-sec{
-    display: flex;
-    width: 100%;
-    height: 600px;
     background: rgba(238, 238, 238, 0.863);
     align-items: center;
     margin: 50px 0;
@@ -312,30 +317,26 @@ a {
 }
 
 .top-sec-img{
-    position: relative;
-    height: 600px;
     display: flex;
-    flex: 0 0 40%;
     align-items: center;
     overflow: hidden;
 }
 
 .top-sec-img img{
-    position: absolute;
-    left: 0;
-    top: 0;
     max-width: 100%;
     height: 600px;
-    /* padding: 150px; */
     transition: transform 0.5s ease;
 }
 
 
 .top-sec-text{
-    position: relative;
     color: rgb(0, 0, 0);
-    margin:0 200px;
-    font-family: 'Helvetica';
+    line-height:1.5; 
+    font-weight: 500;
+    font-size: 16px;
+    font-family: 'Segoe UI';
+    padding: 0 80px;
+    height: 400px;
 }
 
 .top-sec h4 {
@@ -345,7 +346,6 @@ a {
 .top-sec p{
     margin-top:18px ;
     word-wrap: break-word;
-    /* display: block; */
     text-align: left;
 }
 
@@ -361,16 +361,12 @@ a {
 }
 
 @media(max-width:600px){
+    .section{
+        margin-top: 130px;
+    }
     .slide-list img{
         width: 50px;
         height: 50px;
-    }
-
-    .slide-list {
-        display: flex;
-        margin: 0px 0px;
-        padding: 0px 0px;
-        height: 150px;
     }
 
     .amount-buy label{
@@ -378,6 +374,10 @@ a {
         position: absolute;
         bottom: 45px;
         left: 50vw;
+    }
+
+    .top-sec-img img{
+        height: 400px;
     }
 }
 </style>

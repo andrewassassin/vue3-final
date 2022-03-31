@@ -27,6 +27,7 @@ import InputNumber from 'primevue/inputnumber';
 import TabMenu from 'primevue/tabmenu';
 import InputMask from 'primevue/inputmask';
 import Skeleton from 'primevue/skeleton';
+import Image from 'primevue/image';
 import "./index.css";
 const app = createApp(App);
 app.use(store)
@@ -51,5 +52,6 @@ app.component('InputNumber', InputNumber)
 app.component('TabMenu', TabMenu)
 app.component('InputMask', InputMask)
 app.component('Skeleton', Skeleton)
+app.component('Image', Image)
 app.mount('#app');
 
