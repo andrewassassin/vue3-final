@@ -101,6 +101,10 @@ export default {
     color: white;
 }
 
+.nav-bar.trans .DivOverlapMask{
+    transform: translateY(0px);
+}
+
 .nav-bar.trans  .navTitle.color{
     color:rgb(173, 173, 173);
 }

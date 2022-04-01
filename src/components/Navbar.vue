@@ -34,7 +34,7 @@
         </ul>
     </nav>
     <transition name="mask">
-        <div class="DivOverlapMask" @mouseenter="showMask=false" v-show="showMask"></div> 
+        <div class="DivOverlapMask" v-show="showMask"></div> 
     </transition>
     <transition>
         <Modal v-if="isClickCart" @closeBtn="closeModal" />
@@ -113,9 +113,11 @@ export default {
         }
 
         function openModal () {
+            document.body.style.overflow = 'hidden'
             isClickCart.value = true
         }
         function closeModal(){
+            document.body.style.overflow = 'auto'
             isClickCart.value = false
         }
         function goIndex(){
@@ -244,10 +246,6 @@ export default {
     display: none;
 }
 
-#modal{
-    z-index: 5000000000;  
-}
-
 .v-enter-active,.v-leave-active {
     transition: opacity .4s;
 }
@@ -373,7 +371,8 @@ input::-webkit-search-cancel-button{
     position: fixed;
     top: 0px;
     left: 0px;
-    height: 100%;
+    transform: translateY(175px);
+    height: 100vh;
     width: 100%;
     background: rgba(32, 32, 32, 0.7);
 }

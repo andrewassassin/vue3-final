@@ -31,7 +31,7 @@
                 <Column field="name" header="Name">
                     <template #body="{data}">
                         <div v-if="selected !== data.id">{{data.name}}</div>
-                        <InputText v-model="data.name" v-if="selected === data.id" />
+                        <InputText v-model="data.name" v-if="selected === data.id" style="max-width:8rem;"/>
                     </template>
                 </Column>
                 <Column field="price" header="Price" sortable dataType="numeric">
@@ -46,7 +46,7 @@
                 <Column field="image" header="Image" sortable>
                     <template #body="{data}">
                         <div v-if="selected !== data.id">{{data.image}}</div>
-                        <InputText v-model="data.image" v-if="selected === data.id" />
+                        <InputText v-model="data.image" v-if="selected === data.id" style="width:24rem;"/>
                     </template>
                     <template #filter="{filterModel}">
                         <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by Image"/>

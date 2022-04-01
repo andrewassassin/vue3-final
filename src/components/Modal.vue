@@ -173,20 +173,23 @@ export default {
 <style scoped>
 #modal {
     position: fixed;
-    z-index: 500000;
+    z-index: 51;
     margin: 0;
     box-sizing: border-box;
+    overflow-y: hidden;
 }
 
 .DivOverlapMask {
+    z-index: 51;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     position: fixed;
+    /* margin-top: 175px; */
     top: 0px;
     left: 0px;
-    height: 100%;
+    height: 100vh;
     width: 100%;
     background: rgba(32, 32, 32, 0.7);
 }
@@ -194,7 +197,6 @@ export default {
 /* Modal Dialog 層 */
 .DivDialog {
     position: relative;
-    /* width: 850px; */
     height: 800px;
     margin: 0;
     padding: 0 30px;
