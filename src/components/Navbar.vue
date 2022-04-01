@@ -5,7 +5,7 @@
             <i class="pi pi-map-marker i-custom p-mr-5"></i>
             <i class="pi pi-heart i-custom"></i>
         </div>
-        <i @click="goIndex()" class="pi pi-apple p-ml-lg-2" style="fontSize: 2.5rem;cursor:pointer;"></i>
+        <i @click="goIndex()" class="pi pi-slack p-ml-lg-2" style="fontSize: 2.5rem;cursor:pointer;"></i>
         <div class="work-brench p-d-flex p-ai-center">
             <form @submit.prevent="innerSearch($event)" class="search-bar p-mr-5">  
                 <input v-model="searchBar" ref="myinput" @blur="blurFocus" :class="{ show: isExtend }" class="s-input" type="search" placeholder="Search" aria-label="Search">
@@ -392,7 +392,7 @@ input::-webkit-search-cancel-button{
 
 
 @media (max-width: 900px){
-    .pi-apple{
+    .pi-slack{
         display: none;
     }
 

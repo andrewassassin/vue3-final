@@ -61,5 +61,31 @@
     transform: rotateZ(45deg);
 }
 
+.colorBox{
+    width: 40px;
+    height: 40px;
+    display: block;
+    border: #ccc 1px solid;
+    border-radius: 5px;
+}
 
+.colorBox.red{
+    background-image: linear-gradient(315deg, rgb(195, 87, 87) 0%, rgb(138, 62, 62) 59%, rgb(125, 17, 15) 100%);
+}
+
+.colorBox.olive{
+    background-color: #808000;
+}
+
+.colorBox.black{
+    background-image: linear-gradient(315deg, rgba(21,30,33,1) 0%, rgba(61,67,70,1) 50%, rgba(99,105,105,1) 100%);
+}
+
+.colorBox.white{
+    background-image: linear-gradient(315deg, rgba(255,255,255,1) 0%, rgba(237,237,236,1) 59%, rgba(233,233,233,1) 100%);
+}
+
+.colorBox.blue{
+    background-color: #4477A5;
+}
 

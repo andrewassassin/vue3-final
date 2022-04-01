@@ -1,5 +1,5 @@
 <template>
-    <section class="p-py-3 section p-d-flex p-flex-wrap p-ai-center p-jc-center">
+    <section class="p-p-3 section p-d-flex p-flex-wrap">
         <div class="p-md-6 p-col-12 p-d-flex p-flex-wrap p-jc-center">
             <div class="showImg p-md-12 p-col-12 p-d-flex p-jc-center">
                 <!-- <img v-if="!preLoad" :src="require(`../assets/img/${focusIndex}`)" alt=""> -->
@@ -27,17 +27,27 @@
                 </div>
             </div>
         </div>
-        <div class="p-md-5 p-col-12">
-            <form v-on:submit.prevent="addItem($event)" class="">
-                <h1 class="card-title">{{product.name}}</h1>
-                <Badge :value="product.category" class="p-mt-2" size="large" severity="info"></Badge>
+        <div class="p-mt-md-5 p-md-5 p-col-12 p-d-flex p-jc-center">
+            <form @submit.prevent="addItem($event)" class="p-md-7 p-col-12 p-text-left">
+                <h1 class="card-title p-mb-2">{{product.name}}</h1>
+                <Badge :value="product.category" size="large" severity="info" class="p-mt-0"></Badge>
                 <h2 class="p-mt-3">TWD ${{product.price}}</h2>
-                <div class="p-mt-5 amount-buy">
-                    <label>購買數量</label>
-                    <input v-model="amount" class="input-box" type="number" min="1" max="20" required>
+                <div class="p-d-flex p-jc-between p-ai-center p-mt-4">
+                    <div>
+                        <div class="textHeader">COLOR</div>
+                        <div class="p-d-flex">
+                            <label v-for="item in colorGroup" :key="item" class="colorBox p-mt-3 p-mr-1" :class="`${item}`"></label>
+                        </div>
+                    </div>
+                    <div class="p-d-flex p-flex-wrap p-md-4 p-px-0">
+                        <div class="p-md-12 p-col-12 amount-buy p-px-0">購買數量</div>
+                        <div class="p-md-12 p-col-12 p-px-0">
+                            <input v-model="amount" class="input-box p-md-12 p-col-12" type="number" min="1" max="20" required>
+                        </div>
+                    </div>
                 </div>
-                <div class="p-mt-5">
-                    <button class="general-btn" type="submit">
+                <div class="p-mt-5 p-md-12 p-px-0">
+                    <button class="general-btn p-md-12 p-col-12" type="submit">
                     加入購物車
                     </button>
                 </div>
@@ -45,7 +55,6 @@
         </div>
     </section>
     <article class="p-my-5">
-        <h3>商品介紹</h3>
         <div class="top-sec p-d-flex p-flex-wrap p-md-12 p-p-0">
             <div class="top-sec-img p-md-5 p-col-12 p-p-0">
                 <img src="../assets/img/carousel-4.jpg" alt="">
@@ -58,23 +67,6 @@
             </div>
         </div>
     </article>
-    <section class="specification">
-        <h3>產品規格</h3>
-        <table class="table table-border p-md-6">
-            <thead >
-                <tr>
-                    <th v-for="item in columnCnt" :key="item.key" class="text-right">{{item}}</th>
-                </tr>
-            </thead>
-            <tbody id="cartTableBody" v-for="item in specification" :key="item.key">      
-                <tr>
-                    <td v-for="column in item" :key="column.key">                                      
-                        <p class="m-0 text-right">{{column}}</p> 
-                    </td>      
-                </tr>         
-            </tbody>
-        </table>
-    </section>
 </template>
 <script>
 import axios from 'axios'
@@ -91,11 +83,11 @@ export default {
             amount:'',
             key:'cart',
             api:'product',
-            specification:[],
             columnCnt:[],
             clickWait: false,
             timer: {},
             slideData: [],
+            colorGroup:[],
             focusIndex:'',
             preLoad:true,
             chooseImg:0,
@@ -123,7 +115,8 @@ export default {
                     return item.id == this.id
                 })
                 if(item){
-                    this.slideData = Object.values(JSON.parse(item.image))
+                    this.slideData = JSON.parse(item.image)
+                    this.colorGroup = JSON.parse(item.color)
                     this.product = item
                     // this.specification = JSON.parse(item.specification)
                     // this.columnCnt = this.specification[0]
@@ -266,25 +259,22 @@ a {
 }
 
 .card-title{
+    font-size: 30px;
     font-weight: 900;
 }
 
-.amount-buy{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+
+.amount-buy {
+    font-size: 10px;
 }
 
-.amount-buy label{
-    font-size: 10px;
-    position: absolute;
-    bottom: 45px;
-    left: 390px;
+.textHeader{
+    font-size: 12px;
+    font-weight: 500;
+    font-family: "Lato", "HelveticaNeue", "Helvetica Neue", sans-serif;
 }
 
 .input-box{
-    width: 150px;
     height:40px;
     position: relative;
     /* left: 36%; */
@@ -296,7 +286,7 @@ a {
 }
 
 .general-btn{
-    width: 350px;
+    /* width: 350px; */
     height: 55px;
 }
 
@@ -369,15 +359,9 @@ a {
         height: 50px;
     }
 
-    .amount-buy label{
-        font-size: 10px;
-        position: absolute;
-        bottom: 45px;
-        left: 50vw;
-    }
-
     .top-sec-img img{
         height: 400px;
     }
+
 }
 </style>

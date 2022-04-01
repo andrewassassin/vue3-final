@@ -285,7 +285,7 @@ import store from "@/store";
     }
 
     .cForm{
-        width:100%;
+        width: 100%;
     }
 }
 
