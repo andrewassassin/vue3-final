@@ -111,9 +111,9 @@ export default {
             const slideInAt = (window.scrollY + window.innerHeight) 
             if (slideInAt> position.value[0].top + position.value[0].offHeight && st<position.value[0].btm) { 
                 showTopText.value = true
-                setTimeout(function() {
+                setTimeout((function() {
                     showTopImg.value = true
-                },400)
+                })(),400)
             } else {
                 showTopImg.value = false
                 showTopText.value = false

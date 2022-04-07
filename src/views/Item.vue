@@ -11,7 +11,7 @@
                     <i @click="slideCtrl(1)" class="pi pi-chevron-left" style="font-size: 2rem"></i>
                 </div>
                 <div class="slide-item p-md-8 p-col-8 p-d-flex p-jc-start p-mr-3">
-                    <div id="slideList" class="slide-list p-d-flex p-jc-center p-my-1" >
+                    <div id="slideList" class="slide-list p-d-flex p-jc-center p-my-1">
                         <li 
                             v-for="(item,index) in slideData" :key="item.id"  
                             @click="clickImg(index)" 
@@ -91,7 +91,7 @@ export default {
             focusIndex:'',
             preLoad:true,
             chooseImg:0,
-            init:30
+            cntR:0,
         }
     },
     async created() {
@@ -161,33 +161,24 @@ export default {
             window.clearInterval(this.timer);
         },
         slideCtrl(slidesToShow=1) {
-            if (this.clickWait) {
-                return;
-            }
-            this.stopTime();
-            this.clickWait = true;
-    
             if (slidesToShow > 0) {
-                if(this.init<60){
-                    let ul  = document.getElementById("slideList")
-                    ul.style.transform = "translateX(" + this.init + "%)";
-                    this.init+=30
+                let ul  = document.getElementById("slideList")
+                if(ul.style.transform!=='translateX(0%)'){
+                    this.cntR-=30
+                    ul.style.transform = "translateX(-" + this.cntR + "%)";
                     this.setTime();
+                    console.log('ul',ul.style.transform)
                     return;
-                }else{
-                    this.init = 0
                 }
             }
             if (slidesToShow < 0) {
                 let ul  = document.getElementById("slideList")
-                if(ul.style.transform!=='translateX(-90%)'){
-                    ul.style.transform = "translateX(-" + this.init + "%)";
+                if(ul.style.transform!=='translateX(-60%)'){
+                    this.cntR+=30
+                    ul.style.transform = "translateX(-" + this.cntR + "%)";
                     console.log('ul',ul.style.transform)
-                    this.init+=30
                     this.setTime();
                     return;
-                }else{
-                    this.init = 0
                 }
             }
         },
@@ -218,7 +209,7 @@ a {
 }
 
 .slide-list{
-    transform: translateX(2%);
+    transform: translateX(0%);
     cursor: pointer;
     transition: all .3s ease;
     position: relative; 

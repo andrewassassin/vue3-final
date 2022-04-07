@@ -52,15 +52,16 @@
                         <Skeleton v-show="preLoad" width="15%" height="1rem" />
                     </div>
                 </div>
-                <div class="p-d-flex p-flex-wrap container2">
+                <div class="p-d-flex p-flex-wrap container2 p-pb-1">
                     <InputText v-model="discntCode" placeholder="優惠代碼" :class="{'p-invalid':errCode}" type="text" style="width:14rem;height:3rem"/>
                     <Button @click.prevent="sendCode" label="使用優惠代碼" class="p-button-secondary p-md-4 p-ml-3" style="height:3rem"/>
-                    <small v-if="errCode" id="username2-help" class="p-error p-md-12 p-text-left p-px-0">{{errMsg}}</small>
+                    <div v-show="errMsg===''" class="p-md-6"></div>
+                    <small class="p-text-left" :class="{'p-error':errCode}" >{{errMsg}}</small>
                 </div>
                 <div class="p-d-flex p-flex-wrap container2">
                     <div class="p-d-flex p-jc-between p-md-12 p-ai-center" style="height:2rem">
                         <p class="priceText">小計</p>
-                        <p v-show="!loading&&!preLoad" class="priceText">$ {{getAllPrice}}</p>
+                        <p v-show="!loading&&!preLoad" class="priceText" :class="{discnt:cnt!==1}">$ {{getAllPrice}}</p>
                         <Skeleton v-show="loading||preLoad" width="10%" height="1rem" />
                     </div>
                     <div class="p-d-flex p-jc-between p-md-12 p-ai-center" style="height:2rem">
@@ -70,9 +71,12 @@
                 </div>
                 <div class="p-d-flex p-flex-wrap container3">
                     <div class="p-d-flex p-jc-between p-md-12 p-ai-center" style="height:2rem">
-                        <p class="totalPrice">總額</p>
-                        <p v-show="!loading&&!preLoad" class="totalPrice">$ {{getAllPrice}}</p>
+                        <p class="totalPrice" >總額</p>
+                        <p v-show="!loading&&!preLoad" class="totalPrice" :class="{discnt:cnt!==1}">$ {{getAllPrice}}</p>
                         <Skeleton v-show="loading||preLoad" width="15%" height="1rem" />
+                    </div>
+                    <div class="p-d-flex p-md-12 p-jc-end">
+                        <p v-show="!loading&&!preLoad&&cnt!==1" class="totalPrice">$ {{cntPrice}}</p>
                     </div>
                 </div>
             </div>
@@ -101,6 +105,13 @@ import store from "@/store";
         const getAllPrice= computed(()=>{
             return orderList.value.reduce((totalValue, item) => {
                 const itemValue = item.price * item.amount;
+                return parseInt(totalValue + itemValue)
+            }, 0);
+        })
+
+        const cntPrice= computed(()=>{
+            return orderList.value.reduce((totalValue, item) => {
+                const itemValue = item.price * item.amount;
                 return parseInt((totalValue + itemValue)*cnt.value)
             }, 0);
         })
@@ -125,8 +136,9 @@ import store from "@/store";
                         errMsg.value = '無效的優惠碼'
                     }else if(res.data[0].answer === 'ok'){
                         loading.value = true
-                        errCode.value= false
                         setTimeout(function(){
+                            errCode.value= false
+                            errMsg.value = '已使用優惠碼'
                             loading.value = false
                             cnt.value  = Number(res.data[0].cnt)
                         },1500)
@@ -142,13 +154,14 @@ import store from "@/store";
         }
         
         onMounted(()=>{
+            console.log('cnt',cnt.value)
             setTimeout(function(){
                 preLoad.value = false
             },1500)
         })
 
         return {
-            discntCode,errCode,errMsg,preLoad,loading,user,orderList,getAllPrice,sendCode
+            discntCode,errCode,errMsg,preLoad,loading,user,orderList,cnt,getAllPrice,cntPrice,sendCode
         }
     }
 }
@@ -262,6 +275,7 @@ import store from "@/store";
     font-weight: 500;
     font-size: 14px;
     font-family: 'Segoe UI';
+    text-decoration: none;
 }
 
 .totalPrice{
@@ -273,6 +287,10 @@ import store from "@/store";
 .card-content{
     border-top: 1px solid rgb(204, 203, 203);
     background: rgb(245, 245, 245);
+}
+
+.priceText.discnt, .totalPrice.discnt{
+    text-decoration: line-through;
 }
 
 @media(max-width:600px){

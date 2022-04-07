@@ -19,7 +19,7 @@
                         <div class="item-top-bar" :class="{ active: inputTag.indexOf(item.id)!==-1}"></div>
                         <div class="item-body" :class="{ active:  inputTag.indexOf(item.id)!==-1}">
                             <div class="p-field-checkbox">
-                                <Checkbox :id="idx" :checked="true" :value="item.id" v-model="inputTag" />
+                                <Checkbox :id="idx" :checked="true" :value="item.id" v-model="inputTag" :disabled="inputTag.length>=3"/>
                             </div>
                             <div class="item-img">
                                 <img
