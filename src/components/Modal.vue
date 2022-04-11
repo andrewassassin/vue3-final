@@ -54,7 +54,7 @@
                         <button @click.prevent="deleteSelected($event)" type="button" class="general-btn p-md-3 p-col-12 p-mx-2 p-my-1">
                             刪除所選品項
                         </button>
-                        <Button class="p-md-2 p-col-12 p-button-info p-mx-2 p-my-1" @click.prevent="selectAll($event)" label="全選" />
+                        <Button class="p-md-2 p-col-12 p-button-error p-mx-2 p-my-1" @click.prevent="cancelChack($event)" label="取消選擇" />
                     </div> 
                 </footer>
             </div>
@@ -94,8 +94,8 @@ export default {
         closeBtn() {
             this.$emit("closeBtn");
         },
-        selectAll() {       
-            this.inputTag = this.itemList.map(item=>item.id)
+        cancelChack() {       
+            this.inputTag = []
         },
         updateDataToStorage() {
             const itemListStr = JSON.stringify(this.itemList);

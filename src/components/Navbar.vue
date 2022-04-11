@@ -17,11 +17,11 @@
             </div>
             <i v-if="isLogin" @click="toUserInfo" class="pi pi-user i-custom" type="button" aria-current="page"></i>     
         </div>
-        <button @click="toggleBar()" class="nav-toggler" style="cursor:pointer;">
+        <button @click="toggleBar()" v-click-outside="onClickOutside" class="nav-toggler" style="cursor:pointer;">
             <div class="line"></div>
         </button>
     </section>
-    <nav :class="{ active: isActive }" class="nav-top p-d-flex p-ai-center p-jc-center">  
+    <nav :class="{ active: isActive }"  class="nav-top p-d-flex p-ai-center p-jc-center">  
         <div class="p-mr-3 close-btn">
             <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
         </div>            
@@ -95,6 +95,10 @@ export default {
         })
 
         function closeLeftMenu(){
+            isActive.value=false
+        }
+
+        function onClickOutside(){
             isActive.value=false
         }
 
@@ -204,7 +208,8 @@ export default {
             toItemBar,
             closeBarDrawer,
             showMask,
-            goIndex
+            goIndex,
+            onClickOutside
         }
     },
 }

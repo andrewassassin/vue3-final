@@ -155,6 +155,7 @@ export default {
     transition: .1s opacity ease-in;
 }
 .buy-btn{
+    cursor: pointer;
     width:160px;
     height: 40px;
     display: flex;

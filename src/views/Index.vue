@@ -17,10 +17,10 @@
     </div>
     <section id="introSection" class="p-d-flex p-ai-center p-jc-center p-flex-wrap" >
         <div class="top-sec" id="topSec">
-            <div class="top-sec-img" :class="{show:showTopImg}">
+            <div class="top-sec-img" :class="{show:showTop}">
                 <img src="../assets/img/oberon-grille-closeup.jpg" alt="">
             </div>
-            <div class="top-sec-text" :class="{show:showTopText}">
+            <div class="top-sec-text" :class="{show:showTop}">
                 <h4>CABINET DESIGN</h4>
                 <p>The rigid cabinet construction is important to optimize the working environment for both woofers and tweeter. The organically shaped design increases overall rigidity and severely reduces cabinet resonances. Furthermore standing waves are practically eliminated as there are no parallel surfaces reflecting sound waves. The EPICON cabinet consists of real wood veneer which is lacquered of a total of 10 times. Each layer is hand polished to ensure a deep, high gloss and elegant surface. 10 times of lacquer also ensures a sturdy finish with a thickness of almost 2 mm.</p>
             </div>
@@ -79,9 +79,7 @@ export default {
                 text:'',
                 bgi:'carousel-3.jpg'
             }])
-
-        const showTopImg = ref(false)
-        const showTopText= ref(false)
+        const showTop= ref(false)
         const showPro = ref(false)
         const position = ref([
             {
@@ -106,17 +104,13 @@ export default {
             }
         }
 
-        function handleScroll(){
+        async function handleScroll(){
             let st = window.scrollY
             const slideInAt = (window.scrollY + window.innerHeight) 
             if (slideInAt> position.value[0].top + position.value[0].offHeight && st<position.value[0].btm) { 
-                showTopText.value = true
-                setTimeout((function() {
-                    showTopImg.value = true
-                })(),400)
+                showTop.value = true
             } else {
-                showTopImg.value = false
-                showTopText.value = false
+                showTop.value = false
             }
             if (slideInAt> position.value[1].top + position.value[1].offHeight && st<position.value[1].btm) {
                 showPro.value = true
@@ -141,7 +135,7 @@ export default {
             window.removeEventListener("scroll", handleScroll)
         })
         
-        return {inlineBgImage,imgItem,showTopImg,showTopText,showPro}
+        return {inlineBgImage,imgItem,showTop,showPro}
     }
 }
 </script>
@@ -235,6 +229,7 @@ export default {
 .pro-sec-img.show img{
     opacity: 1;
     transform: translateX(-45%);
+    transition-delay: .3s;
 }
 
 
@@ -283,6 +278,7 @@ export default {
 .top-sec-img.show img{
     opacity: 1;
     transform: translateX(-50%);
+    transition-delay: .3s;
 }
 
 .top-sec-text{

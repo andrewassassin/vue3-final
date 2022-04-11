@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="slide-prev p-d-flex p-ai-center">
-                    <i @click="slideCtrl(-1)" class="pi pi-chevron-right" style="font-size: 2rem"></i>
+                    <i @click="scrollTo" class="pi pi-chevron-right" style="font-size: 2rem"></i>
                 </div>
             </div>
         </div>
@@ -159,6 +159,11 @@ export default {
         },
         stopTime() {
             window.clearInterval(this.timer);
+        },
+        scrollTo(){
+            // console.log('id~',document.getElementById('4'))
+            let topLeft = document.getElementById('4').offsetTop;
+            document.getElementById('slideList').scrollLeft = topLeft;
         },
         slideCtrl(slidesToShow=1) {
             if (slidesToShow > 0) {
@@ -353,6 +358,5 @@ a {
     .top-sec-img img{
         height: 400px;
     }
-
 }
 </style>

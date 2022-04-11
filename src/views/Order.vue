@@ -33,8 +33,9 @@
             </div>
             <div class="p-md-1"></div>
         </section>
-        <aside class="aside">
-            <div class="p-md-6">
+        <aside class="aside p-d-flex p-flex-wrap">
+            <div class="p-md-1"></div>
+            <div class="p-md-6 p-col-12">
                 <div class="container p-px-0">
                     <div v-for="item in orderList" class="item-body p-my-3" :key="item.key">
                         <div class="item-img p-mr-3">
@@ -53,8 +54,10 @@
                     </div>
                 </div>
                 <div class="p-d-flex p-flex-wrap container2 p-pb-1">
-                    <InputText v-model="discntCode" placeholder="優惠代碼" :class="{'p-invalid':errCode}" type="text" style="width:14rem;height:3rem"/>
-                    <Button @click.prevent="sendCode" label="使用優惠代碼" class="p-button-secondary p-md-4 p-ml-3" style="height:3rem"/>
+                    <div class="p-d-flex p-flex-wrap p-md-12 p-px-0">
+                        <InputText v-model="discntCode" placeholder="優惠代碼" :class="{'p-invalid':errCode}" class="p-md-7" type="text" style="height:3rem"/>
+                        <Button @click.prevent="sendCode" label="使用優惠代碼" class="p-button-secondary p-md-4 p-col-10 p-ml-5" style="height:3rem"/>
+                    </div>
                     <div v-show="errMsg===''" class="p-md-6"></div>
                     <small class="p-text-left" :class="{'p-error':errCode}" >{{errMsg}}</small>
                 </div>
@@ -80,6 +83,7 @@
                     </div>
                 </div>
             </div>
+            <div class="p-md-4"></div>
         </aside>
     </div>
 </template>
@@ -215,21 +219,17 @@ import store from "@/store";
 
 .container{
     margin-top: 40px;
-    margin-left: 40px;
     border-bottom: 1px solid rgb(204, 203, 203) ;
 }
 
 .container2{
-    margin-left: 40px;
     padding: 20px 0;
     border-bottom: 1px solid rgb(204, 203, 203) ;
 }
 
 .container3{
-    margin-left: 40px;
     padding: 20px 0;
 }
-
 
 .item-body{
     display: flex;
