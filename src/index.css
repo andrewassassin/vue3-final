@@ -67,6 +67,7 @@
     display: block;
     border: #ccc 1px solid;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .colorBox.red{

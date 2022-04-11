@@ -8,22 +8,21 @@
             </div>
             <div class="p-d-flex p-ai-center p-md-12 p-jc-center">
                 <div class="slide-prev p-d-flex p-ai-center">
-                    <i @click="slideCtrl(1)" class="pi pi-chevron-left" style="font-size: 2rem"></i>
+                    <i @click="swipeLeft" class="pi pi-chevron-left" style="font-size: 2rem"></i>
                 </div>
-                <div class="slide-item p-md-8 p-col-8 p-d-flex p-jc-start p-mr-3">
-                    <div id="slideList" class="slide-list p-d-flex p-jc-center p-my-1">
-                        <li 
-                            v-for="(item,index) in slideData" :key="item.id"  
-                            @click="clickImg(index)" 
-                            :class="{box:chooseImg==index}"
-                            class="p-d-flex p-jc-center p-ai-center p-mx-3">                   
-                            <img v-if="!preLoad" :src="require(`../assets/img/${item}`)" :id="`${index}`" alt="">
-                            <Skeleton v-if="preLoad" width="100px" height="100px" class="skeleton-img" />      
-                        </li>
-                    </div>
+                <div id="slideList" class="slide-list p-my-1" ref="content">
+                    <li 
+                        v-for="(item,index) in slideData" :key="item.id"  
+                        :id="`ae${index}`"
+                        @click="clickImg(index)" 
+                        :class="{box:chooseImg==index}"
+                        class="p-mx-3">                   
+                        <img v-if="!preLoad" :src="require(`../assets/img/${item}`)" alt="">
+                        <Skeleton v-if="preLoad" width="100px" height="100px" class="skeleton-img" />      
+                    </li>
                 </div>
                 <div class="slide-prev p-d-flex p-ai-center">
-                    <i @click="scrollTo" class="pi pi-chevron-right" style="font-size: 2rem"></i>
+                    <i @click="swipeRight" class="pi pi-chevron-right" style="font-size: 2rem"></i>
                 </div>
             </div>
         </div>
@@ -36,7 +35,7 @@
                     <div>
                         <div class="textHeader">COLOR</div>
                         <div class="p-d-flex">
-                            <label v-for="item in colorGroup" :key="item" class="colorBox p-mt-3 p-mr-1" :class="`${item}`"></label>
+                            <label v-for="(item,idx) in colorGroup" :key="item" @click="colorScroll(idx)" class="colorBox p-mt-3 p-mr-1" :class="`${item}`"></label>
                         </div>
                     </div>
                     <div class="p-d-flex p-flex-wrap p-md-4 p-px-0">
@@ -82,7 +81,6 @@ export default {
             product:{},
             amount:'',
             key:'cart',
-            api:'product',
             columnCnt:[],
             clickWait: false,
             timer: {},
@@ -91,7 +89,7 @@ export default {
             focusIndex:'',
             preLoad:true,
             chooseImg:0,
-            cntR:0,
+            ori:'0'
         }
     },
     async created() {
@@ -160,36 +158,59 @@ export default {
         stopTime() {
             window.clearInterval(this.timer);
         },
-        scrollTo(){
-            // console.log('id~',document.getElementById('4'))
-            let topLeft = document.getElementById('4').offsetTop;
-            document.getElementById('slideList').scrollLeft = topLeft;
+        scrollTo(element, scrollPixels, duration) {
+            let scroll;
+            const scrollPos = element.scrollLeft;
+            // console.log('scrollPos',scrollPos)
+            // Condition to check if scrolling is required
+            if ( !( (scrollPos === 0 || scrollPixels > 0) && (element.clientWidth + scrollPos === element.scrollWidth || scrollPixels < 0))) {
+                // Get the start timestamp
+                const startTime =
+                "now" in window.performance
+                    ? performance.now()
+                    : new Date().getTime();
+                
+                scroll = function(timestamp) {
+                    //Calculate the timeelapsed
+                    const timeElapsed = timestamp - startTime;
+                    // console.log('timeElapsed',timeElapsed)
+                    //Calculate progress 
+                    const progress = Math.min(timeElapsed / duration, 1);
+                    //Set the scrolleft
+                    element.scrollLeft = scrollPos + scrollPixels * progress;
+                    //Check if elapsed time is less then duration then call the requestAnimation, otherwise exit
+                    if (timeElapsed < duration) {
+                        //Request for animation
+                        window.requestAnimationFrame(scroll);
+                    } else {
+                        return;
+                    }
+                }
+                //Call requestAnimationFrame on scroll function first time
+                window.requestAnimationFrame(scroll);
+            }
         },
-        slideCtrl(slidesToShow=1) {
-            if (slidesToShow > 0) {
-                let ul  = document.getElementById("slideList")
-                if(ul.style.transform!=='translateX(0%)'){
-                    this.cntR-=30
-                    ul.style.transform = "translateX(-" + this.cntR + "%)";
-                    this.setTime();
-                    console.log('ul',ul.style.transform)
-                    return;
-                }
-            }
-            if (slidesToShow < 0) {
-                let ul  = document.getElementById("slideList")
-                if(ul.style.transform!=='translateX(-60%)'){
-                    this.cntR+=30
-                    ul.style.transform = "translateX(-" + this.cntR + "%)";
-                    console.log('ul',ul.style.transform)
-                    this.setTime();
-                    return;
-                }
-            }
+        swipeLeft() {
+            const content = document.getElementById('slideList')
+            this.scrollTo(content, -200, 400);
+        },
+        swipeRight() {
+            const content = document.getElementById('slideList')
+            this.scrollTo(content,200, 400);
         },
         clickImg(index) {
             this.chooseImg=index
             this.focusIndex = this.slideData[index]
+        },
+        colorScroll(idx){
+            this.chooseImg=idx
+            this.focusIndex = this.slideData[idx]
+            const content = document.getElementById('slideList')
+            const id  = document.getElementById(`ae${idx}`)
+            console.log('id',id)
+            const scrollPixels = id.offsetLeft-document.getElementById(`ae${this.ori}`).offsetLeft
+            this.scrollTo(content,scrollPixels, 400);
+            this.ori = idx
         }
     }
 }
@@ -208,19 +229,16 @@ a {
 }
 
 /* slide */
-.slide-item{
+.slide-list{
     background-color: rgb(255, 255, 255);
+    width: 60%;
+    cursor: pointer;
+    white-space: nowrap;
     overflow: hidden;
 }
 
-.slide-list{
-    transform: translateX(0%);
-    cursor: pointer;
-    transition: all .3s ease;
-    position: relative; 
-}
-
 .slide-list li {
+    display: inline-block;
     opacity: 0.3;
 }
 
