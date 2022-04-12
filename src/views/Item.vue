@@ -10,16 +10,21 @@
                 <div class="slide-prev p-d-flex p-ai-center">
                     <i @click="swipeLeft" class="pi pi-chevron-left" style="font-size: 2rem"></i>
                 </div>
-                <div id="slideList" class="slide-list p-my-1" ref="content">
-                    <li 
-                        v-for="(item,index) in slideData" :key="item.id"  
+                <div id="slideList" ref="content" class="p-d-flex slide-list">
+                    <div 
+                        v-for="(items,index) in slideData" :key="items.id"  
                         :id="`ae${index}`"
-                        @click="clickImg(index)" 
-                        :class="{box:chooseImg==index}"
-                        class="p-mx-3">                   
-                        <img v-if="!preLoad" :src="require(`../assets/img/${item}`)" alt="">
-                        <Skeleton v-if="preLoad" width="100px" height="100px" class="skeleton-img" />      
-                    </li>
+                        class="" >                   
+
+                        <li v-for="(item,idx) in items" :key="item.id"
+                            @click="clickImg(index,idx)" 
+                            :id="`${idx}`"
+                            class="p-m-3"
+                            :class="{box:chooseImg==`ae${index}${idx}`}"
+                            >
+                            <img v-if="!preLoad" :src="require(`../assets/img/${item}`)" alt="">
+                        </li>   
+                    </div>
                 </div>
                 <div class="slide-prev p-d-flex p-ai-center">
                     <i @click="swipeRight" class="pi pi-chevron-right" style="font-size: 2rem"></i>
@@ -88,8 +93,7 @@ export default {
             colorGroup:[],
             focusIndex:'',
             preLoad:true,
-            chooseImg:0,
-            ori:'0'
+            chooseImg:'ae00',
         }
     },
     async created() {
@@ -120,7 +124,7 @@ export default {
                     // this.columnCnt = this.specification[0]
                     // this.specification.splice(0,1)
                 }
-                this.focusIndex = this.slideData[0]
+                this.focusIndex = this.slideData[0][0]
                 this.preLoad = false
             })
             .catch(error => {
@@ -149,14 +153,6 @@ export default {
             const itemListStr = JSON.stringify(this.$store.state.itemList);
             localStorage.setItem(this.key, itemListStr);
             this.$store.dispatch("productToData");
-        },
-        setTime() {
-            this.timer = setTimeout(() => {
-                this.clickWait = false;
-            }, 500);
-        },
-        stopTime() {
-            window.clearInterval(this.timer);
         },
         scrollTo(element, scrollPixels, duration) {
             let scroll;
@@ -196,21 +192,22 @@ export default {
         },
         swipeRight() {
             const content = document.getElementById('slideList')
-            this.scrollTo(content,200, 400);
+            this.scrollTo(content, 200, 400); 
         },
-        clickImg(index) {
-            this.chooseImg=index
-            this.focusIndex = this.slideData[index]
+        clickImg(index,idx) {
+            this.chooseImg=`ae${index}${idx}`
+            this.focusIndex = this.slideData[index][idx]
         },
         colorScroll(idx){
-            this.chooseImg=idx
-            this.focusIndex = this.slideData[idx]
+            this.chooseImg=`ae${idx}0`
+            this.focusIndex = this.slideData[idx][0]
             const content = document.getElementById('slideList')
-            const id  = document.getElementById(`ae${idx}`)
-            console.log('id',id)
-            const scrollPixels = id.offsetLeft-document.getElementById(`ae${this.ori}`).offsetLeft
-            this.scrollTo(content,scrollPixels, 400);
-            this.ori = idx
+            const distance = this.slideData.slice(0, idx).reduce((total, item) => {
+                const itemValue = item.length*132
+                return total + itemValue;
+            }, 15);
+            // console.log('distance',distance)
+            content.scrollTo({ left:distance, behavior: 'smooth' })
         }
     }
 }
@@ -367,6 +364,10 @@ a {
 @media(max-width:600px){
     .section{
         margin-top: 130px;
+    }
+
+    .slide-list{
+        width: 35%;
     }
     .slide-list img{
         width: 50px;
