@@ -153,7 +153,6 @@ export default {
         }
 
         function deleteItem(){
-            // console.log('selectedItem',selectedItem.value)
             selectedItem.value.forEach(item => {
                 const index = products.value.map(ele=>ele.id).indexOf(item.id)
                 products.value.splice(index,1)

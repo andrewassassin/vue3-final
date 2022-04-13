@@ -2,15 +2,14 @@
     <section class="p-p-3 section p-d-flex p-flex-wrap">
         <div class="p-md-6 p-col-12 p-d-flex p-flex-wrap p-jc-center">
             <div class="showImg p-md-12 p-col-12 p-d-flex p-jc-center">
-                <!-- <img v-if="!preLoad" :src="require(`../assets/img/${focusIndex}`)" alt=""> -->
                 <Image v-if="!preLoad" :src="require(`../assets/img/${focusIndex}`)" alt="Image" width="400" preview />
                 <Skeleton v-if="preLoad" width="400px" height="400px" class="skeleton-img" />   
             </div>
             <div class="p-d-flex p-ai-center p-md-12 p-jc-center">
                 <div class="slide-prev p-d-flex p-ai-center">
-                    <i @click="swipeLeft" class="pi pi-chevron-left" style="font-size: 2rem"></i>
+                    <i v-show="left" @click="swipeLeft" class="pi pi-chevron-left" style="font-size: 2rem"></i>
                 </div>
-                <div id="slideList" ref="content" class="p-d-flex slide-list">
+                <div id="slideList" ref="content" class="p-d-flex slide-list p-mx-2">
                     <div 
                         v-for="(items,index) in slideData" :key="items.id"  
                         :id="`ae${index}`"
@@ -27,7 +26,7 @@
                     </div>
                 </div>
                 <div class="slide-prev p-d-flex p-ai-center">
-                    <i @click="swipeRight" class="pi pi-chevron-right" style="font-size: 2rem"></i>
+                    <i v-show="right" @click="swipeRight" class="pi pi-chevron-right" style="font-size: 2rem"></i>
                 </div>
             </div>
         </div>
@@ -87,12 +86,12 @@ export default {
             amount:'',
             key:'cart',
             columnCnt:[],
-            clickWait: false,
-            timer: {},
             slideData: [],
             colorGroup:[],
             focusIndex:'',
             preLoad:true,
+            left:false,
+            right:true,
             chooseImg:'ae00',
         }
     },
@@ -157,7 +156,6 @@ export default {
         scrollTo(element, scrollPixels, duration) {
             let scroll;
             const scrollPos = element.scrollLeft;
-            // console.log('scrollPos',scrollPos)
             // Condition to check if scrolling is required
             if ( !( (scrollPos === 0 || scrollPixels > 0) && (element.clientWidth + scrollPos === element.scrollWidth || scrollPixels < 0))) {
                 // Get the start timestamp
@@ -165,15 +163,15 @@ export default {
                 "now" in window.performance
                     ? performance.now()
                     : new Date().getTime();
-                
+                const that = this
                 scroll = function(timestamp) {
                     //Calculate the timeelapsed
                     const timeElapsed = timestamp - startTime;
-                    // console.log('timeElapsed',timeElapsed)
                     //Calculate progress 
                     const progress = Math.min(timeElapsed / duration, 1);
                     //Set the scrolleft
                     element.scrollLeft = scrollPos + scrollPixels * progress;
+                    that.showArrow(element.scrollLeft)
                     //Check if elapsed time is less then duration then call the requestAnimation, otherwise exit
                     if (timeElapsed < duration) {
                         //Request for animation
@@ -192,7 +190,7 @@ export default {
         },
         swipeRight() {
             const content = document.getElementById('slideList')
-            this.scrollTo(content, 200, 400); 
+            this.scrollTo(content, 200, 400);
         },
         clickImg(index,idx) {
             this.chooseImg=`ae${index}${idx}`
@@ -203,11 +201,24 @@ export default {
             this.focusIndex = this.slideData[idx][0]
             const content = document.getElementById('slideList')
             const distance = this.slideData.slice(0, idx).reduce((total, item) => {
-                const itemValue = item.length*132
+                const itemValue = item.length * 132
                 return total + itemValue;
             }, 15);
             // console.log('distance',distance)
+            this.showArrow(distance)
             content.scrollTo({ left:distance, behavior: 'smooth' })
+        },
+        showArrow(distance){
+            if(distance>15){
+                this.left = true
+            }else{
+                this.left = false
+            }
+            if(distance>=969){
+                this.right = false
+            }else{
+                this.right = true
+            }
         }
     }
 }
@@ -217,10 +228,7 @@ ul {
     list-style-type: none;
     padding: 0;
 }
-a {
-    color: #42b983;  
-}
-/* slide ctrl */
+
 .section{
     margin-top: 180px;
 }
@@ -251,18 +259,9 @@ a {
     cursor: pointer;
 }
 
-::v-deep(.p-image-mask .p-component-overlay){
-    position: relative;
-    z-index: 999999;
-}
-
 .slide-list img{
     width: 100px;
     height: 100px;
-}
-
-.flip-list-move {
-    transition: 0.7s;
 }
 
 .list-sec{
@@ -273,7 +272,6 @@ a {
     font-size: 30px;
     font-weight: 900;
 }
-
 
 .amount-buy {
     font-size: 10px;
@@ -288,7 +286,6 @@ a {
 .input-box{
     height:40px;
     position: relative;
-    /* left: 36%; */
 }
 
 .showImg img{
@@ -297,7 +294,6 @@ a {
 }
 
 .general-btn{
-    /* width: 350px; */
     height: 55px;
 }
 

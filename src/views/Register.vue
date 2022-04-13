@@ -1,22 +1,26 @@
 <template>
-    <div>
+    <div class="register"> 
         <h2>註冊</h2>
         <section class="p-py-3 section">
             <form @submit.prevent="registerForm($event)" class="register-form">
                 <div class="input-group">
-                    <input type="text" v-model="user.name" class="register-input" placeholder="姓名" required/>
+                    <input type="text" v-model="user.name" class="register-input" placeholder=" " required/>
+                    <label class="upLabel">姓名</label>
                 </div>
                 <div class="input-group">
-                    <input type="number" v-model="user.phone" class="register-input" placeholder="手機號碼" required/>
+                    <input type="number" v-model="user.phone" class="register-input" placeholder=" " required/>
+                    <label class="upLabel">手機號碼</label>
                 </div>
                 <div class="input-group account-group p-d-flex p-flex-wrap">
-                    <input type="email" v-model="user.username" placeholder="E-mail" id="userName" class="register-input account-group" required/>
+                    <input type="email" v-model="user.username" placeholder=" " id="userName" class="register-input account-group" required/>
+                    <label class="upLabel">E-mail</label>
                     <small v-if="repeatAccount" class="p-error">
                         帳號已有人使用
                     </small>
                 </div>
                 <div class="input-group pwd-group">
-                    <input :type="typePwd" v-model="user.password" placeholder="密碼" id="userPwd" class="register-input" @focus="focusPwd" @keyup="pwdAuth" @blur="blur" required/>
+                    <input :type="typePwd" v-model="user.password" placeholder="  " id="userPwd" class="register-input" @focus="focusPwd" @keyup="pwdAuth" @blur="blur" required/>
+                    <label class="upLabel">密碼</label>
                     <i class="pi p-eye" :class="{'pi-eye': hidePwd,'pi-eye-slash': showPwd}" @click="visiblePwd()" style="fontsize: 1.2rem"></i>
                     <transition>
                         <div v-show="showHint" class="pwd-hint">
@@ -27,7 +31,8 @@
                     </transition>
                 </div>
                 <div class="input-group">
-                    <input :type="typePwd" placeholder="請再次輸入密碼" class="register-input" required/>
+                    <input :type="typePwd" placeholder="  " class="register-input" required/>
+                    <label class="upLabel">再輸入密碼</label>
                 </div>
                 <div class="input-group p-d-flex p-flex-wrap p-jc-center">
                     <button type="submit" class="general-btn" :class="{ color: spinActive }">
@@ -188,6 +193,38 @@ export default {
     position: relative;
 }
 
+.upLabel {
+    position: absolute;
+    left: 10px;
+    top: 40%;
+    transform: translateY(-25%);
+    transition: .3s;
+    pointer-events: none;
+    color: rgb(107, 105, 105);
+}
+
+.register-input{
+    background: rgb(241, 241, 241);
+    width: 500px;
+    height: 50px;
+    border: none;
+    padding: 10px;
+    box-shadow: none;
+}
+
+.register-input:focus{
+    border-radius: 4px;
+    border: 2px black solid;
+}
+
+.register-input:focus~.upLabel,
+.register-input:not(:placeholder-shown)~.upLabel {
+    color: black;
+    font-size: 10px;
+    top: -15px;
+    border: none;
+}
+
 .p-error{
     position: absolute;
     width: 120px;
@@ -253,21 +290,7 @@ export default {
 .v-leave-from {
     height: 130px;
     opacity: 1;
-}
-
-.register-input{
-    background: rgb(241, 241, 241);
-    width: 500px;
-    height: 50px;
-    border: none;
-    padding: 10px;
-}
-
-.register-input:focus{
-    border-radius: 4px;
-    border: 2px black solid;
-}
-    
+}    
 
 .general-btn{
     width: 500px;
@@ -283,18 +306,22 @@ input[type=number]::-webkit-inner-spin-button {
     margin: 0;
 }
 
-.general-btn{
-    width: 500px;
-    height: 50px;
-}
-
 .general-btn.color{
     opacity: .7;
 }
 
+.register{
+    margin: 200px 0 50px 0;
+}
+
 @media (max-width: 600px) {
-    .register-form,.register-input,.registerBtn,.form-group,.pwd-hint{
+    .register-form,.register-input,.registerBtn,.form-group,.pwd-hint,.general-btn{
         width: 90vw;
     }
+
+    .register{
+        margin: 150px 0 50px 0;
+    }
+
 }
 </style>

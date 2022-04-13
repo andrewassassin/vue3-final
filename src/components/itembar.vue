@@ -55,7 +55,6 @@ export default {
             immediate: true,
             deep: true,
             handler(newValue) {
-                // console.log('newValue',newValue)
                 this.navTitle = newValue.title
                 this.navList1 = newValue.content.slice(0,3)
                 this.navList2 = newValue.content.slice(3,6)

@@ -1,30 +1,28 @@
 <template>
-  <div class="p-mt-0">
+  <div class="login">
     <h2>登入</h2>
-    <section class="p-py-3">
-        <div class="container">
-            <div class="row">
-                <form id="LoginForm" v-on:submit.prevent="loginForm($event)" class="container col-md-6 py-3">
-                    <div class="form-group">
-                        <input type="text" v-model="user.username" placeholder="E-mail" id="userName" class="login-input" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" v-model="user.password" placeholder="密碼" id="userPwd" class="login-input"  required>				
-					</div>
-                    <div class="form-group ">
-                        <button type="submit" class="general-btn" :class="{ color: spinActive }">                          
-                            <div class="spinner-border p-d-flex p-jc-center p-ai-center" v-if="spinActive" role="status">
-                                <i class="pi pi-spin pi-spinner" style="fontSize: 2rem"></i>
-                            </div>{{loginText}}
-                        </button>
-                    </div>
-                    <div class="mt-5">
-                        <h6 class="mb-3">忘記密碼了嗎?</h6>
-                        <h6 @click="toRegister" class="create-btn">創建帳戶</h6>
-                    </div>
-                </form>              
+    <section class="p-d-flex p-jc-center">
+        <form v-on:submit.prevent="loginForm($event)">
+            <div class="form-group">
+                <input type="text" v-model="user.username" placeholder="  " id="userName" class="login-input" required>
+                <label class="upLabel">E-mail</label>
             </div>
-        </div>
+            <div class="form-group">
+                <input type="password" v-model="user.password" placeholder=" " id="userPwd" class="login-input"  required>
+                <label class="upLabel">密碼</label>				
+            </div>
+            <div class="form-group">
+                <button type="submit" class="general-btn" :class="{ color: spinActive }">                          
+                    <div class="spinner-border p-d-flex p-jc-center p-ai-center" v-if="spinActive" role="status">
+                        <i class="pi pi-spin pi-spinner" style="fontSize: 2rem"></i>
+                    </div>{{loginText}}
+                </button>
+            </div>
+            <div class="mt-5">
+                <h6 class="mb-3">忘記密碼了嗎?</h6>
+                <h6 @click="toRegister" class="create-btn">創建帳戶</h6>
+            </div>
+        </form>              
         <Toast /> 
     </section>
   </div>
@@ -104,7 +102,26 @@ export default {
 </script>
 <style scoped>
 .form-group{
-    margin: 15px;
+    position: relative;
+    margin: 20px;
+}
+
+.upLabel {
+    position: absolute;
+    left: 10px;
+    top: 40%;
+    transform: translateY(-25%);
+    transition: .3s;
+    pointer-events: none;
+    color: rgb(107, 105, 105);
+}
+
+.login-input:focus~.upLabel,
+.login-input:not(:placeholder-shown)~.upLabel {
+    color: black;
+    font-size: 10px;
+    top: -15px;
+    border: none;
 }
 
 .login-input{
@@ -113,6 +130,7 @@ export default {
     height: 50px;
     border: none;
     padding: 10px;
+    box-shadow: none;
 }
 
 .login-input:focus{
@@ -123,10 +141,6 @@ export default {
 ::-webkit-input-placeholder { /* Chrome, Safari */
     font-size: 16px;
 }   
-
-.spinner-border{
-
-}
 
 .general-btn{
     width: 500px;
@@ -145,10 +159,18 @@ export default {
     cursor: pointer;
 }
 
+.login{
+    margin: 220px 0 50px 0;
+}
+
 @media (max-width: 600px) {
     .login-input, .general-btn{
         width: 90vw;
         height: 50px;
+    }
+
+    .login{
+        margin: 150px 0 50px 0;
     }
 }
 
