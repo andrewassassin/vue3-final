@@ -14,19 +14,19 @@
                         <label class="formText">{{user.phone}}</label>
                     </div>
                     <div class="p-d-flex p-ai-center userData" style="height:2.5rem;">
-                        <label class="p-md-2 formText">名字</label>
-                        <label class="formText">{{user.last_name}}{{user.first_name}}</label>
+                        <label class="p-md-2 formText">姓名</label>
+                        <label class="formText">{{user.name}}</label>
                     </div>
                 </form>
                 <div class="p-mt-5 p-mb-3 title p-text-left">付款方法</div>
                 <form class="p-text-left cForm p-p-0">
                     <div class="p-ml-2 p-md-10 p-py-3 formText p-d-flex p-jc-between">信用卡<i class="pi pi-credit-card"></i></div>
                     <div class="p-d-flex p-flex-wrap p-ai-center card-content p-p-2">
-                        <div class="p-md-12 p-pb-0"><InputMask mask="9999-9999-9999-9999" placeholder="卡號" class="p-md-12" style="height:3rem;border-radius: 5px;"/></div>
-                        <div class="p-md-12 p-pb-0"><InputText placeholder="持卡人姓名" class="p-md-12" style="height:3rem; border-radius: 5px;"/></div>
-                        <div class="p-md-12 p-d-flex p-jc-between">
-                            <InputMask mask="99/99" class="p-md-3"  placeholder="MM/YY" style="height:3rem; border-radius: 5px;"/>
-                            <InputMask mask="999" class="p-md-3" placeholder="CVC" style="height:3rem; border-radius: 5px;"/>
+                        <div class="p-md-12 p-col-12 p-pb-0"><InputMask mask="9999-9999-9999-9999" placeholder="卡號" class="p-md-12" style="height:3rem;border-radius: 5px;"/></div>
+                        <div class="p-md-12 p-col-12 p-pb-0"><InputText placeholder="持卡人姓名" class="p-md-12" style="height:3rem; border-radius: 5px;"/></div>
+                        <div class="p-md-12 p-d-flex p-flex-wrap p-jc-between">
+                            <InputMask mask="99/99" class="p-md-3 p-col-12"  placeholder="MM/YY" style="height:3rem; border-radius: 5px;"/>
+                            <InputMask mask="999" class="p-md-3 p-col-6" placeholder="CVC" style="height:3rem; border-radius: 5px;"/>
                         </div>
                     </div>
                 </form>

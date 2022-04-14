@@ -10,11 +10,7 @@
                     <i v-show="left" @click="swipeLeft" class="pi pi-chevron-left" style="font-size: 2rem"></i>
                 </div>
                 <div id="slideList" ref="content" class="p-d-flex slide-list p-mx-2">
-                    <div 
-                        v-for="(items,index) in slideData" :key="items.id"  
-                        :id="`ae${index}`"
-                        class="" >                   
-
+                    <div v-for="(items,index) in slideData" :key="items.id" :id="`ae${index}`">                   
                         <li v-for="(item,idx) in items" :key="item.id"
                             @click="clickImg(index,idx)" 
                             :id="`${idx}`"

@@ -1,6 +1,6 @@
 <template>
     <div v-click-outside="onClickOutside" class="p-d-flex p-ai-center work-bar p-pl-3">
-        <Button @click.prevent="showup()" class="speeddial p-mr-2 p-button-info">
+        <Button @click.prevent="showup()" class="speeddial p-mr-2 p-button-outlined p-button-secondary">
                 <i class="pi pi-plus" style="fontSize: 1.3rem;" :class="{rotate:isRotate}"></i>
         </Button>
         <transition-group name="show" tag="div" class="p-d-flex">

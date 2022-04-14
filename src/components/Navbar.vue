@@ -24,7 +24,7 @@
     <nav :class="{ active: isActive }"  class="nav-top p-d-flex p-ai-center p-jc-center">  
         <div class="p-mr-3 close-btn">
             <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
-        </div>            
+        </div>
         <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0" @mouseleave="showMask = false,hoverNav = false">
             <li class="itemList" v-for="(item,idx) in navList" :key="item" @mouseleave="navObj.title =''" @mouseenter="showUpMask($event)" :id="`${idx}`"> 
                 <Itembar class="itemBar" @closeItem="closeBarDrawer" :class="{ show: barDrawer }" :navObj="navObj"/>    
@@ -42,19 +42,18 @@
 </template>
 <script>
 import store from "@/store";
-import Modal from '@/components/Modal'
 import Itembar from '@/components/Itembar'
 import Search from '@/views/Search'
 import UserInfo from '@/views/UserInfo'
 import Login from '@/views/Login'
-import { ref,computed,onMounted, reactive } from "vue";
+import { ref,computed,onMounted, reactive,defineAsyncComponent} from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { navBarList } from "@/js/navList.js";
 export default {  
     name: 'Navbar',
     emits: ["searchColor"], 
     components: {
-        Modal,
+        Modal: defineAsyncComponent(() => import("@/components/Modal.vue")),
         Itembar,
     },
     setup(props, { emit }){
