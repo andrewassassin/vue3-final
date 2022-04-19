@@ -1,6 +1,7 @@
 const navBarList = [
     {
         title:'便攜式喇叭',
+        text:'簡易攜帶，音質絕美，隨身享受音樂的沉浸感',
         content:[{
             name:'MARSHELL',
             bg:'028.jpg'
@@ -22,9 +23,10 @@ const navBarList = [
         }]
     },{
         title:'書架喇叭',
+        text:'美型外觀，融入居家生活',
         content:[{
             name:'Dali',
-            bg:'032.jpg'
+            bg:'031-1.jpg'
         },{
             name:'KLIPSCH',
             bg:'038.jpg'
@@ -43,6 +45,7 @@ const navBarList = [
         }]
     },{
         title:'擴大機',
+        text:'',
         content:[{
             name:'YAMAHA',
             bg:'028.jpg'
@@ -64,6 +67,7 @@ const navBarList = [
         }]
     },{
         title:'落地喇叭',
+        text:'呼天撼地，讓人陶醉在每分每秒的澎湃樂章',
         content:[{
             name:'Dali',
             bg:'028.jpg'

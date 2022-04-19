@@ -35,7 +35,17 @@
                     <div>
                         <div class="textHeader">COLOR</div>
                         <div class="p-d-flex">
-                            <label v-for="(item,idx) in colorGroup" :key="item" @click="colorScroll(idx)" class="colorBox p-mt-3 p-mr-1" :class="`${item}`"></label>
+                            <label v-for="(item,idx) in colorGroup" :key="item" 
+                            @click="colorScroll(idx)" 
+                            @mouseenter="showColor=idx" 
+                            @mouseleave="showColor=false" 
+                            class="colorBox p-mt-3 p-mr-1" 
+                            :style="{ cursor: idx==3?'not-allowed':'pointer'}"
+                            :class="`${item}`">
+                                <div v-show="showColor===idx" class="dialog">
+                                    <p>{{item}}</p>
+                                </div>
+                            </label>
                         </div>
                     </div>
                     <div class="p-d-flex p-flex-wrap p-md-4 p-px-0">
@@ -88,6 +98,7 @@ export default {
             preLoad:true,
             left:false,
             right:true,
+            showColor:false,
             chooseImg:'ae00',
         }
     },
@@ -200,8 +211,8 @@ export default {
                 const itemValue = item.length * 132
                 return total + itemValue;
             }, 15);
-            // console.log('distance',distance)
             this.showArrow(distance)
+            // 移動至絕對位置
             content.scrollTo({ left:distance, behavior: 'smooth' })
         },
         showArrow(distance){
@@ -253,6 +264,12 @@ ul {
     width: 30px;
     background: transparent;
     cursor: pointer;
+    transform: scale(.8);
+    transition: all .1s ease-in-out;
+}
+
+.slide-prev:hover{
+    transform: scale(1);
 }
 
 .slide-list img{
@@ -342,15 +359,23 @@ ul {
     text-align: left;
 }
 
-.specification{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+.dialog{
+    position: absolute;
+    display: block;
+    text-align: center;
+    border-radius: 6px;
+    opacity: .8;
+    top: 40px;
+    left: 50%;
+    transform: translate(-50%,0%);
+    width: 40px;
+    background: rgb(44, 44, 44);
+    box-shadow:  0 0 5px #a7a7a7;
 }
 
-.specification h3{
-    width: 100%;
-    margin-bottom: 30px;
+.dialog p{
+    color: white;
+    font-size: 6px;
 }
 
 @media(max-width:600px){

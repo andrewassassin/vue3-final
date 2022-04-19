@@ -171,6 +171,7 @@ export default {
             };
             reader.readAsDataURL(input.files[0]);
             this.imgList.push(input.files[0]);
+            console.log('imglist',this.imgList)
         },
         upload() {
             if( this.imgList.length===3){

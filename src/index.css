@@ -67,7 +67,8 @@
     display: block;
     border: #ccc 1px solid;
     border-radius: 5px;
-    cursor: pointer;
+    /* cursor: pointer; */
+    position: relative;
 }
 
 .colorBox.red{
@@ -90,3 +91,14 @@
     background-color: #4477A5;
 }
 
+.colorBox.grey{
+    background-color: #dfdfdf;
+}
+
+.colorBox.orange{
+    background-color: #e77224;
+}
+
+.colorBox.pink{
+    background-color: #e7249c;
+}

@@ -9,12 +9,12 @@
                 <div class="p-mt-4 bar-list">              
                     <ul class="p-mt-2 p-d-flex p-flex-wrap p-md-6 p-col-12">
                         <li v-for="item in navList1" :key="item" @mouseover="changeBackground(item.bg)" class="p-md-12 p-col-12 p-mt-3 link">
-                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> {{item.name}}</a>
+                            <a @click="herfPrdPage"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> {{item.name}}</a>
                         </li>
                     </ul>
                     <ul class="p-mt-2 p-d-flex p-flex-wrap p-md-6 p-col-12">
                         <li v-for="item in navList2" :key="item" @mouseover="changeBackground(item.bg)" class="p-md-12 p-col-12 p-mt-3 link">
-                            <a href="/product"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> {{item.name}}</a>
+                            <a @click="herfPrdPage"><i class="pi pi-caret-right" style="fontSize: 0.5rem"></i> {{item.name}}</a>
                         </li>
                     </ul>
                 </div>
@@ -23,13 +23,15 @@
         </div>
 </template>
 <script>
+import Product from '@/views/Product'
+import { navBarList } from "@/js/navList.js";
 export default {
     data(){
         return{
-            src:'033.jpg',
+            src:'031-1.jpg',
             navTitle:'',
             navList1:[],
-            navList2:[]
+            navList2:[],
         }
     },
     props:{
@@ -49,6 +51,14 @@ export default {
         closeLeftMenu(){
             this.$emit("closeItem");
         },
+        herfPrdPage(){
+            const idx = navBarList.map(item=>item.title).indexOf(this.navTitle)
+            this.$store.state.headerIdx = idx
+            this.$router.push({
+                path: `/product`,
+                component: Product,
+            }) 
+        }
     },
     watch:{
         navObj: {

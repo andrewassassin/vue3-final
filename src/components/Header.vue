@@ -1,21 +1,32 @@
 <template>
     <header class="header" :style="inlineBgImage(src)">
         <div class="p-md-4 container">
-            <div class="p-md-12 l-text">簡易攜帶，音質絕美，隨身享受音樂的沉浸感</div>
-            <div class="p-md-12 t-text">便攜式喇叭</div>
+            <div class="p-md-12 l-text">{{headerText}}</div>
+            <div class="p-md-12 t-text">{{headerTitle}}</div>
         </div>
     </header>
 </template>
 <script>
-import {computed,ref} from "vue";
+import {computed,ref,onMounted,watch} from "vue";
+import { navBarList } from "@/js/navList.js";
 import store from "@/store";
 export default {
     setup(){
         const show = ref(true)
+        const headerTitle = ref('')
+        const headerText = ref('')
+        const navList = ref(navBarList)
+        const idx = computed(()=>{
+            return store.state.headerIdx;
+        })
         const src = computed(()=>{
             return store.state.src;
         })
-
+        onMounted(()=>{
+            console.log(' navList[list].title',navList.value[store.state.headerIdx])
+            headerTitle.value = navList.value[store.state.headerIdx].title
+            headerText.value = navList.value[store.state.headerIdx].text
+        })
         function inlineBgImage(image) {
             let bgImage = require('@/assets/img/' + image)
             return {
@@ -23,7 +34,12 @@ export default {
             }
         }
 
-        return { inlineBgImage  , src, show}
+        watch(idx,function(newval){
+            headerTitle.value = navList.value[newval].title
+            headerText.value = navList.value[newval].text
+        })
+
+        return { inlineBgImage  , src, show,headerTitle,headerText}
     }
 }
 </script>

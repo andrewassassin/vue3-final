@@ -12,7 +12,8 @@ export default createStore({
         src:'header1.jpg',
         navInVisible:false,
         showHeader:true,
-        orderList:[]
+        orderList:[],
+        headerIdx:1
     },
 
     mutations: {

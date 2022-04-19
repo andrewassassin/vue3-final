@@ -46,6 +46,7 @@
                 <Column field="image" header="Image" sortable>
                     <template #body="{data}">
                         <div v-if="selected !== data.id">{{data.image}}</div>
+                        <Button v-if="selected === data.id" @click="editImg(data.id)" label="Check" type="button" style="width:8rem"></Button>
                         <InputText v-model="data.image" v-if="selected === data.id" style="width:24rem;"/>
                     </template>
                     <template #filter="{filterModel}">
@@ -67,15 +68,22 @@
             </DataTable>
         </section>
     </div>
+    <EditImg v-if="openEditImg" @closeModal="closeModal" :product="seller.product"/>
 </template>
 <script>
+import EditImg from '@/components/EditImg'
 import axios from "axios";
-import { ref,onMounted } from 'vue';
+import { ref,onMounted,reactive } from 'vue';
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 export default {
     components: {
+        EditImg
     },
     setup(){
+        const seller = reactive({
+			product: Object
+		});
+        const openEditImg = ref(false)
         const products = ref();
         const selectedItem = ref();
         const selected = ref();
@@ -129,6 +137,15 @@ export default {
             selected.value = pid
         }
 
+        function closeModal(){
+            openEditImg.value=  false
+        }
+
+        function editImg(id){
+            openEditImg.value=  true
+            seller.product = products.value.find(item=>item.id===id)
+        }
+
         async function saveBtn(pid){
             selected.value = 10000
             const product = JSON.stringify(products.value.filter(item=>item.id===pid)[0])
@@ -160,8 +177,7 @@ export default {
             selectedItem.value=[]
         }
 
-
-        return{products,selectedItem,filters,loading,selected,sellings,editBtn,saveBtn,deleteItem}
+        return{products,selectedItem,filters,loading,selected,sellings,editBtn,saveBtn,deleteItem,editImg,closeModal,openEditImg,seller}
     }
 }
 </script>
@@ -174,6 +190,4 @@ export default {
         margin: 150px 0 50px 0;
     }
 }
-
-
 </style>
