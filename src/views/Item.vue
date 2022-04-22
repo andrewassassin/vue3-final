@@ -2,8 +2,8 @@
     <section class="p-p-3 section p-d-flex p-flex-wrap">
         <div class="p-md-6 p-col-12 p-d-flex p-flex-wrap p-jc-center">
             <div class="showImg p-md-12 p-col-12 p-d-flex p-jc-center">
-                <Image v-if="!preLoad" :src="require(`../assets/img/${focusIndex}`)" alt="Image" width="400" preview />
-                <Skeleton v-if="preLoad" width="400px" height="400px" class="skeleton-img" />   
+                <Image v-if="!preLoad" class="focus" :src="require(`../assets/img/${focusIndex}`)" :key="focusIndex" alt="Image" width="400" preview />
+                <Skeleton v-if="preLoad" width="400px" height="400px" class="skeleton-img" />
             </div>
             <div class="p-d-flex p-ai-center p-md-12 p-jc-center">
                 <div class="slide-prev p-d-flex p-ai-center">
@@ -63,8 +63,17 @@
             </form>
         </div>
     </section>
-    <article class="p-my-5">
-        <div class="top-sec p-d-flex p-flex-wrap p-md-12 p-p-0">
+    <div class="p-p-3 tech-area p-d-flex p-jc-center p-ai-center">
+        <div @click="showDetail=!showDetail" class="p-d-flex p-md-10 p-jc-between p-ai-center">
+            <h1>技術規格</h1>
+            <i class="pi pi-plus" style="fontSize: 2.5rem;"></i>
+        </div>
+    </div>
+    <transition name="collapse">
+        <PrdDetail v-show="showDetail" />
+    </transition>
+    <article class="p-my-5 p-d-flex p-jc-center">
+        <div class="top-sec p-d-flex p-flex-wrap p-md-10 p-p-0">
             <div class="top-sec-img p-md-5 p-col-12 p-p-0">
                 <img src="../assets/img/carousel-4.jpg" alt="">
             </div>
@@ -79,7 +88,11 @@
 </template>
 <script>
 import axios from 'axios'
+import PrdDetail from '@/components/PrdDetail'
 export default {
+    components:{
+        PrdDetail
+    },
     props: {
         id: {
             type: String,
@@ -100,6 +113,7 @@ export default {
             right:true,
             showColor:false,
             chooseImg:'ae00',
+            showDetail:false
         }
     },
     async created() {
@@ -187,17 +201,16 @@ export default {
                         return;
                     }
                 }
-                //Call requestAnimationFrame on scroll function first time
                 window.requestAnimationFrame(scroll);
             }
         },
         swipeLeft() {
             const content = document.getElementById('slideList')
-            this.scrollTo(content, -200, 400);
+            this.scrollTo(content, -400, 400);
         },
         swipeRight() {
             const content = document.getElementById('slideList')
-            this.scrollTo(content, 200, 400);
+            this.scrollTo(content, 400, 400);
         },
         clickImg(index,idx) {
             this.chooseImg=`ae${index}${idx}`
@@ -221,7 +234,11 @@ export default {
             }else{
                 this.left = false
             }
-            if(distance>=969){
+            const allLens = this.slideData.reduce((total, item) => {
+                const itemValue = item.length * 132
+                return total + itemValue;
+            }, 15);
+            if(distance>=allLens-640){
                 this.right = false
             }else{
                 this.right = true
@@ -334,10 +351,9 @@ ul {
 
 .top-sec-img img{
     max-width: 100%;
-    height: 600px;
+    height: 500px;
     transition: transform 0.5s ease;
 }
-
 
 .top-sec-text{
     color: rgb(0, 0, 0);
@@ -378,6 +394,42 @@ ul {
     font-size: 6px;
 }
 
+.focus{
+    animation:change 2s ease-in-out;
+}
+
+@keyframes change {
+    0%{
+        opacity: 0;
+    }
+
+    100%{
+        opacity: 1;
+    }
+}
+
+.tech-area{
+    border: 1px solid rgb(204, 203, 203);
+    border-left: none;
+    border-right: none;
+}
+
+.collapse-enter-active,
+.collapse-leave-active {
+    transition: all .3s ease;
+}
+
+.collapse-enter-from,
+.collapse-leave-to {
+    height: 0;
+    opacity: 0;
+}
+
+.collapse-enter-to,
+.collapse-leave-from {
+    height: 500px;
+    opacity: 1;
+}   
 @media(max-width:600px){
     .section{
         margin-top: 130px;

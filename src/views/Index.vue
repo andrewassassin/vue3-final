@@ -1,8 +1,8 @@
 <template >
     <div>
-        <Carousel :autoplay="3000" :wrap-around="true">
-            <Slide v-for="item in imgItem" :key="item">
-                <div class="carousel__item p-d-flex p-flex-wrap p-jc-center p-ai-center" :style="inlineBgImage(item.bgi)">
+        <Carousel :autoplay="3000" :wrap-around="true" id="carou">
+            <Slide v-for="item in imgItem" :key="item" >
+                <div class="carousel__item p-d-flex p-flex-wrap p-jc-center p-ai-center lazy"  :data-src="inlineBgImage(item.bgi)">
                     <div class="p-md-4 container">
                         <div class="p-md-12"><h3>{{item.title}}</h3></div>
                         <div class="p-md-12">{{item.text}}</div>
@@ -22,7 +22,7 @@
 import IndexSec from '@/components/IndexSec'
 import { Carousel, Pagination, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 export default {
     components: {
         Carousel,
@@ -46,11 +46,35 @@ export default {
                 bgi:'carousel-3.jpg'
             }])
 
+        onMounted(()=>{
+            const optionsTwo = {
+                root: document.getElementById('carou'),
+                rootMargin: "100% 0px 100% 0px",
+                threshold: 0.01
+            }
+            const watcher = new IntersectionObserver(onEnterView, optionsTwo)
+            let lazyImages= document.querySelectorAll('.lazy')
+            for (let image of lazyImages) {
+                watcher.observe(image) // 開始監視
+            }
+        })
+
+        function onEnterView(entries, observer) {
+            for (let entry of entries) {
+                if (entry.isIntersecting) {
+                    // 監視目標進入畫面
+                    const img = entry.target
+                    img.setAttribute('style', `${img.dataset.src}`) // 把值塞回 src
+                    img.removeAttribute('data-src')
+                    observer.unobserve(img) // 取消監視
+                }
+            }
+        }
+
         function inlineBgImage(image) {
             let bgImage = require('@/assets/img/' + image)
-            return {
-                backgroundImage: `url("${bgImage}")`,
-            }
+            return `background-image: url("${bgImage}")`
+            
         }
 
         return {inlineBgImage,imgItem}

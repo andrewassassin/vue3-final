@@ -51,7 +51,6 @@
                                             <Button v-if="!Notupload" @click.prevent="deleteItem(index)" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"/>
                                         </td>
                                     </tr>
-                                    <!-- <div v-if="Notupload" class="p-mt-5">已上傳完畢</div> -->
                                 </ScrollPanel>
                             </table>
                         </div>

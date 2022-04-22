@@ -46,7 +46,7 @@ export default {
             animationList.value.forEach((item,i)=>{
                 setTimeout(function() {
                     animationList.value.pop()
-                },i*40)
+                },i*50)
             })
         }
 
@@ -87,6 +87,31 @@ export default {
     background: rgb(231, 231, 231);
     opacity: 1;
     transform: scale(1);
+}
+
+.work-bar{
+    position: fixed;
+    left: 40px;
+    bottom: 50px;
+    height: 100px;
+}
+
+.speeddial{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    opacity: .8;
+}
+
+.pi-plus{
+    transition: all .3s ease;
+}
+
+.pi-plus.rotate {
+    transform: rotateZ(45deg);
 }
 
 </style>

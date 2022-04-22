@@ -1,11 +1,11 @@
 <template>
         <div class="Dialog p-d-flex p-flex-wrap">   
-            <section class="p-md-6">
-                <div class="p-mr-3 close-btn">
+            <section class="p-md-6 p-col-12">
+                <div class="close-btn">
                     <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
                 </div> 
                 <h2 class="p-mt-5 p-md-6 p-col-12">{{navTitle}}</h2>
-                <hr size="8px" align="center" width="400px" class="p-my-4 p-mx-3">  
+                <hr size="8px" align="center" width="400px" class="p-my-4 p-mx-3 hr">  
                 <div class="p-mt-4 bar-list">              
                     <ul class="p-mt-2 p-d-flex p-flex-wrap p-md-6 p-col-12">
                         <li v-for="item in navList1" :key="item" @mouseover="changeBackground(item.bg)" class="p-md-12 p-col-12 p-mt-3 link">
@@ -52,6 +52,7 @@ export default {
             this.$emit("closeItem");
         },
         herfPrdPage(){
+            this.$emit("closeItem");
             const idx = navBarList.map(item=>item.title).indexOf(this.navTitle)
             this.$store.state.headerIdx = idx
             this.$router.push({
@@ -72,8 +73,6 @@ export default {
                 this.navList1.forEach((item,idx)=>{
                     idx===0 ?this.src = item.bg:1
                 })
-                // console.log('this.src',this.src)
-                // console.log('navList1 content  ',this.navList1[0])
             }
         }
     }
@@ -82,7 +81,6 @@ export default {
 </script>
 
 <style scoped>
-
 .Dialog{
     width: 900px;
     height: 400px;
@@ -126,7 +124,7 @@ hr{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-.close-btn{
+.close-btn {
     display: none;
 }
 
@@ -146,7 +144,7 @@ hr{
     .Dialog h2 {
         color: black;
         text-align: left;
-        margin-left: 40px;
+        margin-left: 0px;
     }
 
     .bar-list li{
@@ -164,10 +162,19 @@ hr{
     
     .close-btn{
         display: block;
-        position: relative;
-        left: 200px;
+        display: flex;
+        justify-content: end;
+    }
+    .close-btn .pi-times{
+        /* position: relative; */
+        /* right:80%; */
         top: 10px;
         height: 50px;
+        z-index: 5000;
+    }
+
+    .hr{
+        display: none;
     }
 }
 </style>

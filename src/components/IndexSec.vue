@@ -120,7 +120,7 @@ export default {
     position: relative;
     color: aliceblue;
     margin-right: 200px;
-    font-family: 'Courier New','Helvetica', sans-serif;
+    font-family: 'Segoe UI','Arial',Charcoal,'Helvetica', 'sans-serif';
 }
 
 .ad-sec h4 {
@@ -188,7 +188,7 @@ export default {
     text-align: left;
     font-weight: 500;
     line-height:1.5; 
-    font-family: 'Arial',Charcoal,'Helvetica', 'sans-serif';
+    font-family:'Segoe UI','Arial',Charcoal,'Helvetica', 'sans-serif';
 }
 
 .top-sec{
@@ -231,7 +231,7 @@ export default {
     opacity: 0;
     color: rgb(0, 0, 0);
     margin-right: 200px;
-    font-family: 'Arial',Charcoal,'Helvetica', 'sans-serif';
+    font-family: 'Segoe UI','Arial',Charcoal,'Helvetica', 'sans-serif';
     line-height:1.5; 
     transition: all .5s ease-in;
 }
@@ -248,7 +248,6 @@ export default {
 .top-sec p{
     margin-top:18px ;
     word-wrap: break-word;
-    /* display: block; */
     text-align: left;
 }
 </style>

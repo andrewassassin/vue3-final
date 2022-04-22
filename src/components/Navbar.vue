@@ -6,9 +6,9 @@
             <Button @click="closeLeftMenu" icon="pi pi-times" class="p-button-rounded p-button-plain p-button-text" />  
         </div>
         <ul class="nav-ul p-d-flex p-ai-center p-jc-center p-pl-0" @mouseleave="showMask = false,hoverNav = false">
-            <li class="itemList" v-for="(item,idx) in navList" :key="item" @mouseleave="navObj.title =''" @mouseenter="showUpMask($event)" :id="`${idx}`"> 
+            <li class="itemList" v-for="(item,idx) in navList" :key="item" @mouseleave="leaveLi" @mouseenter="showUpMask($event)" :id="`${idx}`"> 
                 <Itembar class="itemBar" @closeItem="closeBarDrawer" :class="{ show: barDrawer }" :navObj="navObj"/>    
-                <a @click.prevent="toItemBar" style="cursor:pointer;" class="navTitle"
+                <a @click.prevent="toItemBar(idx)" style="cursor:pointer;" class="navTitle"
                 :class="{color:chooseNav!==idx&&hoverNav}">{{item.title}}</a> 
             </li>
         </ul>
@@ -44,6 +44,18 @@ export default {
             content:[]
         })
         const navList = ref(navBarList)
+        const mm = window.matchMedia("(max-width: 900px)");
+        mm.addListener(resizeWidth);
+        resizeWidth(mm);
+
+        function resizeWidth(pMatchMedia){
+            if (pMatchMedia.matches) {
+                //小於768時執行的js
+                return 'no'
+            }else {
+                //大於768時執行的jsS
+            }
+        }
         
         onMounted(()=>{
             console.log('navList~~',navList.value)
@@ -67,8 +79,9 @@ export default {
         }
 
         function showUpMask(event){
+            let checkPc = resizeWidth(mm);
+            if(checkPc==='no')return
             let idx = event.currentTarget.id
-            console.log('idx',idx)
             navObj.title = navList.value[idx].title
             navObj.content = navList.value[idx].content
             hoverNav.value = true
@@ -85,17 +98,21 @@ export default {
             isActive.value = true
         }
   
-        function toItemBar(){
+        function toItemBar(idx){
+            console.log('idx',idx)
             barDrawer.value=true
+            navObj.title = navList.value[idx].title
+            navObj.content = navList.value[idx].content
         }
 
         function closeBarDrawer(){
             barDrawer.value=false
         }
 
-        function clickLink(idx){
-            navObj.title = navList.value[idx].title
-            navObj.content = navList.value[idx].content
+        function leaveLi(){
+            let checkPc = resizeWidth(mm);
+            if(checkPc==='no')return
+            navObj.title=''
         }
         return {
             chooseNav,
@@ -113,7 +130,7 @@ export default {
             closeLeftMenu,
             searchColor,
             toggleBar,
-            clickLink
+            leaveLi
         }
     },
 }

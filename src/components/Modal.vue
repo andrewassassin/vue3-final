@@ -176,7 +176,7 @@ export default {
     z-index: 51;
     margin: 0;
     box-sizing: border-box;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
 .DivOverlapMask {
@@ -260,7 +260,7 @@ export default {
 .pi-minus-circle {
     transition: 0.2s ease;
     border: none;
-        overflow: auto;
+    overflow: auto;
 }
 
 .pi-plus-circle:hover,
