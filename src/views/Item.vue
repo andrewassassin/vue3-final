@@ -50,9 +50,11 @@
                     </div>
                     <div class="p-d-flex p-flex-wrap p-md-4 p-px-0">
                         <div class="p-md-12 p-col-12 amount-buy p-px-0">購買數量</div>
-                        <div class="p-md-12 p-col-12 p-px-0">
-                            <input v-model="amount" class="input-box p-md-12 p-col-12" type="number" min="1" max="20" required>
-                        </div>
+                            <div class="p-d-flex">
+                                <div @click="amount>0?amount--:1" class="minus p-d-flex p-ai-center p-jc-center">-</div>
+                                <input class="inputK" v-model="amount" oninput="if(value>10)value=10;if(value.length>1)value=value.slice(0,1)" type="text">
+                                <div @click="amount<9?amount++:1" class="plus p-d-flex p-ai-center p-jc-center">+</div>
+                            </div>
                     </div>
                 </div>
                 <div class="p-mt-5 p-md-12 p-px-0">
@@ -66,11 +68,11 @@
     <div class="p-p-3 tech-area p-d-flex p-jc-center p-ai-center">
         <div @click="showDetail=!showDetail" class="p-d-flex p-md-10 p-jc-between p-ai-center">
             <h1>技術規格</h1>
-            <i class="pi pi-plus" style="fontSize: 2.5rem;"></i>
+            <i class="pi pi-plus" :class="{rotate:showDetail}" style="fontSize: 2.5rem;"></i>
         </div>
     </div>
     <transition name="collapse">
-        <PrdDetail v-show="showDetail" />
+        <PrdDetail v-if="showDetail" />
     </transition>
     <article class="p-my-5 p-d-flex p-jc-center">
         <div class="top-sec p-d-flex p-flex-wrap p-md-10 p-p-0">
@@ -102,7 +104,7 @@ export default {
     data () {
         return {
             product:{},
-            amount:'',
+            amount:0,
             key:'cart',
             columnCnt:[],
             slideData: [],
@@ -113,7 +115,7 @@ export default {
             right:true,
             showColor:false,
             chooseImg:'ae00',
-            showDetail:false
+            showDetail:false,
         }
     },
     async created() {
@@ -313,11 +315,27 @@ ul {
     font-family: "Lato", "HelveticaNeue", "Helvetica Neue", sans-serif;
 }
 
-.input-box{
-    height:40px;
-    position: relative;
+.minus,.plus{
+    width:28px;
+    height: 42px;
+    background: rgb(243, 242, 242);
+    cursor: pointer;
+    color: rgb(151, 151, 151);
+    font-size: 18px;
 }
 
+.inputK{
+        position: relative;
+    width:28px;
+    height: 42px;
+    border-radius: 0;
+    background: rgb(243, 242, 242);
+    border: 1.5px solid rgb(224, 224, 224);
+    border-top: none;
+    border-bottom: none;
+    padding: 5px;
+    text-align: center
+}
 .showImg img{
     width:400px;
     height:400px;
@@ -398,6 +416,14 @@ ul {
     animation:change 2s ease-in-out;
 }
 
+.pi-plus{
+    transition: all .3s ease;
+}
+
+.pi-plus.rotate {
+    transform: rotateZ(45deg);
+}
+
 @keyframes change {
     0%{
         opacity: 0;
@@ -421,15 +447,16 @@ ul {
 
 .collapse-enter-from,
 .collapse-leave-to {
-    height: 0;
+    height: 0px;
     opacity: 0;
 }
 
 .collapse-enter-to,
 .collapse-leave-from {
-    height: 500px;
+    height: 800px;
     opacity: 1;
-}   
+}
+
 @media(max-width:600px){
     .section{
         margin-top: 130px;

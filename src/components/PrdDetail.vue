@@ -38,7 +38,8 @@
 </template>
 <style scoped>
 .prd-detail{
-    height: 500px;
+    /* height: 500px;
+    opacity: 1; */
     overflow: hidden;
 }
 .userData{
