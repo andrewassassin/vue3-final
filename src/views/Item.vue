@@ -2,7 +2,7 @@
     <section class="p-p-3 section p-d-flex p-flex-wrap">
         <div class="p-md-6 p-col-12 p-d-flex p-flex-wrap p-jc-center">
             <div class="showImg p-md-12 p-col-12 p-d-flex p-jc-center">
-                <Image v-if="!preLoad" class="focus" :src="require(`../assets/img/${focusIndex}`)" :key="focusIndex" alt="Image" width="400" preview />
+                <Image v-if="!preLoad" class="focus" :src="changeImgSrc(focusIndex)" :key="focusIndex" alt="Image" width="400" preview />
                 <Skeleton v-if="preLoad" width="400px" height="400px" class="skeleton-img" />
             </div>
             <div class="p-d-flex p-ai-center p-md-12 p-jc-center">
@@ -36,7 +36,7 @@
                         <div class="textHeader">COLOR</div>
                         <div class="p-d-flex">
                             <label v-for="(item,idx) in colorGroup" :key="item" 
-                            @click="colorScroll(idx)" 
+                            @click="colorScroll(idx,item)" 
                             @mouseenter="showColor=idx" 
                             @mouseleave="showColor=false" 
                             class="colorBox p-mt-3 p-mr-1" 
@@ -50,11 +50,11 @@
                     </div>
                     <div class="p-d-flex p-flex-wrap p-md-4 p-px-0">
                         <div class="p-md-12 p-col-12 amount-buy p-px-0">購買數量</div>
-                            <div class="p-d-flex">
-                                <div @click="amount>0?amount--:1" class="minus p-d-flex p-ai-center p-jc-center">-</div>
-                                <input class="inputK" v-model="amount" oninput="if(value>10)value=10;if(value.length>1)value=value.slice(0,1)" type="text">
-                                <div @click="amount<9?amount++:1" class="plus p-d-flex p-ai-center p-jc-center">+</div>
-                            </div>
+                        <div class="p-d-flex">
+                            <div @click="amount>0?amount--:1" class="minus p-d-flex p-ai-center p-jc-center">-</div>
+                            <input class="inputK" v-model="amount" oninput="if(value>10)value=10;if(value.length>1)value=value.slice(0,1)" type="text">
+                            <div @click="amount<9?amount++:1" class="plus p-d-flex p-ai-center p-jc-center">+</div>
+                        </div>
                     </div>
                 </div>
                 <div class="p-mt-5 p-md-12 p-px-0">
@@ -65,7 +65,7 @@
             </form>
         </div>
     </section>
-    <div class="p-p-3 tech-area p-d-flex p-jc-center p-ai-center">
+    <div class="p-p-3 tech-area p-d-flex p-jc-center p-ai-center" style="cursor:pointer" >
         <div @click="showDetail=!showDetail" class="p-d-flex p-md-10 p-jc-between p-ai-center">
             <h1>技術規格</h1>
             <i class="pi pi-plus" :class="{rotate:showDetail}" style="fontSize: 2.5rem;"></i>
@@ -74,7 +74,7 @@
     <transition name="collapse">
         <PrdDetail v-if="showDetail" />
     </transition>
-    <article class="p-my-5 p-d-flex p-jc-center">
+    <article class="p-d-flex p-jc-center">
         <div class="top-sec p-d-flex p-flex-wrap p-md-10 p-p-0">
             <div class="top-sec-img p-md-5 p-col-12 p-p-0">
                 <img src="../assets/img/carousel-4.jpg" alt="">
@@ -116,9 +116,11 @@ export default {
             showColor:false,
             chooseImg:'ae00',
             showDetail:false,
+            recentPrd:''
         }
     },
     async created() {
+        // console.log('id now',this.id)
         this.$store.dispatch("DataGetCart");
         const options = {
             method: 'get',
@@ -130,9 +132,15 @@ export default {
                 "Content-Type": "application/x-www-form-urlencoded",
             }
         }
-        // const itemListStr = localStorage.getItem(this.key);
-        // const defaultList = JSON.parse(itemListStr);
-        // this.$store.state.itemList = defaultList || []; 
+        const itemListStr = localStorage.getItem(this.key);
+        const defaultList = JSON.parse(itemListStr);
+        this.$store.state.itemList = defaultList || []; 
+
+        const showRecentId = localStorage.getItem(this.recentPrd);
+        console.log('showRecentId',showRecentId)
+        const storeId = []
+        storeId.push(this.id)
+        localStorage.setItem(this.recentPrd, storeId);
         axios(options)
             .then(response => {
                 const item = response.data.find(item=>{
@@ -160,8 +168,9 @@ export default {
                 amount: this.amount,
             }
             const already = this.$store.state.itemList.find(item => {
-                return item.id === this.product.id
+                return item.id === this.product.id && item.color === this.product.color
             })
+            console.log('already',already)
             if (already) {
                 // 最後的數量= 已經擁有的數量+現在使用者輸入的數量
                 already.amount = parseInt(already.amount) + parseInt(this.amount)
@@ -215,17 +224,20 @@ export default {
             this.scrollTo(content, 400, 400);
         },
         clickImg(index,idx) {
+            console.log('index', this.focusIndex)
             this.chooseImg=`ae${index}${idx}`
             this.focusIndex = this.slideData[index][idx]
         },
-        colorScroll(idx){
+        colorScroll(idx,item){
             this.chooseImg=`ae${idx}0`
             this.focusIndex = this.slideData[idx][0]
+            this.product.color = item
             const content = document.getElementById('slideList')
             const distance = this.slideData.slice(0, idx).reduce((total, item) => {
                 const itemValue = item.length * 132
                 return total + itemValue;
             }, 15);
+            console.log(distance)
             this.showArrow(distance)
             // 移動至絕對位置
             content.scrollTo({ left:distance, behavior: 'smooth' })
@@ -245,6 +257,9 @@ export default {
             }else{
                 this.right = true
             }
+        },
+        changeImgSrc(src){
+            return require(`../assets/img/${src}`)
         }
     }
 }
@@ -353,7 +368,6 @@ ul {
 .top-sec{
     background: rgba(238, 238, 238, 0.863);
     align-items: center;
-    margin: 50px 0;
     overflow: hidden;
 }
 
@@ -413,7 +427,7 @@ ul {
 }
 
 .focus{
-    animation:change 2s ease-in-out;
+    animation:change .2s ease-in;
 }
 
 .pi-plus{

@@ -91,7 +91,7 @@ export default {
         }   
         function blurFocus(){
             emit("searchColor");
-            isExtend.value =false
+            isExtend.value = false
         }
         function toUserInfo(){
             if(Object.entries(loginState.value).length !==0){

@@ -6,7 +6,7 @@
         <header v-if="!$route.meta.m_hideHeader" class="header-bar">
             <Header/>
         </header>
-        <section class="content p-mb-3">
+        <section class="content">
             <router-view />
         </section>
         <footer v-if="!$route.meta.m_hideNavAll">

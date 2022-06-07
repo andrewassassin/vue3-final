@@ -8,7 +8,7 @@
                     <div class="p-col-12 p-xl-4 p-lg-6 p-md-6 p-sm-12 person" v-for="(product,index) in threeList" :key="index">
                         <div class="p-my-5 p-mx-3">
                             <div class="slide-img">
-                                <img :src="require(`../assets/img/${product.image[1]}`)">       
+                                <img :src="require(`../assets/img/${product.image[0][0]}`)">       
                                 <div class="overlay p-d-flex p-jc-center p-ai-center">
                                     <a :id="`${product.id}`" @click="goToProduct($event)" class="buy-btn">Buy Now</a>	
                                 </div>

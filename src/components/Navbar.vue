@@ -80,7 +80,8 @@ export default {
 
         function showUpMask(event){
             let checkPc = resizeWidth(mm);
-            if(checkPc==='no')return
+            if(checkPc==='no')  return
+            console.log('進入pc')
             let idx = event.currentTarget.id
             navObj.title = navList.value[idx].title
             navObj.content = navList.value[idx].content
@@ -308,7 +309,6 @@ export default {
         background:rgb(255, 255, 255);
         margin-top:0;
         transform: translateX(0%);
-        /* transition-delay: 0s; */
     }
 
     .itemList:hover .itemBar{

@@ -2,7 +2,7 @@
     <div class="infoPage">
         <div class="p-md-8">
             <div class="textHello p-mb-3 p-d-flex p-flex-wrap p-ai-center">
-                HELLO, {{userFromVuex.first_name}}
+                HELLO, {{userFromVuex.name}}
                 <div class="p-md-2 p-col-12">
                     <Button @click.prevent="logOut" label="登出"  class="p-ml-3 p-md-4 p-col-10 p-button-info"/>
                 </div>

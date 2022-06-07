@@ -10,6 +10,10 @@
                 <h4>喇叭類別</h4>
                 <MultiSelect v-model="selectCate" :options="category" optionLabel="category" placeholder="Select category" display="chip" />
             </div>
+            <div class="p-mt-5">
+                <h4>喇叭價格</h4>
+                <InputText v-model="selectPrice" style="max-width:8rem;"/>-<InputText v-model="colorNum" style="max-width:8rem;" class="p-mr-3"/>
+            </div>
             <Button @click="goMultiSearch" label="搜尋" class="p-mt-5 p-btn -info"/>
         </aside>
         <section class="p-mt-2 p-xl-9 p-lg-12 p-md-12 p-sm-12">
@@ -51,6 +55,8 @@ export default {
         const itemName = ref("");
         const selectedBrand = ref();
         const selectCate = ref();
+        const selectPrice = ref('');
+        const selectPrice2 = ref('');
         const router = useRouter();
         const productList = ref([]);
         const threeList = ref([]);
@@ -151,6 +157,8 @@ export default {
             goToProduct,
             selectedBrand,
             selectCate,
+            selectPrice,
+            selectPrice2,
             goMultiSearch,
             brands,
             category,

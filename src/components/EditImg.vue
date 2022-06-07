@@ -24,9 +24,9 @@
                     <div class="p-md-12 p-col-12">
                         <h3>每個顏色各有幾張</h3>
                         <div v-for="(list,idx) in imgName" class="p-my-3" :key="list">
-                            <InputText v-model="list.name" style="max-width:8rem;" :id="idx" class="p-mr-3"/>
-                            <InputText v-model="list.cnt" style="max-width:8rem;" :id="idx" class="p-mr-3"/>
-                            <InputText v-model="list.color" style="max-width:8rem;" :id="idx" class="p-mr-3"/>
+                            <InputText v-model="list.name" style="max-width:8rem;" :id="idx" class="p-mr-3" placeholder="檔名" />
+                            <InputText v-model="list.cnt" style="max-width:8rem;" :id="idx" class="p-mr-3" placeholder="數量" />
+                            <InputText v-model="list.color" style="max-width:8rem;" :id="idx" class="p-mr-3" placeholder="顏色" />
                             <Button @click="sendColor(idx)" label="送出顏色" type="button" class="p-mr-2 p-mt-3 p-button-info" style="width:8rem"/>
                         </div>
                     </div>
@@ -63,8 +63,8 @@ export default {
             for(let i =0;i<iidx;i++){
                 let string = `${jpg}-`
                 if(i===0) {
-                i=''
-                string= `${jpg}`
+                    i=''
+                    string= `${jpg}`
                 }
                 arr.value[n].push(`${string}${i}.jpg`)
             }

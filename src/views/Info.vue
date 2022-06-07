@@ -4,27 +4,22 @@
             <div class="p-d-flex p-ai-center userData">
                 <label class="p-md-2 p-mb-3 p-text-bold">EMAIL</label>
                 <label v-if="changeInfo" class="p-mb-3">{{user.username}}</label>
-                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12 p-mb-3" v-model="user.username" placeholder="" type="text" />
+                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-10 p-mb-3" v-model="user.username" placeholder="" type="text" />
             </div>
             <div class="p-d-flex p-ai-center userData">
                 <label class="p-md-2 p-mb-3 p-text-bold">電話</label>
                 <label v-if="changeInfo" class="p-mb-3">{{user.phone}}</label>
-                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12 p-mb-3" v-model="user.phone" type="text" />
+                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-10 p-mb-3" v-model="user.phone" type="text" />
             </div>
             <div class="p-d-flex p-ai-center userData">
-                <label class="p-md-2 p-mb-3 p-text-bold">名字</label>
-                <label v-if="changeInfo" class="p-mb-3">{{user.first_name}}</label>
-                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12 p-mb-3" v-model="user.name" placeholder="" type="text" />
-            </div>
-            <div class="p-d-flex p-ai-center userData">
-                <label class="p-md-2 p-mb-3 p-text-bold">姓氏</label>
-                <label v-if="changeInfo" class="p-mb-3">{{user.last_name}}</label>
-                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12 p-mb-3" v-model="user.name" placeholder="" type="text" />
+                <label class="p-md-2 p-mb-3 p-text-bold">姓名</label>
+                <label v-if="changeInfo" class="p-mb-3">{{user.name}}</label>
+                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-10 p-mb-3" v-model="user.name" placeholder="" type="text" />
             </div>
             <div class="p-d-flex p-ai-center userData">
                 <label class="p-md-2 p-mb-3 p-text-bold">生日</label>
                 <label v-if="changeInfo" class="p-mb-3">{{user.phone}}</label>
-                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-12 p-mb-3" v-model="user.phone" type="text" />
+                <InputText :style="(changeInfo?'display:none;':'display:block;')" class="p-md-10 p-mb-3" v-model="user.phone" type="text" />
             </div>
             <button type="submit" class="general-btn" @click.prevent="changeInfo?editInfo():saveInfo()">
                 {{changeInfo?'編輯':'儲存'}}
