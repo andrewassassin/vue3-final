@@ -51,16 +51,19 @@ export default {
         }
 
         function functionLink(idx){
-            if(idx===0){
-                router.push({
-                    path: `/CreatePrd`,
-                    component: CreatePrd,
-                })  
-            }else if(idx===1){
-                router.push({
-                    path: `/PrdManage`,
-                    component: PrdManage,
-                })  
+            switch(idx){
+                case 0:
+                    router.push({
+                        path: `/CreatePrd`,
+                        component: CreatePrd,
+                    })  
+                    break;
+                case 1:
+                    router.push({
+                        path: `/PrdManage`,
+                        component: PrdManage,
+                    })  
+                break;
             }
         }
         return{showup,onClickOutside,functionLink,isRotate,workbrench,animationList}

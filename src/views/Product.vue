@@ -106,10 +106,13 @@ export default {
         watch(orderSort, function (newVal) {
             threeList.value=[]
             sortKey.name  = newVal
-            if(sortKey.name=="價格由低至高"){
-                cmd.value = 'sortByPrice'
-            }else if(sortKey.name=="最新上架"){
-                cmd.value = 'searchNew'
+            switch(sortKey.name){
+                case "價格由低至高":
+                    cmd.value = 'sortByPrice'
+                break;
+                case "最新上架":
+                    cmd.value = 'searchNew' 
+                break;
             }
             count.value = 0
             showPrdApi()
