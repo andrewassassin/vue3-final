@@ -58,7 +58,8 @@ export default {
         }
         
         onMounted(()=>{
-            console.log('navList~~',navList.value)
+            // console.log('navList~~',navList.value)
+            console.log('hi andrew')
             // 取得購物車商品數量
             store.dispatch("DataGetCart");
             // const itemListStr = localStorage.getItem("cart");

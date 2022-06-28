@@ -136,8 +136,6 @@ export default {
         const defaultList = JSON.parse(itemListStr);
         this.$store.state.itemList = defaultList || []; 
 
-        const showRecentId = localStorage.getItem(this.recentPrd);
-        console.log('showRecentId',showRecentId)
         const storeId = []
         storeId.push(this.id)
         localStorage.setItem(this.recentPrd, storeId);

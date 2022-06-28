@@ -93,11 +93,8 @@ export default createStore({
             }
             await axios(options)
                 .then(res => {
-                    res.data.forEach(item => {
-                        item.image = JSON.parse(item.image);
-                    })
                     context.commit('changeIList', res.data)
-
+                    // console.log('res.data store',res.data)
                 })
                 .catch(error => {
                     console.log('err', error);

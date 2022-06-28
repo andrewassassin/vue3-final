@@ -39,7 +39,7 @@
                 <div class="container p-px-0">
                     <div v-for="item in orderList" class="item-body p-my-3" :key="item.key">
                         <div class="item-img p-mr-3">
-                            <img v-show="!preLoad" :src="require(`../assets/img/${item.image[1]}`)"/>
+                            <img v-show="!preLoad" :src="require(`../assets/img/${item.image}`)"/>
                             <Badge v-show="!preLoad" :value="item.amount" severity="secondary" class="item-cnt p-badge-secondary"></Badge>
                             <Skeleton v-show="preLoad" width="84px" height="84px" class="skeleton-img" />
                         </div>

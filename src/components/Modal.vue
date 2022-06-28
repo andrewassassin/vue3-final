@@ -23,8 +23,8 @@
                             </div>
                             <div class="item-img">
                                 <img
-                                    v-show="!preLoad"
-                                    :src="require(`../assets/img/${item.image[1]}`)"
+                                    v-if="!preLoad"
+                                    :src="require(`../assets/img/${item.image}`)"
                                 />
                                 <Skeleton v-show="preLoad" width="150px" height="150px" class="skeleton-img" />
                             </div>
