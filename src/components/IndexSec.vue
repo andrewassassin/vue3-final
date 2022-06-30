@@ -50,12 +50,18 @@ export default {
                 top:Number,
                 btm:Number,
                 offHeight:Number,
+                task: function(){
+                    showTop.value = true
+                }
             },
             {
                 name:'prosec',
                 top:Number,
                 btm:Number,
-                offHeight:Number
+                offHeight:Number,
+                task: function(){
+                    showTop.value = true
+                }
             }
         ])
         async function handleScroll(){

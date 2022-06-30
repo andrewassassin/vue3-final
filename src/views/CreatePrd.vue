@@ -31,7 +31,7 @@
                                     選擇圖片
                                 </label>
                             </Button>
-                            <Button @click.prevent="upload" :label="!Notupload?'上傳圖片':'上傳完畢'" :class="{'p-disabled':Notupload}" class="p-ml-3"/>
+                            <Button @click.prevent="importImg" :label="!Notupload?'匯入':'匯入完畢'" :class="{'p-disabled':Notupload}" class="p-ml-3"/>
                             <Button @click.prevent="removeAllImg" label="取消"  :class="{'p-disabled':Notupload}" class="p-ml-3 "/>
                         </div>
                         <div class="upload-img p-d-flex p-jc-center">
@@ -56,8 +56,11 @@
                         </div>
                     </div>
                 </div>    
-                <div class="p-field p-grid">
-                    <label class="p-col-12 p-mb-2 p-md-12 p-mb-md-0">
+                <transition name="collapse">
+                    <ImgColor v-if="showDetail" :product="product.image" @updColor="updColor"/>
+                </transition>
+                <div class="p-field p-grid p-mt-3">
+                    <label class="p-col-12 p-mb-2 p-md-12 p-mb-md-0 ">
                         商品分類
                     </label>
                     <div class="p-col-12 p-md-12 p-mt-2">
@@ -92,8 +95,11 @@
 
 <script>
 import axios from "axios";
-import XLSX from "xlsx";
-export default {
+import ImgColor from '@/components/ImgColor'
+export default {   
+    components:{
+        ImgColor
+    },
     data() {
         return {
             preview: [],
@@ -106,6 +112,7 @@ export default {
                 price: "",
                 image: [],
                 category: "",
+                color:[]
             },
             api: "product",
             sellings :[
@@ -114,6 +121,7 @@ export default {
                 { name: '便攜式喇叭', code: '便攜式喇叭' },
                 { name: '落地喇叭', code: '落地喇叭' },
             ],
+            showDetail:false,
         };
     },
     methods: {
@@ -137,6 +145,7 @@ export default {
                 name: this.product.name,
                 price: this.product.price,
                 image: this.product.image,
+                color:this.product.color,
                 category: this.product.category,
                 createdAt: new Date().getTime(),
                 specification: this.speciTable,
@@ -163,24 +172,25 @@ export default {
                 });   
         },
         previewImage(event) {
-            var input = event.target;
-            var reader = new FileReader();
-            reader.onload = (e) => {
-                this.preview.push(e.target.result);          
-            };
-            reader.readAsDataURL(input.files[0]);
-            this.imgList.push(input.files[0]);
-            console.log('imglist',this.imgList)
-        },
-        upload() {
-            if( this.imgList.length===3){
-                this.imgList.forEach((img) => {
-                    this.product.image.push(img.name);
-                });
-                this.Notupload = true
-            }else{
-                this.$toast.add({severity:'error', summary: 'Error Message', detail:'至少上傳三張圖片', life: 3000});
+            let input = event.target;
+            let that = this
+            for(let i = 0; i < input.files.length; i ++){
+                let reader = new FileReader();       
+                reader.onload = (e) => {
+                    that.preview.push( e.target.result)     
+                };    
+                reader.readAsDataURL(input.files[i]);
+                this.imgList.push(input.files[i]);
             }
+        },
+        importImg() {
+            this.imgList.forEach((img) => {
+                const obj = {}
+                obj.name  = img.name
+                this.product.image.push(obj);
+            });
+            this.Notupload = true
+            this.showDetail = true    
         },
         deleteItem(idx) {
             this.preview.splice(idx, 1);
@@ -194,24 +204,11 @@ export default {
             this.product.image = [];
             this.disable = false
         },
-        chooseExcel(event) {
-            this.file = event.target.files ? event.target.files[0] : null;
-            if (this.file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    /* Parse data */
-                    const bstr = e.target.result;
-                    const wb = XLSX.read(bstr, { type: "binary" });
-                    /* Get first worksheet */
-                    const wsname = wb.SheetNames[0];
-                    const ws = wb.Sheets[wsname];
-                    /* Convert array of arrays */
-                    const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
-                    this.speciTable = JSON.stringify(data);
-                };
-                reader.readAsBinaryString(this.file);
-            }
-        },
+        updColor(imgList,colorList){
+            console.log('子組件',imgList,'子組件2',colorList)
+            this.product.image = imgList
+            this.product.color = colorList
+        }
     },
     watch: {
         preview:  {
@@ -268,6 +265,24 @@ export default {
     top: 550px;
     z-index: 999;
 }
+
+.collapse-enter-active,
+.collapse-leave-active {
+    transition: all .3s ease;
+}
+
+.collapse-enter-from,
+.collapse-leave-to {
+    height: 0px;
+    opacity: 0;
+}
+
+.collapse-enter-to,
+.collapse-leave-from {
+    height: 800px;
+    opacity: 1;
+}
+
 
 
 @media(max-width: 600px){

@@ -116,7 +116,6 @@ export default {
             showColor:false,
             chooseImg:'ae00',
             showDetail:false,
-            recentPrd:''
         }
     },
     async created() {
@@ -136,10 +135,7 @@ export default {
         const defaultList = JSON.parse(itemListStr);
         this.$store.state.itemList = defaultList || []; 
 
-        const storeId = []
-        storeId.push(this.id)
-        localStorage.setItem(this.recentPrd, storeId);
-        axios(options)
+        await axios(options)
             .then(response => {
                 const item = response.data.find(item=>{
                     return item.id == this.id
@@ -175,6 +171,7 @@ export default {
                 this.product = already
             } else{
                 this.$store.commit("itemList",item);
+                console.log('pizza',this.$store.state.itemList)
             }
             this.productDatabase()
         },

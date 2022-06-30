@@ -16,10 +16,10 @@
                         <button class="general-btn" @click="startShop">開始選購</button>
                     </div>
                     <div v-for="(item, idx) in itemList" class="cart-body" :key="item.key">
-                        <div class="item-top-bar" :class="{ active: inputTag.indexOf(item.id)!==-1}"></div>
-                        <div class="item-body" :class="{ active:  inputTag.indexOf(item.id)!==-1}">
+                        <div class="item-top-bar" :class="{ active: inputTag.indexOf(idx)!==-1}"></div>
+                        <div class="item-body" :class="{ active:  inputTag.indexOf(idx)!==-1}">
                             <div class="p-field-checkbox">
-                                <Checkbox :id="idx" :checked="true" :value="item.id" v-model="inputTag" :disabled="inputTag.length>=3"/>
+                                <Checkbox :id="idx" :checked="true" :value="idx" v-model="inputTag" :disabled="inputTag.length>=3"/>
                             </div>
                             <div class="item-img">
                                 <img
@@ -103,7 +103,9 @@ export default {
         },
         deleteSelected() {
             this.inputTag.forEach((item) => {
-                const index = this.itemList.map((el) => el.id).indexOf(item);
+                console.log(item)
+                const index = this.itemList.map((el,idx) => idx).indexOf(item)
+                console.log('index',index)
                 this.itemList.splice(index, 1);
             });
             this.inputTag = [];
@@ -118,7 +120,7 @@ export default {
             this.$emit("closeBtn");
         },
         buyItem(){
-            const buyItem = this.itemList.filter(item=>this.inputTag.indexOf(item.id)!==-1)
+            const buyItem = this.itemList.filter((item,idx)=>this.inputTag.indexOf(idx)!==-1)
             this.$store.state.orderList = buyItem
             // this.$store.dispatch("createOrder");
             this.$router.push({
@@ -136,7 +138,7 @@ export default {
         // this.preLoad = false;
         if(this.itemList.length!==0){
             this.cartNoItem = false
-            this.inputTag.push(this.itemList[0].id)   
+            this.inputTag.push(0)   
         }
         // const itemListStr = localStorage.getItem(this.key);
         // const defaultList = JSON.parse(itemListStr);
