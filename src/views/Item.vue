@@ -144,6 +144,7 @@ export default {
                     this.slideData = JSON.parse(item.image)
                     this.colorGroup = JSON.parse(item.color)
                     this.product = item
+                    this.product.color = ''
                     // this.specification = JSON.parse(item.specification)
                     // this.columnCnt = this.specification[0]
                     // this.specification.splice(0,1)
@@ -157,6 +158,7 @@ export default {
     },
     methods: {
         addItem() {
+            if(this.product.color==='')alert('請選顏色')
             const item = {
                 ...this.product,
                 amount: this.amount,

@@ -69,7 +69,7 @@ export default {
         const category = ref([
             { category: "落地喇叭", code: "10" },
             { category: "便攜式喇叭", code: "50" },
-            { category: "擴大機", code: "60" },
+            { category: "重低音", code: "60" },
             { category: "書架喇叭", code: "80" },
         ]);
         const brandList = ref([]);

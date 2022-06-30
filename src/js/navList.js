@@ -44,7 +44,7 @@ const navBarList = [
             bg:'036.jpg'
         }]
     },{
-        title:'擴大機',
+        title:'重低音',
         text:'',
         content:[{
             name:'YAMAHA',

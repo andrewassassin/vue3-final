@@ -128,7 +128,7 @@ export default {
 
         const sellings =ref([
             { name: '書架喇叭', code: '書架喇叭' },
-            { name: '擴大機', code: '擴大機' },
+            { name: '重低音', code: '重低音' },
             { name: '便攜式喇叭', code: '便攜式喇叭' },
             { name: '落地喇叭', code: '落地喇叭' },
         ])
