@@ -21,8 +21,8 @@ export default {
         const router = useRouter();
         const animationList = ref([])
         const workbrench = ref([
-                {name:'pi-heart-fill'},{name:'pi-moon'},{name:'pi-github'},{name:'pi-facebook'},{name:'pi-google'}
-            ])
+            {name:'pi-heart-fill'},{name:'pi-moon'},{name:'pi-github'},{name:'pi-facebook'},{name:'pi-google'}
+        ])
             
         function showup(){
             isRotate.value =! isRotate.value
@@ -49,7 +49,7 @@ export default {
                 },i*50)
             })
         }
-
+        
         function functionLink(idx){
             switch(idx){
                 case 0:
@@ -63,7 +63,7 @@ export default {
                         path: `/PrdManage`,
                         component: PrdManage,
                     })  
-                break;
+                    break;
             }
         }
         return{showup,onClickOutside,functionLink,isRotate,workbrench,animationList}

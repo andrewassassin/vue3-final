@@ -6,7 +6,7 @@
                     <div class="p-md-4 container">
                         <div class="p-md-12"><h3>{{item.title}}</h3></div>
                         <div class="p-md-12">{{item.text}}</div>
-                        <div class="p-md-12"><button class="mainBtn">探索更多</button></div>
+                        <div class="p-md-12"><button class="mainBtn" @click="gotoPrdPage(item.link)">探索更多</button></div>
                     </div>
                 </div>
             </Slide>
@@ -23,6 +23,7 @@ import IndexSec from '@/components/IndexSec'
 import { Carousel, Pagination, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 export default {
     components: {
         Carousel,
@@ -31,19 +32,23 @@ export default {
         IndexSec
     },
     setup(){
+        const router = useRouter();
         const imgItem = ref([
             {
                 title:'What Hi-Fi? Awards 2021',
                 text:'年度產品大獎',
-                bgi:'carousel-1.jpg'
+                bgi:'carousel-1.jpg',
+                link:'/product/171'
             },{
                 title:'DALI OPTICON2',
                 text:'',
-                bgi:'carousel-2.jpg'
+                bgi:'carousel-2.jpg',
+                link:'/product/169'
             },{
                 title:'KLIPSCH THE FIVES',
                 text:'',
-                bgi:'carousel-3.jpg'
+                bgi:'carousel-3.jpg',
+                link:'/product/212'
             }])
 
         onMounted(()=>{
@@ -74,10 +79,14 @@ export default {
         function inlineBgImage(image) {
             let bgImage = require('@/assets/img/' + image)
             return `background-image: url("${bgImage}")`
-            
         }
 
-        return {inlineBgImage,imgItem}
+        function gotoPrdPage(path){
+            router.push({
+                path: path,
+            })  
+        }
+        return {inlineBgImage,gotoPrdPage,imgItem}
     }
 }
 </script>
@@ -127,6 +136,13 @@ ul {
     border: 1px solid rgb(243, 243, 243);
     padding: 14px 40px;
     font-size: 16px;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.mainBtn:hover {
+    background: white;
+    color: black;
 }
 
 ::v-deep(.carousel__pagination-button){
