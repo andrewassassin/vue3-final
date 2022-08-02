@@ -40,6 +40,7 @@
 .prd-detail{
     /* height: 500px;
     opacity: 1; */
+    height: 620px;
     overflow: hidden;
 }
 .userData{

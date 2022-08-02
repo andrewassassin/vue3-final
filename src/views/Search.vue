@@ -12,7 +12,7 @@
             </div>
             <div class="p-mt-5">
                 <h4>喇叭價格</h4>
-                <InputText v-model="selectPrice" style="max-width:8rem;"/>-<InputText v-model="colorNum" style="max-width:8rem;" class="p-mr-3"/>
+                <InputText v-model="selectPrice.from" style="max-width:8rem;"/>-<InputText v-model="selectPrice.to" style="max-width:8rem;" class="p-mr-3"/>
             </div>
             <Button @click="goMultiSearch" label="搜尋" class="p-mt-5 p-btn -info"/>
         </aside>
@@ -42,7 +42,7 @@
 <script>
 import axios from "axios";
 import MultiSelect from "primevue/multiselect";
-import { ref, onMounted, watch } from "vue";
+import { ref,reactive, onMounted, watch } from "vue";
 import Item from "@/views/Item";
 import { useRouter } from "vue-router";
 export default {
@@ -55,8 +55,10 @@ export default {
         const itemName = ref("");
         const selectedBrand = ref();
         const selectCate = ref();
-        const selectPrice = ref('');
-        const selectPrice2 = ref('');
+        const selectPrice = reactive({
+            from:'',
+            to:''
+        });
         const router = useRouter();
         const productList = ref([]);
         const threeList = ref([]);
@@ -127,7 +129,9 @@ export default {
             const product = {
                 name: brandList.value,
                 category: cateList.value,
+                price: selectPrice
             };
+            console.log('prodcut',product)
             const options = {
                 method: 'get',
                 url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
@@ -158,7 +162,6 @@ export default {
             selectedBrand,
             selectCate,
             selectPrice,
-            selectPrice2,
             goMultiSearch,
             brands,
             category,

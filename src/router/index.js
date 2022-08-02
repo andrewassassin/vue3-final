@@ -44,7 +44,11 @@ const routes = [
         path: `/multi`,
         name: 'multi',
         props: true,
-        component: multi
+        component: multi,
+        meta:{
+            m_hideHeader:true,
+            m_hideNavAll:true,
+        }
     },
     {
         path: '/CreatePrd',

@@ -119,7 +119,7 @@ export default {
                 const itemValue = item.length * 132
                 return total + itemValue;
             }, 15);
-            console.log(distance)
+            console.log('distance',distance)
             this.showArrow(distance)
             // 移動至絕對位置
             content.scrollTo({ left:distance, behavior: 'smooth' })

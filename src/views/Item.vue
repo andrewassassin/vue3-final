@@ -299,7 +299,7 @@ ul {
 
 .collapse-enter-to,
 .collapse-leave-from {
-    height: 800px;
+    height: 620px;
     opacity: 1;
 }
 

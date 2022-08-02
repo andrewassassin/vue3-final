@@ -25,7 +25,7 @@
                     </label>
                     <div class="upload p-col-12 p-md-12 p-p-0 p-mt-2">
                         <div class="upload-head p-d-flex p-flex-wrap p-jc-center p-ai-center">
-                            <Button class="p-d-flex p-jc-center p-p-0" :class="{'p-disabled':disable}">
+                            <Button class="p-d-flex p-jc-center p-p-0" :class="{'p-disabled':Notupload}">
                                 <label class="p-button-primary p-md-12 p-sm-12 p-col-12 choose-label" style="cursor:pointer">
                                     <input id="upload_img" style="display:none;" accept="image/*" @change="previewImage" type="file" multiple />
                                     選擇圖片
@@ -196,27 +196,19 @@ export default {
             this.preview.splice(idx, 1);
             this.imgList.splice(idx, 1);
             this.product.image.splice(idx, 1);
-            this.disable = false
+            
         },
         removeAllImg() {
             this.imgList = [];
             this.preview = [];
             this.product.image = [];
-            this.disable = false
+            
         },
         updColor(imgList,colorList){
             console.log('子組件',imgList,'子組件2',colorList)
             this.product.image = imgList
             this.product.color = colorList
         }
-    },
-    watch: {
-        preview:  {
-            handler: function () {
-                this.preview.length === 3 ? this.disable = true : 1  
-            },
-            deep: true, 
-        },
     },
 }
 </script>
@@ -284,7 +276,6 @@ export default {
 }
 
 
-
 @media(max-width: 600px){
     .createPage{
         margin: 150px 0 50px 0;
@@ -305,5 +296,4 @@ export default {
         height: 40px;
     }
 }
-
 </style>
