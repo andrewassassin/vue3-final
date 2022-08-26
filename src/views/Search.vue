@@ -12,9 +12,11 @@
             </div>
             <div class="p-mt-5">
                 <h4>喇叭價格</h4>
-                <InputText v-model="selectPrice.from" style="max-width:8rem;"/>-<InputText v-model="selectPrice.to" style="max-width:8rem;" class="p-mr-3"/>
+                <InputText v-model="selectPrice.from" style="max-width:9rem;" class="p-mr-1"/>
+                –
+                <InputText v-model="selectPrice.to" style="max-width:9rem;" class="p-ml-1"/>
             </div>
-            <Button @click="goMultiSearch" label="搜尋" class="p-mt-5 p-btn -info"/>
+            <Button @click="goMultiSearch" label="搜尋" class="p-mt-5 p-btn-info"/>
         </aside>
         <section class="p-mt-2 p-xl-9 p-lg-12 p-md-12 p-sm-12">
             <h2 class="p-text-left">搜尋: {{ itemName }}</h2>
@@ -27,10 +29,10 @@
                                 <a :id="`${product.id}`" @click="goToProduct($event)" class="buy-btn">Buy Now</a>
                             </div>
                         </div>
-                        <div class="card-body p-md-12 p-col-12">
-                            <h4 class="card-title">{{ product.name }}</h4>
+                        <div class="p-md-12 p-col-12">
+                            <h4>{{ product.name }}</h4>
                             <Badge :value="product.category" class="p-mt-2" size="large" severity="info"></Badge>
-                            <p class="card-text">$ {{ product.price }} NTD</p>
+                            <p>$ {{ product.price }} NTD</p>
                         </div>
                     </div>
                 </div>
@@ -131,7 +133,7 @@ export default {
                 category: cateList.value,
                 price: selectPrice
             };
-            console.log('prodcut',product)
+
             const options = {
                 method: 'get',
                 url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
@@ -247,16 +249,4 @@ header {
     }
 }
 
-.goBackBtn {
-    background: rgba(170, 100, 9, 0.904);
-    width: 40px;
-    height: 40px;
-    border: none;
-    position: fixed;
-    bottom: 15px;
-    right: 15px;
-    z-index: 1000;
-    border-radius: 50%;
-    cursor: pointer;
-}
 </style>

@@ -122,11 +122,11 @@ const router = createRouter({
     },
 })
 
+// const arr = []
 // router.beforeEach((to) => {
 //     console.log('to=>', to.path);
-//     if(to.path==="/"){
-//         console.log('進入首頁')
-//     }
+//     arr.push(to.path)
+//     console.log('arr', arr);
 // })
 
 // router.beforeEach((to, from, next) => {

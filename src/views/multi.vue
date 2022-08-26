@@ -1,133 +1,139 @@
 <template>
-    <section class="p-d-flex p-jc-center">
-        <div class="content">
-            <div class="mid">
-                <transition-group 
-                :name="transType"
-                @after-leave="afterLeave"
-                >
-                    <img 
-                        v-for="(item, idx) in slidList" 
-                        v-show="imgIdx === idx" 
-                        :key="item.id" 
-                        :src="item.src"
-                    />
-                </transition-group>
-            </div>
-            <div class="nav_menu">
-                <a class="aaa"
-                    v-for="(item, idx) in slidList"
-                    :key="item.id"
-                    :class="{active: imgIdx === idx}"
-                    @click="handleMenuActive(idx)"
-                >
-                {{idx + 1}}
-                </a>
-            </div>
-        </div>
-    </section>
+    <div>
+        <InputText v-model="debouncedInput" @input="debouncedFunc" min="1" max="90000" placeholder="商品價格" type="text"/>
+    </div>
+    <div class="cn-wrapper">
+        <ul>
+            <li v-for="(item,idx) in workbrench" class=" p-mr-2" :key="idx" style="cursor:pointer;">
+                <i class="pi round p-d-flex p-ai-center p-jc-center" :class="item.name" style="font-size: 1.5rem"></i>
+            </li>
+        </ul>
+    </div>
+    <div class="bigr">
+        <div class="shadow"></div>
+        <img src="../assets/img/oberon-grille-closeup.jpg" class="testImg" alt="">
+    </div>
 </template>
 <script>
-import { ref } from 'vue'
+import axios from "axios";
+import {  onMounted,ref } from "vue";
 export default {
     setup(){
-        const imgIdx = ref(0);
-        const prevIdx = ref(0);
-        const transType = ref("right");
+        onMounted(()=>{
+            console.log()
+        })
 
-        const slidList = ref([
-            { id: '1', src: "https://source.unsplash.com/600x400?1" },
-            { id: '2', src: "https://source.unsplash.com/600x400?2" },
-            { id: '3', src: "https://source.unsplash.com/600x400?3" },
-            { id: '4', src: "https://source.unsplash.com/600x400?4" },
-            { id: '5', src: "https://source.unsplash.com/600x400?5" },
-            { id: '6', src: "https://source.unsplash.com/600x400?6" },
-            { id: '7', src: "https://source.unsplash.com/600x400?7" },
-            { id: '8', src: "https://source.unsplash.com/600x400?8" },
-        ]);
-        
-        const handleMenuActive = idx => {
-            imgIdx.value = idx;
-            transType.value = idx > prevIdx.value ? "left" : "right";
+        const workbrench = ref([
+            {name:'pi-heart-fill'},
+            {name:'pi-moon'},
+            {name:'pi-github'},
+            {name:'pi-facebook'},
+            {name:'pi-google'}
+        ])
+
+        const debouncedInput = ref("")
+        const debounce = (func, delay = 300) => {
+            let timeout = null;
+            
+            return (...args) => {
+                const later = () => {
+                    timeout = null;
+                    func(...args);
+                };
+                console.log('ji')
+                clearTimeout(timeout);
+                timeout = setTimeout(later, delay);
+            };
+        };
+        const DELAYED_TIME = 300;
+        // console.log('12345657890')
+
+        function displayDebouncedResult(){
+            const sendData = debouncedInput.value
+            const options = {
+                method: 'get',
+                url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+                params: {
+                    cmd: 'webSearch',
+                    data: sendData
+                },
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                }
+            }
+            axios(options)
+                .then((res) => {
+                    console.log('res',res)
+                });
         }
-        
-        const afterLeave = () => {
-            prevIdx.value = imgIdx.value;
-        }
-        
-        return {
-            imgIdx,
-            slidList,
-            handleMenuActive,
-            afterLeave,
-            transType
+
+        const debouncedFunc = debounce(displayDebouncedResult, DELAYED_TIME);
+
+        return{
+            workbrench,
+            debouncedInput,
+            debouncedFunc
         }
     }
-};
+}
 </script>
 <style scoped>
-    .left-enter-active,
-    .left-leave-active,
-    .right-enter-active,
-    .right-leave-active {
-        transition: transform .3s ease;
-    }
-    
-    .left-enter-from{
-        transform: translateX(-550px);
-    }
-    .left-leave-to{
-        transform: translateX(550px)
-    }
-    .right-enter-from{
-        transform: translateX(550px)
-    }
-    .right-leave-to{
-        transform: translateX(-550px);
-    }
+.cn-wrapper{
+    width: 26em;
+    height: 26em;
+    overflow: hidden;
+    position: fixed;
+    z-index: 10;
+    bottom: -13em;
+    left: 50%;
+    border-radius: 50%;
+}
+
+li{
+    position:static;
+    float:left;
+    font-size:1em;
+    /* height:5em;
+    width:5em; */
+    background-color: #eee;
+    text-align:center;
+    /* line-height:5em; */
+}
 
 
-    .content {
-      width: 600px;
-      height: 900px;
-    }
+li:first-child {
+    transform: rotate(-10deg);
+}
 
-    .mid{
-        position: relative;
-        width: 100%;
-        height: 100%;
-        overflow: hidden; 
-        margin-bottom: 20px;
-    }
+li:nth-child(2) {
+    transform: rotate(30deg);
+}
 
-    img{
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
+li:nth-child(3) {
+    transform: rotate(70deg);
+}
+li:nth-child(4) {
+    transform: rotate(110deg);
+}
 
-    .nav_menu{
-        text-align: center;
-        background-color: rgb(58, 49, 49); 
-        width: 600px;
-        /* height: 500px; */
-    }
-
-    .aaa{
-        cursor: pointer;
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        border-radius: 10px;
-        margin: 5px;
-        line-height: 20px;
-        /* margin-top: 100px; */
-        /* background-color: white; */
-    }
-    
-
-    .aaa.active{
-        color:black;
-        background-color: #40c297;
-    }
+.bigr{
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
+.testImg{
+    position: absolute;
+    width: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.shadow{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
 </style>

@@ -54,7 +54,7 @@
                         <button @click.prevent="deleteSelected($event)" type="button" class="general-btn p-md-3 p-col-12 p-mx-2 p-my-1">
                             刪除所選品項
                         </button>
-                        <Button class="p-md-2 p-col-12 p-button-error p-mx-2 p-my-1" @click.prevent="cancelChack($event)" label="取消選擇" />
+                        <Button class="p-md-2 p-col-12 p-button-error p-mx-2 p-my-1" @click.prevent="cancelCheck($event)" label="取消選擇" />
                     </div> 
                 </footer>
             </div>
@@ -94,7 +94,7 @@ export default {
         closeBtn() {
             this.$emit("closeBtn");
         },
-        cancelChack() {       
+        cancelCheck() {       
             this.inputTag = []
         },
         updateDataToStorage() {
@@ -128,7 +128,6 @@ export default {
                 component: Order,
             }) 
             this.$emit("closeBtn");
-            console.log('buy')
         }
     },
     async mounted() {

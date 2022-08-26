@@ -107,7 +107,7 @@ export default {
         const itemListStr = localStorage.getItem(this.key);
         const defaultList = JSON.parse(itemListStr);
         this.$store.state.itemList = defaultList || []; 
-
+        // console.log('資料庫的',this.$store.state.itemList)
         axios(options)
             .then(response => {
                 const item = response.data.find(item=>{
@@ -127,7 +127,7 @@ export default {
     },
     methods: {
         addItem() {
-            if(this.product.color==='')alert('請選顏色')
+            if(this.product.color==='') alert('請選顏色')
             const item = {
                 ...this.product,
                 amount: this.amount,
@@ -138,7 +138,7 @@ export default {
             if (already) {
                 // 最後的數量= 已經擁有的數量+現在使用者輸入的數量
                 already.amount = parseInt(already.amount) + parseInt(this.amount)
-                this.product = already
+                // this.product = already
             } else{
                 this.$store.commit("itemList",item);
                 console.log('pizza',this.$store.state.itemList)
