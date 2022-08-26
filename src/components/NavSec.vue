@@ -6,8 +6,8 @@
         </div>
         <i @click="goIndex()" class="pi pi-slack p-ml-lg-2" style="fontSize: 2.5rem;cursor:pointer;"></i>
         <div class="work-brench p-d-flex p-ai-center">
-            <form @submit.prevent="innerSearch($event)" class="search-bar p-mr-5">  
-                <input v-model="searchBar" ref="myinput" @blur="blurFocus" :class="{ show: isExtend }" class="s-input" type="search" placeholder="Search" aria-label="Search">
+            <form class="search-bar p-mr-5">  
+                <input v-model="searchBar" @input="debouncedFunc" ref="myinput" @blur="blurFocus" :class="{ show: isExtend }" class="s-input" type="search" placeholder="Search" aria-label="Search">
                 <i class="pi pi-search i-custom" @click="showInput" type="button"></i>          
             </form>
             <div class="cart-place p-mr-5" @click.prevent="openModal()" @mouseover="isHoverCart = true" @mouseleave="isHoverCart=false" v-bind:class="{ move: isHoverCart }">
@@ -49,7 +49,22 @@ export default {
             // 監聽購物車商品數量
             return store.getters.changeCartNum;
         })
-
+        const DELAYED_TIME = 300;
+        const debounce = (func, delay = 300) => {
+            let timeout = null;
+            
+            return (...args) => {
+                const later = () => {
+                    timeout = null;
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, delay);
+            };
+        };
+        const debouncedFunc = debounce(displayDebouncedResult, DELAYED_TIME);
+        
+   
         onMounted(()=>{
             // 取得購物車商品數量
             store.dispatch("DataGetCart");
@@ -70,7 +85,7 @@ export default {
                 path: `/`,
             }) 
         }
-        function innerSearch(){
+        function displayDebouncedResult(){
             let id = searchBar.value
             if(id&& route.path!==`/search/${id}` &&route.name!=='search'){
                 router.push({
@@ -108,12 +123,12 @@ export default {
         }
         return {
             goIndex,
-            innerSearch,
             openModal,
             closeModal,
             showInput,
             blurFocus,
             toUserInfo,
+            debouncedFunc,
             changeCartNum,
             isHoverCart,
             isLogin,
@@ -224,15 +239,12 @@ input::-webkit-search-cancel-button{
     .pi-slack{
         display: none;
     }
-
     .work-brench2{
         display: none;
     }
-
     .section{
         border-bottom: 1px solid rgb(243, 243, 243) ;
     }
-
     .work-brench{
         right: 10%;
     }
