@@ -146,7 +146,7 @@ export default {
             seller.product = products.value.find(item=>item.id===id)
         }
 
-        async function saveBtn(pid){
+        function saveBtn(pid){
             selected.value = 10000
             const product = JSON.stringify(products.value.filter(item=>item.id===pid)[0])
             const options = {
@@ -160,7 +160,7 @@ export default {
 					"Content-Type": "application/x-www-form-urlencoded",
 				}
 			};
-			await axios(options)
+			axios(options)
 				.then(function (res) {
                     res.data.st==='OK'?console.log('修改成功'):1
 				})

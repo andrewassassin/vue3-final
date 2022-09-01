@@ -48,7 +48,6 @@ export default {
         const sortKey = reactive({name:""})
         const cmd =ref('')
         const count = ref(0)
-        const showTop = ref(false)
      
         count.value = 0
         cmd.value = 'searchNew'
@@ -65,15 +64,14 @@ export default {
             // 距離底部200px加載一次
             let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight <= 400
             if (bottomOfWindow && isLoading == false) {
-                showTop.value=true
-                isLoading = true
+                // isLoading = true
                 count.value += 6
                 showPrdApi()
-                isLoading = false
+                // isLoading = false
             }               
         }
 
-        async function showPrdApi(){
+        function showPrdApi(){
             const options = {
                 method: 'get',
                 url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
@@ -85,7 +83,7 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded",
                 }
             }
-            await axios(options)
+            axios(options)
                 .then(response => {
                     productList.value = response.data
                     productList.value.splice(0,6).forEach(item=>{
@@ -126,7 +124,6 @@ export default {
             sortKey,
             cmd,
             count,
-            showTop,
             goToProduct,
         }
     }
@@ -203,7 +200,4 @@ export default {
         opacity: 1;
     }
 }
-
-
- 
 </style>

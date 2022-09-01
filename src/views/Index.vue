@@ -97,6 +97,10 @@ ul {
     padding: 0;
 }
 
+#carou{
+    height: 100vh;
+}
+
 .carousel__item {
     min-height: 200px;
     width: 100%;

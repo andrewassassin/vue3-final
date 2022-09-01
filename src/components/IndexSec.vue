@@ -1,7 +1,9 @@
 <template>
-    <section id="introSection" class="p-d-flex p-ai-center p-jc-center p-flex-wrap" >
+    <section class="p-d-flex p-ai-center p-jc-center p-flex-wrap p-mt-0" >
         <div class="top-sec" id="topSec">
-            <div class="top-sec-img" :class="{show:showTop}">
+            <div class="top-sec-img" :class="{bigsize:showTop}">
+                <div class="shadow" :class="{bigsize:showTop}" ></div>
+                <div class="shadow-ring" :class="{bigsize:showTop}" ></div>
                 <img src="../assets/img/oberon-grille-closeup.jpg" alt="">
             </div>
             <div class="top-sec-text" :class="{show:showTop}">
@@ -10,62 +12,63 @@
             </div>
         </div>
         <div class="pro-sec" id="proSec">
-            <div class="pro-sec-text" :class="{show:showPro}">
+            <div v-if="!isMobile" class="pro-sec-text" :class="{show:showPro}">
                 <h4>{{mainList[1].title}}</h4>
                 <p>{{mainList[1].content}}</p>
             </div>
             <div class="pro-sec-img" :class="{show:showPro}">
                 <img src="../assets/img/pro-sec-img.jpg" alt="">
             </div>
+            <div v-if="isMobile" class="pro-sec-text" :class="{show:showPro}">
+                <h4>{{mainList[1].title}}</h4>
+                <p>{{mainList[1].content}}</p>
+            </div>
         </div>
-        <div class="ad-sec">
-            <div class="ad-sec-img">
+        <div class="ad-sec" id="adSec">
+            <div class="ad-sec-img" :class="{show:showAd}">
                 <img src="../assets/img/cabinet-design.jpg" alt="">
             </div>
-            <div class="ad-sec-text">
+            <div class="ad-sec-text" :class="{show:showAd}">
                 <h4>{{mainList[0].title}}</h4>
                 <p>{{mainList[0].content}}</p>
             </div>
-        </div>
-        <div>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br> debitis? Non ratione porro excepturi autem debitis distinctio rerum id, inventore, quisquam quibusdam itaque nam voluptas eos hic pariatur at. Veniam.</p>
-        </div>
-        <div>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br> debitis? Non ratione porro excepturi autem debitis distinctio rerum id, inventore, quisquam quibusdam itaque nam voluptas eos hic pariatur at. Veniam.</p>
         </div>
     </section>
 </template>
 <script>
 import { mainText } from "@/js/mainText.js";
-import { ref, onMounted,onBeforeUnmount } from "vue";
+import { ref, onMounted,onBeforeUnmount,computed } from "vue";
 export default {
     setup(){
         window.addEventListener("scroll", handleScroll);
         const mainList = ref(mainText)
         const showTop= ref(false)
         const showPro = ref(false)
+        const showAd = ref(false)
         const position = ref([
             {
                 name:'topsec',
                 top:Number,
                 btm:Number,
                 offHeight:Number,
-                task: function(){
-                    showTop.value = true
-                }
             },
             {
                 name:'prosec',
                 top:Number,
                 btm:Number,
                 offHeight:Number,
-                task: function(){
-                    showTop.value = true
-                }
+            },
+            {
+                name:'adsec',
+                top:Number,
+                btm:Number,
+                offHeight:Number,
             }
         ])
+        const isMobile = computed(()=>{
+            return screen.width <= 900 ?  true : false
+        })
         async function handleScroll(){
-            console.log('scroll index')
             let st = window.scrollY
             const slideInAt = (window.scrollY + window.innerHeight) 
             if (slideInAt> position.value[0].top + position.value[0].offHeight && st<position.value[0].btm) { 
@@ -77,6 +80,11 @@ export default {
                 showPro.value = true
             } else {
                 showPro.value = false
+            }
+            if (slideInAt> position.value[2].top + position.value[2].offHeight && st<position.value[2].btm) {
+                showAd.value = true
+            } else {
+                showAd.value = false
             }
         }
 
@@ -90,170 +98,68 @@ export default {
         onMounted(()=>{
             animation('topSec',0)
             animation('proSec',1)
+            animation('adSec',2)
         })
 
         onBeforeUnmount(()=>{
             window.removeEventListener("scroll", handleScroll)
         })
         
-        return{mainList,showTop,showPro}
+        return{mainList,showTop,showPro,showAd,isMobile}
     }
 }
 </script>
+<style scoped src="../assets/styles/indexSec.css"></style>
 <style scoped>
-.ad-sec{
-    display: flex;
-    width: 100%;
-    height: 600px;
-    background: black;
-    align-items: center;
+@media (min-width: 760px) and (max-width: 991px){
+    .top-sec,.ad-sec,.pro-sec{
+        justify-content: center;
+        height: 800px;
+    }
 }
+@media(max-width:760px){
+    .top-sec,.ad-sec,.pro-sec{
+        justify-content: center;
+        height: auto;
+    }
 
-.ad-sec-img{
-    display: flex;
-    flex: 0 0 50%;
-    align-items: center;
-    /* justify-content: center; */
-}
+    .ad-sec-text,.top-sec-text,.pro-sec-text{
+        width: 80%;
+    }
 
-.ad-sec-img img{
-    max-width: 100%;
-    height: auto;
-    padding: 150px;
-}
+    .top-sec-text.show,.ad-sec-text.show,.pro-sec-text.show{
+        transform: translateX(0%);
+    }
 
-.ad-sec-text{
-    position: relative;
-    color: aliceblue;
-    margin-right: 200px;
-    font-family: 'Segoe UI','Arial',Charcoal,'Helvetica', 'sans-serif';
-}
+    .top-sec-img{
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+    .top-sec-img img{
+        transform: translateX(0%);
+        max-width: 240px;
+        height: 230px;
+    }
+    .pro-sec-img img{
+        max-width: 100%;
+    }
+    .pro-sec-img.show img, .ad-sec-img.show img{
+        transform: translateX(0%);
+    }
+    .shadow,.shadow-ring{
+        transform: translateX(0%);
+        max-width: 255px;
+        height: 250px;
+        border: rgba(238, 238, 238, 1) solid 70px;
+    }
 
-.ad-sec h4 {
-    font-weight: 900;
-}
-
-.ad-sec p{
-    margin-top:18px ;
-    word-wrap: break-word;
-    /* display: block; */
-    text-align: left;
-}
-
-.pro-sec{
-    display: flex;
-    width: 100%;
-    height: 600px;
-    background: rgb(255, 255, 255);
-    align-items: center;
-    margin: 50px 0;
-}
-
-.pro-sec-text{
-    position: relative;
-    left: 50%;
-    transform: translateX(-140%);
-    opacity: 0;
-    flex: 0 0 35%;
-    align-items: center;
-    margin-left:160px ;
-    transition: all .5s ease-in;
-}
-
-
-.pro-sec-text.show{
-    opacity: 1;
-    transform: translateX(-135%);
-}
-
-.pro-sec-img img{
-    position: relative;
-    left: 50%;
-    transform: translateX(-40%);
-    opacity: 0;
-    max-width: 100%;
-    height: auto;
-    padding: 180px;
-    transition: all .5s ease-in;
-}
-
-.pro-sec-img.show img{
-    opacity: 1;
-    transform: translateX(-45%);
-    transition-delay: .3s;
-}
-
-.pro-sec h4 {
-    font-weight: 900;
-}
-
-.pro-sec p{
-    margin-top:18px ;
-    word-wrap: break-word;
-    /* display: block; */
-    text-align: left;
-    font-weight: 500;
-    line-height:1.5; 
-    font-family:'Segoe UI','Arial',Charcoal,'Helvetica', 'sans-serif';
-}
-
-.top-sec{
-    display: flex;
-    width: 100%;
-    height: 600px;
-    background: rgba(238, 238, 238, 0.863);
-    align-items: center;
-    margin: 20px 0;
-}
-
-.top-sec-img{
-    display: flex;
-    flex: 0 0 50%;
-    align-items: center;
-    /* justify-content: center; */
-}
-
-.top-sec-img img{
-    max-width: 100%;
-    height: auto;
-    padding: 150px;
-    position: relative;
-    opacity: 0;
-    left: 50%;
-    transform: translateX(-55%);
-    transition: all .5s ease-in;
-}
-
-.top-sec-img.show img{
-    opacity: 1;
-    transform: translateX(-50%);
-    transition-delay: .3s;
-}
-
-.top-sec-text{
-    position: relative;
-    left: 50%;
-    transform: translateX(-100%);
-    opacity: 0;
-    color: rgb(0, 0, 0);
-    margin-right: 200px;
-    font-family: 'Segoe UI','Arial',Charcoal,'Helvetica', 'sans-serif';
-    line-height:1.5; 
-    transition: all .5s ease-in;
-}
-
-.top-sec-text.show{
-    opacity: 1;
-    transform: translateX(-110%);
-}
-
-.top-sec h4 {
-    font-weight: 900;
-}
-
-.top-sec p{
-    margin-top:18px ;
-    word-wrap: break-word;
-    text-align: left;
+    .shadow-ring.bigsize{
+        transition-delay: .2s;
+        max-width: 120px;
+        height: 120px;
+        border: rgba(238, 238, 238, 0.83) solid 20px;
+        transform: translateX(-90%);
+    }
 }
 </style>

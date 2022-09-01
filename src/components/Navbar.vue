@@ -97,6 +97,7 @@ export default {
         }
 
         function toggleBar(){
+            console.log('按住')
             isActive.value = true
         }
   
@@ -257,8 +258,8 @@ export default {
     .close-btn{
         display: block;
         position: relative;
-        left: 250px;
-        top: -350px;
+        left: 70%;
+        top: -40%;
     }
 
     .nav-toggler{

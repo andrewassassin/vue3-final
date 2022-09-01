@@ -125,6 +125,10 @@ export default {
     #app{
         overflow-x:hidden;
     }
+
+    .nav-bar.hideUp{
+        transform: translateY(0px);
+    }
 }
 
 </style>
