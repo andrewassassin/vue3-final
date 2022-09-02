@@ -12,14 +12,10 @@
             </div>
         </div>
         <div class="pro-sec" id="proSec">
-            <div v-if="!isMobile" class="pro-sec-text" :class="{show:showPro}">
-                <h4>{{mainList[1].title}}</h4>
-                <p>{{mainList[1].content}}</p>
-            </div>
             <div class="pro-sec-img" :class="{show:showPro}">
                 <img src="../assets/img/pro-sec-img.jpg" alt="">
             </div>
-            <div v-if="isMobile" class="pro-sec-text" :class="{show:showPro}">
+            <div class="pro-sec-text" :class="{show:showPro}">
                 <h4>{{mainList[1].title}}</h4>
                 <p>{{mainList[1].content}}</p>
             </div>
@@ -119,6 +115,7 @@ export default {
 }
 @media(max-width:760px){
     .top-sec,.ad-sec,.pro-sec{
+        display: flex;
         justify-content: center;
         height: auto;
     }

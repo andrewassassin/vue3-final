@@ -117,7 +117,7 @@ export default {
                     this.slideList = JSON.parse(item.image)
                     this.colorGroup = JSON.parse(item.color)
                     this.product = item
-                    this.product.color = ''
+                    this.product.color = this.colorGroup[0]
                     this.preLoad = false
                 }         
             })
@@ -127,7 +127,6 @@ export default {
     },
     methods: {
         addItem() {
-            if(this.product.color==='') alert('請選顏色')
             const item = {
                 ...this.product,
                 amount: this.amount,
