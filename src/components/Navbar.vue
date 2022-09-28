@@ -271,7 +271,7 @@ export default {
         width: 60px;
         height: 60px;
         background: transparent;
-        z-index: 49;
+        /* z-index: 49; */
     }
 
     .line {

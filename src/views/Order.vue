@@ -31,10 +31,10 @@
                     </div>
                 </form>
             </div>
-            <div class="p-md-1"></div>
+            <div v-if="!isMobile" class="p-md-1"></div>
         </section>
-        <aside class="aside p-d-flex p-flex-wrap">
-            <div class="p-md-1"></div>
+        <aside  class="aside p-d-flex p-flex-wrap">
+            <div v-if="!isMobile" class="p-md-1"></div>
             <div class="p-md-6 p-col-12">
                 <div class="container p-px-0">
                     <div v-for="item in orderList" class="item-body p-my-3" :key="item.key">
@@ -55,8 +55,8 @@
                 </div>
                 <div class="p-d-flex p-flex-wrap container2 p-pb-1">
                     <div class="p-d-flex p-flex-wrap p-md-12 p-px-0">
-                        <InputText v-model="discntCode" placeholder="優惠代碼" :class="{'p-invalid':errCode}" class="p-md-7" type="text" style="height:3rem"/>
-                        <Button @click.prevent="sendCode" label="使用優惠代碼" class="p-button-secondary p-md-4 p-col-10 p-ml-5" style="height:3rem"/>
+                        <InputText v-model="discntCode" placeholder="優惠代碼" :class="{'p-invalid':errCode}" class="p-md-7 p-col-12" type="text" style="height:3rem"/>
+                        <Button @click.prevent="sendCode" label="使用優惠代碼" class="p-button-secondary p-md-4 p-col-12 p-ml-md-5" style="height:3rem"/>
                     </div>
                     <div v-show="errMsg===''" class="p-md-6"></div>
                     <small class="p-text-left" :class="{'p-error':errCode}" >{{errMsg}}</small>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="p-d-flex p-flex-wrap container3">
                     <div class="p-d-flex p-jc-between p-md-12 p-ai-center" style="height:2rem">
-                        <p class="totalPrice" >總額</p>
+                        <p class="totalPrice">總額</p>
                         <p v-show="!loading&&!preLoad" class="totalPrice" :class="{discnt:cnt!==1}">$ {{getAllPrice}}</p>
                         <Skeleton v-show="loading||preLoad" width="15%" height="1rem" />
                     </div>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <div class="p-md-4"></div>
+            <div v-if="!isMobile" class="p-md-4"></div>
         </aside>
     </div>
 </template>
@@ -99,6 +99,9 @@ import store from "@/store";
         const preLoad = ref(true)
         const loading = ref(false)
         const cnt = ref(1)
+        const isMobile = computed(()=>{
+            return screen.width <= 900 ? true : false
+        })
         const user = computed(()=>{
             return store.state.user;
         })
@@ -158,14 +161,14 @@ import store from "@/store";
         }
         
         onMounted(()=>{
-            console.log('cnt',cnt.value)
+            // console.log('cnt',cnt.value)
             setTimeout(function(){
                 preLoad.value = false
             },1500)
         })
 
         return {
-            discntCode,errCode,errMsg,preLoad,loading,user,orderList,cnt,getAllPrice,cntPrice,sendCode
+            discntCode,errCode,errMsg,preLoad,loading,user,orderList,cnt,getAllPrice,cntPrice,sendCode,isMobile
         }
     }
 }
@@ -175,7 +178,7 @@ import store from "@/store";
     background: white;
     height: 100%;
     width: 55%;
-    margin-top: 30px;
+    margin-top: 1%;
 }
 
 .aside{
@@ -190,14 +193,9 @@ import store from "@/store";
 .cForm{
     border: 1px solid #d9d9d9;
     border-radius: 5px;
-    /* margin-right: 60px; */
 }
 
 .title{
-    margin-right: 60px;
-}
-
-.cardSec{
     margin-right: 60px;
 }
 
@@ -300,6 +298,7 @@ import store from "@/store";
 
     .aside{
         width: 100%;
+        height: auto;
     }
 
     .cForm{

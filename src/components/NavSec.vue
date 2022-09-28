@@ -147,7 +147,6 @@ export default {
     background: white;
     position: fixed;
     margin-top: 45px;
-    z-index: 48;
     transition: .3s ease;
 }
 

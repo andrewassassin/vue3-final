@@ -31,8 +31,8 @@
                                     選擇圖片
                                 </label>
                             </Button>
-                            <Button @click.prevent="importImg" :label="!Notupload?'匯入':'匯入完畢'" :class="{'p-disabled':Notupload}" class="p-ml-3"/>
-                            <Button @click.prevent="removeAllImg" label="取消"  :class="{'p-disabled':Notupload}" class="p-ml-3 "/>
+                            <Button @click.prevent="importImg" :label="!Notupload?'匯入':'匯入完畢'" :class="{'p-disabled':Notupload}" class="btn"/>
+                            <Button @click.prevent="removeAllImg" label="取消"  :class="{'p-disabled':Notupload}" class="btn"/>
                         </div>
                         <div class="upload-img p-d-flex p-jc-center">
                             <table id="cartTableBody" class="p-md-12 p-p-0">
@@ -275,6 +275,10 @@ export default {
     opacity: 1;
 }
 
+.btn{
+    margin-left: 20px;
+}
+
 
 @media(max-width: 600px){
     .createPage{
@@ -292,8 +296,12 @@ export default {
     }
 
     .upload .p-button{
-        width: 35%;
+        width: 80%;
         height: 40px;
+    }
+
+    .btn{
+        margin-left: 0px;
     }
 }
 </style>

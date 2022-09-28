@@ -9,7 +9,7 @@
 
 .pro-sec{
     display: grid;
-    grid-template-columns:[line_1] 0.5fr [line2]0.5fr;
+    grid-template-columns:[line1] 0.5fr [line2]0.5fr;
     grid-template-rows:[row-1] 600px ;
     background: rgb(255, 255, 255);
 }
@@ -87,6 +87,7 @@
     font-family: 'Segoe UI','Arial',Charcoal,'Helvetica', 'sans-serif';
     line-height:2; 
     transition: all .5s ease-out;
+    /* transition: all .5s cubic-bezier(.62,-0.44,.8,1.25); */
 }
 
 .ad-sec-text{

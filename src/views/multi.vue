@@ -95,7 +95,7 @@ export default {
     transform: translate(-50%,-50%);
     border: white solid 60px;
     border-radius: 50%;
-    transition: all .5s ease-out;
+    transition-timing-function: cubic-bezier(.62,-0.14,.62,1.25);
 }
 
 .shadow.bigsize{
