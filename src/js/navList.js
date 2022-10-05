@@ -4,13 +4,13 @@ const navBarList = [
         text:'簡易攜帶，音質絕美，隨身享受音樂的沉浸感',
         content:[{
             name:'MARSHELL',
-            bg:'028.jpg'
+            bg:'008-1.jpg'
         },{
             name:'LOVE',
-            bg:'029.jpg'
+            bg:'008-2.jpg'
         },{
             name:'RONY',
-            bg:'030.jpg'
+            bg:'008-3.jpg'
         },{
             name:'Edifier',
             bg:'034.jpg'
@@ -26,13 +26,13 @@ const navBarList = [
         text:'美型外觀，融入居家生活',
         content:[{
             name:'Dali',
-            bg:'031-1.jpg'
+            bg:'031.jpg'
         },{
             name:'KLIPSCH',
-            bg:'038.jpg'
+            bg:'031-1.jpg'
         },{
             name:'KEF',
-            bg:'039.jpg'
+            bg:'031-2.jpg'
         },{
             name:'B&W',
             bg:'034.jpg'
@@ -51,10 +51,10 @@ const navBarList = [
             bg:'028.jpg'
         },{
             name:'MAGNAT',
-            bg:'029.jpg'
+            bg:'028-1.jpg'
         },{
             name:'AUDIOLAB',
-            bg:'030.jpg'
+            bg:'028-2.jpg'
         },{
             name:'MARANTZ',
             bg:'034.jpg'
@@ -70,13 +70,13 @@ const navBarList = [
         text:'呼天撼地，讓人陶醉在每分每秒的澎湃樂章',
         content:[{
             name:'Dali',
-            bg:'028.jpg'
+            bg:'025.jpg'
         },{
             name:'KLIPSCH',
-            bg:'029.jpg'
+            bg:'026.jpg'
         },{
             name:'KEF',
-            bg:'030.jpg'
+            bg:'027.jpg'
         },{
             name:'B&W',
             bg:'034.jpg'

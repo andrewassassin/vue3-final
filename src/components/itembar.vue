@@ -140,6 +140,10 @@ hr{
     opacity: 1;
 }
 
+.link{
+    cursor: pointer;
+}
+
 @media(max-width:900px){
     .Dialog h2 {
         color: black;
