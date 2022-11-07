@@ -74,7 +74,7 @@ export default {
         function showPrdApi(){
             const options = {
                 method: 'get',
-                url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+                url: `http://localhost/Amitproject/product.php#/`,
                 params: {
                     cmd: cmd.value,
                     count:count.value.toString()

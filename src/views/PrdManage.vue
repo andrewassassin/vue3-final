@@ -91,7 +91,7 @@ export default {
         onMounted(() => {
             const options = {
 				method: 'get',
-				url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+				url: `http://localhost/Amitproject/product.php#/`,
 				params: {
 					cmd: 'show',
 				},
@@ -151,7 +151,7 @@ export default {
             const product = JSON.stringify(products.value.filter(item=>item.id===pid)[0])
             const options = {
 				method: 'get',
-				url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+				url: `http://localhost/Amitproject/product.php#/`,
 				params: {
 					cmd: 'save',
                     data: product

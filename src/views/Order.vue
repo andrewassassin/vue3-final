@@ -126,7 +126,7 @@ import store from "@/store";
         function sendCode(){
             const options = {
                 method: 'get',
-                url: `https://x-home.pcpogo.com/px/create.php?PDEBUG=andrewc`,
+                url: `http://localhost/Amitproject/create.php#/`,
                 params: {
                     cmd: 'discnt',
                     data: discntCode.value

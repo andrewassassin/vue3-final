@@ -98,7 +98,7 @@ export default {
             itemName.value = id.value.id;
             const options = {
                 method: 'get',
-                url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+                url: `http://localhost/Amitproject/product.php#/`,
                 params: {
                     cmd: 'webSearch',
                     data: id.value.id
@@ -136,7 +136,7 @@ export default {
 
             const options = {
                 method: 'get',
-                url: `https://x-home.pcpogo.com/px/product.php?PDEBUG=andrewc`,
+                url: `http://localhost/Amitproject/product.php#/`,
                 params: {
                     cmd: 'multi',
                     data: product

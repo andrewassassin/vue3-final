@@ -135,6 +135,7 @@ export default {
             toggleBar,
             leaveLi
         }
+        
     },
 }
 </script>

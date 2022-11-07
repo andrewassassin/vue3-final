@@ -52,7 +52,7 @@ export default createStore({
             }
             const options = {
                 method: 'get',
-                url: `https://x-home.pcpogo.com/px/create.php?PDEBUG=andrewc`,
+                url: `http://localhost/Amitproject/create.php#/`,
                 params: {
                     cmd: 'saveUserCart',
                     data: cartItem
@@ -82,7 +82,7 @@ export default createStore({
             }
             const options = {
                 method: 'get',
-                url: `https://x-home.pcpogo.com/px/create.php?PDEBUG=andrewc`,
+                url: `http://localhost/Amitproject/create.php#/`,
                 params: {
                     cmd: 'findUserCart',
                     data: uid

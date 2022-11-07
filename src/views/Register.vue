@@ -93,7 +93,7 @@ export default {
 
             const options = {
                 method: 'get',
-                url: `https://x-home.pcpogo.com/px/account.php?PDEBUG=andrewc`,
+                url: `http://localhost/Amitproject/account.php#/`,
                 params: {
                     cmd: this.cmd,
                     data: data
