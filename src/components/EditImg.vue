@@ -43,6 +43,7 @@ export default {
         product: Object,
 	},
     setup(props, { emit }){
+        console.log('sis')
         const colorNum = ref()
         const arr = ref([])
         const color = ref([])
