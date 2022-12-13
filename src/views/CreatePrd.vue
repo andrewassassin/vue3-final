@@ -198,6 +198,7 @@ export default {
         },
         deleteItem(idx) {
             console.log('20221213 feature')
+            console.log('dev st測試')
             this.preview.splice(idx, 1);
             this.imgList.splice(idx, 1);
             this.product.image.splice(idx, 1);
