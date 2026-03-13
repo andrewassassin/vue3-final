@@ -9,7 +9,7 @@ on:
 
 # 設定此 workflow 的權限（部署時需寫入 gh-pages 分支）
 permissions:
-  contents: read
+  contents: write   # 改為 write，peaceiris 才能 push 到 gh-pages
   pages: write
   id-token: write
 
