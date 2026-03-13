@@ -1,0 +1,1 @@
+import{_ as t,o as n,c as o,a as s}from"./index-BkPo2EUa.js";const a={setup(){}};function r(c,e,p,l,u,_){return n(),o("div",null,[...e[0]||(e[0]=[s("h3",null,"payment",-1)])])}const f=t(a,[["render",r]]);export{f as default};
