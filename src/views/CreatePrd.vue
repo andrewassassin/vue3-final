@@ -95,7 +95,7 @@
 
 <script>
 import axios from "axios";
-import ImgColor from '@/components/ImgColor'
+import ImgColor from '@/components/ImgColor.vue'
 export default {   
     components:{
         ImgColor

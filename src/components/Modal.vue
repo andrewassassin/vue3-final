@@ -24,7 +24,7 @@
                             <div class="item-img">
                                 <img
                                     v-if="!preLoad"
-                                    :src="require(`../assets/img/${item.image}`)"
+                                    :src="getImgUrl(item.image)"
                                 />
                                 <Skeleton v-show="preLoad" width="150px" height="150px" class="skeleton-img" />
                             </div>
@@ -62,8 +62,9 @@
     </div>
 </template>
 <script>
-import Order from '@/views/Order'
-import Product from '@/views/Product'
+import Order from '@/views/Order.vue'
+import Product from '@/views/Product.vue'
+import { getImgUrl } from '@/utils/img.js'
 export default {
     data() {
         return {
@@ -75,6 +76,7 @@ export default {
         };
     },
     methods: {
+        getImgUrl,
         minusItem(event) {
             const idx = event.currentTarget.id;
             if (this.itemList[idx].amount > 1) {

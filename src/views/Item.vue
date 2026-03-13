@@ -65,8 +65,8 @@
 </template>
 <script>
 import axios from 'axios'
-import PrdDetail from '@/components/PrdDetail'
-import ItemGallery from '@/components/ItemGallery'
+import PrdDetail from '@/components/PrdDetail.vue'
+import ItemGallery from '@/components/ItemGallery.vue'
 export default {
     components:{
         PrdDetail,

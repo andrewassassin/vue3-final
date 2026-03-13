@@ -24,9 +24,9 @@
 <script>
 import { ref,computed,onMounted,defineAsyncComponent} from "vue";
 import store from "@/store";
-import Search from '@/views/Search'
-import UserInfo from '@/views/UserInfo'
-import Login from '@/views/Login'
+import Search from '@/views/Search.vue'
+import UserInfo from '@/views/UserInfo.vue'
+import Login from '@/views/Login.vue'
 import { useRouter,useRoute } from "vue-router";
 export default {
     emits: ["searchColor"], 

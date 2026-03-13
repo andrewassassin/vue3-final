@@ -17,8 +17,8 @@
     <SpeedDial/>
 </template>
 <script>
-import Navbar from '@/components/Navbar'
-import TopBtn from '@/components/TopBtn'
+import Navbar from '@/components/Navbar.vue'
+import TopBtn from '@/components/TopBtn.vue'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import SpeedDial from '@/components/SpeedDial.vue'

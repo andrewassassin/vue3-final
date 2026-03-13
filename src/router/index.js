@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Index from '../views/Index.vue'
-import Product from '../views/Product'
-import Item from '../views/Item'
-import Search from '../views/Search'
-import multi from '../views/multi'
-import CreatePrd from '../views/CreatePrd'
-import Login from '../views/Login'
-import Register from '../views/Register'
-import UserInfo from '../views/UserInfo'
-import PrdManage from '../views/PrdManage'
-import Order from '../views/Order'
+import Product from '../views/Product.vue'
+import Item from '../views/Item.vue'
+import Search from '../views/Search.vue'
+import multi from '../views/multi.vue'
+import CreatePrd from '../views/CreatePrd.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
+import UserInfo from '../views/UserInfo.vue'
+import PrdManage from '../views/PrdManage.vue'
+import Order from '../views/Order.vue'
 const routes = [
     {
         path: '/',
@@ -115,7 +115,7 @@ const routes = [
 ]
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes,
     scrollBehavior() {
         return { left: 0, top: 0, behavior: "smooth" };

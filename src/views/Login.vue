@@ -30,8 +30,8 @@
 
 <script>
 import axios from 'axios'
-import UserInfo from '@/views/UserInfo'
-import Register from '@/views/Register'
+import UserInfo from '@/views/UserInfo.vue'
+import Register from '@/views/Register.vue'
 import Toast from 'primevue/toast';
 export default {
     components:{

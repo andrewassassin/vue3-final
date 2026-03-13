@@ -51,7 +51,7 @@
 
 <script>
 import axios from "axios";
-import Login from '@/views/Login'
+import Login from '@/views/Login.vue'
 export default {
     name: "Register",
     data() {

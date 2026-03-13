@@ -39,7 +39,7 @@
                 <div class="container p-px-0">
                     <div v-for="item in orderList" class="item-body p-my-3" :key="item.key">
                         <div class="item-img p-mr-3">
-                            <img v-show="!preLoad" :src="require(`../assets/img/${item.image}`)"/>
+                            <img v-show="!preLoad" :src="getImgUrl(item.image)"/>
                             <Badge v-show="!preLoad" :value="item.amount" severity="secondary" class="item-cnt p-badge-secondary"></Badge>
                             <Skeleton v-show="preLoad" width="84px" height="84px" class="skeleton-img" />
                         </div>
@@ -88,10 +88,11 @@
     </div>
 </template>
 <script>
-import { ref,computed, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue'
 import axios from 'axios'
-import store from "@/store";
-  export default {
+import store from '@/store'
+import { getImgUrl } from '@/utils/img.js'
+export default {
     setup () {
         const discntCode = ref("")
         const errCode = ref(false)
@@ -168,7 +169,8 @@ import store from "@/store";
         })
 
         return {
-            discntCode,errCode,errMsg,preLoad,loading,user,orderList,cnt,getAllPrice,cntPrice,sendCode,isMobile
+            getImgUrl,
+            discntCode, errCode, errMsg, preLoad, loading, user, orderList, cnt, getAllPrice, cntPrice, sendCode, isMobile
         }
     }
 }

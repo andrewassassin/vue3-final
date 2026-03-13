@@ -7,9 +7,10 @@
     </header>
 </template>
 <script>
-import {computed,ref,onMounted,watch} from "vue";
-import { navBarList } from "@/js/navList.js";
-import store from "@/store";
+import { computed, ref, onMounted, watch } from 'vue'
+import { navBarList } from '@/js/navList.js'
+import store from '@/store'
+import { getImgUrl } from '@/utils/img.js'
 export default {
     setup(){
         const show = ref(true)
@@ -28,9 +29,9 @@ export default {
             headerText.value = navList.value[store.state.headerIdx].text
         })
         function inlineBgImage(image) {
-            let bgImage = require('@/assets/img/' + image)
+            const bgImage = getImgUrl(image)
             return {
-                backgroundImage: `url("${bgImage}")`,
+                backgroundImage: bgImage ? `url("${bgImage}")` : '',
             }
         }
 

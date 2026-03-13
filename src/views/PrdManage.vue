@@ -71,7 +71,7 @@
     <EditImg v-if="openEditImg" @closeModal="closeModal" :product="seller.product"/>
 </template>
 <script>
-import EditImg from '@/components/EditImg'
+import EditImg from '@/components/EditImg.vue'
 import axios from "axios";
 import { ref,onMounted,reactive } from 'vue';
 import { FilterMatchMode, FilterOperator } from "primevue/api";

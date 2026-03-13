@@ -8,7 +8,7 @@
                     <div class="p-col-12 p-xl-4 p-lg-6 p-md-6 p-sm-12 person" v-for="(product,index) in threeList" :key="index">
                         <div class="p-my-5 p-mx-3">
                             <div class="slide-img">
-                                <img :src="require(`../assets/img/${product.image[0][0]}`)">       
+                                <img :src="getImgUrl(product.image?.[0]?.[0])">       
                                 <div class="overlay p-d-flex p-jc-center p-ai-center">
                                     <a :id="`${product.id}`" @click="goToProduct($event)" class="buy-btn">Buy Now</a>	
                                 </div>
@@ -28,18 +28,19 @@
 
 <script>
 import { watch,onMounted,onBeforeUnmount,reactive,ref  } from 'vue';
-import store from "@/store";
-import { useRouter } from "vue-router";
-import SelectButton from 'primevue/selectbutton';
+import store from '@/store'
+import { useRouter } from 'vue-router'
+import SelectButton from 'primevue/selectbutton'
 import axios from 'axios'
-import Item from '@/views/Item'
+import Item from '@/views/Item.vue'
+import { getImgUrl } from '@/utils/img.js'
 export default {
     name: 'Product',
     components: {
         SelectButton
     },
     setup () {
-        store.state.src='carousel-3.jpg'
+        store.state.src = 'carousel-3.jpg'
         const router = useRouter();
         const orderSort = ref('最新上架')
         const productList = ref([])
@@ -117,6 +118,7 @@ export default {
         });
 
         return {
+            getImgUrl,
             orderSort,
             productList,
             threeList,

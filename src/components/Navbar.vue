@@ -22,8 +22,8 @@
 </template>
 <script>
 import store from "@/store";
-import NavSec from '@/components/NavSec'
-import Itembar from '@/components/Itembar'
+import NavSec from '@/components/NavSec.vue'
+import Itembar from '@/components/itembar.vue'
 import { ref,onMounted, reactive} from "vue";
 import { navBarList } from "@/js/navList.js";
 export default {  

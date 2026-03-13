@@ -18,7 +18,7 @@
     </div>
 </template>
 <script>
-import Login from '@/views/Login'
+import Login from '@/views/Login.vue'
 import { ref,onMounted,computed } from 'vue';
 import store from "@/store";
 import { useRouter } from "vue-router";

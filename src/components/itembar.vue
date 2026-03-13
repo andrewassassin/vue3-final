@@ -23,8 +23,9 @@
         </div>
 </template>
 <script>
-import Product from '@/views/Product'
-import { navBarList } from "@/js/navList.js";
+import Product from '@/views/Product.vue'
+import { navBarList } from '@/js/navList.js'
+import { getImgUrl } from '@/utils/img.js'
 export default {
     data(){
         return{
@@ -39,10 +40,9 @@ export default {
     },
     methods: {
         inlineBgImage(image) {
-            let bgImage = require('@/assets/img/' + image)
-
+            const bgImage = getImgUrl(image)
             return {
-                backgroundImage: `url("${bgImage}")`,
+                backgroundImage: bgImage ? `url("${bgImage}")` : '',
             }
         },
         changeBackground(image){

@@ -16,7 +16,7 @@
                         class="p-m-3"
                         :class="{box:chooseImg==`ae${index}${idx}`}"
                         >
-                        <img v-if="!preLoad" :src="require(`../assets/img/${item}`)" alt="">
+                        <img v-if="!preLoad" :src="getImgUrl(item)" alt="">
                     </li>   
                 </div>
             </div>
@@ -27,6 +27,7 @@
     </div>
 </template>
 <script>
+import { getImgUrl } from '@/utils/img.js'
 export default {
     props: {
         slideList: {
@@ -48,7 +49,8 @@ export default {
     created(){
         
     },
-    methods:{
+    methods: {
+        getImgUrl,
         scrollTo(element, scrollPixels, duration) {
             let scroll;
             const scrollPos = element.scrollLeft;
@@ -108,8 +110,8 @@ export default {
                 this.right = true
             }
         },
-        changeImgSrc(src){
-            return require(`../assets/img/${src}`)
+        changeImgSrc(src) {
+            return getImgUrl(src)
         },
         parentMsg(idx){
             this.chooseImg=`ae${idx}0`

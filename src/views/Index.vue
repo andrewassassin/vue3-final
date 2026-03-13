@@ -19,7 +19,8 @@
 </template>
 <script>
 // import axios from 'axios'
-import IndexSec from '@/components/IndexSec'
+import IndexSec from '@/components/IndexSec.vue'
+import { getImgUrl } from '@/utils/img.js'
 import { Carousel, Pagination, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 import { onMounted, ref } from "vue";
@@ -77,7 +78,7 @@ export default {
         }
 
         function inlineBgImage(image) {
-            let bgImage = require('@/assets/img/' + image)
+            const bgImage = getImgUrl(image)
             return `background-image: url("${bgImage}")`
         }
 
